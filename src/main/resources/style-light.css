@@ -1,0 +1,81 @@
+/*
+Design directions:
+- Left menu (1/6 of the full with of the display) (fixed size)
+- Minimum Dynamic size (1/2 of every direction of teh display) (1/4 total display size)
+- Minimum Minimum size (800x600)
+*/
+
+.root {
+    /*accent*/
+    -fu-accent: red;
+    -fu-accent-rest: -fu-accent;
+    -fu-accent-hover: -fu-accent;
+    -fu-accent-pressed: -fu-accent;
+    -fu-accent-selected: -fu-accent;
+
+    /*mode dark/light*/
+    -fu-background-1: #f0f0f0;
+    -fu-background-2: #f5f5f5;
+    -fu-background-3: #fafafa;
+    -fu-background-4: #ffffff;
+
+    -fu-foreground-rest: #ffffff;
+    -fu-foregrounf-hover: #ffffff;
+    -fu-foregrounf-pressed: #ffffff;
+    -fu-foregrounf-selected: #ffffff;
+
+    -fu-stroke-rest: #ffffff;
+    -fu-stroke-hover: #ffffff;
+    -fu-stroke-pressed: #ffffff;
+    -fu-stroke-selected: #ffffff;
+
+    -fu-text-1: #000000;
+    -fu-text-2: #464646;
+
+
+    /* Disabled  Opacity 80/70% */
+}
+
+.label {
+    -fx-text-fill: -fu-text-1;
+}
+
+.background-1 {
+    -fx-background-color: -fu-background-1;
+}
+
+.background-2 {
+    -fx-background-color: -fu-background-2;
+}
+
+.background-3 {
+    -fx-background-color: -fu-background-3;
+}
+
+.background-4 {
+    -fx-background-color: -fu-background-4;
+}
+
+.text-input, .text-area, .text-field {
+    -fx-cursor: text;
+    -fx-highlight-fill: -fu-accent;
+    -fx-highlight-text-fill: -fu-accent;
+    -fx-text-fill: -fu-text-1;
+    -fx-prompt-text-fill: -fu-text-2;
+
+    /*accent, border, background*/
+    /*top-l, top-r, bottom-r, bottom-l*/
+    -fx-background-color: -fu-accent, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 0 0, 4;
+    -fx-padding: .333333em .583em .444444em .583em;
+}
+
+.text-input:hover {
+    -fx-background-color: -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
+}
+
+.text-input:focused {
+    -fx-background-color: -fu-accent, -fu-stroke-focused, -fu-foreground-focused;
+    -fx-background-insets: 0 0 0 0, 0 0 3 0, 2 2 3 2;
+}
