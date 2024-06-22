@@ -73,11 +73,12 @@ Design directions:
 
 .text-input:hover, .text-area:hover, .text-field:hover {
     -fx-background-color: -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
+    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 2 0, 2 2 2 2;
 }
 
 .text-input:focused, .text-area:focused, .text-field:focused {
     -fx-background-color: -fu-accent, -fu-stroke-selected, -fu-foreground-selected;
-    -fx-background-insets: 0 0 0 0, 0 0 3 0, 2 2 3 2;
+    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3 2;
 }
 
 .side-button {
@@ -122,6 +123,8 @@ Design directions:
     -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 6, 4;
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
 }
 
 .button:hover {
@@ -428,3 +431,40 @@ Design directions:
     -fx-background-radius: 20, 20;
     -fx-background-insets: 0, 2;
 }
+
+.colorpickerpreset .button {
+    -fx-text-fill: transparent;
+    -fx-background-color: -fu-stroke-rest, -fu-accent;
+    -fx-background-insets: 0 0 0 0, 3 3 3 3;
+    -fx-background-radius: 10, 8;
+}
+
+.colorpickerpreset_upper_checkmark {
+    -fx-fill: transparent;
+    -fx-font-size: 18;
+}
+
+.colorpickerpreset_upper_checkmark:selected {
+    -fx-fill: -fu-text-1;
+}
+
+.colorpickerpreset_center_checkmark {
+    -fx-fill: transparent;
+    -fx-font-size: 20;
+}
+
+.colorpickerpreset_center_checkmark:hover {
+    -fx-fill: white;
+    -fx-font-size: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}
+
+.colorpickerpreset_under_checkmark {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0 0 0 4;
+}
+
+.colorpickerpreset_under_checkmark:selected {
+    -fx-background-color: -fu-stroke-rest;
+}
+

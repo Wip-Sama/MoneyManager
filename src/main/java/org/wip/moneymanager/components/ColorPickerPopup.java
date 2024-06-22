@@ -1,9 +1,6 @@
 package org.wip.moneymanager.components;
 
 import javafx.beans.property.Property;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -12,10 +9,9 @@ import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-import java.time.temporal.ValueRange;
 import java.util.function.UnaryOperator;
 
-public class ColorPicker {
+public class ColorPickerPopup {
     @FXML
     protected Pane color_preview;
 
@@ -43,7 +39,6 @@ public class ColorPicker {
 
     @FXML
     protected void initialize() {
-
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
             if (newText.isEmpty())
@@ -59,7 +54,7 @@ public class ColorPicker {
             }
             return null;
         };
-        StringConverter<Number> sc = new StringConverter<Number>() {
+        StringConverter<Number> sc = new StringConverter<>() {
             @Override
             public String toString(Number number) {
                 return number.toString();
@@ -95,7 +90,6 @@ public class ColorPicker {
             blue_textfield.setText(String.valueOf(newValue.intValue()));
             updateColorPreview();
         });
-
     }
 
     protected void updateColorPreview() {

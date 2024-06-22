@@ -24,7 +24,7 @@ public class HelloController {
     protected void onHelloButtonClick() throws IOException {
 
         // Carica l'elemento FXML
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("components/colorpicker.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("components/colorpickerpopup.fxml"));
         Parent colorPickerParent = fxmlLoader.load();
 
         Popup popup = new Popup();
