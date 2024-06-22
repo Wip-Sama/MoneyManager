@@ -122,7 +122,7 @@
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="transparent-button" text="Button" />
                         <ChoiceBox prefWidth="150.0" />
                         <DatePicker />
-                        <ColorPicker />
+                        <ColorPicker style="-fx-scale-x: 1;" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
