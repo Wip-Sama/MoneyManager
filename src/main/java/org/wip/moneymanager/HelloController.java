@@ -12,6 +12,8 @@ import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import org.wip.moneymanager.components.ColorPickerButton;
+
 import java.io.IOException;
 
 public class HelloController {
@@ -22,16 +24,12 @@ public class HelloController {
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
-
-        // Carica l'elemento FXML
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("components/colorpickerpopup.fxml"));
         Parent colorPickerParent = fxmlLoader.load();
-
         Popup popup = new Popup();
         popup.getContent().add(colorPickerParent);
-        popup.show(welcomeText.getScene().getWindow());
-
-
+        popup.show(welcomeText.getScene().getWindow());*/
 
         welcomeText.setText("Welcome to JavaFX Application! "+theme);
         Scene scene = welcomeText.getScene();

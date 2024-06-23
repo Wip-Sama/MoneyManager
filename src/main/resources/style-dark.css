@@ -428,43 +428,71 @@ Design directions:
 
 .colorpicker {
     -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
-    -fx-background-radius: 20, 20;
+    -fx-background-radius: 22, 20;
     -fx-background-insets: 0, 2;
 }
 
-.colorpickerpreset .button {
+.colorpickerpreset > .button {
     -fx-text-fill: transparent;
     -fx-background-color: -fu-stroke-rest, -fu-accent;
     -fx-background-insets: 0 0 0 0, 3 3 3 3;
     -fx-background-radius: 10, 8;
 }
 
-.colorpickerpreset_upper_checkmark {
+.colorpickerpreset > .colorpickerpreset_upper_checkmark {
     -fx-fill: transparent;
     -fx-font-size: 18;
 }
 
-.colorpickerpreset_upper_checkmark:selected {
+.colorpickerpreset:selected > .colorpickerpreset_upper_checkmark {
     -fx-fill: -fu-text-1;
 }
 
-.colorpickerpreset_center_checkmark {
+.colorpickerpreset > .colorpickerpreset_center_checkmark {
     -fx-fill: transparent;
     -fx-font-size: 20;
 }
 
-.colorpickerpreset_center_checkmark:hover {
+.colorpickerpreset:hover > .colorpickerpreset_center_checkmark {
     -fx-fill: white;
     -fx-font-size: 20;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }
 
-.colorpickerpreset_under_checkmark {
+.colorpickerpreset > .colorpickerpreset_under_checkmark {
     -fx-background-color: transparent;
     -fx-background-radius: 0 0 0 4;
 }
 
-.colorpickerpreset_under_checkmark:selected {
+.colorpickerpreset:selected > .colorpickerpreset_under_checkmark {
     -fx-background-color: -fu-stroke-rest;
 }
 
+.colorpickerbutton > .button {
+    -fx-text-fill: transparent;
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 3 3 3 3;
+    -fx-background-radius: 10, 8;
+}
+
+.colorpickerbutton:hover > .button {
+    -fx-background-color: -fu-stroke-hover, -fu-foreground-hover;
+}
+
+.colorpickerbutton:pressed > .button {
+    -fx-background-color: -fu-stroke-pressed, -fu-foreground-pressed;
+}
+
+.colorpickerbutton > .ikonli-font-icon {
+    -fx-fill: -fu-stroke-rest;
+}
+
+.colorpickerbutton:hover > .ikonli-font-icon {
+    -fx-font-size: 24;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}
+
+.colorpickerbutton:pressed > .ikonli-font-icon {
+    -fx-font-size: 24;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}

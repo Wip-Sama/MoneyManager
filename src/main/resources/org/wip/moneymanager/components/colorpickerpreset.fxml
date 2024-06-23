@@ -6,15 +6,15 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" styleClass="colorpickerpreset" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.components.ColorPickerPreset">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" styleClass="colorpickerpreset" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="fdsfsd" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Pane prefHeight="20.0" prefWidth="20.0" styleClass="colorpickerpreset_under_checkmark" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <FontIcon iconLiteral="fltfal-checkmark-12" styleClass="colorpickerpreset_upper_checkmark" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+      <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane mouseTransparent="true" prefHeight="20.0" prefWidth="20.0" styleClass="colorpickerpreset_under_checkmark" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <FontIcon iconLiteral="fltfal-checkmark-12" mouseTransparent="true" styleClass="colorpickerpreset_upper_checkmark" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
          <font>
             <Font size="18.0" />
          </font>
       </FontIcon>
-      <FontIcon iconLiteral="fltfal-checkmark-12" layoutX="11.0" layoutY="29.0" styleClass="colorpickerpreset_center_checkmark" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <FontIcon iconLiteral="fltfal-checkmark-12" layoutX="11.0" layoutY="29.0" mouseTransparent="true" styleClass="colorpickerpreset_center_checkmark" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
    </children>
-</AnchorPane>
+</fx:root>

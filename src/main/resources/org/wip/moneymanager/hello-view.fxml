@@ -10,48 +10,18 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import org.wip.moneymanager.components.ColorPickerButton?>
+<?import org.wip.moneymanager.components.ColorPickerPreset?>
+
 <VBox alignment="CENTER" prefHeight="800.0" prefWidth="800.0" spacing="20.0" styleClass="background-1" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.HelloController">
-	<padding>
-		<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-	</padding>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
    <TextField />
 
-	<Label fx:id="welcomeText" />
-   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" styleClass="colorpickerpreset">
-      <children>
-         <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="fdsfsd" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         <Pane prefHeight="20.0" prefWidth="20.0" styleClass="colorpickerpreset_under_checkmark" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         <FontIcon iconLiteral="fltfal-checkmark-12" styleClass="colorpickerpreset_upper_checkmark" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </FontIcon>
-         <FontIcon iconLiteral="fltfal-checkmark-12" layoutX="11.0" layoutY="29.0" styleClass="colorpickerpreset_center_checkmark" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      </children>
-   </AnchorPane>
-   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" styleClass="colorpickerpreset">
-      <children>
-         <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="fdsfsd" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         <Pane prefHeight="20.0" prefWidth="20.0" styleClass="colorpickerpreset_under_checkmark" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         <FontIcon iconLiteral="fltfal-checkmark-12" styleClass="colorpickerpreset_upper_checkmark" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </FontIcon>
-         <FontIcon iconLiteral="fltfal-checkmark-12" layoutX="11.0" layoutY="29.0" styleClass="colorpickerpreset_center_checkmark" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      </children>
-   </AnchorPane>
-   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" styleClass="colorpickerpreset">
-      <children>
-         <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="fdsfsd" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         <Pane prefHeight="20.0" prefWidth="20.0" styleClass="colorpickerpreset_under_checkmark" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         <FontIcon iconLiteral="fltfal-checkmark-12" styleClass="colorpickerpreset_upper_checkmark" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </FontIcon>
-         <FontIcon iconLiteral="fltfal-checkmark-12" layoutX="11.0" layoutY="29.0" styleClass="colorpickerpreset_center_checkmark" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      </children>
-   </AnchorPane>
-	<Button onAction="#onHelloButtonClick" text="Hello!" />
+   <Label fx:id="welcomeText" />
+   <ColorPickerButton />
+   <ColorPickerPreset />
+   <ColorPickerPreset />
+   <Button onAction="#onHelloButtonClick" text="Hello!" />
 </VBox>

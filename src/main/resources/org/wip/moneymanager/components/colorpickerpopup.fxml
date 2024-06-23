@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="246.0" maxWidth="220.0" minHeight="246.0" minWidth="220.0" prefHeight="246.0" prefWidth="220.0" styleClass="colorpicker" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.components.ColorPickerPopup">
+<fx:root type="javafx.scene.layout.BorderPane" maxHeight="246.0" maxWidth="220.0" minHeight="246.0" minWidth="220.0" prefHeight="246.0" prefWidth="220.0" styleClass="colorpicker" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <Pane fx:id="color_preview" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: black;" styleClass="rounded_pane" BorderPane.alignment="CENTER" />
    </top>
@@ -63,4 +63,4 @@
    <effect>
       <DropShadow />
    </effect>
-</BorderPane>
+</fx:root>
