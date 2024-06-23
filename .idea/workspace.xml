@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="ColorPickerv2 by wip">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" afterDir="false" />
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="ColorPicker v3 by wip">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-dark.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/test.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +17,8 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="package-info" />
+        <option value="JavaFXApplication" />
       </list>
     </option>
   </component>
@@ -62,8 +55,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ColorPickerButtonTest.executor": "Run",
     "Application.HelloApplication.executor": "Run",
+    "Maven.MoneyManager [clean].executor": "Run",
     "Maven.MoneyManager [compile].executor": "Run",
+    "Maven.MoneyManager [install].executor": "Run",
+    "Maven.MoneyManager [validate].executor": "Run",
+    "Maven.MoneyManager [verify].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
@@ -79,8 +77,8 @@
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "project.structure.side.proportion": "0.23353909",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -89,7 +87,20 @@
       <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.ColorPickerButtonTest">
+    <configuration name="ColorPickerButtonTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.components.ColorPickerButtonTest" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.components.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HelloApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.HelloApplication" />
       <module name="MoneyManager" />
@@ -97,6 +108,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ColorPickerButtonTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -128,7 +144,7 @@
       <workItem from="1719061525384" duration="7999000" />
       <workItem from="1719073892930" duration="5501000" />
       <workItem from="1719083351267" duration="5996000" />
-      <workItem from="1719133964436" duration="10725000" />
+      <workItem from="1719133964436" duration="15040000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -218,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719089355872</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="ColorPicker v3 by wip">
+      <option name="closed" value="true" />
+      <created>1719146904029</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1719146904029</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +264,8 @@
     <MESSAGE value="Test" />
     <MESSAGE value="ColorPicker by wip" />
     <MESSAGE value="ColorPickerv2 by wip" />
-    <option name="LAST_COMMIT_MESSAGE" value="ColorPickerv2 by wip" />
+    <MESSAGE value="ColorPicker v3 by wip" />
+    <option name="LAST_COMMIT_MESSAGE" value="ColorPicker v3 by wip" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
