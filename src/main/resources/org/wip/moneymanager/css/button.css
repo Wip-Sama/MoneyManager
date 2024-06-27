@@ -1,0 +1,20 @@
+.button {
+    -fx-text-fill: -fu-text-1;
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6, 4;
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
+}
+
+.button:hover {
+    -fx-background-color: -fu-stroke-hover, -fu-foreground-hover;
+}
+
+.button:pressed {
+    -fx-background-color: -fu-stroke-pressed, -fu-foreground-pressed;
+}
+
+.button:selected {
+    -fx-background-color: -fu-stroke-selected, -fu-foreground-selected;
+}

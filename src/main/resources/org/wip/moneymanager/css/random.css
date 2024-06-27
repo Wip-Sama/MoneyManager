@@ -1,0 +1,7 @@
+.label {
+    -fx-text-fill: -fu-text-1;
+}
+
+.rounded_pane {
+    -fx-background-radius: 15;
+}

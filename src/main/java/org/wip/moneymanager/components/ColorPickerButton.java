@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.wip.moneymanager.HelloApplication;
 
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class ColorPickerButton extends AnchorPane {
 
     protected static Parent loaded;
     private static ColorPickerPopup colorPickerPopup;
+    private Stage stage;
 
     public ColorPickerButton() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("components/colorpickerbutton.fxml"));
@@ -35,6 +38,9 @@ public class ColorPickerButton extends AnchorPane {
         red.addListener(ChangeListener -> updateColors());
         green.addListener(ChangeListener -> updateColors());
         blue.addListener(ChangeListener -> updateColors());
+
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);  // Imposta la modalità
     }
 
     protected void updateColors() {

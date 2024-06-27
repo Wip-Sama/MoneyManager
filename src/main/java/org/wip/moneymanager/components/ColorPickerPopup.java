@@ -2,12 +2,12 @@ package org.wip.moneymanager.components;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
@@ -42,6 +42,8 @@ public class ColorPickerPopup {
     @FXML
     protected TextField blue_textfield;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
     public Property<Number> red_channel = new SimpleDoubleProperty(0);
     public Property<Number> green_channel = new SimpleDoubleProperty(0);
     public Property<Number> blue_channel = new SimpleDoubleProperty(0);
@@ -53,11 +55,13 @@ public class ColorPickerPopup {
     public ColorPickerPopup(Window window) throws IOException {
         node = window;
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("components/colorpickerpopup.fxml"));
-        BorderPane root = new BorderPane();
-        fxmlLoader.setRoot(root);
+        fxmlLoader.setRoot(new BorderPane()); /* L'alternativa è extends Borderpane e setRoot(this) */
         fxmlLoader.setController(this);
         Parent loaded = fxmlLoader.load();
         popup.getContent().add(loaded);
+
+        /* Controlliamo se l'utente interagisce con la finestra sottostante e in caso chiusiamo il pulsante*/
+        window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
     @FXML
@@ -136,6 +140,16 @@ public class ColorPickerPopup {
             blue_channel.setValue(newValue.intValue());
             blue_textfield.setText(String.valueOf(newValue.intValue()));
             updateColorPreview();
+        });
+
+        color_preview.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        color_preview.setOnMouseDragged(event -> {
+            popup.setX(event.getScreenX() - xOffset);
+            popup.setY(event.getScreenY() - yOffset);
         });
     }
 
