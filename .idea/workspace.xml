@@ -4,23 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="ColorPicker v3 by wip&#10;- Mancava questo file">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/backgrounds.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-button.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-preset.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/random.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/scroll-bar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/side-button.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/slider.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/text-input.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/transparent-button.css" afterDir="false" />
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/combopasswordfield.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/combo-password-field.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/ic_fluent_eye_hide_24_filled.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/ic_fluent_eye_show_24_filled.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-dark.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/style-light.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-light.css" afterDir="false" />
     </list>
@@ -32,10 +31,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
-        <option value="Class" />
         <option value="package-info" />
         <option value="JavaFXApplication" />
+        <option value="Class" />
+        <option value="FxmlFile" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -51,7 +51,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Wip-Sama/MoneyManager.git&quot;,
-    &quot;accountId&quot;: &quot;fe6bcc16-6319-43f9-a767-bfc808fa2e32&quot;
+    &quot;accountId&quot;: &quot;26be2ba9-9ddd-4387-b4f2-4463262b4cfb&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -60,6 +60,9 @@
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -70,41 +73,58 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ColorPickerButtonTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [verify].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/smast/OneDrive - Università della Calabria/2° Anno/User Interface Design/laboratorio/lab04_04_2024_es1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.23353909&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ColorPickerButtonTest.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "Maven.MoneyManager [clean,build].executor": "Run",
+    "Maven.MoneyManager [clean,install].executor": "Run",
+    "Maven.MoneyManager [clean].executor": "Run",
+    "Maven.MoneyManager [compile].executor": "Run",
+    "Maven.MoneyManager [install2].executor": "Debug",
+    "Maven.MoneyManager [install].executor": "Run",
+    "Maven.MoneyManager [site].executor": "Run",
+    "Maven.MoneyManager [validate].executor": "Run",
+    "Maven.MoneyManager [verify].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Programming/MoneyManager/src/main/resources/org/wip/moneymanager/svg",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.23353909",
+    "settings.editor.selected.configurable": "proofread",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager\svg" />
+      <recent name="D:\Programming\MoneyManager\src\main\java\org\wip\moneymanager" />
+      <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager\css" />
       <recent name="D:\Programmazione\MoneyManager\src\main\resources" />
       <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean build" />
+      <command value="mvn clean install" />
+    </option>
   </component>
   <component name="RunManager" selected="Application.HelloApplication">
     <configuration name="ColorPickerButtonTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -127,6 +147,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.HelloApplication" />
+      <item itemvalue="Application.ColorPickerButtonTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ColorPickerButtonTest" />
@@ -136,8 +160,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -167,6 +191,15 @@
       <workItem from="1719160466806" duration="341000" />
       <workItem from="1719520214046" duration="453000" />
       <workItem from="1719527149532" duration="2365000" />
+      <workItem from="1722171831839" duration="607000" />
+      <workItem from="1722177756357" duration="65000" />
+      <workItem from="1722256705246" duration="4694000" />
+      <workItem from="1722332534162" duration="4423000" />
+      <workItem from="1722429200960" duration="7166000" />
+      <workItem from="1722498265564" duration="5557000" />
+      <workItem from="1722618033558" duration="314000" />
+      <workItem from="1722618562072" duration="6805000" />
+      <workItem from="1722691280228" duration="10540000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -290,23 +323,34 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="test" />
     <MESSAGE value="Test" />
     <MESSAGE value="ColorPicker by wip" />
     <MESSAGE value="ColorPickerv2 by wip" />
     <MESSAGE value="ColorPicker v3 by wip" />
     <MESSAGE value="ColorPicker v3 by wip&#10;- Mancava questo file" />
-    <option name="LAST_COMMIT_MESSAGE" value="ColorPicker v3 by wip&#10;- Mancava questo file" />
+    <MESSAGE value="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint type="java-exception">
           <properties class="java.lang.IllegalStateException" package="java.lang" />
           <option name="timeStamp" value="2" />
         </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="12" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="javafx.scene.control.TextFormatter$Change" memberName="accessor" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

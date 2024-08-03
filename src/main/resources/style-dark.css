@@ -1,13 +1,5 @@
-@import "org/wip/moneymanager/css/button.css";
-@import "org/wip/moneymanager/css/text-input.css";
-@import "org/wip/moneymanager/css/scroll-bar.css";
-@import "org/wip/moneymanager/css/slider.css";
-@import "org/wip/moneymanager/css/side-button.css";
-@import "org/wip/moneymanager/css/transparent-button.css";
-@import "org/wip/moneymanager/css/date-picker.css";
-@import "org/wip/moneymanager/css/color-picker.css";
-@import "org/wip/moneymanager/css/backgrounds.css";
-@import "org/wip/moneymanager/css/random.css";
+/* è molto più facile in caso avessimo più temi base avere tutti i css in un solo punto */
+@import "org/wip/moneymanager/css/everycss.css";
 
 /*
 Design directions:

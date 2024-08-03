@@ -2,15 +2,11 @@ package org.wip.moneymanager.components;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import org.wip.moneymanager.HelloApplication;
 
 import java.io.IOException;
 
@@ -18,29 +14,37 @@ public class ColorPickerButton extends AnchorPane {
     @FXML
     protected Button color_picker_button;
 
+    protected final boolean selected = false;
+    // TODO: Aggiungere la spunta per far capire che è stato selezionato (come il ColorPickerPreset)
+
     protected static Property<Number> red = new SimpleDoubleProperty(0);
     protected static Property<Number> green = new SimpleDoubleProperty(0);
     protected static Property<Number> blue = new SimpleDoubleProperty(0);
 
     protected static Parent loaded;
     private static ColorPickerPopup colorPickerPopup;
-    private Stage stage;
 
-    public ColorPickerButton() throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("components/colorpickerbutton.fxml"));
+    public ColorPickerButton() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/colorpickerbutton.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        loaded = fxmlLoader.load();
+        try {
+            loaded = fxmlLoader.load();
+        } catch (IOException e) {
+            // Se questo fallisce realisticamente non siamo in grado di caricare l'app quindi c'è un problema di fondo
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    protected void initialize() {
-        red.addListener(ChangeListener -> updateColors());
-        green.addListener(ChangeListener -> updateColors());
-        blue.addListener(ChangeListener -> updateColors());
+    protected void initialize() throws IOException {
+        red.addListener(_ -> updateColors());
+        green.addListener(_ -> updateColors());
+        blue.addListener(_ -> updateColors());
 
-        stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);  // Imposta la modalità
+        color_picker_button.onActionProperty().set(event -> {
+            select_color();
+        });
     }
 
     protected void updateColors() {
@@ -48,15 +52,19 @@ public class ColorPickerButton extends AnchorPane {
     }
 
     @FXML
-    protected void select_color() throws IOException {
+    protected void select_color() {
         if (colorPickerPopup == null) {
-            colorPickerPopup = new ColorPickerPopup(loaded.getScene().getWindow());
-            colorPickerPopup.red_channel.bindBidirectional(red);
-            colorPickerPopup.green_channel.bindBidirectional(green);
-            colorPickerPopup.blue_channel.bindBidirectional(blue);
+            try {
+                colorPickerPopup = new ColorPickerPopup(loaded.getScene().getWindow());
+                // Potremmo far in modo che i colori cambiano solo se l'utente conferma la selezione
+                colorPickerPopup.red_channel.bindBidirectional(red);
+                colorPickerPopup.green_channel.bindBidirectional(green);
+                colorPickerPopup.blue_channel.bindBidirectional(blue);
+            } catch (IOException e) {
+                // TODO: Dire che qualcosa è andato storto con l'avvio del color picker
+                // TODO: Loggare l'errore
+            }
         }
         colorPickerPopup.toggle();
     }
-
-
 }
