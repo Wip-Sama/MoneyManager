@@ -8,11 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.SVGPath;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Objects;
+import java.io.*;
 
 public class ComboPasswordField extends StackPane {
     @FXML
@@ -45,11 +41,17 @@ public class ComboPasswordField extends StackPane {
 
         try {
             // Ringraziamo java per avere liste infinite di funzioni per fare una cosa stupida come leggere una stringa da un file
-            show_eye = Files.readString(Paths.get(Objects.requireNonNull(getClass().getResource("/org/wip/moneymanager/svg/ic_fluent_eye_show_24_filled.svg")).toURI()));
-            hide_eye = Files.readString(Paths.get(Objects.requireNonNull(getClass().getResource("/org/wip/moneymanager/svg/ic_fluent_eye_hide_24_filled.svg")).toURI()));
-        } catch (IOException | URISyntaxException e) {
+            show_eye = readResourceAsString("/org/wip/moneymanager/svg/ic_fluent_eye_show_24_filled.svg");
+            hide_eye = readResourceAsString("/org/wip/moneymanager/svg/ic_fluent_eye_hide_24_filled.svg");
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private String readResourceAsString(String resourcePath) throws IOException {
+        // TODO: spostare da un'altra parte
+        InputStream inputStream = getClass().getResourceAsStream(resourcePath);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        return reader.readLine();
     }
 
     @FXML
