@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/readme" afterDir="false" />
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="Fix Scenebuilder jar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" afterDir="false" />
     </list>
@@ -62,7 +61,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.ColorPickerButtonTest.executor": "Run",
-    "Application.HelloApplication.executor": "Run",
+    "Application.HelloApplication.executor": "Debug",
     "Maven.MoneyManager [clean,build].executor": "Run",
     "Maven.MoneyManager [clean,install].executor": "Run",
     "Maven.MoneyManager [clean].executor": "Run",
@@ -185,7 +184,8 @@
       <workItem from="1722498265564" duration="5557000" />
       <workItem from="1722618033558" duration="314000" />
       <workItem from="1722618562072" duration="6805000" />
-      <workItem from="1722691280228" duration="11474000" />
+      <workItem from="1722691280228" duration="11535000" />
+      <workItem from="1722706984702" duration="149000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -299,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722702047274</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fix Scenebuilder jar">
+      <option name="closed" value="true" />
+      <created>1722702958095</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1722702958095</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,7 +332,8 @@
     <MESSAGE value="ColorPicker v3 by wip" />
     <MESSAGE value="ColorPicker v3 by wip&#10;- Mancava questo file" />
     <MESSAGE value="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)" />
-    <option name="LAST_COMMIT_MESSAGE" value="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)" />
+    <MESSAGE value="Fix Scenebuilder jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Scenebuilder jar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

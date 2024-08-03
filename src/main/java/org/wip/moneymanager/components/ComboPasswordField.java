@@ -1,5 +1,8 @@
 package org.wip.moneymanager.components;
 
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +30,7 @@ public class ComboPasswordField extends StackPane {
     private final int[] selection = new int[2];
     private String show_eye;
     private String hide_eye;
+    public final Property<String> password = new SimpleStringProperty();
 
     public ComboPasswordField() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/combopasswordfield.fxml"));
@@ -56,7 +60,9 @@ public class ComboPasswordField extends StackPane {
 
     @FXML
     public void initialize() {
-        text_field.textProperty().bindBidirectional(password_field.textProperty());
+        // Preferisco salvare il testo in una variabile interna alla classe che leggere il textfield per averla
+        text_field.textProperty().bindBidirectional(password);
+        password_field.textProperty().bindBidirectional(password);
 
         icon_pane.setOnMouseClicked(_ -> {
             // dato che richiediamo il focus mentre swappiamo i dati è importante che non vengano aggiornati dai listener
