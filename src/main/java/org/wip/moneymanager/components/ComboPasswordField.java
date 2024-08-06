@@ -2,7 +2,6 @@ package org.wip.moneymanager.components;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -47,9 +46,8 @@ public class ComboPasswordField extends StackPane {
             // Ringraziamo java per avere liste infinite di funzioni per fare una cosa stupida come leggere una stringa da un file
             show_eye = readResourceAsString("/org/wip/moneymanager/svg/ic_fluent_eye_show_24_filled.svg");
             hide_eye = readResourceAsString("/org/wip/moneymanager/svg/ic_fluent_eye_hide_24_filled.svg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ignore) {}
+            // Se succede ci siamo dimenticati di includere i file quindi servirebbe comunque a poco
     }
     private String readResourceAsString(String resourcePath) throws IOException {
         // TODO: spostare da un'altra parte
@@ -65,7 +63,7 @@ public class ComboPasswordField extends StackPane {
         password_field.textProperty().bindBidirectional(password);
 
         icon_pane.setOnMouseClicked(_ -> {
-            // dato che richiediamo il focus mentre swappiamo i dati è importante che non vengano aggiornati dai listener
+            // dato che richiediamo il focus mentre copiamo i dati è importante che non vengano aggiornati dai listener
             // vorrei far notare che sono riuscito a far mantenete la selezione tra lo swap di text e passwordfield
             requesting_focus = true;
             if (password_field.isVisible()) {

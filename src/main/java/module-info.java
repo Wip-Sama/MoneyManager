@@ -8,6 +8,8 @@ module org.wip.moneymanager {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fluentui;
 
+    requires java.sql;
+
     opens org.wip.moneymanager to javafx.fxml;
     exports org.wip.moneymanager;
     opens org.wip.moneymanager.components to javafx.fxml;

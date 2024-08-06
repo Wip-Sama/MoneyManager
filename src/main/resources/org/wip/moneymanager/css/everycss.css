@@ -6,6 +6,8 @@
 @import "transparent-button.css";
 @import "date-picker.css";
 @import "color-picker.css";
+@import "color-picker-button.css";
+@import "color-picker-preset.css";
 @import "backgrounds.css";
 @import "random.css";
 @import "combo-password-field.css";

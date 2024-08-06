@@ -112,13 +112,16 @@
     -fx-text-fill: -fu-text-2;
 }
 .date-picker-popup > * > .day-cell {
-    -fx-pref-width: 48px;
-    -fx-pref-height: 48px;
+    -fx-pref-width: 32px;
+    -fx-pref-height: 32px;
     -fx-background-radius: 50%;
     -fx-background-insets: 4, 5;
 }
 .date-picker-popup > * > .day-cell:hover {
     -fx-background-color: -fu-stroke-hover, -fu-stroke-hover;
+}
+.date-picker-popup > * > .day-cell {
+    -fx-text-fill: -fu-text-1;
 }
 .date-picker-popup > * > .selected {
     -fx-background-color: -fu-accent, -fu-foreground-rest;

@@ -1,10 +1,9 @@
-@import "color-picker-preset.css";
-@import "color-picker-button.css";
-
 .colorpicker {
     -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
-    -fx-background-radius: 22, 20;
+    -fx-background-radius: 15, 13;
     -fx-background-insets: 0, 2;
 }
 
-
+.rounded_pane {
+    -fx-background-radius: 8;
+}

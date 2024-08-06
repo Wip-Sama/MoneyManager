@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="Fix Scenebuilder jar">
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="minor changes to ComboPasswordField">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/money_manager.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/combo-password-field.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/combo-password-field.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/random.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/random.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +73,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.ColorPickerButtonTest.executor": "Run",
-    "Application.HelloApplication.executor": "Debug",
+    "Application.HelloApplication.executor": "Run",
     "Maven.MoneyManager [clean,build].executor": "Run",
     "Maven.MoneyManager [clean,install].executor": "Run",
     "Maven.MoneyManager [clean].executor": "Run",
@@ -77,7 +89,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Programming/MoneyManager/src/main/resources/org/wip/moneymanager/svg",
+    "last_opened_file_path": "D:/Programming/MoneyManager/db_name.db",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
@@ -91,6 +103,11 @@
     "project.structure.side.proportion": "0.23353909",
     "settings.editor.selected.configurable": "proofread",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -185,7 +202,11 @@
       <workItem from="1722618033558" duration="314000" />
       <workItem from="1722618562072" duration="6805000" />
       <workItem from="1722691280228" duration="11535000" />
-      <workItem from="1722706984702" duration="149000" />
+      <workItem from="1722706984702" duration="192000" />
+      <workItem from="1722726161211" duration="1941000" />
+      <workItem from="1722787759484" duration="884000" />
+      <workItem from="1722906088172" duration="342000" />
+      <workItem from="1722906653274" duration="2513000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -307,7 +328,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722702958095</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="minor changes to ComboPasswordField">
+      <option name="closed" value="true" />
+      <created>1722707157370</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1722707157370</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,7 +362,8 @@
     <MESSAGE value="ColorPicker v3 by wip&#10;- Mancava questo file" />
     <MESSAGE value="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)" />
     <MESSAGE value="Fix Scenebuilder jar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Scenebuilder jar" />
+    <MESSAGE value="minor changes to ComboPasswordField" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor changes to ComboPasswordField" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
