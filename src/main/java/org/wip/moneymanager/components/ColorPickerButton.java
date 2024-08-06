@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -13,6 +14,8 @@ import java.io.IOException;
 public class ColorPickerButton extends AnchorPane {
     @FXML
     protected Button color_picker_button;
+
+    protected ToggleButton tg;
 
     protected final boolean selected = false;
     // TODO: Aggiungere la spunta per far capire che è stato selezionato (come il ColorPickerPreset)

@@ -4,21 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="minor changes to ComboPasswordField">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/money_manager.db" afterDir="false" />
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="Date Picker final touches +testdb">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/BaseMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/images/Screenshot 2024-07-26 155113(1).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/Bank_accounts.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/Kebab_menu.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/Logo_Money_manager.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/Logo_Money_manager_path.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/Settings.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/Statistics.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/Transactions_icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/combo-password-field.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/combo-password-field.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/random.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/random.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/side-button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/side-button.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/readme" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/readme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-dark.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +32,9 @@
       <list>
         <option value="package-info" />
         <option value="JavaFXApplication" />
-        <option value="Class" />
-        <option value="FxmlFile" />
         <option value="CSS File" />
+        <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -73,7 +75,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.ColorPickerButtonTest.executor": "Run",
-    "Application.HelloApplication.executor": "Run",
+    "Application.HelloApplication.executor": "Debug",
     "Maven.MoneyManager [clean,build].executor": "Run",
     "Maven.MoneyManager [clean,install].executor": "Run",
     "Maven.MoneyManager [clean].executor": "Run",
@@ -84,12 +86,11 @@
     "Maven.MoneyManager [validate].executor": "Run",
     "Maven.MoneyManager [verify].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "extract.method.default.visibility": "private",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Programming/MoneyManager/db_name.db",
+    "last_opened_file_path": "D:/Programming/MoneyManager/src/main/resources/org/wip/moneymanager/svg",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
@@ -117,6 +118,7 @@
       <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager\images" />
       <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager\css" />
       <recent name="D:\Programmazione\MoneyManager\src\main\resources" />
       <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager" />
@@ -206,7 +208,8 @@
       <workItem from="1722726161211" duration="1941000" />
       <workItem from="1722787759484" duration="884000" />
       <workItem from="1722906088172" duration="342000" />
-      <workItem from="1722906653274" duration="2513000" />
+      <workItem from="1722906653274" duration="3209000" />
+      <workItem from="1722948035336" duration="6392000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -336,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722707157370</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Date Picker final touches +testdb">
+      <option name="closed" value="true" />
+      <created>1722910449724</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1722910449724</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -363,7 +374,8 @@
     <MESSAGE value="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)" />
     <MESSAGE value="Fix Scenebuilder jar" />
     <MESSAGE value="minor changes to ComboPasswordField" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor changes to ComboPasswordField" />
+    <MESSAGE value="Date Picker final touches +testdb" />
+    <option name="LAST_COMMIT_MESSAGE" value="Date Picker final touches +testdb" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
