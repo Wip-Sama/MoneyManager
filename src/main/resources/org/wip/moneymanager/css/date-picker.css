@@ -1,6 +1,6 @@
 
 .combo-box-base.date-picker .text-input {
-    -fx-background-color: -fu-accent, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 0 2 2;
     -fx-background-radius: 4 0 0 4, 4 0 0 4, 3 0 0 3;
     -fx-padding: .333333em .583em .444444em .583em;
@@ -8,7 +8,7 @@
     -fx-cursor: text;
 }
 .combo-box-base.date-picker .arrow-button {
-    -fx-background-color: -fu-accent, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 0;
     -fx-background-radius: 0 4 4 0, 0 4 4 0, 0 3 3 0;
     -fx-padding: .333333em .583em .444444em .583em;
@@ -21,11 +21,27 @@
 .combo-box-base.date-picker:pressed .text-input,
 .combo-box-base.date-picker:pressed .arrow-button {
     -fx-background-color: -fu-accent, -fu-stroke-pressed, -fu-foreground-pressed;
-    -fx-text-fill: -fu-text-1;
 }
 .combo-box-base.date-picker:disabled .text-input,
 .combo-box-base.date-picker:disabled .button {
-    -fx-opacity: 1.0; /* Required otherwise input in .combo-box-base gets reduced opacity twice */
+    -fx-opacity: 1.0;
+}
+/*
+Il date-picker quando è focused non mantiene l'accento se spostiamo il cursore dall'hover
+
+.combo-box-base.date-picker:focused .text-input,
+.combo-box-base.date-picker:focused .arrow-button {
+    -fx-background-color: -fu-accent, -fu-stroke-rest, -fu-foreground-rest;
+}
+
+Il problema di questo codice è che il date-picker è diviso tra arrow e button e solo uno dei 2 può stare in focus
+Come non detto sono un mostro con sto css, il codice sotto funziona
+Voglio lasciare questo commento per commemorare la mia sofferenza
+*/
+
+.combo-box-base:focused.date-picker .text-input,
+.combo-box-base:focused.date-picker .arrow-button {
+    -fx-background-color: -fu-accent, -fu-stroke-rest, -fu-foreground-rest;
 }
 
 .date-picker > .arrow-button > .arrow {

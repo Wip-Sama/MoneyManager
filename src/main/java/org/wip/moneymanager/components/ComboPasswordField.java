@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.SVGPath;
+import org.wip.moneymanager.utility.SVGLoader;
 
 import java.io.*;
 
@@ -41,21 +42,12 @@ public class ComboPasswordField extends StackPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
-        try {
-            // Ringraziamo java per avere liste infinite di funzioni per fare una cosa stupida come leggere una stringa da un file
-            show_eye = readResourceAsString("/org/wip/moneymanager/svg/ic_fluent_eye_show_24_filled.svg");
-            hide_eye = readResourceAsString("/org/wip/moneymanager/svg/ic_fluent_eye_hide_24_filled.svg");
-        } catch (IOException ignore) {}
-            // Se succede ci siamo dimenticati di includere i file quindi servirebbe comunque a poco
+        // Ringraziamo java per avere liste infinite di funzioni per fare una cosa stupida come leggere una stringa da un file
+        System.out.println(new SVGLoader("ic_fluent_eye_show_24_filled.svg").getPath());
+        System.out.println(new SVGLoader("ic_fluent_eye_hide_24_filled.svg").getPath());
+        show_eye = new SVGLoader("ic_fluent_eye_show_24_filled.svg").getPath();
+        hide_eye = new SVGLoader("ic_fluent_eye_hide_24_filled.svg").getPath();
     }
-    private String readResourceAsString(String resourcePath) throws IOException {
-        // TODO: spostare da un'altra parte
-        InputStream inputStream = getClass().getResourceAsStream(resourcePath);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        return reader.readLine();
-    }
-
     @FXML
     public void initialize() {
         // Preferisco salvare il testo in una variabile interna alla classe che leggere il textfield per averla

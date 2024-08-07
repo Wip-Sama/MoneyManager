@@ -9,6 +9,7 @@ module org.wip.moneymanager {
     requires org.kordamp.ikonli.fluentui;
 
     requires java.sql;
+    requires spring.core;
 
     opens org.wip.moneymanager to javafx.fxml;
     exports org.wip.moneymanager;
