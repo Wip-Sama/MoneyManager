@@ -1,9 +1,10 @@
-.menu-item:hover {
+.menu-item {
+    -fx-font-size: 14;
     -fx-text-fill: -fu-text-1;
-}
-
-.menu-item:selected {
-    -fx-background-color: green;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-padding: 5;
+    -fx-background-radius: 4;
+    -fx-background-insets: 3;
 }
 
 .menu-item:focused {

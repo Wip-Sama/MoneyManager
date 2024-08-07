@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background-4" stylesheets="@../../../style-dark.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" styleClass="background-4" stylesheets="@../../../style-dark.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="background-3" BorderPane.alignment="CENTER">
          <bottom>
@@ -52,13 +46,11 @@
                            <viewport>
                               <Rectangle2D />
                            </viewport>
-                           <image>
-                              <Image url="@images/Screenshot%202024-07-26%20155113(1).png" />
-                           </image>
+
                         </ImageView>
                      </left>
                      <right>
-                        <MenuButton alignment="CENTER_RIGHT" graphicTextGap="0.0" mnemonicParsing="false" popupSide="RIGHT" scaleShape="false" styleClass="transparent-menubutton" BorderPane.alignment="CENTER">
+                        <MenuButton alignment="CENTER_RIGHT" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" popupSide="RIGHT" scaleShape="false" styleClass="transparent-menubutton" BorderPane.alignment="CENTER">
                           <items>
                             <MenuItem mnemonicParsing="false" text="Action 1" />
                             <MenuItem mnemonicParsing="false" text="Action 2" />
