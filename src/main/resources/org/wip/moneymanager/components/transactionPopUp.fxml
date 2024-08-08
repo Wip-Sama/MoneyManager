@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane stylesheets="@../../../../style-light.css" styleClass="rounded-border-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" prefWidth="364.0" stylesheets="@../../../../style-light.css">
+         <padding>
+            <Insets bottom="20" top="20" />
+         </padding>
+         <HBox alignment="CENTER" prefHeight="28.0" prefWidth="309.0" spacing="10">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="28.0" prefWidth="97.21" styleClass="entrate-button" text="Entrate" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="28.0" prefWidth="97.21" styleClass="spese-button" text="Spese" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="28.0" prefWidth="97.21" styleClass="trasferimenti-button" text="Trasferimenti" />
+         </HBox>
+
+         <VBox alignment="CENTER" spacing="40" VBox.vgrow="ALWAYS">
+            <GridPane alignment="CENTER" hgap="10.0" prefHeight="198.0" prefWidth="263.0" vgap="32">
+               <Label styleClass="label" text="Giorno" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <DatePicker prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label styleClass="label" text="Importo" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label styleClass="label" text="Categoria" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+               <Label styleClass="label" text="Conto" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+               <Label styleClass="label" text="Tags" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+               <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+               <VBox.margin>
+                  <Insets bottom="-30.0" top="30.0" />
+               </VBox.margin>
+            </GridPane>
+
+            <VBox alignment="CENTER" spacing="15">
+               <VBox.margin>
+                  <Insets top="39" />
+               </VBox.margin>
+               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="28.0" prefWidth="266.0" styleClass="save-button" text="Salva" />
+               <Button mnemonicParsing="false" styleClass="cancel-button" text="Annulla" />
+            </VBox>
+         </VBox>
+      </VBox>
+   </center>
+</BorderPane>
