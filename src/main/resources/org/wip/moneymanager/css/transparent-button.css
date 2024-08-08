@@ -1,0 +1,30 @@
+.transparent-button {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-text-fill: -fu-text-1;
+    -fx-text-alignment: left;
+}
+
+.transparent-button:hover {
+    -fx-background-color: rgba(0, 0, 0, .2);
+}
+
+.transparent-menubutton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-text-fill: -fu-text-1;
+    -fx-text-alignment: left;
+    -fx-padding: 4;
+    -fx-background-radius: 4;
+}
+
+.transparent-menubutton:hover {
+    -fx-background-color: rgba(0, 0, 0, .4);
+}
+
+.transparent-menubutton > .arrow-button {
+    -fx-padding: 0;
+}
+
+.transparent-menubutton > .arrow-button > .arrow {
+    -fx-padding: 0;
+}
+

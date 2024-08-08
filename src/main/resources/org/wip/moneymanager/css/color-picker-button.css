@@ -1,0 +1,30 @@
+.colorpickerbutton > .button {
+    -fx-text-fill: transparent;
+    -fx-background-color: -fu-stroke-rest, black;
+    -fx-background-insets: 0 0 0 0, 3 3 3 3;
+    -fx-background-radius: 10, 8;
+}
+
+.colorpickerbutton:hover > .button {
+    -fx-background-color: -fu-stroke-hover, black;
+}
+
+.colorpickerbutton:pressed > .button {
+    -fx-background-color: -fu-stroke-pressed, black;
+}
+
+.colorpickerbutton > .ikonli-font-icon {
+    -fx-fill: -fu-stroke-rest;
+}
+
+.colorpickerbutton:hover > .ikonli-font-icon {
+    -fx-font-size: 24;
+    -fx-blend-mode: hard-light;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}
+
+.colorpickerbutton:pressed > .ikonli-font-icon {
+    -fx-font-size: 24;
+    -fx-blend-mode: hard-light;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}

@@ -2,19 +2,19 @@ package org.wip.moneymanager.components;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
-import org.wip.moneymanager.HelloApplication;
+import org.wip.moneymanager.MoneyManager;
 import javafx.scene.Parent;
 
 import java.io.IOException;
@@ -42,6 +42,8 @@ public class ColorPickerPopup {
     @FXML
     protected TextField blue_textfield;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
     public Property<Number> red_channel = new SimpleDoubleProperty(0);
     public Property<Number> green_channel = new SimpleDoubleProperty(0);
     public Property<Number> blue_channel = new SimpleDoubleProperty(0);
@@ -52,90 +54,81 @@ public class ColorPickerPopup {
 
     public ColorPickerPopup(Window window) throws IOException {
         node = window;
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("components/colorpickerpopup.fxml"));
-        BorderPane root = new BorderPane();
-        fxmlLoader.setRoot(root);
+        FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("components/colorpickerpopup.fxml"));
+        fxmlLoader.setRoot(new BorderPane()); /* L'alternativa è extends Borderpane e setRoot(this) */
         fxmlLoader.setController(this);
+        // realisticamente non dovrebbe mai fallire ma anche se lo facesse non è lui a dover gestire l'errore
+        // dato che viene chiamato sempre da una classe e non fxml è quella classe che deve accollarsi l'errore
         Parent loaded = fxmlLoader.load();
         popup.getContent().add(loaded);
+
+        /* Controlliamo se l'utente interagisce con la finestra sottostante e in caso chiusiamo il pulsante*/
+        window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
     @FXML
     protected void initialize() {
-        UnaryOperator<TextFormatter.Change> filter = change -> {
+        UnaryOperator<TextFormatter.Change> text_filter = change -> {
+            // TODO: mentre si digita è possibile inserire infiniti 0
+            // Programmi come ps hanno lasciato questo comportamento
+            // Non mi piace più di tanto ma non è una priorità
             String newText = change.getControlNewText();
-            if (newText.isEmpty())
+            if (newText.isEmpty()) {
+                change.setText("0");
                 return change;
-
+            }
             try {
+                while (newText.length() > 1 && newText.charAt(0) == '0') {
+                    newText = newText.substring(1);
+                }
+
                 int value = Integer.parseInt(newText);
                 if (value >= 0 && value <= 255) {
                     return change;
                 }
             } catch (NumberFormatException e) {
-                // Guardate che error handler pazzesco
+                return null;
             }
             return null;
         };
-        StringConverter<Number> sc = new StringConverter<>() {
-            @Override
-            public String toString(Number number) {
-                return number.toString();
-            }
 
-            @Override
+        StringConverter<Number> converter = new StringConverter<>() {
+            public String toString(Number n) {
+                return n == null ? "0" : String.valueOf(n.intValue());
+            }
             public Number fromString(String s) {
-                if (s == null || s.isEmpty()) {
-                    return 0;
-                }
-                return Integer.parseInt(s);
+                return s.isEmpty() ? 0 : Integer.parseInt(s);
             }
         };
+
         // Limita i textfield ad accettare solo numeri tra 0 e 255
-        red_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, filter));
-        green_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, filter));
-        blue_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, filter));
+        red_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, text_filter));
+        green_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, text_filter));
+        blue_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, text_filter));
 
-        // Forza il valore della slider ad essere uguale a quello del textfield
-        red_textfield.textProperty().addListener((_, _, newValue) -> {
-            if (newValue.isEmpty()) {
-                red_slider.setValue(0);
-                red_textfield.setText("0");
-            } else {
-                red_slider.setValue(Integer.parseInt(newValue));
-            }
-        });
-        green_textfield.textProperty().addListener((_, _, newValue) -> {
-            if (newValue.isEmpty()) {
-                green_slider.setValue(0);
-                green_textfield.setText("0");
-            } else {
-                green_slider.setValue(Integer.parseInt(newValue));
-            }
-        });
-        blue_textfield.textProperty().addListener((_, _, newValue) -> {
-            if (newValue.isEmpty()) {
-                blue_slider.setValue(0);
-                blue_textfield.setText("0");
-            } else {
-                blue_slider.setValue(Integer.parseInt(newValue));
-            }
-        });
+        // Forza il valore della slider a essere uguale a quello del textfield
+        // NumberStringConverter non sembra funzionare correttamente in questo caso, quindi resto col mio
+        red_textfield.textProperty().bindBidirectional(red_channel, converter);
+        green_textfield.textProperty().bindBidirectional(green_channel, converter);
+        blue_textfield.textProperty().bindBidirectional(blue_channel, converter);
 
-        red_slider.valueProperty().addListener((_, _, newValue) -> {
-            red_channel.setValue(newValue.intValue());
-            red_textfield.setText(String.valueOf(newValue.intValue()));
-            updateColorPreview();
+        red_slider.valueProperty().bindBidirectional(red_channel);
+        green_slider.valueProperty().bindBidirectional(green_channel);
+        blue_slider.valueProperty().bindBidirectional(blue_channel);
+
+        // Aggiorna il colore della preview quando i valori dei channel cambiano
+        red_channel.addListener(_ -> updateColorPreview());
+        green_channel.addListener(_ -> updateColorPreview());
+        blue_channel.addListener(_ -> updateColorPreview());
+
+        /* Si può spostare see */
+        color_preview.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
         });
-        green_slider.valueProperty().addListener((_, _, newValue) -> {
-            green_channel.setValue(newValue.intValue());
-            green_textfield.setText(String.valueOf(newValue.intValue()));
-            updateColorPreview();
-        });
-        blue_slider.valueProperty().addListener((_, _, newValue) -> {
-            blue_channel.setValue(newValue.intValue());
-            blue_textfield.setText(String.valueOf(newValue.intValue()));
-            updateColorPreview();
+        color_preview.setOnMouseDragged(event -> {
+            popup.setX(event.getScreenX() - xOffset);
+            popup.setY(event.getScreenY() - yOffset);
         });
     }
 
@@ -143,40 +136,25 @@ public class ColorPickerPopup {
         color_preview.setStyle("-fx-background-color: rgb(" + red_slider.getValue() + "," + green_slider.getValue() + "," + blue_slider.getValue() + ");");
     }
 
-    protected void updateSliders() {
-        red_slider.setValue(red_channel.getValue().intValue());
-        green_slider.setValue(green_channel.getValue().intValue());
-        blue_slider.setValue(blue_channel.getValue().intValue());
-    }
-
-    protected void updateTextfields() {
-        red_textfield.setText(String.valueOf(red_channel.getValue().intValue()));
-        green_textfield.setText(String.valueOf(green_channel.getValue().intValue()));
-        blue_textfield.setText(String.valueOf(blue_channel.getValue().intValue()));
-    }
-
-    protected void store_previous_values() {
+    protected void store_values() {
         rgb[0] = red_channel.getValue().intValue();
         rgb[1] = green_channel.getValue().intValue();
         rgb[2] = blue_channel.getValue().intValue();
     }
 
-    protected void load_previous_values() {
+    protected void restore_previous_values() {
         red_channel.setValue(rgb[0]);
         green_channel.setValue(rgb[1]);
         blue_channel.setValue(rgb[2]);
-        updateSliders();
-        updateTextfields();
     }
 
     public void show() {
-        store_previous_values();
+        store_values();
         popup.show(node);
     }
 
     public void hide() {
-        load_previous_values();
-        updateColorPreview();
+        restore_previous_values();
         popup.hide();
     }
 
@@ -195,7 +173,7 @@ public class ColorPickerPopup {
 
     @FXML
     protected void save() {
-        store_previous_values();
+        store_values();
         hide();
     }
 }
