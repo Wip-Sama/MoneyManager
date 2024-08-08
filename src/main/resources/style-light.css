@@ -7,7 +7,7 @@ Design directions:
 
 .root {
     /* Colore di accentuazione */
-    -fu-accent: rgba(255, 89, 89 0.87);
+    -fu-accent: rgba(255, 89, 89, 0.87);
     -fu-accent-rest: -fu-accent;
     -fu-accent-hover: -fu-accent;
     -fu-accent-pressed: -fu-accent;
@@ -467,3 +467,56 @@ Design directions:
 .colorpickerpreset_under_checkmark:selected {
     -fx-background-color: -fu-stroke-rest;
 }
+
+.side-button {
+    -fx-alignment: CENTER;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+}
+
+.entrate-button:hover, .entrate-button:selected {
+    -fx-border-color: #00FF00;
+    -fx-border-radius: 7; /* radius hover di "Entrate" */
+}
+
+.spese-button:hover, .spese-button:selected {
+    -fx-border-color: #FF0000;
+    -fx-border-radius: 7; /* radius hover di "Spese" */
+}
+
+.trasferimenti-button:hover, .trasferimenti-button:selected {
+    -fx-border-color: #000000;
+    -fx-border-radius: 7; /* radius hover di "Trasferimenti" */
+}
+
+.save-button {
+    -fx-background-color: #0F6CBD; /* blu per "Salva" */
+    -fx-text-fill: white;
+}
+
+.save-button:hover {
+    -fx-background-color: #0B558C; /* blu più scuro per il button "Salva" in hover */
+}
+
+.cancel-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fu-text-1;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+
+.cancel-button:hover {
+    -fx-text-fill: #EEEEEE; /* è più storto di bebe vio */
+}
+
+.text-input, .text-area, .text-field {
+    -fx-focus-color: #0F6CBD;
+}
+
+.rounded-border-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+}
+
