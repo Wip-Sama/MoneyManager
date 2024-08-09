@@ -18,7 +18,8 @@ public class ColorPickerButton extends AnchorPane {
     protected ToggleButton tg;
 
     protected final boolean selected = false;
-    // TODO: Aggiungere la spunta per far capire che è stato selezionato (come il ColorPickerPreset)
+    // TODO: Shift + click = setta il colore già presente nel color picker
+    // TODO: Cambiare il colore cambia il tema globale
 
     protected static Property<Number> red = new SimpleDoubleProperty(0);
     protected static Property<Number> green = new SimpleDoubleProperty(0);

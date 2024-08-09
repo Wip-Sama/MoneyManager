@@ -1,7 +1,10 @@
 .tag {
-    -fx-opacity: 0.5;
-    -fx-background-color: black;
+    -fx-background-color: -fu-foreground-rest;
     -fx-background-radius: 5;
+}
+
+.tag .label {
+    -fx-text-fill: -fu-text-1;
 }
 
 .tag:hover {

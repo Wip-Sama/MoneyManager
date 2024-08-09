@@ -13,7 +13,6 @@ public class Tag extends BorderPane {
     @FXML
     private Label tagLabel;
 
-    private final IntegerProperty tag_status = new SimpleIntegerProperty(0);
 
     /*TODO: non so se vogliamo far in modo che i tag abbiamo un colore selezionabile dall'utente
     *  vorrei evitare ma nel dubbio metto le property pronte casomai volessimo farlo*/
@@ -21,7 +20,12 @@ public class Tag extends BorderPane {
     public final IntegerProperty green = new SimpleIntegerProperty(0);
     public final IntegerProperty blue = new SimpleIntegerProperty(0);
 
+    private final IntegerProperty tag_status = new SimpleIntegerProperty(0);
     private final StringProperty tag = new SimpleStringProperty();
+    private final IntegerProperty modalita = new SimpleIntegerProperty(0);
+    // 0: display
+    // 1: select
+    // 2: filter
 
     private static final PseudoClass DISCARDED_PSEUDO_CLASS = PseudoClass.getPseudoClass("discarded");
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
@@ -35,13 +39,24 @@ public class Tag extends BorderPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        onMouseClickedProperty().set(event -> {
-            tag_status.set((tag_status.get() + 1) % 3);
+        onMouseClickedProperty().set(_ -> {
+            if (modalita.get() == 2) {
+                tag_status.set((tag_status.get() + 1) % 3);
+            } else if (modalita.get() == 1) {
+                tag_status.set((tag_status.get() + 1) % 2);
+            }
         });
         tag_status.addListener((_, _, newValue) -> {
-            pseudoClassStateChanged(DISCARDED_PSEUDO_CLASS, newValue.intValue() == 1);
-            pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue.intValue() == 2);
+            pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue.intValue() == 1);
+            pseudoClassStateChanged(DISCARDED_PSEUDO_CLASS, newValue.intValue() == 2);
         });
+    }
+
+    public Tag(String _tag, int _tag_status, int _modalita) {
+        this();
+        this.tag.set(_tag);
+        this.tag_status.set(_tag_status);
+        this.modalita.set(_modalita);
     }
 
     @FXML
@@ -59,5 +74,54 @@ public class Tag extends BorderPane {
 
     public StringProperty tagProperty() {
         return tag;
+    }
+
+    public int getModalita() {
+        return modalita.get();
+    }
+
+    public void setModalita(int mod) {
+        this.modalita.set(mod);
+    }
+
+    public IntegerProperty modalitaProperty() {
+        if (modalita.get() < 0) {
+            modalita.set(0);
+        } else if (modalita.get() > 2) {
+            modalita.set(2);
+        }
+        return modalita;
+    }
+
+    public int getTagStatus() {
+        // Serve a settare lo stato di base
+        // potremmo voler far vedere un tag come selezionato o scartato
+        // e allo stesso tempo potremmo non voler permettere agli utenti di modificare lo stato
+        return tag_status.get();
+    }
+
+    public void setTag_status(int status) {
+        if (status < 0) {
+            status = 0;
+        } else if (status > 2) {
+            status = 2;
+        }
+        this.tag_status.set(status);
+    }
+
+    public IntegerProperty tagStatusProperty() {
+        return tag_status;
+    }
+
+    public void setVisibleListener(StringProperty string) {
+        string.addListener((_, _, newValue) -> {
+            if (newValue.isEmpty()) {
+                setVisible(true);
+                System.out.println("visibile");
+            } else {
+                setVisible(tag.get().startsWith(newValue));
+                System.out.println("non visibile");
+            }
+        });
     }
 }

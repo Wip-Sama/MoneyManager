@@ -4,28 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tag.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/ic_fluent_add_24_filled.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/ic_fluent_checkmark_24_filled.svg" afterDir="false" />
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="Tag&#10;removed Ikonli merda from fxml&#10;added state to color picker preset&#10;fixed readme in svg folder&#10;small fixes to css">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagfilter.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag-filter.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-preset.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-preset.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/random.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/random.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/readme" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/readme" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,6 +212,7 @@
       <workItem from="1723039488053" duration="895000" />
       <workItem from="1723126063134" duration="10189000" />
       <workItem from="1723156612991" duration="5785000" />
+      <workItem from="1723207675696" duration="7195000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -399,7 +390,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723126150545</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Tag&#10;removed Ikonli merda from fxml&#10;added state to color picker preset&#10;fixed readme in svg folder&#10;small fixes to css">
+      <option name="closed" value="true" />
+      <created>1723207771966</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1723207771966</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,7 +431,8 @@
     <MESSAGE value="SVGLoader&#10;date-picker fix focused state" />
     <MESSAGE value="new main&#10;icon&#10;Menubutton fix&#10;menu item 2.0&#10;added full svg back" />
     <MESSAGE value="random stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="random stuff" />
+    <MESSAGE value="Tag&#10;removed Ikonli merda from fxml&#10;added state to color picker preset&#10;fixed readme in svg folder&#10;small fixes to css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tag&#10;removed Ikonli merda from fxml&#10;added state to color picker preset&#10;fixed readme in svg folder&#10;small fixes to css" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

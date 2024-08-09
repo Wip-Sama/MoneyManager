@@ -10,6 +10,7 @@ module org.wip.moneymanager {
 
     requires java.sql;
     requires spring.core;
+    requires java.desktop;
 
     opens org.wip.moneymanager to javafx.fxml;
     exports org.wip.moneymanager;

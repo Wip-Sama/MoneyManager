@@ -26,12 +26,13 @@ public class MoneyManager extends Application {
 
         stage.setScene(scene);
         stage.show();
+        //TODO: Creare un sistema per le impostazioni globali
         /*
+        //TODO: Abilitare il database
         String url = "jdbc:sqlite:money_manager.db";
         Connection con = DriverManager.getConnection(url);
         if(con != null && !con.isClosed())
             System.out.println("Connected!");
-
          */
     }
 
