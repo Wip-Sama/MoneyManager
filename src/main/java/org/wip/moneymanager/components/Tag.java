@@ -117,10 +117,11 @@ public class Tag extends BorderPane {
         string.addListener((_, _, newValue) -> {
             if (newValue.isEmpty()) {
                 setVisible(true);
-                System.out.println("visibile");
             } else {
                 setVisible(tag.get().startsWith(newValue));
-                System.out.println("non visibile");
+                //setVisible(tag.get().startsWith(newValue));
+                //e se, ma dico solo se, accettassimo un regex come stringa??? è una merda ma è una possibilità
+                //TODO: decidere quale dei 2 sistemi vogliamo tenere per la ricerca
             }
         });
     }

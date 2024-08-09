@@ -21,12 +21,12 @@ public class ColorPickerButton extends AnchorPane {
     // TODO: Shift + click = setta il colore già presente nel color picker
     // TODO: Cambiare il colore cambia il tema globale
 
-    protected static Property<Number> red = new SimpleDoubleProperty(0);
-    protected static Property<Number> green = new SimpleDoubleProperty(0);
-    protected static Property<Number> blue = new SimpleDoubleProperty(0);
+    protected Property<Number> red = new SimpleDoubleProperty(0);
+    protected Property<Number> green = new SimpleDoubleProperty(0);
+    protected Property<Number> blue = new SimpleDoubleProperty(0);
 
-    protected static Parent loaded;
-    private static ColorPickerPopup colorPickerPopup;
+    protected Parent loaded;
+    private ColorPickerPopup colorPickerPopup;
 
     public ColorPickerButton() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/colorpickerbutton.fxml"));
