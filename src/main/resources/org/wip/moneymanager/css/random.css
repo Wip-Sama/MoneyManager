@@ -5,3 +5,13 @@
 .icon_general {
     -fx-fill: -fu-text-1;
 }
+
+.rounded_pane {
+    -fx-background-radius: 8;
+}
+
+.dialog_pane {
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-radius: 15, 13;
+    -fx-background-insets: 0, 2;
+}

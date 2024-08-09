@@ -1,0 +1,32 @@
+.tag {
+    -fx-opacity: 0.5;
+    -fx-background-color: black;
+    -fx-background-radius: 5;
+}
+
+.tag:hover {
+    -fx-opacity: 0.7;
+}
+
+.tag:pressed {
+    -fx-opacity: 0.9;
+}
+
+.tag:selected {
+    -fx-border-color: green;
+    -fx-border-radius: 5;
+}
+
+.tag:selected .label {
+    -fx-text-fill: green;
+}
+
+.tag:discarded {
+    -fx-border-color: red;
+    -fx-border-style: dashed;
+    -fx-border-radius: 5;
+}
+
+.tag:discarded .label{
+    -fx-text-fill: red;
+}

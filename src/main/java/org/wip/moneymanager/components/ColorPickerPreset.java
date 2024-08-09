@@ -1,7 +1,7 @@
 package org.wip.moneymanager.components;
 
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.*;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,14 +11,18 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class ColorPickerPreset extends AnchorPane {
-    protected static Property<Number> red = new SimpleDoubleProperty(0);
-    protected static Property<Number> green = new SimpleDoubleProperty(0);
-    protected static Property<Number> blue = new SimpleDoubleProperty(0);
-
     @FXML
     protected Button color_preset_button;
 
     protected static Parent loaded;
+
+    private final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
+
+    private final BooleanProperty selected = new SimpleBooleanProperty(false);
+
+    private final IntegerProperty red = new SimpleIntegerProperty(0);
+    private final IntegerProperty green = new SimpleIntegerProperty(0);
+    private final IntegerProperty blue = new SimpleIntegerProperty(0);
 
     public ColorPickerPreset(int r, int g, int b) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/colorpickerpreset.fxml"));
@@ -29,9 +33,9 @@ public class ColorPickerPreset extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        red.setValue(r);
-        green.setValue(g);
-        blue.setValue(b);
+        red.set(r);
+        green.set(g);
+        blue.set(b);
     }
 
     public ColorPickerPreset() {
@@ -42,11 +46,17 @@ public class ColorPickerPreset extends AnchorPane {
             loaded = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
+            /*Se succede qualcosa qui abbiamo sbagliato a fare il file quindi va sistemato prima di mandarlo in produzione*/
         }
+
+        onMouseClickedProperty().set(_ -> selected.set(!selected.get()));
+        selected.addListener((_, _, newValue) ->
+            pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue)
+        );
     }
 
     public void updateColor() {
-        color_preset_button.setStyle("-fx-background-color: -fu-stroke-rest, rgb(" + red.getValue() + "," + green.getValue() + "," + blue.getValue() + ")");
+        setStyle("-fx-background-color: -fu-stroke-rest, rgb(" + red.getValue() + "," + green.getValue() + "," + blue.getValue() + ")");
     }
 
     @FXML
@@ -55,5 +65,56 @@ public class ColorPickerPreset extends AnchorPane {
         green.addListener(_ -> updateColor());
         blue.addListener(_ -> updateColor());
         updateColor();
+    }
+
+    public int getRed() {
+        return red.get();
+    }
+    public int getGreen() {
+        return green.get();
+    }
+    public int getBlue() {
+        return blue.get();
+    }
+
+    public void setRed(int intero) {
+        if (intero < 0) {
+            this.red.set(0);
+            return;
+        } else if (intero > 255) {
+            this.red.set(255);
+            return;
+        }
+        this.red.set(intero);
+    }
+    public void setGreen (int intero) {
+        if (intero < 0) {
+            this.green.set(0);
+            return;
+        } else if (intero > 255) {
+            this.green.set(255);
+            return;
+        }
+        this.green.set(intero);
+    }
+    public void setBlue(int intero) {
+        if (intero < 0) {
+            this.blue.set(0);
+            return;
+        } else if (intero > 255) {
+            this.blue.set(255);
+            return;
+        }
+        this.blue.set(intero);
+    }
+
+    public IntegerProperty redProperty() {
+        return red;
+    }
+    public IntegerProperty greenProperty() {
+        return green;
+    }
+    public IntegerProperty blueProperty() {
+        return blue;
     }
 }

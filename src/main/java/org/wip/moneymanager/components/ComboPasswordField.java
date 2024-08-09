@@ -43,8 +43,6 @@ public class ComboPasswordField extends StackPane {
             throw new RuntimeException(exception);
         }
         // Ringraziamo java per avere liste infinite di funzioni per fare una cosa stupida come leggere una stringa da un file
-        System.out.println(new SVGLoader("ic_fluent_eye_show_24_filled.svg").getPath());
-        System.out.println(new SVGLoader("ic_fluent_eye_hide_24_filled.svg").getPath());
         show_eye = new SVGLoader("ic_fluent_eye_show_24_filled.svg").getPath();
         hide_eye = new SVGLoader("ic_fluent_eye_hide_24_filled.svg").getPath();
     }

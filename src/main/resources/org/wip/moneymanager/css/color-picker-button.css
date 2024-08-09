@@ -13,18 +13,16 @@
     -fx-background-color: -fu-stroke-pressed, black;
 }
 
-.colorpickerbutton > .ikonli-font-icon {
+.colorpickerbutton SVGPath {
     -fx-fill: -fu-stroke-rest;
 }
 
-.colorpickerbutton:hover > .ikonli-font-icon {
+.colorpickerbutton:hover SVGPath {
     -fx-font-size: 24;
-    -fx-blend-mode: hard-light;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }
 
-.colorpickerbutton:pressed > .ikonli-font-icon {
+.colorpickerbutton:pressed SVGPath {
     -fx-font-size: 24;
-    -fx-blend-mode: hard-light;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }

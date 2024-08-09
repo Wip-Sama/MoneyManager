@@ -45,9 +45,7 @@ public class ColorPickerButton extends AnchorPane {
         green.addListener(_ -> updateColors());
         blue.addListener(_ -> updateColors());
 
-        color_picker_button.onActionProperty().set(event -> {
-            select_color();
-        });
+        color_picker_button.onActionProperty().set(_ -> select_color());
     }
 
     protected void updateColors() {
