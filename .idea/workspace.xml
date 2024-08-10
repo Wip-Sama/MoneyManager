@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="Tag $ TagFilter V2">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag-selector.css" afterDir="false" />
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="tagFilter+Selector Alpha">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag-filter.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag-filter.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-dark.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +211,9 @@
       <workItem from="1723126063134" duration="10189000" />
       <workItem from="1723156612991" duration="5785000" />
       <workItem from="1723207675696" duration="7283000" />
-      <workItem from="1723230978087" duration="5903000" />
+      <workItem from="1723230978087" duration="5938000" />
+      <workItem from="1723243295980" duration="4606000" />
+      <workItem from="1723293464735" duration="5545000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -406,7 +407,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723216088155</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="tagFilter+Selector Alpha">
+      <option name="closed" value="true" />
+      <created>1723236977108</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1723236977108</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,7 +450,8 @@
     <MESSAGE value="random stuff" />
     <MESSAGE value="Tag&#10;removed Ikonli merda from fxml&#10;added state to color picker preset&#10;fixed readme in svg folder&#10;small fixes to css" />
     <MESSAGE value="Tag $ TagFilter V2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tag $ TagFilter V2" />
+    <MESSAGE value="tagFilter+Selector Alpha" />
+    <option name="LAST_COMMIT_MESSAGE" value="tagFilter+Selector Alpha" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -6,42 +6,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.SVGPath?>
-<?import org.wip.moneymanager.components.Tag?>
-
 
 <fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" styleClass="tag-selector" stylesheets="@../../../../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <ScrollPane hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" style="-fx-background-color: transparent;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
-            <HBox fx:id="tag_list" spacing="2.0" styleClass="tag-selector-hb">
-               <children>
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-                  <Tag tag="ciao" />
-               </children>
-            </HBox>
+            <HBox fx:id="tag_list" spacing="2.0" styleClass="tag-selector-hb"/>
          </content>
          <BorderPane.margin>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

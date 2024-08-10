@@ -94,9 +94,6 @@ public class Tag extends BorderPane {
     }
 
     public int getTagStatus() {
-        // Serve a settare lo stato di base
-        // potremmo voler far vedere un tag come selezionato o scartato
-        // e allo stesso tempo potremmo non voler permettere agli utenti di modificare lo stato
         return tag_status.get();
     }
 
@@ -111,18 +108,5 @@ public class Tag extends BorderPane {
 
     public IntegerProperty tagStatusProperty() {
         return tag_status;
-    }
-
-    public void setVisibleListener(StringProperty string) {
-        string.addListener((_, _, newValue) -> {
-            if (newValue.isEmpty()) {
-                setVisible(true);
-            } else {
-                setVisible(tag.get().startsWith(newValue));
-                //setVisible(tag.get().startsWith(newValue));
-                //e se, ma dico solo se, accettassimo un regex come stringa??? è una merda ma è una possibilità
-                //TODO: decidere quale dei 2 sistemi vogliamo tenere per la ricerca
-            }
-        });
     }
 }

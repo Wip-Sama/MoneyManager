@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/*Premessa per il prof:
+* In questo codice troverete diversi metodi apparentemente inutilizzati
+* Ora probabilmente qualcuno è effettivamente inutilizzato ma la maggior parte sono utilizzati da scenebuilder
+* Servono per permetterci di modificare dei valori nel'FXML */
 
 public class MoneyManager extends Application {
     @Override

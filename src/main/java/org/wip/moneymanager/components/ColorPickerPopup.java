@@ -64,6 +64,12 @@ public class ColorPickerPopup {
 
         /* Controlliamo se l'utente interagisce con la finestra sottostante e in caso chiusiamo il pulsante*/
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
+
+        // Me del futuro, questo codice fa schifo, i popup non dovrebbero essere usati in questo modo
+        // Ero indeciso se riscriverlo come context menu o lasciarlo così
+        // Ho deciso di lasciarlo così solo per vader vedere che so usare i popup
+        // In questo contesto ha un sacco di problemi
+        // Es: se passate ad un'altra app vi ritroverete il popup anche sopra essa
     }
 
     @FXML
@@ -133,6 +139,8 @@ public class ColorPickerPopup {
     }
 
     protected void updateColorPreview() {
+        // Questo metodo di aggiornare i colori non mi piace ma non ho trovato un modo migliore
+        // e fa tutto ciò che deve fare
         color_preview.setStyle("-fx-background-color: rgb(" + red_slider.getValue() + "," + green_slider.getValue() + "," + blue_slider.getValue() + ");");
     }
 
