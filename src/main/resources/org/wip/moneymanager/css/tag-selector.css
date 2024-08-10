@@ -1,0 +1,26 @@
+.tag-selector {
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 0 0, 4;
+    -fx-padding: .333333em .583em .444444em .583em;
+}
+
+.tag-selector:hover {
+    -fx-background-color: -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+}
+
+.tag-selector:focused {
+    -fx-background-color: -fu-accent, -fu-stroke-selected, -fu-foreground-selected;
+    -fx-background-insets: 0 0 0 0, 0 0 3 0, 2 2 3 2;
+}
+
+.tag-selector-hb {
+    -fx-background-color: -fu-foreground-rest;
+}
+.tag-selector:hover * > .tag-selector-hb {
+    -fx-background-color: -fu-foreground-hover;
+}
+.tag-selector:focused * > .tag-selector-hb {
+    -fx-background-color: -fu-foreground-selected;
+}

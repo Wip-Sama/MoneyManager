@@ -1,0 +1,16 @@
+.full_button {
+    -fx-background-radius: 6;
+    -fx-background-color: -fu-accent;
+}
+
+.full_button:hover {
+    -fx-background-color: -fu-accent-hover;
+}
+
+.full_button:pressed {
+    -fx-background-color: -fu-accent-hover;
+}
+
+.full_button:hover:pressed {
+    -fx-background-color: -fu-accent-pressed;
+}

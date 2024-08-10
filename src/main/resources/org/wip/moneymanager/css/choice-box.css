@@ -1,0 +1,100 @@
+.choice-box,
+.combo-box-base {
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 0 0, 4;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+    -fx-text-fill: -fu-text-1;
+}
+
+.choice-box:hover,
+.combo-box-base:hover {
+    -fx-background-color: -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
+    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 2 0, 2 2 2 2;
+}
+
+.choice-box:armed,
+.combo-box-base:armed {
+    -fx-background-color: -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+}
+
+.choice-box:focused,
+.combo-box-base:focused {
+    -fx-background-color: -fu-accent, -fu-stroke-selected, -fu-foreground-selected;
+    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3
+}
+
+.choice-box > .open-button,
+.combo-box-base > .arrow-button {
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 1 1 0;
+    -fx-padding: 6 8 6 10;
+    -fx-background-color: transparent;
+}
+
+.choice-box:armed > .open-button > .arrow,
+.combo-box-base:armed > .arrow-button > .arrow {
+    -fx-translate-y: 1;
+}
+
+.choice-box > .label {
+    -fx-padding: 4 8 4 8;
+}
+
+.combo-box > .list-cell {
+//-fx-text-fill: -TextFillColorTertiaryBrush;
+    -fx-padding: 4 8 4 8;
+}
+
+.combo-box-popup > .list-view {
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 8;
+    -fx-padding: 6 5 6 5;
+}
+
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 7 7 7 7;
+}
+
+
+/*TODO: Sistemare questo e quello sotto (RGBA) -> -fu-something*/
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover {
+    -fx-background: transparent;
+    -fx-background-color: rgba(0, 0, 0, 0.04);
+    -fx-background-radius: 3;
+    -fx-background-insets: 2 0 2 0;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.combo-box-popup  > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected,
+.combo-box-popup  > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected:hover {
+    -fx-background: transparent;
+    -fx-background-color: rgba(0, 0, 0, 0.04), transparent, transparent;
+    -fx-background-radius: 3;
+    -fx-background-insets: 2 0 2 0;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.combo-box-base:editable > .text-field {
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 0 2 2;
+    -fx-background-radius: 4 0 0 4, 3 0 0 0, 3 0 0 3;
+    -fx-padding: .333333em .583em .444444em .583em;
+    -fx-cursor: text;
+}
+
+.combo-box-base:editable  > .arrow-button {
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 0;
+    -fx-background-radius: 0 4 4 0, 0 3 0 0, 0 4 4 0;
+    -fx-padding: .333333em .583em .444444em .583em;
+}
+
+.combo-box-base:editable:hover .text-input,
+.combo-box-base:editable:hover .arrow-button {
+    -fx-background-color: -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
+    -fx-text-fill: -fu-text-1;
+}

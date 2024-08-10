@@ -10,11 +10,11 @@ Design directions:
 
 .root {
     /* Accento */
-    -fu-accent: red;
-    -fu-accent-rest: -fu-accent;
-    -fu-accent-hover: -fu-accent;
-    -fu-accent-pressed: -fu-accent;
-    -fu-accent-selected: -fu-accent;
+    -fu-accent: rgba(255, 0, 0, 1);
+    -fu-accent-rest: rgba(255, 0, 0, 1);
+    -fu-accent-hover: rgba(210, 0, 0, 1);
+    -fu-accent-pressed: rgba(180, 0, 0, 1);
+    -fu-accent-selected: rgba(230, 0, 0, 1);
 
     /* Variabili per la modalità scura */
     -fu-background-1: #0a0a0a;
@@ -39,29 +39,33 @@ Design directions:
     /* Opacità impostata al 80/70% */
 }
 
-.tag-selector {
-    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
-    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
-    -fx-background-radius: 4, 3 3 0 0, 4;
-    -fx-padding: .333333em .583em .444444em .583em;
+.switch {
+    -fx-text-fill: -fu-text-1;
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6, 4;
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
 }
 
-.tag-selector:hover {
-    -fx-background-color: -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
-    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 2 0, 2 2 2 2;
+.switch:hover {
+    -fx-background-color: -fu-stroke-hover, -fu-foreground-hover;
 }
 
-.tag-selector:focused {
-    -fx-background-color: -fu-accent, -fu-stroke-selected, -fu-foreground-selected;
-    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3 2;
+.switch:pressed {
+    -fx-background-color: -fu-stroke-pressed, -fu-foreground-pressed;
 }
 
-.tag-selector-hb {
-    -fx-background-color: -fu-foreground-rest;
+.switch:selected {
+    -fx-background-color: -fu-stroke-selected, -fu-foreground-selected;
 }
-.tag-selector:hover * > .tag-selector-hb {
-    -fx-background-color: -fu-foreground-hover;
+.switch_state_indicator {
+    -fx-background-color: -fu-accent;
+    -fx-background-insets: 2;
+    -fx-background-radius: 4;
 }
-.tag-selector:focused * > .tag-selector-hb {
-    -fx-background-color: -fu-foreground-selected;
+
+.switch:hover > .switch_state_indicator {
+    -fx-background-insets: 3;
+    -fx-background-radius: 3;
 }
