@@ -26,16 +26,17 @@
     -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3
 }
 
-.choice-box > .open-button,
-.combo-box-base > .arrow-button {
-    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 1 1 0;
-    -fx-padding: 6 8 6 10;
+.choice-box .separator,
+.combo-box-base .separator {
+    -fx-padding: 6 0 6 0;
     -fx-background-color: transparent;
 }
 
-.choice-box:armed > .open-button > .arrow,
-.combo-box-base:armed > .arrow-button > .arrow {
-    -fx-translate-y: 1;
+.choice-box .separator .line,
+.combo-box-base .separator .line {
+    -fx-border-color: -fu-stroke-rest;
+    -fx-border-insets: 0 3 0 3;
+    -fx-border-width: 0.8;
 }
 
 .choice-box > .label {

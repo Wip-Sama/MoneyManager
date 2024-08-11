@@ -28,6 +28,6 @@ Suona meglio in inglese la frase che tradotta*/
 }
 
 .switch:hover > .switch_state_indicator {
-    -fx-background-insets: 3;
-    -fx-background-radius: 3;
+    -fx-background-insets: 3.5;
+    -fx-background-radius: 2.5;
 }

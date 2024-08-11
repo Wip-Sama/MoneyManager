@@ -84,9 +84,8 @@ public class ColorPickerPopup {
                 return change;
             }
             try {
-                while (newText.length() > 1 && newText.charAt(0) == '0') {
-                    newText = newText.substring(1);
-                }
+                if (newText.length() > 1)
+                    newText = newText.replaceAll("^0+(?!$)", "");
 
                 int value = Integer.parseInt(newText);
                 if (value >= 0 && value <= 255) {
@@ -108,9 +107,9 @@ public class ColorPickerPopup {
         };
 
         // Limita i textfield ad accettare solo numeri tra 0 e 255
-        red_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, text_filter));
-        green_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, text_filter));
-        blue_textfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, text_filter));
+        red_textfield.setTextFormatter(new TextFormatter<>(text_filter));
+        green_textfield.setTextFormatter(new TextFormatter<>(text_filter));
+        blue_textfield.setTextFormatter(new TextFormatter<>(text_filter));
 
         // Forza il valore della slider a essere uguale a quello del textfield
         // NumberStringConverter non sembra funzionare correttamente in questo caso, quindi resto col mio
