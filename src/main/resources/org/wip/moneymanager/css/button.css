@@ -3,6 +3,7 @@
     -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 6, 4;
+    -fx-padding: 5;
     -fx-text-alignment: CENTER;
     -fx-alignment: CENTER;
 }
@@ -16,5 +17,31 @@
 }
 
 .button:selected {
+    -fx-background-color: -fu-stroke-selected, -fu-foreground-selected;
+}
+
+.toggle-button {
+    -fx-text-fill: -fu-text-1;
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6, 4;
+    -fx-padding: 5;
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
+}
+
+.toggle-button:hover {
+    -fx-background-color: -fu-stroke-hover, -fu-foreground-hover;
+}
+
+.toggle-button:pressed {
+    -fx-background-color: -fu-stroke-pressed, -fu-foreground-pressed;
+}
+
+.toggle-button:selected {
+    -fx-background-color: -fu-accent, -fu-foreground-selected;
+}
+
+.icon-toggle-button:selected {
     -fx-background-color: -fu-stroke-selected, -fu-foreground-selected;
 }

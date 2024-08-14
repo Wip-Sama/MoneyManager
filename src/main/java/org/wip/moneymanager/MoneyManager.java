@@ -19,7 +19,7 @@ public class MoneyManager extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
         setUserAgentStylesheet("style-dark.css");
-        FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("base_menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setMinHeight(500);
         stage.setMinWidth(640);

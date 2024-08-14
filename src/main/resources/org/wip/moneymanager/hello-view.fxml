@@ -9,6 +9,7 @@
 <?import org.wip.moneymanager.components.Switch?>
 
 <?import org.wip.moneymanager.components.CardConto?>
+<?import org.wip.moneymanager.components.ColorPickerButton?>
 <VBox alignment="CENTER" prefHeight="800.0" prefWidth="800.0" spacing="20.0" styleClass="background-1" stylesheets="@../../../style-dark.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.HelloController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -17,7 +18,7 @@
    <CardConto />
    <Switch state="false"/>
    <Switch state="true"/>
-
+   <ColorPickerButton />
    <Label fx:id="welcomeText" />
    <ColorPickerPreset green="100" red="100" />
 

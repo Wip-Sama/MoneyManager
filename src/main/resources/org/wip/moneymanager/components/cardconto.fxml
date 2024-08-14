@@ -132,18 +132,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Nome Conto">
+                  <Label fx:id="account_name" text="Nome Conto">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label text="Bilancio: xxxx" GridPane.columnIndex="1">
+                  <Label fx:id="account_balance" text="Bilancio: xxxx" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <Label text="Tipo Conto" GridPane.rowIndex="1" />
-                  <Label text="Data creazione: xx/xx/xxxx" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="account_creation_date" text="Data creazione: xx/xx/xxxx" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <BorderPane.margin>
                   <Insets left="60.0" />

@@ -4,17 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="cardconto+switch&#10;-fullbutton&#10;-transparentbutton/tag-selector/datepicker fix style&#10;-Choice box css&#10;-Style dark better red accent">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/BalanceEditor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/balanceeditor.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/balanceeditor.css" afterDir="false" />
+    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="BalanceEditor&#10;-remove zeroes while-&gt;regex">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/accounts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/Encrypter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/money_manager.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardconto.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardconto.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/choice-box.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/choice-box.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/switch.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/switch.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/balanceeditor.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/balanceeditor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +75,15 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.ColorPickerButtonTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Decrypt.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Encrypt.executor&quot;: &quot;Run&quot;,
+    &quot;Application.EncryptionDemo.executor&quot;: &quot;Run&quot;,
     &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Test2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.VerifyPublicKey.executor&quot;: &quot;Run&quot;,
+    &quot;Application.encrypt.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.wip.moneymanager.EncryptionDemo.executor&quot;: &quot;Debug&quot;,
     &quot;Maven.MoneyManager [clean,build].executor&quot;: &quot;Run&quot;,
     &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
@@ -85,7 +98,7 @@
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programming/MoneyManager/src/main/resources/org/wip/moneymanager/svg&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/MoneyManager/user_dbs&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
@@ -108,6 +121,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programming\MoneyManager\user_dbs" />
       <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager\svg" />
       <recent name="D:\Programming\MoneyManager\src\main\java\org\wip\moneymanager" />
       <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager" />
@@ -119,6 +133,9 @@
       <recent name="D:\Programmazione\MoneyManager\src\main\resources" />
       <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.wip.moneymanager" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -126,16 +143,36 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.HelloApplication">
-    <configuration name="ColorPickerButtonTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.components.ColorPickerButtonTest" />
+  <component name="RunManager" selected="Application.org.wip.moneymanager.EncryptionDemo">
+    <configuration name="Decrypt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.Decrypt" />
       <module name="MoneyManager" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.components.*" />
+          <option name="PATTERN" value="org.wip.moneymanager.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Encrypt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.Encrypt" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EncryptionDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="EncryptionDemo" />
+      <module name="MoneyManager" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -147,13 +184,47 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="VerifyPublicKey" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.VerifyPublicKey" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="org.wip.moneymanager.EncryptionDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.EncryptionDemo" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.HelloApplication" />
-      <item itemvalue="Application.ColorPickerButtonTest" />
+      <item itemvalue="Application.Decrypt" />
+      <item itemvalue="Application.Encrypt" />
+      <item itemvalue="Application.EncryptionDemo" />
+      <item itemvalue="Application.VerifyPublicKey" />
+      <item itemvalue="Application.org.wip.moneymanager.EncryptionDemo" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ColorPickerButtonTest" />
+        <item itemvalue="Application.org.wip.moneymanager.EncryptionDemo" />
+        <item itemvalue="Application.EncryptionDemo" />
+        <item itemvalue="Application.VerifyPublicKey" />
+        <item itemvalue="Application.Decrypt" />
+        <item itemvalue="Application.Encrypt" />
       </list>
     </recent_temporary>
   </component>
@@ -216,7 +287,11 @@
       <workItem from="1723243295980" duration="4606000" />
       <workItem from="1723293464735" duration="6431000" />
       <workItem from="1723301218583" duration="21488000" />
-      <workItem from="1723372078323" duration="8225000" />
+      <workItem from="1723372078323" duration="8971000" />
+      <workItem from="1723424696639" duration="1498000" />
+      <workItem from="1723468087583" duration="6331000" />
+      <workItem from="1723556012593" duration="19043000" />
+      <workItem from="1723641419410" duration="1582000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <option name="closed" value="true" />
@@ -434,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723326945126</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="BalanceEditor&#10;-remove zeroes while-&gt;regex">
+      <option name="closed" value="true" />
+      <created>1723384663320</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1723384663320</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +555,8 @@
     <MESSAGE value="tagFilter+Selector Alpha" />
     <MESSAGE value="tagFilter+Selector beta" />
     <MESSAGE value="cardconto+switch&#10;-fullbutton&#10;-transparentbutton/tag-selector/datepicker fix style&#10;-Choice box css&#10;-Style dark better red accent" />
-    <option name="LAST_COMMIT_MESSAGE" value="cardconto+switch&#10;-fullbutton&#10;-transparentbutton/tag-selector/datepicker fix style&#10;-Choice box css&#10;-Style dark better red accent" />
+    <MESSAGE value="BalanceEditor&#10;-remove zeroes while-&gt;regex" />
+    <option name="LAST_COMMIT_MESSAGE" value="BalanceEditor&#10;-remove zeroes while-&gt;regex" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
