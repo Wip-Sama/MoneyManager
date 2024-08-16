@@ -4,22 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="BalanceEditor&#10;-remove zeroes while-&gt;regex">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/accounts.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/Encrypter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" afterDir="false" />
+    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Currency.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/MMDatabase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Tag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Transaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Transaction_tags.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/UserDatabase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Statistics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/databases/money_manager_template.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user_dbs/user.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cssdialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/money_manager.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/BalanceEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/BalanceEditor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/accounts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/Encrypter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/Encrypter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardconto.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardconto.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/balanceeditor.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/balanceeditor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpreset.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,11 +52,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="package-info" />
-        <option value="JavaFXApplication" />
-        <option value="CSS File" />
         <option value="Record" />
-        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -60,78 +79,36 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2grzzxVfqvx0Gzht2jn7imjQ31J" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2kfW84wiqWENASleYc5pK3cu21m" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.ColorPickerButtonTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Decrypt.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.Encrypt.executor&quot;: &quot;Run&quot;,
-    &quot;Application.EncryptionDemo.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Test2.executor&quot;: &quot;Run&quot;,
-    &quot;Application.VerifyPublicKey.executor&quot;: &quot;Run&quot;,
-    &quot;Application.encrypt.executor&quot;: &quot;Run&quot;,
-    &quot;Application.org.wip.moneymanager.EncryptionDemo.executor&quot;: &quot;Debug&quot;,
-    &quot;Maven.MoneyManager [clean,build].executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [install2].executor&quot;: &quot;Debug&quot;,
     &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [site].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [verify].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programming/MoneyManager/user_dbs&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/MoneyManager&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.23353909&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
-    ]
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Programming\MoneyManager\user_dbs" />
-      <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager\svg" />
-      <recent name="D:\Programming\MoneyManager\src\main\java\org\wip\moneymanager" />
-      <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager\images" />
-      <recent name="D:\Programming\MoneyManager\src\main\resources\org\wip\moneymanager\svg" />
-      <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager\css" />
-      <recent name="D:\Programmazione\MoneyManager\src\main\resources" />
-      <recent name="D:\Programmazione\MoneyManager\src\main\resources\org\wip\moneymanager" />
+      <recent name="D:\Programming\MoneyManager" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.wip.moneymanager" />
@@ -139,446 +116,44 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="mvn clean build" />
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.org.wip.moneymanager.EncryptionDemo">
-    <configuration name="Decrypt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.Decrypt" />
-      <module name="MoneyManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Encrypt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.Encrypt" />
-      <module name="MoneyManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EncryptionDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="EncryptionDemo" />
-      <module name="MoneyManager" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="HelloApplication" type="Application" factoryName="Application">
+  <component name="RunManager">
+    <configuration name="MoneyManager" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.MoneyManager" />
       <module name="MoneyManager" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VerifyPublicKey" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.VerifyPublicKey" />
-      <module name="MoneyManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="org.wip.moneymanager.EncryptionDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.EncryptionDemo" />
-      <module name="MoneyManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.HelloApplication" />
-      <item itemvalue="Application.Decrypt" />
-      <item itemvalue="Application.Encrypt" />
-      <item itemvalue="Application.EncryptionDemo" />
-      <item itemvalue="Application.VerifyPublicKey" />
-      <item itemvalue="Application.org.wip.moneymanager.EncryptionDemo" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.org.wip.moneymanager.EncryptionDemo" />
-        <item itemvalue="Application.EncryptionDemo" />
-        <item itemvalue="Application.VerifyPublicKey" />
-        <item itemvalue="Application.Decrypt" />
-        <item itemvalue="Application.Encrypt" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.300" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.300" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cc36b4f7-1c2d-4ec8-a9ae-d8031eef7235" name="Changes" comment="" />
-      <created>1716470752626</created>
+      <changelist id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="" />
+      <created>1723674954273</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1716470752626</updated>
-      <workItem from="1716470753716" duration="3717000" />
-      <workItem from="1716891070662" duration="2857000" />
-      <workItem from="1718053545688" duration="322000" />
-      <workItem from="1718625741356" duration="1438000" />
-      <workItem from="1718701535698" duration="1222000" />
-      <workItem from="1718706341970" duration="2484000" />
-      <workItem from="1718711336584" duration="5026000" />
-      <workItem from="1718717689201" duration="9623000" />
-      <workItem from="1718729510722" duration="160000" />
-      <workItem from="1718741176233" duration="96000" />
-      <workItem from="1719061451964" duration="62000" />
-      <workItem from="1719061525384" duration="7999000" />
-      <workItem from="1719073892930" duration="5501000" />
-      <workItem from="1719083351267" duration="5996000" />
-      <workItem from="1719133964436" duration="15040000" />
-      <workItem from="1719160466806" duration="341000" />
-      <workItem from="1719520214046" duration="453000" />
-      <workItem from="1719527149532" duration="2365000" />
-      <workItem from="1722171831839" duration="607000" />
-      <workItem from="1722177756357" duration="65000" />
-      <workItem from="1722256705246" duration="4694000" />
-      <workItem from="1722332534162" duration="4423000" />
-      <workItem from="1722429200960" duration="7166000" />
-      <workItem from="1722498265564" duration="5557000" />
-      <workItem from="1722618033558" duration="314000" />
-      <workItem from="1722618562072" duration="6805000" />
-      <workItem from="1722691280228" duration="11535000" />
-      <workItem from="1722706984702" duration="192000" />
-      <workItem from="1722726161211" duration="1941000" />
-      <workItem from="1722787759484" duration="884000" />
-      <workItem from="1722906088172" duration="342000" />
-      <workItem from="1722906653274" duration="3209000" />
-      <workItem from="1722948035336" duration="6457000" />
-      <workItem from="1722973206672" duration="2810000" />
-      <workItem from="1723033207900" duration="6222000" />
-      <workItem from="1723039488053" duration="895000" />
-      <workItem from="1723126063134" duration="10189000" />
-      <workItem from="1723156612991" duration="5785000" />
-      <workItem from="1723207675696" duration="7283000" />
-      <workItem from="1723230978087" duration="5938000" />
-      <workItem from="1723243295980" duration="4606000" />
-      <workItem from="1723293464735" duration="6431000" />
-      <workItem from="1723301218583" duration="21488000" />
-      <workItem from="1723372078323" duration="8971000" />
-      <workItem from="1723424696639" duration="1498000" />
-      <workItem from="1723468087583" duration="6331000" />
-      <workItem from="1723556012593" duration="19043000" />
-      <workItem from="1723641419410" duration="1582000" />
+      <updated>1723674954273</updated>
+      <workItem from="1723674955975" duration="1007000" />
+      <workItem from="1723726535703" duration="19071000" />
+      <workItem from="1723751708809" duration="1000" />
+      <workItem from="1723755320085" duration="960000" />
+      <workItem from="1723770472322" duration="4518000" />
+      <workItem from="1723824637033" duration="2297000" />
     </task>
-    <task id="LOCAL-00001" summary="Test">
-      <option name="closed" value="true" />
-      <created>1716471420095</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1716471420095</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Test">
-      <option name="closed" value="true" />
-      <created>1718717259959</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1718717259959</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Test">
-      <option name="closed" value="true" />
-      <created>1718717439280</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1718717439280</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Test">
-      <option name="closed" value="true" />
-      <created>1718719600431</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1718719600431</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Test">
-      <option name="closed" value="true" />
-      <created>1718722672308</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1718722672308</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Test">
-      <option name="closed" value="true" />
-      <created>1718722876713</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1718722876713</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Test">
-      <option name="closed" value="true" />
-      <created>1719066620349</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1719066620349</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Test">
-      <option name="closed" value="true" />
-      <created>1719066663030</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1719066663030</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Test">
-      <option name="closed" value="true" />
-      <created>1719067238813</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1719067238813</updated>
-    </task>
-    <task id="LOCAL-00010" summary="ColorPicker by wip">
-      <option name="closed" value="true" />
-      <created>1719078379499</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1719078379499</updated>
-    </task>
-    <task id="LOCAL-00011" summary="ColorPickerv2 by wip">
-      <option name="closed" value="true" />
-      <created>1719089355872</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1719089355872</updated>
-    </task>
-    <task id="LOCAL-00012" summary="ColorPicker v3 by wip">
-      <option name="closed" value="true" />
-      <created>1719146904029</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1719146904029</updated>
-    </task>
-    <task id="LOCAL-00013" summary="ColorPicker v3 by wip&#10;- Mancava questo file">
-      <option name="closed" value="true" />
-      <created>1719160724581</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1719160724581</updated>
-    </task>
-    <task id="LOCAL-00014" summary="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)">
-      <option name="closed" value="true" />
-      <created>1722702047274</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1722702047274</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Fix Scenebuilder jar">
-      <option name="closed" value="true" />
-      <created>1722702958095</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1722702958095</updated>
-    </task>
-    <task id="LOCAL-00016" summary="minor changes to ComboPasswordField">
-      <option name="closed" value="true" />
-      <created>1722707157370</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1722707157370</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Date Picker final touches +testdb">
-      <option name="closed" value="true" />
-      <created>1722910449724</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1722910449724</updated>
-    </task>
-    <task id="LOCAL-00018" summary="main_menu alpha">
-      <option name="closed" value="true" />
-      <created>1722954969795</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1722954969795</updated>
-    </task>
-    <task id="LOCAL-00019" summary="main_menu beta&#10;contect menu&#10;menu item&#10;menu button">
-      <option name="closed" value="true" />
-      <created>1722976041233</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1722976041233</updated>
-    </task>
-    <task id="LOCAL-00020" summary="SVGLoader&#10;date-picker fix focused state">
-      <option name="closed" value="true" />
-      <created>1723037640572</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1723037640572</updated>
-    </task>
-    <task id="LOCAL-00021" summary="new main&#10;icon&#10;Menubutton fix&#10;menu item 2.0&#10;added full svg back">
-      <option name="closed" value="true" />
-      <created>1723040333711</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1723040333711</updated>
-    </task>
-    <task id="LOCAL-00022" summary="random stuff">
-      <option name="closed" value="true" />
-      <created>1723126150545</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1723126150545</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Tag&#10;removed Ikonli merda from fxml&#10;added state to color picker preset&#10;fixed readme in svg folder&#10;small fixes to css">
-      <option name="closed" value="true" />
-      <created>1723207771966</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1723207771966</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Tag $ TagFilter V2">
-      <option name="closed" value="true" />
-      <created>1723216088155</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1723216088155</updated>
-    </task>
-    <task id="LOCAL-00025" summary="tagFilter+Selector Alpha">
-      <option name="closed" value="true" />
-      <created>1723236977108</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1723236977108</updated>
-    </task>
-    <task id="LOCAL-00026" summary="tagFilter+Selector beta">
-      <option name="closed" value="true" />
-      <created>1723300324384</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1723300324384</updated>
-    </task>
-    <task id="LOCAL-00027" summary="cardconto+switch&#10;-fullbutton&#10;-transparentbutton/tag-selector/datepicker fix style&#10;-Choice box css&#10;-Style dark better red accent">
-      <option name="closed" value="true" />
-      <created>1723326945126</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1723326945126</updated>
-    </task>
-    <task id="LOCAL-00028" summary="BalanceEditor&#10;-remove zeroes while-&gt;regex">
-      <option name="closed" value="true" />
-      <created>1723384663320</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1723384663320</updated>
-    </task>
-    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="test" />
-    <MESSAGE value="Test" />
-    <MESSAGE value="ColorPicker by wip" />
-    <MESSAGE value="ColorPickerv2 by wip" />
-    <MESSAGE value="ColorPicker v3 by wip" />
-    <MESSAGE value="ColorPicker v3 by wip&#10;- Mancava questo file" />
-    <MESSAGE value="ColorPicker v4 by wip&#10;- ComboPasswordField&#10;- ColorPickerButton v4&#10;- ColorPickerPopup v4 &#10;- Aggiunte le icone SVG (IKONLI MERDA)" />
-    <MESSAGE value="Fix Scenebuilder jar" />
-    <MESSAGE value="minor changes to ComboPasswordField" />
-    <MESSAGE value="Date Picker final touches +testdb" />
-    <MESSAGE value="main_menu alpha" />
-    <MESSAGE value="main_menu beta&#10;contect menu&#10;menu item&#10;menu button" />
-    <MESSAGE value="SVGLoader&#10;date-picker fix focused state" />
-    <MESSAGE value="new main&#10;icon&#10;Menubutton fix&#10;menu item 2.0&#10;added full svg back" />
-    <MESSAGE value="random stuff" />
-    <MESSAGE value="Tag&#10;removed Ikonli merda from fxml&#10;added state to color picker preset&#10;fixed readme in svg folder&#10;small fixes to css" />
-    <MESSAGE value="Tag $ TagFilter V2" />
-    <MESSAGE value="tagFilter+Selector Alpha" />
-    <MESSAGE value="tagFilter+Selector beta" />
-    <MESSAGE value="cardconto+switch&#10;-fullbutton&#10;-transparentbutton/tag-selector/datepicker fix style&#10;-Choice box css&#10;-Style dark better red accent" />
-    <MESSAGE value="BalanceEditor&#10;-remove zeroes while-&gt;regex" />
-    <option name="LAST_COMMIT_MESSAGE" value="BalanceEditor&#10;-remove zeroes while-&gt;regex" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint type="java-exception">
-          <properties class="java.lang.IllegalStateException" package="java.lang" />
-          <option name="timeStamp" value="2" />
-        </breakpoint>
-        <breakpoint type="java-exception">
-          <properties class="java.lang.NumberFormatException" package="java.lang" />
-          <option name="timeStamp" value="12" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-    <pin-to-top-manager>
-      <pinned-members>
-        <PinnedItemInfo parentTag="javafx.scene.control.TextFormatter$Change" memberName="accessor" />
-      </pinned-members>
-    </pin-to-top-manager>
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

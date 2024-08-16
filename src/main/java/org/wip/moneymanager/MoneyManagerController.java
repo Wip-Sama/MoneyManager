@@ -6,20 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-
-import org.wip.moneymanager.components.ColorPickerButton;
 
 import java.io.IOException;
 
-public class HelloController {
-    @FXML
-    private Label welcomeText;
-
+public class MoneyManagerController {
     @FXML
     private ToggleButton accounts;
+
+    @FXML
+    private ToggleButton settings;
+
+    @FXML
+    private ToggleButton statistics;
+
+    @FXML
+    private ToggleButton transactions;
 
     @FXML
     private BorderPane change_pane;
@@ -27,13 +28,13 @@ public class HelloController {
     private Integer theme = 1;
 
     public void initialize() {
-        System.out.println("HelloController initialized");
+        System.out.println("MoneyManagerController initialized");
         accounts.onActionProperty().addListener((_, _, newValue) -> {
             System.out.println(newValue);
         });
         accounts.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
-                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/accounts.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Accounts.fxml"));
 
                 try {
                     Parent root = fxmlLoader.load();
@@ -43,19 +44,30 @@ public class HelloController {
                 }
             }
         });
+        settings.selectedProperty().addListener((_, _, newValue) -> {
+            if (newValue) {
+                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Settings.fxml"));
+                try {
+                    Parent root = fxmlLoader.load();
+                    change_pane.setCenter(root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        statistics.selectedProperty().addListener((_, _, newValue) -> {
+            try {
+                onHelloButtonClick();
+                System.out.println("Hello "+theme);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("components/colorpickerpopup.fxml"));
-        Parent colorPickerParent = fxmlLoader.load();
-        Popup popup = new Popup();
-        popup.getContent().add(colorPickerParent);
-        popup.show(welcomeText.getScene().getWindow());*/
-
-        welcomeText.setText("Welcome to JavaFX Application! "+theme);
-        Scene scene = welcomeText.getScene();
+        Scene scene = accounts.getScene();
         if (theme % 2 == 0) {
             scene.getStylesheets().remove("style-light.css");
             scene.getStylesheets().add("style-dark.css");

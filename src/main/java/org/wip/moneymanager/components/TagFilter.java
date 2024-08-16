@@ -61,7 +61,7 @@ public class TagFilter extends BorderPane {
                 tag.managedProperty().bindBidirectional(tag.visibleProperty());
             }
         });
-        //TODO: Sostituire con un get dal database
+        //TODO: Sostituire con un get dal org.wip.moneymanager.database
         for (int i = 0; i < 100; i++) {
             tags.add(new Tag("Tag test " + i, 0, 2));
         }

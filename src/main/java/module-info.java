@@ -4,15 +4,14 @@ module org.wip.moneymanager {
     requires javafx.controls;
     requires javafx.graphics;
 
-    requires org.kordamp.ikonli.core;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.ikonli.fluentui;
-    requires org.bouncycastle.provider;
-
     requires java.sql;
-    requires spring.core;
     requires java.desktop;
+    requires java.net.http;
+
+    requires spring.core;
     requires spring.security.crypto;
+
+    requires org.json;
 
     opens org.wip.moneymanager to javafx.fxml;
     exports org.wip.moneymanager;

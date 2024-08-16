@@ -58,7 +58,7 @@ public class BalanceEditor extends HBox {
                 pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, false);
             }
         });
-        //TODO: Sostituire con entry dal database
+        //TODO: Sostituire con entry dal org.wip.moneymanager.database
         currency_field.getItems().addAll("USD", "EUR", "RUB");
         currency_field.setValue("EUR");
     }

@@ -26,8 +26,6 @@
     -fx-background-insets: 0, 2;
     -fx-background-radius: 6, 4;
     -fx-padding: 5;
-    -fx-text-alignment: CENTER;
-    -fx-alignment: CENTER;
 }
 
 .toggle-button:hover {

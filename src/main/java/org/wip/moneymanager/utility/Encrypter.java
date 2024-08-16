@@ -12,21 +12,13 @@ import java.io.File;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Encrypter {
-    private Cipher ecipher;
-    private Cipher dcipher;
-    private int bcrypt_salt = 12;
-
-    public Encrypter(SecretKey key, int bccrypt_salt) throws Exception {
-        this(key);
-        this.bcrypt_salt = bccrypt_salt;
-    }
-
-    public Encrypter(String key, int bccrypt_salt) throws Exception {
-        this(key);
-        this.bcrypt_salt = bccrypt_salt;
-    }
+    private final Cipher ecipher;
+    private final Cipher dcipher;
+    private final SecretKey sk;
+    private static int bcrypt_salt = 12;
 
     public Encrypter(SecretKey key) throws Exception {
+        sk = key;
         ecipher = Cipher.getInstance("AES");
         dcipher = Cipher.getInstance("AES");
         ecipher.init(Cipher.ENCRYPT_MODE, key);
@@ -35,6 +27,7 @@ public class Encrypter {
 
     public Encrypter(String key) throws Exception {
         SecretKey k = new SecretKeySpec(key.getBytes(), "AES");
+        sk = k;
         ecipher = Cipher.getInstance("AES");
         dcipher = Cipher.getInstance("AES");
         ecipher.init(Cipher.ENCRYPT_MODE, k);
@@ -81,11 +74,15 @@ public class Encrypter {
                 throw new IOException("Failed to delete input file");
     }
 
-    public String encrypt_string_bcrypt(String str) {
+    public void setBcrypt_salt(int salt) {
+        bcrypt_salt = salt;
+    }
+
+    public static String encrypt_string_bcrypt(String str) {
         return BCrypt.hashpw(str, BCrypt.gensalt(bcrypt_salt));
     }
 
-    public boolean check_string_bcrypt(String str) {
-        return BCrypt.checkpw(str, BCrypt.gensalt(bcrypt_salt));
+    public static boolean check_string_bcrypt(String str, String hash) {
+        return BCrypt.checkpw(str, hash);
     }
 }
