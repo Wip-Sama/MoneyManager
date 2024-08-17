@@ -1,11 +1,11 @@
-package org.wip.moneymanager.database;
+package org.wip.moneymanager.model;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class Currency {
+public final class Currency implements Comparable<Currency>{
     private static final MMDatabase db = MMDatabase.getInstance();
     private final String name;
     private double value;
@@ -85,5 +85,10 @@ public final class Currency {
                 "name=" + name + ", " +
                 "value=" + value + ", " +
                 "update_date=" + update_date + ']';
+    }
+
+    @Override
+    public int compareTo(Currency other) {
+        return this.name.compareTo(other.name);
     }
 }

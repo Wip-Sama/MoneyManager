@@ -1,4 +1,4 @@
-package org.wip.moneymanager.database;
+package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
 import org.wip.moneymanager.utility.Encrypter;

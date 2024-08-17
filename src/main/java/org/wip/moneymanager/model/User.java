@@ -1,4 +1,4 @@
-package org.wip.moneymanager.database;
+package org.wip.moneymanager.model;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ public final class User {
     private String accent;
     private int home_screen;
     private int week_start;
-    private int main_currency;
+    private String main_currency;
     private String language;
     private int last_login;
 
@@ -27,7 +27,7 @@ public final class User {
                 String accent,
                 int home_screen,
                 int week_start,
-                int main_currency,
+                String main_currency,
                 String language,
                 int last_login) {
         this.id = id;
@@ -53,7 +53,7 @@ public final class User {
                 rs.getString("accent"),
                 rs.getInt("home_screen"),
                 rs.getInt("week_start"),
-                rs.getInt("main_currency"),
+                rs.getString("main_currency"),
                 rs.getString("language"),
                 rs.getInt("last_login")
         );
@@ -94,6 +94,14 @@ public final class User {
         return theme;
     }
 
+    public String themeString() {
+        if (theme == 0) {
+            return "Light";
+        } else {
+            return "Dark";
+        }
+    }
+
     public void setTheme(int theme) throws SQLException {
         this.theme = theme;
         updateField("theme", theme);
@@ -126,11 +134,11 @@ public final class User {
         updateField("week_start", week_start);
     }
 
-    public int main_currency() {
+    public String main_currency() {
         return main_currency;
     }
 
-    public void setMain_currency(int main_currency) throws SQLException {
+    public void setMain_currency(String main_currency) throws SQLException {
         this.main_currency = main_currency;
         updateField("main_currency", main_currency);
     }
@@ -174,7 +182,7 @@ public final class User {
                 Objects.equals(this.accent, that.accent) &&
                 this.home_screen == that.home_screen &&
                 this.week_start == that.week_start &&
-                this.main_currency == that.main_currency &&
+                Objects.equals(this.main_currency, that.main_currency) &&
                 Objects.equals(this.language, that.language) &&
                 this.last_login == that.last_login;
     }

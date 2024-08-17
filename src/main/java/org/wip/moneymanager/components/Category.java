@@ -7,13 +7,14 @@ import java.io.IOException;
 
 public class Category extends BorderPane {
     public Category() {
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/category.fxml"));
-        fxmlLoader.setRoot(this);
+        //fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
             fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

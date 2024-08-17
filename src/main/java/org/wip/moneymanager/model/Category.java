@@ -1,4 +1,4 @@
-package org.wip.moneymanager.database;
+package org.wip.moneymanager.model;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

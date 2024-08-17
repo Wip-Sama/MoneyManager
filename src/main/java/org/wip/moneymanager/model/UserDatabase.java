@@ -1,29 +1,24 @@
-package org.wip.moneymanager.database;
+package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
-import org.wip.moneymanager.utility.Encrypter;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDatabase extends Database {
-    private UserDatabase instance = null;
-    private String username;
+    private static UserDatabase instance = null;
 
-    public UserDatabase getInstance() {
+    public static UserDatabase getInstance() {
         if (instance == null) {
-            instance = new UserDatabase(username);
+            instance = new UserDatabase();
         }
         return instance;
     }
 
-    public UserDatabase(String username) {
-        super(username+".db");
-        this.username = username;
+    public UserDatabase() {
+        super(Data.user+".db");
     }
 
     public Task<Boolean> createTag(String name, String color) {

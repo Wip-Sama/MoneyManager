@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wip.moneymanager.database.Currency;
-import org.wip.moneymanager.database.MMDatabase;
+import org.wip.moneymanager.model.Currency;
+import org.wip.moneymanager.model.MMDatabase;
 
 import java.io.IOException;
 import java.net.URI;
