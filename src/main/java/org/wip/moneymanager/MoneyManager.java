@@ -105,7 +105,6 @@ public class MoneyManager extends Application {
         Thread t = new Thread(update_currency);
         t.setDaemon(true) ;
         t.start();
-
     }
 
     public static void main(String[] args) {

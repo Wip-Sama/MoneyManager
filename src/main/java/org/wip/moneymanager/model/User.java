@@ -11,7 +11,7 @@ public final class User {
     private String username;
     private String password_hash;
     private String safe_login;
-    private int theme;
+    private Theme theme;
     private String accent;
     private int home_screen;
     private int week_start;
@@ -34,7 +34,7 @@ public final class User {
         this.username = username;
         this.password_hash = password_hash;
         this.safe_login = safe_login;
-        this.theme = theme;
+        this.theme = Theme.fromInt(theme);
         this.accent = accent;
         this.home_screen = home_screen;
         this.week_start = week_start;
@@ -90,19 +90,11 @@ public final class User {
         updateField("safe_login", safe_login);
     }
 
-    public int theme() {
+    public Theme theme() {
         return theme;
     }
 
-    public String themeString() {
-        if (theme == 0) {
-            return "Light";
-        } else {
-            return "Dark";
-        }
-    }
-
-    public void setTheme(int theme) throws SQLException {
+    public void setTheme(Theme theme) throws SQLException {
         this.theme = theme;
         updateField("theme", theme);
     }

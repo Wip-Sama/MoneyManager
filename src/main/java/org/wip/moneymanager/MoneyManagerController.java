@@ -1,6 +1,9 @@
 package org.wip.moneymanager;
 
 import javafx.animation.FadeTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,10 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
+import org.wip.moneymanager.components.Switch;
+import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.model.Theme;
 
 import java.io.IOException;
-
-import static java.lang.Thread.sleep;
 
 public class MoneyManagerController {
     @FXML
@@ -35,9 +39,13 @@ public class MoneyManagerController {
     private Integer theme = 1;
 
     public void initialize() {
-        System.out.println("MoneyManagerController initialized");
-        accounts.onActionProperty().addListener((_, _, newValue) -> {
-            System.out.println(newValue);
+        busy_indicator.setVisible(false);
+        Data.busyProperty().addListener((_, _, newValue) -> {
+            if (newValue.intValue() > 0) {
+                show_busy_indicator();
+            } else {
+                hide_busy_indicator();
+            }
         });
         accounts.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
@@ -62,31 +70,19 @@ public class MoneyManagerController {
                 }
             }
         });
-        statistics.selectedProperty().addListener((_, _, newValue) -> {
-            try {
-                onHelloButtonClick();
-                System.out.println("Hello "+theme);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        Data.theme.addListener((_, _, newValue) -> {
+            Scene scene = accounts.getScene();
+            switch (newValue) {
+                case DARK, SYSTEM:
+                    scene.getStylesheets().remove("style-light.css");
+                    scene.getStylesheets().add("style-dark.css");
+                    break;
+                case LIGHT:
+                    scene.getStylesheets().remove("style-dark.css");
+                    scene.getStylesheets().add("style-light.css");
+                    break;
             }
         });
-    }
-
-    @FXML
-    protected void onHelloButtonClick() throws IOException, InterruptedException {
-        Scene scene = accounts.getScene();
-        if (theme % 2 == 0) {
-            scene.getStylesheets().remove("style-light.css");
-            scene.getStylesheets().add("style-dark.css");
-            theme = 1;
-        } else {
-            scene.getStylesheets().remove("style-dark.css");
-            scene.getStylesheets().add("style-light.css");
-            theme = 0;
-        }
-        show_busy_indicator();
     }
 
     public void show_busy_indicator() {

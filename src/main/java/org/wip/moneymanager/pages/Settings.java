@@ -11,12 +11,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.wip.moneymanager.components.ColorPickerButton;
 import org.wip.moneymanager.components.ColorPickerPreset;
-import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.model.MMDatabase;
-import org.wip.moneymanager.model.Currency;
-import org.wip.moneymanager.model.User;
+import org.wip.moneymanager.model.*;
 
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -96,29 +94,32 @@ public class Settings extends BorderPane {
     }
 
     private void initialize_choice_box(Task<User> tmp) throws ExecutionException, InterruptedException {
+        Data.subscribe_busy();
         tmp.run();
         User user = tmp.get();
         theme.getItems().addAll("Light", "Dark");
-        theme.setValue(user.themeString());
+        theme.setValue(user.theme().toString());
 
         language.getItems().addAll("English", "Italian");
-        language.setValue("Italian");
+        language.setValue(user.language());
 
         first_day_of_week.getItems().addAll("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica");
-        first_day_of_week.setValue("Lunedì");
+        //first_day_of_week.setValue(user.week_start_string());
 
         start_page.getItems().addAll("Nessuna", "Conti", "Statistiche", "Transazioni");
-        start_page.setValue("Nessuna");
+        //start_page.setValue(user.home_screen());
 
         Task<List<Currency>> currencies = db.getAllCurrency();
         currencies.run();
         currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.name().toUpperCase()));
-        Task<Currency> cr = db.getCurrency(user.main_currency());
-        cr.run();
-        primary_currency.setValue(cr.get().name().toUpperCase());
+        Task<Currency> currency = db.getCurrency(user.main_currency());
+        currency.run();
+        primary_currency.setValue(currency.get().name().toUpperCase());
+        Data.unsubscribe_busy();
     }
 
     public void initialize() throws ExecutionException, InterruptedException {
+        Data.subscribe_busy();
         category_container.viewportBoundsProperty().addListener((_, _, _) -> {
             double[] availableSpace = getAvailableSpace(category_container);
             category_list.setPrefWidth(availableSpace[0]);
@@ -134,12 +135,35 @@ public class Settings extends BorderPane {
         tmp.setOnSucceeded(event -> {
             try {
                 initialize_choice_box(tmp);
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         });
-        executorService.submit(tmp);
+        // Execute the task in a background thread
+        //executorService.submit(tmp);
+
+        Thread t = new Thread(tmp);
+        t.setDaemon(true) ;
+        t.start();
+
+        theme.valueProperty().addListener((_, _, newValue) -> {
+            Data.subscribe_busy();
+            Task<User> task = db.getUser(Data.user);
+            task.run();
+            User user = null;
+            try {
+                user = task.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                user.setTheme(Theme.fromString(newValue));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Data.theme.set(user.theme());
+            Data.unsubscribe_busy();
+        });
+        Data.unsubscribe_busy();
     }
 }
