@@ -1,6 +1,8 @@
 package org.wip.moneymanager.components;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,11 +44,14 @@ public class ColorPickerPopup {
     @FXML
     protected TextField blue_textfield;
 
+    public final BooleanProperty changesSaved = new SimpleBooleanProperty(false);
+
     private double xOffset = 0;
     private double yOffset = 0;
     public Property<Number> red_channel = new SimpleDoubleProperty(0);
     public Property<Number> green_channel = new SimpleDoubleProperty(0);
     public Property<Number> blue_channel = new SimpleDoubleProperty(0);
+
     public int[] rgb = new int[3];
 
     private final Popup popup = new Popup();
@@ -175,12 +180,14 @@ public class ColorPickerPopup {
 
     @FXML
     protected void discard() {
+        changesSaved.set(false);
         hide();
     }
 
     @FXML
     protected void save() {
         store_values();
+        changesSaved.set(true);
         hide();
     }
 }

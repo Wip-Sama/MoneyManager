@@ -18,11 +18,45 @@
 }
 
 .colorpickerbutton:hover SVGPath {
-    -fx-font-size: 24;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }
 
 .colorpickerbutton:pressed SVGPath {
-    -fx-font-size: 24;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}
+
+.colorpickerbutton:selected SVGPath {
+    -fx-fill: transparent;
+}
+
+.colorpickerbutton > .colorpickerpreset_upper_checkmark {
+    -fx-fill: transparent;
+}
+
+.colorpickerbutton > .colorpickerpreset_center_checkmark {
+    -fx-fill: transparent;
+}
+
+.colorpickerbutton > .colorpickerpreset_under_checkmark {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0 0 0 4;
+}
+
+.colorpickerbutton:hover > .colorpickerpreset_center_checkmark {
+    -fx-fill: -fu-stroke-rest;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}
+
+.colorpickerbutton:selected > .colorpickerpreset_upper_checkmark {
+    -fx-fill: -fu-text-1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+}
+
+.colorpickerbutton:selected > .colorpickerpreset_under_checkmark {
+    -fx-background-color: -fu-stroke-rest;
+    -fx-background-radius: 0;
+}
+
+.colorpickerbutton:selected > .colorpickerpreset_center_checkmark {
+    -fx-fill: transparent;
 }

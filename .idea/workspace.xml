@@ -4,32 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Data.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/category.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/progress-bar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user_dbs/user_copy.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="&#10;&#10;- Aggiornato setTheme user per supportare l'Enum">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Color.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Week.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/money_manager.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/BalanceEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/BalanceEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Currency.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/MMDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Transaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/Transaction_tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Transaction_tags.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/database/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Currency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Theme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Theme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Transaction_tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Transaction_tags.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerbutton.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker-button.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/style-light.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-light.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/test.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +43,7 @@
       <list>
         <option value="Record" />
         <option value="FxmlFile" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -60,6 +63,9 @@
     &quot;accountId&quot;: &quot;26be2ba9-9ddd-4387-b4f2-4463262b4cfb&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -68,7 +74,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -79,28 +85,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.MoneyManager.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programming/MoneyManager&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.MoneyManager.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "Maven.MoneyManager [clean,install].executor": "Run",
+    "Maven.MoneyManager [clean].executor": "Run",
+    "Maven.MoneyManager [install].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Programming/WomToolkitUI_nw",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="QodanaHighlightedReportService">
+    <option name="localRunNotPublishedPersistedInfo">
+      <LocalReportPersistedInfo>
+        <option name="path" value="C:\Users\sgroo\AppData\Local\Temp\qodana_output\qodana.sarif.json" />
+        <option name="reportGuid" value="b831d61b-5b66-4345-9303-4a3f587490e3" />
+        <option name="reportName" value="MoneyManager/qodana/2024-08-20" />
+      </LocalReportPersistedInfo>
+    </option>
+  </component>
+  <component name="QodanaIsSelectedPersistenceService">
+    <option name="selectedOrLoading" value="true" />
+  </component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\sgroo\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="b831d61b-5b66-4345-9303-4a3f587490e3" reportId="MoneyManager/qodana/2024-08-20" />
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Programming\MoneyManager\user_dbs" />
@@ -153,6 +177,13 @@
       <workItem from="1723908269649" duration="43000" />
       <workItem from="1723908313866" duration="31000" />
       <workItem from="1723908346122" duration="13000" />
+      <workItem from="1723908364810" duration="195000" />
+      <workItem from="1723911102515" duration="339000" />
+      <workItem from="1723923920952" duration="2917000" />
+      <workItem from="1723984581860" duration="581000" />
+      <workItem from="1723998869336" duration="2911000" />
+      <workItem from="1724146787476" duration="12339000" />
+      <workItem from="1724175593642" duration="8786000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />
@@ -162,7 +193,31 @@
       <option name="project" value="LOCAL" />
       <updated>1723827083177</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Push">
+      <option name="closed" value="true" />
+      <created>1723908537290</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1723908537290</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Push">
+      <option name="closed" value="true" />
+      <created>1723908551946</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723908551946</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Enum per i Temi&#10;- Se aggiungiamo tanti Enum è il caso di metterli in una loro cartella">
+      <option name="closed" value="true" />
+      <created>1724012078024</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1724012078024</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +236,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta" />
-    <option name="LAST_COMMIT_MESSAGE" value="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta" />
+    <MESSAGE value="Push" />
+    <MESSAGE value="Enum per i Temi&#10;- Se aggiungiamo tanti Enum è il caso di metterli in una loro cartella" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enum per i Temi&#10;- Se aggiungiamo tanti Enum è il caso di metterli in una loro cartella" />
   </component>
 </project>

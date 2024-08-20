@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import org.wip.moneymanager.model.Data;
 
 import java.sql.Date;
 
@@ -92,18 +93,17 @@ public class CardConto extends AnchorPane {
         /* Edit part */
         hide_balance.addListener((_, _, newValue) -> {
             if (newValue) {
-                account_balance.setText("Balance: 00 "+"Insert Default currency here");
+                account_balance.setText("Balance: 0,00 " + Data.user.main_currencyProperty().get().toUpperCase());
                 account_balance.setStyle("-fx-text-fill: -fu-text-2");
             } else {
-
                 account_balance.setStyle("-fx-text-fill: -fu-text-1");
             }
             balance_field.setVisible(newValue);
         });
 
         account_balance.textProperty().addListener((_, _, newValue) -> {
-            if (hide_balance.get()) {
-
+            if (!hide_balance.get()) {
+                account_balance.setText(newValue);
             }
         });
 

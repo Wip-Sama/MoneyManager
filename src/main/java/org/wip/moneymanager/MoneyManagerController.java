@@ -1,9 +1,7 @@
 package org.wip.moneymanager;
 
 import javafx.animation.FadeTransition;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,11 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
-import org.wip.moneymanager.components.Switch;
 import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.model.Theme;
+import org.wip.moneymanager.model.MMDatabase;
+import org.wip.moneymanager.model.types.Theme;
+import org.wip.moneymanager.model.types.User;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class MoneyManagerController {
     @FXML
@@ -36,9 +36,13 @@ public class MoneyManagerController {
     @FXML
     private ProgressBar busy_indicator;
 
-    private Integer theme = 1;
+    @FXML
+    public void initialize() throws ExecutionException, InterruptedException {
+        // TODO: da rimuovere dopo che avremo fatto la schermata di login/register
+        Task<User> t = MMDatabase.getInstance().getUser(Data.username);
+        t.run();
+        Data.user = t.get();
 
-    public void initialize() {
         busy_indicator.setVisible(false);
         Data.busyProperty().addListener((_, _, newValue) -> {
             if (newValue.intValue() > 0) {
@@ -47,6 +51,7 @@ public class MoneyManagerController {
                 hide_busy_indicator();
             }
         });
+
         accounts.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
                 FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Accounts.fxml"));
@@ -59,6 +64,7 @@ public class MoneyManagerController {
                 }
             }
         });
+
         settings.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
                 FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Settings.fxml"));
@@ -70,7 +76,8 @@ public class MoneyManagerController {
                 }
             }
         });
-        Data.theme.addListener((_, _, newValue) -> {
+
+        Data.user.themeProperty().addListener((_, _, newValue) -> {
             Scene scene = accounts.getScene();
             switch (newValue) {
                 case DARK, SYSTEM:
@@ -83,6 +90,26 @@ public class MoneyManagerController {
                     break;
             }
         });
+
+        Data.user.accentProperty().addListener((_, _, newValue) -> {
+            Scene scene = accounts.getScene();
+            scene.getRoot().setStyle("-fu-accent: " + newValue.getHex() + ";");
+        });
+
+        // il pulsante non è inizializzato durante questa fase
+        // quindi per assicurarci che il tutto parta con il colore giusto dobbiamo fare sta roba
+        // e tutte quelle dopo
+        accounts.sceneProperty().addListener((_, _, newValue) -> {
+            if (newValue != null) {
+                newValue.getRoot().setStyle("-fu-accent: " + Data.user.accentProperty().get().getHex() + ";");
+                if (Data.user.themeProperty().get() == Theme.LIGHT) {
+                    newValue.getStylesheets().add("style-light.css");
+                } else {
+                    newValue.getStylesheets().add("style-dark.css");
+                }
+            }
+        });
+
     }
 
     public void show_busy_indicator() {
@@ -97,7 +124,7 @@ public class MoneyManagerController {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(500), busy_indicator);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
-        fadeOut.setOnFinished(event -> busy_indicator.setVisible(false));
+        fadeOut.setOnFinished(_ -> busy_indicator.setVisible(false));
         fadeOut.play();
     }
 

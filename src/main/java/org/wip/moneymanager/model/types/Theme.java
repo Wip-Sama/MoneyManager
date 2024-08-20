@@ -1,4 +1,4 @@
-package org.wip.moneymanager.model;
+package org.wip.moneymanager.model.types;
 
 public enum Theme {
     SYSTEM,
@@ -9,6 +9,8 @@ public enum Theme {
         theme = theme.toLowerCase();
         return switch (theme) {
             case "system" -> SYSTEM;
+            // System non funziona per il semplice fatto che prenderlo probabilmente cambia tra mac/window/linux ecc
+            // quindi non ha senso implementarlo, anche perché non possiamo tertsalo su mac
             case "light" -> LIGHT;
             case "dark" -> DARK;
             default -> null;
@@ -21,6 +23,11 @@ public enum Theme {
             case LIGHT -> "Light";
             case DARK -> "Dark";
         };
+    }
+
+    @Override
+    public String toString() {
+        return Theme.toString(this);
     }
 
     public static Theme fromInt(int theme) {

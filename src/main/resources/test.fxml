@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <StackPane minHeight="400.0" minWidth="600.0" stylesheets="@style-dark.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -34,9 +33,6 @@
                            </padding>
                         </Label>
                         <ToggleButton alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="36.0" styleClass="side-button" text="Transaziomi">
-                           <graphic>
-                              <FontIcon fill="#8d1a1a" iconColor="WHITE" iconLiteral="fltfal-document-one-page-20" />
-                           </graphic>
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -44,9 +40,6 @@
                               <Insets left="30.0" />
                            </padding></ToggleButton>
                         <ToggleButton alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="36.0" styleClass="side-button" text="Conti">
-                           <graphic>
-                              <FontIcon fill="#8d1a1a" iconColor="WHITE" iconLiteral="fltfal-document-one-page-20" />
-                           </graphic>
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -55,9 +48,6 @@
                            </padding>
                         </ToggleButton>
                         <ToggleButton alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="36.0" styleClass="side-button" text="Statistiche">
-                           <graphic>
-                              <FontIcon fill="#8d1a1a" iconColor="WHITE" iconLiteral="fltfal-document-one-page-20" />
-                           </graphic>
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -125,11 +115,6 @@
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" styleClass="colorpickerbutton">
                            <children>
                               <Button layoutX="274.0" layoutY="188.0" mnemonicParsing="false" text="Button" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <FontIcon iconLiteral="fltfal-add-12" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </FontIcon>
                            </children>
                         </AnchorPane>
                      </children>

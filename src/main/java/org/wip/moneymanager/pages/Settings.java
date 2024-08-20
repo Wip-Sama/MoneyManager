@@ -12,14 +12,17 @@ import javafx.scene.layout.VBox;
 import org.wip.moneymanager.components.ColorPickerButton;
 import org.wip.moneymanager.components.ColorPickerPreset;
 import org.wip.moneymanager.model.*;
+import org.wip.moneymanager.model.types.Currency;
+import org.wip.moneymanager.model.types.Theme;
+import org.wip.moneymanager.model.types.User;
 
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Settings extends BorderPane {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -93,18 +96,16 @@ public class Settings extends BorderPane {
         return viewportBounds.getWidth() - paddingLeft - paddingRight;
     }
 
-    private void initialize_choice_box(Task<User> tmp) throws ExecutionException, InterruptedException {
+    private void initialize_choice_box() throws ExecutionException, InterruptedException {
         Data.subscribe_busy();
-        tmp.run();
-        User user = tmp.get();
         theme.getItems().addAll("Light", "Dark");
-        theme.setValue(user.theme().toString());
+        theme.setValue(Data.user.themeProperty().get().toString());
 
-        language.getItems().addAll("English", "Italian");
-        language.setValue(user.language());
+        language.getItems().addAll("Eng", "Ita");
+        language.setValue(Data.user.languageProperty().get());
 
         first_day_of_week.getItems().addAll("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica");
-        //first_day_of_week.setValue(user.week_start_string());
+        first_day_of_week.setValue(Data.user.week_startProperty().get().toString());
 
         start_page.getItems().addAll("Nessuna", "Conti", "Statistiche", "Transazioni");
         //start_page.setValue(user.home_screen());
@@ -112,14 +113,56 @@ public class Settings extends BorderPane {
         Task<List<Currency>> currencies = db.getAllCurrency();
         currencies.run();
         currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.name().toUpperCase()));
-        Task<Currency> currency = db.getCurrency(user.main_currency());
-        currency.run();
-        primary_currency.setValue(currency.get().name().toUpperCase());
+        primary_currency.setValue(Data.user.main_currencyProperty().get().toUpperCase());
         Data.unsubscribe_busy();
     }
 
+    private void deselect_all_presets() {
+        preset_blue.selected.set(false);
+        preset_green.selected.set(false);
+        preset_yellow.selected.set(false);
+        preset_orange.selected.set(false);
+        custom_color.selected.set(false);
+    }
+
+    private void set_selected() {
+        int[] rgb = Data.user.accentProperty().get().getRGB();
+
+        if (Arrays.equals(preset_orange.getRGB(), rgb)) {
+            preset_orange.selected.set(true);
+        } else if (Arrays.equals(preset_yellow.getRGB(), rgb)) {
+            preset_yellow.selected.set(true);
+        } else if (Arrays.equals(preset_green.getRGB(), rgb)) {
+            preset_green.selected.set(true);
+        } else if (Arrays.equals(preset_blue.getRGB(), rgb)) {
+            preset_blue.selected.set(true);
+        } else {
+            custom_color.selected.set(true);
+            custom_color.setRGB(rgb);
+        }
+    }
+
+    private void initialize_accent_selector() {
+        set_selected();
+
+        // Set accent color updater
+        Data.user.accentProperty().addListener((_, _, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
+
+            deselect_all_presets();
+            set_selected();
+
+            try {
+                Data.user.setAccent(Data.user.accentProperty().get());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     public void initialize() throws ExecutionException, InterruptedException {
-        Data.subscribe_busy();
         category_container.viewportBoundsProperty().addListener((_, _, _) -> {
             double[] availableSpace = getAvailableSpace(category_container);
             category_list.setPrefWidth(availableSpace[0]);
@@ -130,39 +173,28 @@ public class Settings extends BorderPane {
             sub_category_list.setPrefWidth(availableSpace[0]);
             sub_category_list.setMinHeight(availableSpace[1]);
         });
+        Data.subscribe_busy();
 
-        Task<User> tmp = db.getUser(Data.user);
-        tmp.setOnSucceeded(event -> {
-            try {
-                initialize_choice_box(tmp);
-            } catch (ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        // Execute the task in a background thread
-        //executorService.submit(tmp);
+        Task<User> tmp = db.getUser(Data.username);
+        tmp.run();
+        User user = tmp.get();
 
-        Thread t = new Thread(tmp);
-        t.setDaemon(true) ;
-        t.start();
+        initialize_choice_box();
+        initialize_accent_selector();
+
+        executorService.submit(tmp);
 
         theme.valueProperty().addListener((_, _, newValue) -> {
-            Data.subscribe_busy();
-            Task<User> task = db.getUser(Data.user);
-            task.run();
-            User user = null;
-            try {
-                user = task.get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
             try {
                 user.setTheme(Theme.fromString(newValue));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            Data.theme.set(user.theme());
-            Data.unsubscribe_busy();
+            try {
+                Data.user.setTheme(user.themeProperty().get());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
         Data.unsubscribe_busy();
     }

@@ -11,10 +11,14 @@ Design directions:
 .root {
     /* Accento */
     -fu-accent: rgba(255, 0, 0, 1);
-    -fu-accent-rest: rgba(255, 0, 0, 1);
-    -fu-accent-hover: rgba(210, 0, 0, 1);
-    -fu-accent-pressed: rgba(180, 0, 0, 1);
-    -fu-accent-selected: rgba(230, 0, 0, 1);
+    -fu-accent-rest: -fu-accent;
+    -fu-accent-hover: -fu-accent;
+    -fu-accent-pressed: -fu-accent;
+    -fu-accent-selected: -fu-accent;
+    -xfu-accent-rest: rgba(255, 0, 0, 1);
+    -xfu-accent-hover: rgba(210, 0, 0, 1);
+    -xfu-accent-pressed: rgba(180, 0, 0, 1);
+    -xfu-accent-selected: rgba(230, 0, 0, 1);
 
     /* Variabili per la modalità scura */
     -fu-background-1: #0a0a0a;

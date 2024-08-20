@@ -1,4 +1,6 @@
-package org.wip.moneymanager.model;
+package org.wip.moneymanager.model.types;
+
+import org.wip.moneymanager.model.MMDatabase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

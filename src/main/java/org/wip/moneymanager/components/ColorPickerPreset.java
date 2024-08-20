@@ -7,8 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import org.wip.moneymanager.model.Data;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ColorPickerPreset extends AnchorPane {
     @FXML
@@ -17,22 +19,14 @@ public class ColorPickerPreset extends AnchorPane {
     protected static Parent loaded;
 
     private final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
-
-    private final BooleanProperty selected = new SimpleBooleanProperty(false);
+    public final BooleanProperty selected = new SimpleBooleanProperty(false);
 
     private final IntegerProperty red = new SimpleIntegerProperty(0);
     private final IntegerProperty green = new SimpleIntegerProperty(0);
     private final IntegerProperty blue = new SimpleIntegerProperty(0);
 
     public ColorPickerPreset(int r, int g, int b) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/colorpickerpreset.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            loaded = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this();
         red.set(r);
         green.set(g);
         blue.set(b);
@@ -49,9 +43,19 @@ public class ColorPickerPreset extends AnchorPane {
             /*Se succede qualcosa qui abbiamo sbagliato a fare il file quindi va sistemato prima di mandarlo in produzione*/
         }
 
-        onMouseClickedProperty().set(_ -> selected.set(!selected.get()));
-        selected.addListener((_, _, newValue) ->
-            pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue)
+        onMouseClickedProperty().set(_ -> {
+            selected.set(!selected.get());
+            if (selected.get()) {
+                try {
+                    Data.user.setAccent(getRGB());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        selected.addListener((_, _, newValue) -> {
+                pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue);
+            }
         );
     }
 
@@ -75,6 +79,9 @@ public class ColorPickerPreset extends AnchorPane {
     }
     public int getBlue() {
         return blue.get();
+    }
+    public int[] getRGB() {
+        return new int[] {red.get(), green.get(), blue.get()};
     }
 
     public void setRed(int intero) {
@@ -106,6 +113,16 @@ public class ColorPickerPreset extends AnchorPane {
             return;
         }
         this.blue.set(intero);
+    }
+    public void setRGB(int r, int g, int b) {
+        setRed(r);
+        setGreen(g);
+        setBlue(b);
+    }
+    public void setRGB(int[] rgb) {
+        setRed(rgb[0]);
+        setGreen(rgb[1]);
+        setBlue(rgb[2]);
     }
 
     public IntegerProperty redProperty() {

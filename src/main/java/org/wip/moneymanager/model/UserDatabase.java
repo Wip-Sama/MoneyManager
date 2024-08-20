@@ -1,6 +1,8 @@
 package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
+import org.wip.moneymanager.model.types.Tag;
+import org.wip.moneymanager.model.types.Transaction_tags;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +20,7 @@ public class UserDatabase extends Database {
     }
 
     public UserDatabase() {
-        super(Data.user+".db");
+        super(Data.username+".db");
     }
 
     public Task<Boolean> createTag(String name, String color) {
