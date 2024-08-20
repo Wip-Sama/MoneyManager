@@ -183,7 +183,6 @@ public class Settings extends BorderPane {
         initialize_accent_selector();
 
         executorService.submit(tmp);
-
         theme.valueProperty().addListener((_, _, newValue) -> {
             try {
                 user.setTheme(Theme.fromString(newValue));
@@ -196,6 +195,8 @@ public class Settings extends BorderPane {
                 throw new RuntimeException(e);
             }
         });
+
+        executorService.shutdown();
         Data.unsubscribe_busy();
     }
 }

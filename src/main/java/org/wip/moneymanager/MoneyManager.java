@@ -21,9 +21,12 @@ import java.net.http.HttpTimeoutException;
 import java.sql.*;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /*Premessa per il prof:
  * In questo codice troverete diversi metodi apparentemente inutilizzati
@@ -32,8 +35,13 @@ import java.util.concurrent.Executors;
  * Altri semplicemente sono buone pratiche, come avere tutti i getter/setter impostati anche se non utilizzati*/
 
 public class MoneyManager extends Application {
+    private Set<String> initialThreads;
     @Override
     public void start(Stage stage) throws IOException, SQLException {
+        initialThreads = Thread.getAllStackTraces().keySet().stream()
+                .map(Thread::getName)
+                .collect(Collectors.toSet());
+
         setUserAgentStylesheet("style-dark.css");
         FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("base_menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -53,7 +61,8 @@ public class MoneyManager extends Application {
             protected Void call() throws Exception {
                 MMDatabase db = MMDatabase.getInstance();
                 Task<Boolean> checked = db.checkUpdate_date();
-                if (checked.get() == null || checked.get()) {
+                checked.run();
+                if (checked.get() == null || !checked.get()) {
                     Task<List<Currency>> currencies = db.getAllCurrency();
                     currencies.run();
 
@@ -73,8 +82,11 @@ public class MoneyManager extends Application {
                         JSONObject jsonObject = new JSONObject(response.body());
                         JSONObject tmp = jsonObject.getJSONObject("eur");
 
-                        if (currencies.get() != null) {
-                            for (Currency currency : currencies.get()) {
+                        List<Currency> currenciesList = currencies.get();
+                        System.out.println(currenciesList.size());
+
+                        if (currenciesList != null) {
+                            for (Currency currency : currenciesList) {
                                 if (tmp.has(currency.name())) {
                                     currency.setUpdate_date();
                                     currency.setValue(tmp.getDouble(currency.name()));
@@ -86,6 +98,7 @@ public class MoneyManager extends Application {
                             for (String key : tmp.keySet()) {
                                 Task<Boolean> createCurrencyTask = db.createCurrency(key, tmp.getDouble(key));
                                 createCurrencyTask.run();
+                                createCurrencyTask.get();
                             }
                         }
                     } catch (HttpTimeoutException e) {
@@ -105,9 +118,23 @@ public class MoneyManager extends Application {
         // Add a ShutdownHook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Shutdown Hook is running!");
-            for (Thread thread : Thread.getAllStackTraces().keySet()) {
-                if (thread.isAlive()) {
-                    System.out.println("Thread still running: " + thread.getName());
+            Set<String> currentThreads = Thread.getAllStackTraces().keySet().stream()
+                    .map(Thread::getName)
+                    .collect(Collectors.toSet());
+
+            currentThreads.removeAll(initialThreads);
+
+            for (String threadName : currentThreads) {
+                System.out.println("Thread still running: " + threadName);
+            }
+
+            // Find and print the stack trace of Thread-3
+            for (Map.Entry<Thread, StackTraceElement[]> entry : Thread.getAllStackTraces().entrySet()) {
+                if (entry.getKey().getName().equals("Thread-3")) {
+                    System.out.println("Thread-3 stack trace:");
+                    for (StackTraceElement element : entry.getValue()) {
+                        System.out.println(element);
+                    }
                 }
             }
         }));

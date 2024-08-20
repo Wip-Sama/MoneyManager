@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Database {
+public class Database implements AutoCloseable {
 
     protected Connection con = null;
 
@@ -39,7 +39,8 @@ public class Database {
         }
     }
 
-    protected void close() {
+    @Override
+    public void close() {
         executorService.shutdown();
         try {
             if(con != null)
