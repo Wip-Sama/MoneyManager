@@ -100,6 +100,22 @@ public class MMDatabase extends Database {
         });
     }
 
+    public Task<List<String>> getAllCurrencyName() {
+        return asyncCall(() -> {
+            List<String> currencies = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT name FROM Currency;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    currencies.add(rs.getString("name"));
+                };
+                stmt.close();
+            }
+            return currencies;
+        });
+    }
+
     public Task<Boolean> checkPassword(String username, String password) {
         return asyncCall(() -> {
             if (isConnected()) {

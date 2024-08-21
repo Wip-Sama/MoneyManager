@@ -77,6 +77,14 @@ public class MoneyManagerController {
             }
         });
 
+        statistics.selectedProperty().addListener((_, _, newValue) -> {
+            if (newValue) {
+                Data.localizationService.setSelectedLanguage("it");
+            } else {
+                Data.localizationService.setSelectedLanguage("en");
+            }
+        });
+
         Data.user.themeProperty().addListener((_, _, newValue) -> {
             Scene scene = accounts.getScene();
             switch (newValue) {
@@ -109,7 +117,6 @@ public class MoneyManagerController {
                 }
             }
         });
-
     }
 
     public void show_busy_indicator() {

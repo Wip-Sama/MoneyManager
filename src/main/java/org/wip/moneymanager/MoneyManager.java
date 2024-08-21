@@ -20,10 +20,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
 import java.sql.*;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -139,6 +136,7 @@ public class MoneyManager extends Application {
             }
         }));
     }
+    private final static String base_path = "/org/wip/moneymanager/locale/";
 
     public static void main(String[] args) {
         launch();

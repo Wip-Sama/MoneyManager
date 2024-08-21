@@ -76,6 +76,9 @@ public class Settings extends BorderPane {
     @FXML
     private VBox sub_category_list;
 
+    @FXML
+    private Label page_title;
+
     public Settings() {}
 
     public double[] getAvailableSpace(ScrollPane scrollPane) {
@@ -86,14 +89,6 @@ public class Settings extends BorderPane {
         double paddingTop = content.getPadding().getTop();
         double paddingBottom = content.getPadding().getBottom();
         return new double[]{viewportBounds.getWidth() - paddingLeft - paddingRight, viewportBounds.getHeight() - paddingTop - paddingBottom};
-    }
-
-    public double getAvailableSpaceHeight(ScrollPane scrollPane) {
-        Bounds viewportBounds = scrollPane.getViewportBounds();
-        Region content = (Region) scrollPane.getContent();
-        double paddingLeft = content.getPadding().getLeft();
-        double paddingRight = content.getPadding().getRight();
-        return viewportBounds.getWidth() - paddingLeft - paddingRight;
     }
 
     private void initialize_choice_box() throws ExecutionException, InterruptedException {
@@ -108,13 +103,19 @@ public class Settings extends BorderPane {
         first_day_of_week.setValue(Data.user.week_startProperty().get().toString());
 
         start_page.getItems().addAll("Nessuna", "Conti", "Statistiche", "Transazioni");
-        //start_page.setValue(user.home_screen());
+        start_page.setValue(String.valueOf(Data.user.home_screenProperty().get()));
 
-        Task<List<Currency>> currencies = db.getAllCurrency();
+        Task<List<String>> currencies = db.getAllCurrencyName();
         currencies.run();
-        currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.name().toUpperCase()));
+        currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.toUpperCase()));
         primary_currency.setValue(Data.user.main_currencyProperty().get().toUpperCase());
         Data.unsubscribe_busy();
+
+//        Task<List<Currency>> currencies = db.getAllCurrency();
+//        currencies.run();
+//        currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.name().toUpperCase()));
+//        primary_currency.setValue(Data.user.main_currencyProperty().get().toUpperCase());
+//        Data.unsubscribe_busy();
     }
 
     private void deselect_all_presets() {
@@ -144,16 +145,12 @@ public class Settings extends BorderPane {
 
     private void initialize_accent_selector() {
         set_selected();
-
-        // Set accent color updater
         Data.user.accentProperty().addListener((_, _, newValue) -> {
             if (newValue == null) {
                 return;
             }
-
             deselect_all_presets();
             set_selected();
-
             try {
                 Data.user.setAccent(Data.user.accentProperty().get());
             } catch (SQLException e) {
@@ -163,6 +160,7 @@ public class Settings extends BorderPane {
     }
 
     public void initialize() throws ExecutionException, InterruptedException {
+        Data.subscribe_busy();
         category_container.viewportBoundsProperty().addListener((_, _, _) -> {
             double[] availableSpace = getAvailableSpace(category_container);
             category_list.setPrefWidth(availableSpace[0]);
@@ -173,7 +171,6 @@ public class Settings extends BorderPane {
             sub_category_list.setPrefWidth(availableSpace[0]);
             sub_category_list.setMinHeight(availableSpace[1]);
         });
-        Data.subscribe_busy();
 
         Task<User> tmp = db.getUser(Data.username);
         tmp.run();
@@ -183,6 +180,7 @@ public class Settings extends BorderPane {
         initialize_accent_selector();
 
         executorService.submit(tmp);
+
         theme.valueProperty().addListener((_, _, newValue) -> {
             try {
                 user.setTheme(Theme.fromString(newValue));
@@ -195,6 +193,8 @@ public class Settings extends BorderPane {
                 throw new RuntimeException(e);
             }
         });
+
+        page_title.textProperty().bind(Data.localizationService.localizedStringBinding("settings"));
 
         executorService.shutdown();
         Data.unsubscribe_busy();

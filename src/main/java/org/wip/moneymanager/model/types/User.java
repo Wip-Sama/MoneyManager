@@ -16,7 +16,7 @@ public final class User {
     private final StringProperty safe_login;
     private final ObjectProperty<Theme> theme;
     private final ObjectProperty<Color> accent;
-    private final IntegerProperty home_screen;
+    private final StringProperty home_screen;
     private final ObjectProperty<Week> week_start;
     private final StringProperty main_currency;
     private final StringProperty language;
@@ -28,7 +28,7 @@ public final class User {
                 String safe_login,
                 int theme,
                 String accent,
-                int home_screen,
+                String home_screen,
                 int week_start,
                 String main_currency,
                 String language,
@@ -39,7 +39,7 @@ public final class User {
         this.safe_login = new SimpleStringProperty(safe_login);
         this.theme = new SimpleObjectProperty<>(Theme.fromInt(theme));
         this.accent = new SimpleObjectProperty<>(new Color(accent));
-        this.home_screen = new SimpleIntegerProperty(home_screen); // -> string -> Object
+        this.home_screen = new SimpleStringProperty(home_screen); // -> string -> Object
         this.week_start = new SimpleObjectProperty<Week>(Week.fromInt(week_start)); // -> string -> Object
         this.main_currency = new SimpleStringProperty(main_currency); // -> Object
         this.language = new SimpleStringProperty(language); // -> Object // Forse no
@@ -55,7 +55,7 @@ public final class User {
                 rs.getString("safe_login"),
                 rs.getInt("theme"),
                 rs.getString("accent"),
-                rs.getInt("home_screen"),
+                rs.getString("home_screen"),
                 rs.getInt("week_start"),
                 rs.getString("main_currency"),
                 rs.getString("language"),
@@ -87,7 +87,7 @@ public final class User {
         return accent;
     }
 
-    public ReadOnlyIntegerProperty home_screenProperty() {
+    public ReadOnlyStringProperty home_screenProperty() {
         return home_screen;
     }
 
@@ -140,7 +140,7 @@ public final class User {
         updateField("accent", accent.getHex());
     }
 
-    public void setHome_screen(int home_screen) throws SQLException {
+    public void setHome_screen(String home_screen) throws SQLException {
         this.home_screen.set(home_screen);
         updateField("home_screen", home_screen);
     }
