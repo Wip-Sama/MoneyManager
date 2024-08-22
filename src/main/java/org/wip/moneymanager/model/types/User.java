@@ -147,7 +147,7 @@ public final class User {
 
     public void setWeek_start(Week week_start) throws SQLException {
         this.week_start.set(week_start);
-        updateField("week_start", week_start);
+        updateField("week_start", week_start.ordinal());
     }
 
     public void setMain_currency(String main_currency) throws SQLException {

@@ -109,12 +109,16 @@ public class MoneyManagerController {
         // e tutte quelle dopo
         accounts.sceneProperty().addListener((_, _, newValue) -> {
             if (newValue != null) {
-                newValue.getRoot().setStyle("-fu-accent: " + Data.user.accentProperty().get().getHex() + ";");
+                // Alternativa:
+                // Non funzioan per System
+                // newValue.getStylesheets().add("style-"+Data.user.themeProperty().get().toString().toLowerCase()+".css");
                 if (Data.user.themeProperty().get() == Theme.LIGHT) {
                     newValue.getStylesheets().add("style-light.css");
                 } else {
                     newValue.getStylesheets().add("style-dark.css");
                 }
+                newValue.getRoot().setStyle("-fu-accent: " + Data.user.accentProperty().get().getHex() + ";");
+                Data.lsp.setSelectedLanguage(Data.user.languageProperty().get());
             }
         });
     }

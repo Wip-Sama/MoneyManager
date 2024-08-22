@@ -10,10 +10,7 @@ import org.wip.moneymanager.model.interfaces.Translation;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,10 +60,12 @@ public class LocalizationService {
         }, selectedLanguage);
     }
 
+    // Non so che vuol dire ma intellij non smetteva di chiederlo
     @SafeVarargs
     public final StringBinding lsb(String key, ObservableValue<String>... arg) {
         return localizedStringBinding(key, arg);
     }
+    @SafeVarargs
     public final StringBinding localizedStringBinding(String key, ObservableValue<String>... args) {
         Observable[] observables = new Observable[args.length + 1];
         observables[0] = selectedLanguage;
@@ -85,12 +84,16 @@ public class LocalizationService {
         }, observables);
     }
 
+    public List<String> getAvailableLocales() {
+        return new ArrayList<>(localizationData.keySet());
+    }
+
     public String getLocalizedString(String key, String locale) {
         return localizationData.get(locale).translate(key);
     }
 
     public void loadAllLocales() throws IOException {
-        File dir = new File(MoneyManager.class.getResource(base_path).getFile());
+        File dir = new File(Objects.requireNonNull(MoneyManager.class.getResource(base_path)).getFile());
         File[] files = dir.listFiles();
         assert files != null;
         for (File file : files) {

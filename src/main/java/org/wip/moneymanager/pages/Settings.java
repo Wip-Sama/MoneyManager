@@ -1,5 +1,6 @@
 package org.wip.moneymanager.pages;
 
+import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -15,6 +16,7 @@ import org.wip.moneymanager.model.*;
 import org.wip.moneymanager.model.types.Currency;
 import org.wip.moneymanager.model.types.Theme;
 import org.wip.moneymanager.model.types.User;
+import org.wip.moneymanager.model.types.Week;
 
 
 import java.sql.SQLException;
@@ -29,55 +31,55 @@ public class Settings extends BorderPane {
     private final MMDatabase db = MMDatabase.getInstance();
 
     @FXML
+    private Label page_title;
+    @FXML
+    private Label theme_label;
+    @FXML
     private ChoiceBox<String> theme;
-
     @FXML
-    private ChoiceBox<String> language;
-
-    @FXML
-    private ChoiceBox<String> primary_currency;
-
-    @FXML
-    private ChoiceBox<String> first_day_of_week;
-
-    @FXML
-    private ChoiceBox<String> start_page;
-
+    private Label accent_label;
     @FXML
     private ColorPickerPreset preset_blue;
-
     @FXML
     private ColorPickerPreset preset_green;
-
     @FXML
     private ColorPickerPreset preset_yellow;
-
     @FXML
     private ColorPickerPreset preset_orange;
-
     @FXML
     private ColorPickerButton custom_color;
-
+    @FXML
+    private Label language_label;
+    @FXML
+    private ChoiceBox<String> language;
+    @FXML
+    private Label primary_curency_label;
+    @FXML
+    private ChoiceBox<String> primary_currency;
+    @FXML
+    private Label first_day_of_week_label;
+    @FXML
+    private ChoiceBox<String> first_day_of_week;
+    @FXML
+    private Label start_page_label;
+    @FXML
+    private ChoiceBox<String> start_page;
+    @FXML
+    private Label category_label;
     @FXML
     private Button new_category;
-
-    @FXML
-    private Button new_sub_category;
-
     @FXML
     private ScrollPane category_container;
-
-    @FXML
-    private ScrollPane sub_category_container;
-
     @FXML
     private VBox category_list;
-
+    @FXML
+    private Button new_sub_category;
+    @FXML
+    private Label sub_category_label;
+    @FXML
+    private ScrollPane sub_category_container;
     @FXML
     private VBox sub_category_list;
-
-    @FXML
-    private Label page_title;
 
     public Settings() {}
 
@@ -91,31 +93,90 @@ public class Settings extends BorderPane {
         return new double[]{viewportBounds.getWidth() - paddingLeft - paddingRight, viewportBounds.getHeight() - paddingTop - paddingBottom};
     }
 
+    private void update_day_of_week() {
+        int selectedIndex = first_day_of_week.getSelectionModel().getSelectedIndex();
+        first_day_of_week.getItems().setAll(FXCollections.observableArrayList(
+                        Data.localizationService.localizedStringBinding("monday").get(),
+                        Data.localizationService.localizedStringBinding("tuesday").get(),
+                        Data.localizationService.localizedStringBinding("wednesday").get(),
+                        Data.localizationService.localizedStringBinding("thursday").get(),
+                        Data.localizationService.localizedStringBinding("friday").get(),
+                        Data.localizationService.localizedStringBinding("saturday").get(),
+                        Data.localizationService.localizedStringBinding("sunday").get()
+                )
+        );
+        first_day_of_week.getSelectionModel().select(selectedIndex);
+    }
+
+    private void update_theme() {
+        int selectedIndex = theme.getSelectionModel().getSelectedIndex();
+        theme.getItems().setAll(FXCollections.observableArrayList(
+                        Data.localizationService.localizedStringBinding("theme.light").get(),
+                        Data.localizationService.localizedStringBinding("theme.dark").get()
+                )
+        );
+        theme.getSelectionModel().select(selectedIndex);
+    }
+
+    private void update_start_page() {
+        int selectedIndex = start_page.getSelectionModel().getSelectedIndex();
+        start_page.getItems().setAll(FXCollections.observableArrayList(
+                        Data.localizationService.localizedStringBinding("monday").get(),
+                        Data.localizationService.localizedStringBinding("tuesday").get(),
+                        Data.localizationService.localizedStringBinding("wednesday").get(),
+                        Data.localizationService.localizedStringBinding("thursday").get(),
+                        Data.localizationService.localizedStringBinding("friday").get(),
+                        Data.localizationService.localizedStringBinding("saturday").get(),
+                        Data.localizationService.localizedStringBinding("sunday").get()
+                )
+        );
+        start_page.getSelectionModel().select(selectedIndex);
+    }
+
     private void initialize_choice_box() throws ExecutionException, InterruptedException {
         Data.subscribe_busy();
-        theme.getItems().addAll("Light", "Dark");
-        theme.setValue(Data.user.themeProperty().get().toString());
 
-        language.getItems().addAll("Eng", "Ita");
+        language.getItems().addAll(Data.lsp.getAvailableLocales());
         language.setValue(Data.user.languageProperty().get());
+        language.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
+            try {
+                Data.user.setLanguage(newValue);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Data.lsp.setSelectedLanguage(newValue);
+        });
 
-        first_day_of_week.getItems().addAll("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica");
-        first_day_of_week.setValue(Data.user.week_startProperty().get().toString());
+        update_theme();
+        theme.getSelectionModel().select(Data.user.themeProperty().get().ordinal()-1);
+        theme.valueProperty().addListener((_, _, newValue) -> {
+            //+1 perché System non esiste ma il conteggio del tema parte da 0 (system)
+            try {
+                Data.user.setTheme(Theme.fromInt(theme.getSelectionModel().getSelectedIndex()+1));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        start_page.getItems().addAll("Nessuna", "Conti", "Statistiche", "Transazioni");
-        start_page.setValue(String.valueOf(Data.user.home_screenProperty().get()));
+        update_day_of_week();
+        first_day_of_week.getSelectionModel().select(Data.user.week_startProperty().get().ordinal());
+        first_day_of_week.valueProperty().addListener((_, _, newValue) -> {
+            try {
+                Data.user.setWeek_start(Week.fromInt(first_day_of_week.getSelectionModel().getSelectedIndex()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        update_start_page();
+        start_page.getSelectionModel().select(Data.user.home_screenProperty().get());
+
 
         Task<List<String>> currencies = db.getAllCurrencyName();
         currencies.run();
         currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.toUpperCase()));
         primary_currency.setValue(Data.user.main_currencyProperty().get().toUpperCase());
         Data.unsubscribe_busy();
-
-//        Task<List<Currency>> currencies = db.getAllCurrency();
-//        currencies.run();
-//        currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.name().toUpperCase()));
-//        primary_currency.setValue(Data.user.main_currencyProperty().get().toUpperCase());
-//        Data.unsubscribe_busy();
     }
 
     private void deselect_all_presets() {
@@ -172,31 +233,29 @@ public class Settings extends BorderPane {
             sub_category_list.setMinHeight(availableSpace[1]);
         });
 
-        Task<User> tmp = db.getUser(Data.username);
-        tmp.run();
-        User user = tmp.get();
-
         initialize_choice_box();
         initialize_accent_selector();
 
-        executorService.submit(tmp);
-
-        theme.valueProperty().addListener((_, _, newValue) -> {
-            try {
-                user.setTheme(Theme.fromString(newValue));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                Data.user.setTheme(user.themeProperty().get());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        page_title.textProperty().bind(Data.localizationService.localizedStringBinding("settings"));
+        page_title.textProperty().bind(Data.lsp.lsb("settings"));
+        theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
+        accent_label.textProperty().bind(Data.lsp.lsb("settings.accent"));
+        language_label.textProperty().bind(Data.lsp.lsb("settings.language"));
+        primary_curency_label.textProperty().bind(Data.lsp.lsb("settings.primary_currency"));
+        first_day_of_week_label.textProperty().bind(Data.lsp.lsb("settings.first_day_of_week"));
+        start_page_label.textProperty().bind(Data.lsp.lsb("settings.start_page"));
+        category_label.textProperty().bind(Data.lsp.lsb("settings.categories"));
+        sub_category_label.textProperty().bind(Data.lsp.lsb("settings.subcategories"));
+        new_category.textProperty().bind(Data.lsp.lsb("settings.new_category"));
+        new_sub_category.textProperty().bind(Data.lsp.lsb("settings.new_subcategory"));
 
         executorService.shutdown();
         Data.unsubscribe_busy();
+
+        /* Update stage */
+        Data.lsp.selectedLanguageProperty().addListener((_, _, _) -> {
+            update_day_of_week();
+            update_theme();
+            update_start_page();
+        });
     }
 }

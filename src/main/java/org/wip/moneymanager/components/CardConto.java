@@ -119,7 +119,6 @@ public class CardConto extends AnchorPane {
         });
 
         account_creation_date.textProperty().bind(Data.localizationService.localizedStringBinding("cardconto.creation_date"));
-
         updateChoiceBoxItems();
         type_field.getSelectionModel().select(0);
 

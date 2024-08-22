@@ -51,7 +51,6 @@ public class MoneyManager extends Application {
         stage.setMinHeight(500);
         stage.setMinWidth(800);
         stage.setTitle("Money Manager");
-
         Image icon = new Image(Objects.requireNonNull(MoneyManager.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
         stage.getIcons().add(icon);
 
