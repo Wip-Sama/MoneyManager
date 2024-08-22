@@ -23,8 +23,13 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 /*Premessa per il prof:
  * In questo codice troverete diversi metodi apparentemente inutilizzati
  * Ora probabilmente qualcuno è effettivamente inutilizzato ma la maggior parte sono utilizzati da scenebuilder
@@ -118,21 +123,9 @@ public class MoneyManager extends Application {
             Set<String> currentThreads = Thread.getAllStackTraces().keySet().stream()
                     .map(Thread::getName)
                     .collect(Collectors.toSet());
-
             currentThreads.removeAll(initialThreads);
-
             for (String threadName : currentThreads) {
                 System.out.println("Thread still running: " + threadName);
-            }
-
-            // Find and print the stack trace of Thread-3
-            for (Map.Entry<Thread, StackTraceElement[]> entry : Thread.getAllStackTraces().entrySet()) {
-                if (entry.getKey().getName().equals("Thread-3")) {
-                    System.out.println("Thread-3 stack trace:");
-                    for (StackTraceElement element : entry.getValue()) {
-                        System.out.println(element);
-                    }
-                }
             }
         }));
     }
@@ -140,11 +133,5 @@ public class MoneyManager extends Application {
 
     public static void main(String[] args) {
         launch();
-
-//        Color test = new Color(255,0,0);
-//        System.out.println(test.darker().brighter());
-//        System.out.println(test.darker().darker());
-//        System.out.println(test.darker().darker().darker().brighter().brighter());
-
     }
 }

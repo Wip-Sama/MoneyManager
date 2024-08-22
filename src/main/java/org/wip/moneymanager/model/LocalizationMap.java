@@ -1,4 +1,4 @@
-package org.wip.moneymanager.model.types;
+package org.wip.moneymanager.model;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,6 +28,9 @@ public class LocalizationMap implements Translation {
         }
     }
 
+    // Funziona solo se la lingua non è in resources
+    // Da la possibilità all'untete di implementtare un sistema per permettere
+    // all'utente di salvere le proprie traduzioni per lingue non implementate
     public void save() throws IOException {
         try (FileOutputStream output = new FileOutputStream(getClass().getResource(base_path+language).getFile())) {
             properties.store(output, null);
@@ -44,7 +47,7 @@ public class LocalizationMap implements Translation {
 
     public String getProperty(String key) {
         String value = properties.getProperty(key);
-        if (value == null) {
+        if (value == null || value.equals("__MISSING__")) {
             setProperty(key);
             try {
                 save();

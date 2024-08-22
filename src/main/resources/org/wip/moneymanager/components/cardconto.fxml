@@ -36,7 +36,7 @@
                <children>
                   <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label text="Nome Conto">
+                        <Label fx:id="name_label" text="Nome Conto">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -49,7 +49,7 @@
                   </VBox>
                   <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>
-                        <Label text="Bilancio">
+                        <Label fx:id="balance_label" text="Bilancio">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -59,7 +59,7 @@
                   </VBox>
                   <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                      <children>
-                        <Label text="Tipo Conto">
+                        <Label fx:id="type_label" text="Tipo Conto">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -69,7 +69,7 @@
                   </VBox>
                   <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label text="Data Creazione">
+                        <Label fx:id="creation_date_label" text="Data Creazione">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -79,12 +79,12 @@
                   </VBox>
                   <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                      <children>
-                        <Label text="Includi nei totali">
+                        <Label fx:id="include_into_totals_label" text="Includi nei totali">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Switch />
+                        <Switch fx:id="include_into_totals_field" />
                      </children>
                   </VBox>
                </children>
@@ -142,7 +142,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label text="Tipo Conto" GridPane.rowIndex="1" />
+                  <Label fx:id="account_type" text="Tipo Conto" GridPane.rowIndex="1" />
                   <Label fx:id="account_creation_date" text="Data creazione: xx/xx/xxxx" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <BorderPane.margin>

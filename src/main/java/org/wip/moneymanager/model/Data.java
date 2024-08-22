@@ -1,10 +1,7 @@
 package org.wip.moneymanager.model;
 
 import javafx.beans.property.*;
-import org.wip.moneymanager.model.types.LocalizationService;
 import org.wip.moneymanager.model.types.User;
-
-import java.util.Locale;
 
 public class Data {
     // Non serve particolarmente ma volevo metteralo lo stesso
@@ -13,6 +10,7 @@ public class Data {
     public static UserDatabase userDatabase;
 
     public static final LocalizationService localizationService = new LocalizationService("en");
+    public static final LocalizationService lsp = localizationService;
 
     // public static String user = null;
     // Solo per i test
