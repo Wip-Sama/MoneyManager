@@ -138,5 +138,4 @@ public class MoneyManagerController {
         fadeOut.setOnFinished(_ -> busy_indicator.setVisible(false));
         fadeOut.play();
     }
-
 }

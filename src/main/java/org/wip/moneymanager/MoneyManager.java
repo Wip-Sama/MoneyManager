@@ -86,15 +86,15 @@ public class MoneyManager extends Application {
                         List<Currency> currenciesList = currencies.get();
                         System.out.println(currenciesList.size());
 
-                        if (currenciesList != null) {
-                            for (Currency currency : currenciesList) {
-                                if (tmp.has(currency.name())) {
-                                    currency.setUpdate_date();
-                                    currency.setValue(tmp.getDouble(currency.name()));
-                                    tmp.remove(currency.name());
-                                }
+
+                        for (Currency currency : currenciesList) {
+                            if (tmp.has(currency.name())) {
+                                currency.setUpdate_date();
+                                currency.setValue(tmp.getDouble(currency.name()));
+                                tmp.remove(currency.name());
                             }
                         }
+
                         if (tmp.keySet() != null) {
                             for (String key : tmp.keySet()) {
                                 Task<Boolean> createCurrencyTask = db.createCurrency(key, tmp.getDouble(key));

@@ -3,6 +3,7 @@ package org.wip.moneymanager.model;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.wip.moneymanager.model.interfaces.Translation;
@@ -23,7 +24,7 @@ public class LocalizationMap implements Translation {
     }
 
     public void load() throws IOException {
-        try (FileInputStream input = new FileInputStream(getClass().getResource(base_path+language).getFile())) {
+        try (FileInputStream input = new FileInputStream(Objects.requireNonNull(getClass().getResource(base_path + language)).getFile())) {
             properties.load(input);
         }
     }
@@ -32,7 +33,7 @@ public class LocalizationMap implements Translation {
     // Da la possibilità all'untete di implementtare un sistema per permettere
     // all'utente di salvere le proprie traduzioni per lingue non implementate
     public void save() throws IOException {
-        try (FileOutputStream output = new FileOutputStream(getClass().getResource(base_path+language).getFile())) {
+        try (FileOutputStream output = new FileOutputStream(Objects.requireNonNull(getClass().getResource(base_path + language)).getFile())) {
             properties.store(output, null);
         }
     }

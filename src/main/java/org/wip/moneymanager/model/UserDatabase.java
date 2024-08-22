@@ -2,6 +2,7 @@ package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
 import org.wip.moneymanager.model.types.Tag;
+import org.wip.moneymanager.model.types.Transaction;
 import org.wip.moneymanager.model.types.Transaction_tags;
 
 import java.sql.PreparedStatement;
@@ -95,6 +96,24 @@ public class UserDatabase extends Database {
                 stmt.close();
             }
             return tags;
+        });
+    }
+
+    public Task<List<Transaction>> getAlltransactionBetween(int start, int end) {
+        return asyncCall(() -> {
+            List<Transaction> transactions = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT * FROM Transactions WHERE date BETWEEN ? AND ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, start);
+                stmt.setInt(2, end);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    transactions.add(new Transaction(rs, this));
+                };
+                stmt.close();
+            }
+            return transactions;
         });
     }
 
