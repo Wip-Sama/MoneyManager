@@ -23,3 +23,29 @@
     -fx-background-color: -fu-accent, -fu-stroke-selected, -fu-foreground-selected;
     -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3 2;
 }
+
+.transparent-text-field {
+    -fx-cursor: text;
+    -fx-highlight-fill: -fu-accent;
+    -fx-highlight-text-fill: -fu-text-1;
+    -fx-text-fill: -fu-text-1;
+    -fx-prompt-text-fill: -fu-text-2;
+
+
+    /*accent, border, background*/
+    /*top-l, top-r, bottom-r, bottom-l*/
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 0 0, 4;
+    -fx-padding: .333333em .583em .444444em .583em;
+}
+
+.transparent-text-field:hover {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 2 0, 2 2 2 2;
+}
+
+.transparent-text-field:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3 2;
+}

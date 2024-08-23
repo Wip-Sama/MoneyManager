@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 import org.wip.moneymanager.model.types.Theme;
-import org.wip.moneymanager.model.types.User;
+import org.wip.moneymanager.model.DBObjects.User;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;

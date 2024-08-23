@@ -9,17 +9,20 @@ public enum Theme {
 
     // Andrebbe sistemato, il problema è che se abbiamo più linge dovremmo
     // Convertire la localizzazione a inglese o una lingua comune per poterla usare
+    // Edit: ho cambiato da switch a if, ora teoricamente dovrebbe avere meno problemi
+    // c'è sempre però ilc aso in cui theme sia un dato più vecchio della lingua attuale
+    // non so come si potrebbe verificare ma è una possibilità
     @Deprecated
     public static Theme fromString(String theme) {
         theme = theme.toLowerCase();
-        return switch (theme) {
-            case "system" -> SYSTEM;
-            // System non funziona per il semplice fatto che prenderlo probabilmente cambia tra mac/window/linux ecc
-            // quindi non ha senso implementarlo, anche perché non possiamo tertsalo su mac
-            case "light" -> LIGHT;
-            case "dark" -> DARK;
-            default -> null;
-        };
+        if (Data.lsp.lsb("system").get().toLowerCase().equals(theme)) {
+            return Theme.SYSTEM;
+        } else if (Data.lsp.lsb("light").get().toLowerCase().equals(theme)) {
+            return Theme.LIGHT;
+        } else if (Data.lsp.lsb("dark").get().toLowerCase().equals(theme)) {
+            return Theme.DARK;
+        }
+        return null;
     }
 
     public static String toString(Theme theme) {

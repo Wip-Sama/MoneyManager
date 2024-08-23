@@ -1,4 +1,4 @@
-package org.wip.moneymanager.model.types;
+package org.wip.moneymanager.model.DBObjects;
 
 import org.wip.moneymanager.model.MMDatabase;
 

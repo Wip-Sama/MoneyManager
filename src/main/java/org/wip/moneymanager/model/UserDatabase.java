@@ -1,9 +1,9 @@
 package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
-import org.wip.moneymanager.model.types.Tag;
-import org.wip.moneymanager.model.types.Transaction;
-import org.wip.moneymanager.model.types.Transaction_tags;
+import org.wip.moneymanager.model.DBObjects.Tag;
+import org.wip.moneymanager.model.DBObjects.Transaction;
+import org.wip.moneymanager.model.DBObjects.Transaction_tags;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

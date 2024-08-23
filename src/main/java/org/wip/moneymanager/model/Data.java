@@ -1,7 +1,7 @@
 package org.wip.moneymanager.model;
 
 import javafx.beans.property.*;
-import org.wip.moneymanager.model.types.User;
+import org.wip.moneymanager.model.DBObjects.User;
 
 public class Data {
     // Non serve particolarmente ma volevo metteralo lo stesso

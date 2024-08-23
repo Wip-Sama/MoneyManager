@@ -1,7 +1,10 @@
-package org.wip.moneymanager.model.types;
+package org.wip.moneymanager.model.DBObjects;
 
 import javafx.beans.property.*;
 import org.wip.moneymanager.model.MMDatabase;
+import org.wip.moneymanager.model.types.HomeScreen;
+import org.wip.moneymanager.model.types.Theme;
+import org.wip.moneymanager.model.types.Week;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +19,7 @@ public final class User {
     private final StringProperty safe_login;
     private final ObjectProperty<Theme> theme;
     private final ObjectProperty<Color> accent;
-    private final StringProperty home_screen;
+    private final ObjectProperty<HomeScreen> home_screen;
     private final ObjectProperty<Week> week_start;
     private final StringProperty main_currency;
     private final StringProperty language;
@@ -28,7 +31,7 @@ public final class User {
                 String safe_login,
                 int theme,
                 String accent,
-                String home_screen,
+                int home_screen,
                 int week_start,
                 String main_currency,
                 String language,
@@ -39,7 +42,7 @@ public final class User {
         this.safe_login = new SimpleStringProperty(safe_login);
         this.theme = new SimpleObjectProperty<>(Theme.fromInt(theme));
         this.accent = new SimpleObjectProperty<>(new Color(accent));
-        this.home_screen = new SimpleStringProperty(home_screen); // -> string -> Object
+        this.home_screen = new SimpleObjectProperty<HomeScreen>(HomeScreen.fromInt(home_screen)); // -> string -> Object
         this.week_start = new SimpleObjectProperty<Week>(Week.fromInt(week_start)); // -> string -> Object
         this.main_currency = new SimpleStringProperty(main_currency); // -> Object
         this.language = new SimpleStringProperty(language); // -> Object // Forse no
@@ -55,7 +58,7 @@ public final class User {
                 rs.getString("safe_login"),
                 rs.getInt("theme"),
                 rs.getString("accent"),
-                rs.getString("home_screen"),
+                rs.getInt("home_screen"),
                 rs.getInt("week_start"),
                 rs.getString("main_currency"),
                 rs.getString("language"),
@@ -87,7 +90,7 @@ public final class User {
         return accent;
     }
 
-    public ReadOnlyStringProperty home_screenProperty() {
+    public ReadOnlyObjectProperty<HomeScreen> home_screenProperty() {
         return home_screen;
     }
 
@@ -140,9 +143,9 @@ public final class User {
         updateField("accent", accent.getHex());
     }
 
-    public void setHome_screen(String home_screen) throws SQLException {
+    public void setHome_screen(HomeScreen home_screen) throws SQLException {
         this.home_screen.set(home_screen);
-        updateField("home_screen", home_screen);
+        updateField("home_screen", home_screen.ordinal());
     }
 
     public void setWeek_start(Week week_start) throws SQLException {

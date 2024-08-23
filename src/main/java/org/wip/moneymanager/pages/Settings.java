@@ -8,14 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import org.wip.moneymanager.components.Category;
 import org.wip.moneymanager.components.ColorPickerButton;
 import org.wip.moneymanager.components.ColorPickerPreset;
 import org.wip.moneymanager.model.*;
-import org.wip.moneymanager.model.types.Currency;
+import org.wip.moneymanager.model.types.HomeScreen;
 import org.wip.moneymanager.model.types.Theme;
-import org.wip.moneymanager.model.types.User;
 import org.wip.moneymanager.model.types.Week;
 
 
@@ -80,6 +82,12 @@ public class Settings extends BorderPane {
     private ScrollPane sub_category_container;
     @FXML
     private VBox sub_category_list;
+    @FXML
+    private BorderPane category_bp;
+    @FXML
+    private BorderPane subcategory_bp;
+    @FXML
+    private HBox category_editor;
 
     public Settings() {}
 
@@ -121,13 +129,10 @@ public class Settings extends BorderPane {
     private void update_start_page() {
         int selectedIndex = start_page.getSelectionModel().getSelectedIndex();
         start_page.getItems().setAll(FXCollections.observableArrayList(
-                        Data.localizationService.localizedStringBinding("monday").get(),
-                        Data.localizationService.localizedStringBinding("tuesday").get(),
-                        Data.localizationService.localizedStringBinding("wednesday").get(),
-                        Data.localizationService.localizedStringBinding("thursday").get(),
-                        Data.localizationService.localizedStringBinding("friday").get(),
-                        Data.localizationService.localizedStringBinding("saturday").get(),
-                        Data.localizationService.localizedStringBinding("sunday").get()
+                        Data.localizationService.localizedStringBinding("homescreen.none").get(),
+                        Data.localizationService.localizedStringBinding("homescreen.transactions").get(),
+                        Data.localizationService.localizedStringBinding("homescreen.accounts").get(),
+                        Data.localizationService.localizedStringBinding("homescreen.statistics").get()
                 )
         );
         start_page.getSelectionModel().select(selectedIndex);
@@ -169,8 +174,19 @@ public class Settings extends BorderPane {
         });
 
         update_start_page();
-        start_page.getSelectionModel().select(Data.user.home_screenProperty().get());
+        start_page.getSelectionModel().select(Data.user.home_screenProperty().get().ordinal());
+        start_page.valueProperty().addListener((_, _, newValue) -> {
+            try {
+                Data.user.setHome_screen(HomeScreen.fromInt(start_page.getSelectionModel().getSelectedIndex()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
+        category_editor.widthProperty().addListener((_, _, _) -> {
+            category_bp.setMaxWidth(category_editor.getWidth()/2);
+            subcategory_bp.setMaxWidth(category_editor.getWidth()/2);
+        });
 
         Task<List<String>> currencies = db.getAllCurrencyName();
         currencies.run();
@@ -219,6 +235,7 @@ public class Settings extends BorderPane {
             }
         });
     }
+
 
     public void initialize() throws ExecutionException, InterruptedException {
         Data.subscribe_busy();

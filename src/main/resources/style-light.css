@@ -25,7 +25,7 @@ Design directions:
     -fu-foreground-rest: rgba(239, 239, 239, 1);
     -fu-foreground-hover: rgba(227, 227, 227, 1);
     -fu-foreground-pressed: rgba(247, 247, 247, 1);
-    -fu-foreground-selected: rgba(239, 239, 239, 1);
+    -fu-foreground-selected: rgba(210, 210, 210, 1);
 
     -fu-stroke-rest: rgba(198, 198, 198, 1);
     -fu-stroke-hover: rgba(198, 198, 198, 1);

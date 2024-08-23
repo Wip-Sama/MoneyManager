@@ -36,12 +36,12 @@ public enum Week {
     public static String toString(Week week) {
         return switch (week) {
             case MONDAY -> Data.lsp.lsb("Monday").get();
-            case TUESDAY -> Data.lsp.lsb("Monday").get();
-            case WEDNESDAY -> "Wednesday";
-            case THURSDAY -> "Thursday";
-            case FRIDAY -> "Friday";
-            case SATURDAY -> "Saturday";
-            case SUNDAY -> "Sunday";
+            case TUESDAY -> Data.lsp.lsb("tuesday").get();
+            case WEDNESDAY -> Data.lsp.lsb("wednesday").get();
+            case THURSDAY -> Data.lsp.lsb("thursday").get();
+            case FRIDAY -> Data.lsp.lsb("friday").get();
+            case SATURDAY -> Data.lsp.lsb("saturday").get();
+            case SUNDAY -> Data.lsp.lsb("sunday").get();
         };
     }
 

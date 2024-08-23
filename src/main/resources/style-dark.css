@@ -29,7 +29,7 @@ Design directions:
     -fu-foreground-rest: rgba(26, 26, 26, 1);
     -fu-foreground-hover: rgba(38, 38, 38, 1);
     -fu-foreground-pressed: rgba(18, 18, 18, 1);
-    -fu-foreground-selected: rgba(26, 26, 26, 1);
+    -fu-foreground-selected: rgba(22, 22, 22, 1);
 
     -fu-stroke-rest: rgba(66, 66, 66, 1);
     -fu-stroke-hover: rgba(66, 66, 66, 1);
@@ -41,4 +41,45 @@ Design directions:
 
     /* Opacità per lo stato disabilitato */
     /* Opacità impostata al 80/70% */
+}
+
+.separator {
+    -fx-padding: 3 0 3 0;
+    -fx-background-color: transparent;
+}
+
+.separator .line {
+    -fx-border-color: -fu-stroke-rest;
+    -fx-border-insets: 1 3 1 3;
+    -fx-border-width: 0.8;
+}
+
+.category_editor {
+    -fx-background-insets: 5 0 0 0;
+    -fx-background-radius: 5;
+}
+
+.category_editor:hover .separator .line {
+    -fx-border-color: -fu-accent;
+}
+
+.category_editor:pressed {
+    -fx-background-color: -fu-foreground-pressed;
+}
+
+.category_editor:selected .separator .line {
+    -fx-border-color: -fu-accent;
+}
+
+.category_editor:selected {
+    -fx-background-color: -fu-foreground-selected;
+}
+
+.category_editor:selected:pressed {
+    -fx-background-color: -fu-foreground-pressed;
+}
+
+.category_editor .separator {
+    -fx-padding: 3 0 0 0;
+    -fx-background-color: transparent;
 }

@@ -1,0 +1,4 @@
+.category_editor .separator {
+    -fx-padding: 3 0 0 0;
+    -fx-background-color: transparent;
+}

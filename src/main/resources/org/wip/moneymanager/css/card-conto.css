@@ -3,12 +3,12 @@
 }
 
 .card-conto-display {
-    -fx-background-color: -fu-background-3;
+    -fx-background-color: -fu-background-2;
     -fx-background-radius: 10;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }
 
 .card-conto-edit {
-    -fx-background-color: -fu-background-3;
+    -fx-background-color: -fu-background-2;
     -fx-background-radius: 10;
 }

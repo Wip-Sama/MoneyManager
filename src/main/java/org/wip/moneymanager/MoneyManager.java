@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wip.moneymanager.model.types.Currency;
+import org.wip.moneymanager.model.DBObjects.Currency;
 import org.wip.moneymanager.model.MMDatabase;
 
 import java.io.IOException;
@@ -23,12 +23,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.ArrayList;
 import java.util.List;
 /*Premessa per il prof:
  * In questo codice troverete diversi metodi apparentemente inutilizzati
@@ -128,7 +123,6 @@ public class MoneyManager extends Application {
             }
         }));
     }
-    private final static String base_path = "/org/wip/moneymanager/locale/";
 
     public static void main(String[] args) {
         launch();
