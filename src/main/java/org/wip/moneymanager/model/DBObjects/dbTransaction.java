@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class Transaction {
+public final class dbTransaction {
     private final UserDatabase db;
     private final int id;
     private int date;
@@ -18,7 +18,7 @@ public final class Transaction {
     private String note;
     private int fauvorite;
 
-    public Transaction(int id, int date, int type, double amount, int account, int second_account, String note, int fauvorite, UserDatabase db) {
+    public dbTransaction(int id, int date, int type, double amount, int account, int second_account, String note, int fauvorite, UserDatabase db) {
         this.id = id;
         this.date = date;
         this.type = type;
@@ -30,7 +30,7 @@ public final class Transaction {
         this.db = db;
     }
 
-    public Transaction(ResultSet rs, UserDatabase db) throws SQLException {
+    public dbTransaction(ResultSet rs, UserDatabase db) throws SQLException {
         this(
                 rs.getInt("id"),
                 rs.getInt("date"),
@@ -124,7 +124,7 @@ public final class Transaction {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Transaction) obj;
+        var that = (dbTransaction) obj;
         return this.id == that.id &&
                 this.date == that.date &&
                 this.type == that.type &&
@@ -142,7 +142,7 @@ public final class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction[" +
+        return "dbTransaction[" +
                 "id=" + id + ", " +
                 "date=" + date + ", " +
                 "type=" + type + ", " +

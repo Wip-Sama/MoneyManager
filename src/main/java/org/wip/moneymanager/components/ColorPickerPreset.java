@@ -47,7 +47,7 @@ public class ColorPickerPreset extends AnchorPane {
             selected.set(!selected.get());
             if (selected.get()) {
                 try {
-                    Data.user.setAccent(getRGB());
+                    Data.dbUser.setAccent(getRGB());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

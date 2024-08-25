@@ -7,20 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class Tag {
+public final class dbTag {
     private final UserDatabase db;
     private final int id;
     private String name;
     private String color;
 
-    public Tag(int id, String name, String color, UserDatabase db) {
+    public dbTag(int id, String name, String color, UserDatabase db) {
         this.id = id;
         this.name = name;
         this.color = color;
         this.db = db;
     }
 
-    public Tag(ResultSet rs, UserDatabase db) throws SQLException {
+    public dbTag(ResultSet rs, UserDatabase db) throws SQLException {
         this(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -64,7 +64,7 @@ public final class Tag {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Tag) obj;
+        var that = (dbTag) obj;
         return this.id == that.id &&
                 Objects.equals(this.name, that.name) &&
                 Objects.equals(this.color, that.color);
@@ -77,7 +77,7 @@ public final class Tag {
 
     @Override
     public String toString() {
-        return "Tag[" +
+        return "dbTag[" +
                 "id=" + id + ", " +
                 "name=" + name + ", " +
                 "color=" + color + ']';

@@ -2,6 +2,7 @@ package org.wip.moneymanager.model.DBObjects;
 
 import javafx.beans.property.*;
 import org.wip.moneymanager.model.MMDatabase;
+import org.wip.moneymanager.model.types.Color;
 import org.wip.moneymanager.model.types.HomeScreen;
 import org.wip.moneymanager.model.types.Theme;
 import org.wip.moneymanager.model.types.Week;
@@ -11,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class User {
+public final class dbUser {
     private static final MMDatabase db = MMDatabase.getInstance();
     private final int id;
     private final StringProperty username;
@@ -25,17 +26,17 @@ public final class User {
     private final StringProperty language;
     private final IntegerProperty last_login;
 
-    public User(int id,
-                String username,
-                String password_hash,
-                String safe_login,
-                int theme,
-                String accent,
-                int home_screen,
-                int week_start,
-                String main_currency,
-                String language,
-                int last_login) {
+    public dbUser(int id,
+                  String username,
+                  String password_hash,
+                  String safe_login,
+                  int theme,
+                  String accent,
+                  int home_screen,
+                  int week_start,
+                  String main_currency,
+                  String language,
+                  int last_login) {
         this.id = id;
         this.username = new SimpleStringProperty(username);
         this.password_hash = new SimpleStringProperty(password_hash);
@@ -50,7 +51,7 @@ public final class User {
         // Salvare le cose come intero lo rende molto difficile da portare se non mettiamo un versioning al db
     }
 
-    public User(ResultSet rs) throws SQLException {
+    public dbUser(ResultSet rs) throws SQLException {
         this(
                 rs.getInt("id"),
                 rs.getString("username"),
@@ -181,7 +182,7 @@ public final class User {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (User) obj;
+        var that = (dbUser) obj;
         return Objects.equals(this.username, that.username) &&
                 Objects.equals(this.password_hash, that.password_hash) &&
                 Objects.equals(this.safe_login, that.safe_login) &&
@@ -201,7 +202,7 @@ public final class User {
 
     @Override
     public String toString() {
-        return "User[" +
+        return "dbUser[" +
                 "username=" + username + ", " +
                 "password_hash=" + password_hash + ", " +
                 "safe_login=" + safe_login + ", " +

@@ -1,0 +1,8 @@
+.tooltip {
+    -fx-background-color: -fu-foreground-rest;
+    -fx-background-radius: 5;
+    -fx-border-color: -fu-stroke-rest;
+    -fx-border-radius: 5;
+    -fx-text-fill: -fu-text-1;
+    -fx-padding: 5;
+}

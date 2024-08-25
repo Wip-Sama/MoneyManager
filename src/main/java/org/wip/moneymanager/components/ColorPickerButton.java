@@ -72,7 +72,7 @@ public class ColorPickerButton extends AnchorPane {
                 colorPickerPopup.changesSaved.addListener((_, _, newValue) -> {
                     if (newValue) {
                         try {
-                            Data.user.setAccent(getRGB());
+                            Data.dbUser.setAccent(getRGB());
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }

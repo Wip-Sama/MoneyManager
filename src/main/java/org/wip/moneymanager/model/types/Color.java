@@ -1,4 +1,4 @@
-package org.wip.moneymanager.model.DBObjects;
+package org.wip.moneymanager.model.types;
 
 public class Color {
     private int red;

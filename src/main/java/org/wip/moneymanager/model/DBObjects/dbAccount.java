@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class Account {
+public final class dbAccount {
     private final UserDatabase db;
     private final int id;
     private String name;
@@ -16,7 +16,7 @@ public final class Account {
     private int creation_date;
     private int include_into_totals;
 
-    public Account(int id, String name, int type, double balance, int creation_date, int include_into_totals, UserDatabase db) {
+    public dbAccount(int id, String name, int type, double balance, int creation_date, int include_into_totals, UserDatabase db) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -26,7 +26,7 @@ public final class Account {
         this.db = db;
     }
 
-    public Account(ResultSet rs, UserDatabase db) throws Exception {
+    public dbAccount(ResultSet rs, UserDatabase db) throws Exception {
         this(
             rs.getInt("id"),
             rs.getString("name"),
@@ -111,7 +111,7 @@ public final class Account {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Account) obj;
+        var that = (dbAccount) obj;
         return this.id == that.id &&
                 Objects.equals(this.name, that.name) &&
                 this.type == that.type &&
@@ -127,7 +127,7 @@ public final class Account {
 
     @Override
     public String toString() {
-        return "Account[" +
+        return "dbAccount[" +
                 "id=" + id + ", " +
                 "name=" + name + ", " +
                 "type=" + type + ", " +

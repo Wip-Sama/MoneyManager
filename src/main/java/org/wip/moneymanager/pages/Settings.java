@@ -1,6 +1,10 @@
 package org.wip.moneymanager.pages;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -11,17 +15,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import org.wip.moneymanager.components.Category;
 import org.wip.moneymanager.components.ColorPickerButton;
 import org.wip.moneymanager.components.ColorPickerPreset;
 import org.wip.moneymanager.model.*;
+import org.wip.moneymanager.model.DBObjects.dbCategory;
 import org.wip.moneymanager.model.types.HomeScreen;
 import org.wip.moneymanager.model.types.Theme;
 import org.wip.moneymanager.model.types.Week;
 
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -81,13 +85,24 @@ public class Settings extends BorderPane {
     @FXML
     private ScrollPane sub_category_container;
     @FXML
-    private VBox sub_category_list;
+    private VBox subcategory_list;
     @FXML
     private BorderPane category_bp;
     @FXML
     private BorderPane subcategory_bp;
     @FXML
     private HBox category_editor;
+    @FXML
+    private ToggleButton income;
+    @FXML
+    private ToggleButton expense;
+    @FXML
+    private ToggleGroup category_type;
+
+    private final ObjectProperty<Category> selectedCategory = new SimpleObjectProperty<>();
+    private final ObservableList<Category> categories = FXCollections.observableList(new ArrayList<>());
+    private final ObservableList<Category> subcategories = FXCollections.observableList(new ArrayList<>());
+    private boolean somethingnew = false;
 
     public Settings() {}
 
@@ -142,10 +157,10 @@ public class Settings extends BorderPane {
         Data.subscribe_busy();
 
         language.getItems().addAll(Data.lsp.getAvailableLocales());
-        language.setValue(Data.user.languageProperty().get());
+        language.setValue(Data.dbUser.languageProperty().get());
         language.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
             try {
-                Data.user.setLanguage(newValue);
+                Data.dbUser.setLanguage(newValue);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -153,31 +168,31 @@ public class Settings extends BorderPane {
         });
 
         update_theme();
-        theme.getSelectionModel().select(Data.user.themeProperty().get().ordinal()-1);
+        theme.getSelectionModel().select(Data.dbUser.themeProperty().get().ordinal()-1);
         theme.valueProperty().addListener((_, _, newValue) -> {
             //+1 perché System non esiste ma il conteggio del tema parte da 0 (system)
             try {
-                Data.user.setTheme(Theme.fromInt(theme.getSelectionModel().getSelectedIndex()+1));
+                Data.dbUser.setTheme(Theme.fromInt(theme.getSelectionModel().getSelectedIndex()+1));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
 
         update_day_of_week();
-        first_day_of_week.getSelectionModel().select(Data.user.week_startProperty().get().ordinal());
+        first_day_of_week.getSelectionModel().select(Data.dbUser.week_startProperty().get().ordinal());
         first_day_of_week.valueProperty().addListener((_, _, newValue) -> {
             try {
-                Data.user.setWeek_start(Week.fromInt(first_day_of_week.getSelectionModel().getSelectedIndex()));
+                Data.dbUser.setWeek_start(Week.fromInt(first_day_of_week.getSelectionModel().getSelectedIndex()));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
 
         update_start_page();
-        start_page.getSelectionModel().select(Data.user.home_screenProperty().get().ordinal());
+        start_page.getSelectionModel().select(Data.dbUser.home_screenProperty().get().ordinal());
         start_page.valueProperty().addListener((_, _, newValue) -> {
             try {
-                Data.user.setHome_screen(HomeScreen.fromInt(start_page.getSelectionModel().getSelectedIndex()));
+                Data.dbUser.setHome_screen(HomeScreen.fromInt(start_page.getSelectionModel().getSelectedIndex()));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -191,7 +206,7 @@ public class Settings extends BorderPane {
         Task<List<String>> currencies = db.getAllCurrencyName();
         currencies.run();
         currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.toUpperCase()));
-        primary_currency.setValue(Data.user.main_currencyProperty().get().toUpperCase());
+        primary_currency.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
         Data.unsubscribe_busy();
     }
 
@@ -204,7 +219,7 @@ public class Settings extends BorderPane {
     }
 
     private void set_selected() {
-        int[] rgb = Data.user.accentProperty().get().getRGB();
+        int[] rgb = Data.dbUser.accentProperty().get().getRGB();
 
         if (Arrays.equals(preset_orange.getRGB(), rgb)) {
             preset_orange.selected.set(true);
@@ -222,20 +237,149 @@ public class Settings extends BorderPane {
 
     private void initialize_accent_selector() {
         set_selected();
-        Data.user.accentProperty().addListener((_, _, newValue) -> {
+        Data.dbUser.accentProperty().addListener((_, _, newValue) -> {
             if (newValue == null) {
                 return;
             }
             deselect_all_presets();
             set_selected();
             try {
-                Data.user.setAccent(Data.user.accentProperty().get());
+                Data.dbUser.setAccent(Data.dbUser.accentProperty().get());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
+    private void initialize_category_list() throws ExecutionException, InterruptedException {
+        this.categories.addListener((ListChangeListener<Category>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    category_list.getChildren().addAll(c.getAddedSubList());
+                    for (Category category : c.getAddedSubList()) {
+                        category.destruct.addListener((_, _, newValue) -> {
+                            if (!newValue) {
+                                return;
+                            }
+
+                            if (category.getDbcategory() == null) {
+                                categories.remove(category);
+                                return;
+                            }
+
+                            Task<List<dbCategory>> hasSub = Data.userDatabase.getAllSubcategories(category.getDbcategory().id());
+                            hasSub.run();
+                            try {
+                                if (!hasSub.get().isEmpty()) {
+                                    Alert alert = new Alert(Alert.AlertType.WARNING, Data.lsp.lsb("alert.you_cant_delete_category_with_subcategories").get(), ButtonType.OK);
+                                    alert.setTitle("Error");
+                                    alert.setHeaderText(null);
+                                    alert.showAndWait();
+                                    category.destruct.set(false);
+                                } else {
+                                    Task<Boolean> result = Data.userDatabase.forceRemoveCategory(category.getDbcategory().id());
+                                    result.run();
+                                    categories.remove(category);
+                                }
+                            } catch (InterruptedException | ExecutionException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        category.selected.addListener((_, _, newValue) -> {
+                            if (newValue) {
+                                selectedCategory.set(category);
+                            } else if (selectedCategory.get() == category) {
+                                selectedCategory.set(null);
+                            }
+                        });
+                    }
+                }
+                if (c.wasRemoved()) {
+                    category_list.getChildren().removeAll(c.getRemoved());
+                }
+            }
+        });
+        this.subcategories.addListener((ListChangeListener<Category>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    subcategory_list.getChildren().addAll(c.getAddedSubList());
+                    for (Category subcategory : c.getAddedSubList()) {
+                        subcategory.selectionable(false);
+                        subcategory.destruct.addListener((_, _, newValue) -> {
+                            if (!newValue) {
+                                return;
+                            }
+
+                            if (subcategory.getDbcategory() == null) {
+                                subcategories.remove(subcategory);
+                                return;
+                            }
+
+                            Task<List<dbCategory>> hasSub = Data.userDatabase.getAllSubcategories(subcategory.getDbcategory().id());
+                            hasSub.run();
+                            try {
+                                if (!hasSub.get().isEmpty()) {
+                                    Alert alert = new Alert(Alert.AlertType.WARNING, Data.lsp.lsb("alert.you_cant_delete_category_with_subcategories").get(), ButtonType.OK);
+                                    alert.setTitle("Error");
+                                    alert.setHeaderText(null);
+                                    alert.showAndWait();
+                                    subcategory.destruct.set(false);
+                                } else {
+                                    Task<Boolean> result = Data.userDatabase.forceRemoveCategory(subcategory.getDbcategory().id());
+                                    result.run();
+                                    subcategories.remove(subcategory);
+                                }
+                            } catch (InterruptedException | ExecutionException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    }
+                }
+                if (c.wasRemoved()) {
+                    subcategory_list.getChildren().removeAll(c.getRemoved());
+                }
+            }
+        });
+        update_category_list();
+    }
+
+    private void update_category_list() throws ExecutionException, InterruptedException {
+        this.categories.clear();
+        category_list.getChildren().clear();
+
+        Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllCategories(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1);
+        dbCategories.run();
+        for (dbCategory dbCategory : dbCategories.get()) {
+            Category category = new Category(dbCategory);
+            this.categories.add(category);
+        }
+    }
+
+    private void update_subcategory_list() throws ExecutionException, InterruptedException {
+        this.subcategories.clear();
+        subcategory_list.getChildren().clear();
+
+        Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllSubcategories(selectedCategory.get().getDbcategory().id());
+        dbCategories.run();
+        for (dbCategory dbCategory : dbCategories.get()) {
+            Category category = new Category(dbCategory);
+            this.subcategories.add(category);
+        }
+    }
+
+    private boolean creating_new_category() {
+        for (Category category : categories) {
+            if (category.is_tmp) {
+                return true;
+            }
+        }
+        for (Category subcategory : subcategories) {
+            if (subcategory.is_tmp) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void initialize() throws ExecutionException, InterruptedException {
         Data.subscribe_busy();
@@ -246,12 +390,28 @@ public class Settings extends BorderPane {
         });
         sub_category_container.viewportBoundsProperty().addListener((_, _, _) -> {
             double[] availableSpace = getAvailableSpace(sub_category_container);
-            sub_category_list.setPrefWidth(availableSpace[0]);
-            sub_category_list.setMinHeight(availableSpace[1]);
+            subcategory_list.setPrefWidth(availableSpace[0]);
+            subcategory_list.setMinHeight(availableSpace[1]);
         });
 
         initialize_choice_box();
         initialize_accent_selector();
+        initialize_category_list();
+
+        new_category.onActionProperty().set(_ -> {
+            if (creating_new_category()) {
+                return;
+            }
+            this.categories.add(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1));
+        });
+        new_sub_category.onActionProperty().set(_ -> {
+            if (creating_new_category()) {
+                return;
+            }
+            if (selectedCategory.get() != null) {
+                this.subcategories.add(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1, selectedCategory.get().getDbcategory().id()));
+            }
+        });
 
         page_title.textProperty().bind(Data.lsp.lsb("settings"));
         theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
@@ -264,6 +424,46 @@ public class Settings extends BorderPane {
         sub_category_label.textProperty().bind(Data.lsp.lsb("settings.subcategories"));
         new_category.textProperty().bind(Data.lsp.lsb("settings.new_category"));
         new_sub_category.textProperty().bind(Data.lsp.lsb("settings.new_subcategory"));
+        income.textProperty().bind(Data.lsp.lsb("settings.income"));
+        expense.textProperty().bind(Data.lsp.lsb("settings.expense"));
+
+        income.selectedProperty().addListener((_, _, newValue) -> {
+            if (!newValue && !expense.isSelected()) {
+                income.setSelected(true);
+            }
+        });
+        expense.selectedProperty().addListener((_, _, newValue) -> {
+            if (!newValue && !income.isSelected()) {
+                expense.setSelected(true);
+            }
+        });
+
+        category_type.selectedToggleProperty().addListener((_, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
+            if (!newValue.equals(oldValue)) {
+                selectedCategory.set(null);
+            }
+            try {
+                update_category_list();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        selectedCategory.addListener((_, oldValue, newValue) -> {
+            try {
+                if (oldValue != null)
+                    oldValue.selected.set(false);
+                if (newValue != null)
+                    update_subcategory_list();
+                else
+                    subcategories.clear();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         executorService.shutdown();
         Data.unsubscribe_busy();

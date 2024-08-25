@@ -9,10 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
+import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
+import org.wip.moneymanager.model.UserDatabase;
 import org.wip.moneymanager.model.types.Theme;
-import org.wip.moneymanager.model.DBObjects.User;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -39,9 +40,9 @@ public class MoneyManagerController {
     @FXML
     public void initialize() throws ExecutionException, InterruptedException {
         // TODO: da rimuovere dopo che avremo fatto la schermata di login/register
-        Task<User> t = MMDatabase.getInstance().getUser(Data.username);
+        Task<dbUser> t = MMDatabase.getInstance().getUser(Data.username);
         t.run();
-        Data.user = t.get();
+        Data.dbUser = t.get();
 
         busy_indicator.setVisible(false);
         Data.busyProperty().addListener((_, _, newValue) -> {
@@ -85,7 +86,7 @@ public class MoneyManagerController {
             }
         });
 
-        Data.user.themeProperty().addListener((_, _, newValue) -> {
+        Data.dbUser.themeProperty().addListener((_, _, newValue) -> {
             Scene scene = accounts.getScene();
             switch (newValue) {
                 case DARK, SYSTEM:
@@ -99,7 +100,7 @@ public class MoneyManagerController {
             }
         });
 
-        Data.user.accentProperty().addListener((_, _, newValue) -> {
+        Data.dbUser.accentProperty().addListener((_, _, newValue) -> {
             Scene scene = accounts.getScene();
             scene.getRoot().setStyle("-fu-accent: " + newValue.getHex() + ";");
         });
@@ -111,16 +112,17 @@ public class MoneyManagerController {
             if (newValue != null) {
                 // Alternativa:
                 // Non funzioan per System
-                // newValue.getStylesheets().add("style-"+Data.user.themeProperty().get().toString().toLowerCase()+".css");
-                if (Data.user.themeProperty().get() == Theme.LIGHT) {
+                // newValue.getStylesheets().add("style-"+Data.dbUser.themeProperty().get().toString().toLowerCase()+".css");
+                if (Data.dbUser.themeProperty().get() == Theme.LIGHT) {
                     newValue.getStylesheets().add("style-light.css");
                 } else {
                     newValue.getStylesheets().add("style-dark.css");
                 }
-                newValue.getRoot().setStyle("-fu-accent: " + Data.user.accentProperty().get().getHex() + ";");
-                Data.lsp.setSelectedLanguage(Data.user.languageProperty().get());
+                newValue.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
+                Data.lsp.setSelectedLanguage(Data.dbUser.languageProperty().get());
             }
         });
+        Data.userDatabase = new UserDatabase();
     }
 
     public void show_busy_indicator() {

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wip.moneymanager.model.DBObjects.Currency;
+import org.wip.moneymanager.model.DBObjects.dbCurrency;
 import org.wip.moneymanager.model.MMDatabase;
 
 import java.io.IOException;
@@ -59,7 +59,7 @@ public class MoneyManager extends Application {
                 Task<Boolean> checked = db.checkUpdate_date();
                 checked.run();
                 if (checked.get() == null || !checked.get()) {
-                    Task<List<Currency>> currencies = db.getAllCurrency();
+                    Task<List<dbCurrency>> currencies = db.getAllCurrency();
                     currencies.run();
 
                     String url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json";
@@ -78,11 +78,11 @@ public class MoneyManager extends Application {
                         JSONObject jsonObject = new JSONObject(response.body());
                         JSONObject tmp = jsonObject.getJSONObject("eur");
 
-                        List<Currency> currenciesList = currencies.get();
+                        List<dbCurrency> currenciesList = currencies.get();
                         System.out.println(currenciesList.size());
 
 
-                        for (Currency currency : currenciesList) {
+                        for (dbCurrency currency : currenciesList) {
                             if (tmp.has(currency.name())) {
                                 currency.setUpdate_date();
                                 currency.setValue(tmp.getDouble(currency.name()));

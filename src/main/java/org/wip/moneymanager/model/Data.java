@@ -1,7 +1,7 @@
 package org.wip.moneymanager.model;
 
 import javafx.beans.property.*;
-import org.wip.moneymanager.model.DBObjects.User;
+import org.wip.moneymanager.model.DBObjects.dbUser;
 
 public class Data {
     // Non serve particolarmente ma volevo metteralo lo stesso
@@ -12,11 +12,10 @@ public class Data {
     public static final LocalizationService localizationService = new LocalizationService("en");
     public static final LocalizationService lsp = localizationService;
 
-    // public static String user = null;
-    // Solo per i test
+    // Solo per i test "user"
     public static String username = "user";
 
-    public static User user;
+    public static dbUser dbUser;
 
     // BUSY status
     private static final IntegerProperty busy = new SimpleIntegerProperty(0);

@@ -1,9 +1,10 @@
 package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
-import org.wip.moneymanager.model.DBObjects.Tag;
-import org.wip.moneymanager.model.DBObjects.Transaction;
-import org.wip.moneymanager.model.DBObjects.Transaction_tags;
+import org.wip.moneymanager.model.DBObjects.dbCategory;
+import org.wip.moneymanager.model.DBObjects.dbTag;
+import org.wip.moneymanager.model.DBObjects.dbTransaction;
+import org.wip.moneymanager.model.DBObjects.dbTransaction_tags;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class UserDatabase extends Database {
     }
 
     public UserDatabase() {
-        super(Data.username+".db");
+        super("user_dbs/"+Data.username+".db");
     }
 
     public Task<Boolean> createTag(String name, String color) {
@@ -56,7 +57,8 @@ public class UserDatabase extends Database {
     public Task<Boolean> removeAllTag() {
         return asyncCall(() -> {
             if (isConnected()) {
-                String query = "DELETE FROM Tag;";
+                // WHERE id != -1 non serve ma altrimenti intellij eprnede che la query pulisce il db come un errore
+                String query = "DELETE FROM Tag WHERE id != -1;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.executeUpdate();
                 stmt.close();
@@ -66,42 +68,42 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<Tag> getTag(String name) {
+    public Task<dbTag> getTag(String name) {
         return asyncCall(() -> {
-            Tag tag = null;
+            dbTag dbTag = null;
             if (isConnected()) {
                 String query = "SELECT * FROM Tag WHERE name = ?;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setString(1, name);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    tag= new Tag(rs, this);
+                    dbTag = new dbTag(rs, this);
                 };
                 stmt.close();
             }
-            return tag;
+            return dbTag;
         });
     }
 
-    public Task<List<Tag>> getAllTag() {
+    public Task<List<dbTag>> getAllTag() {
         return asyncCall(() -> {
-            List<Tag> tags = new ArrayList<>();
+            List<dbTag> dbTags = new ArrayList<>();
             if (isConnected()) {
                 String query = "SELECT * FROM Tag;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
-                    tags.add(new Tag(rs, this));
+                    dbTags.add(new dbTag(rs, this));
                 };
                 stmt.close();
             }
-            return tags;
+            return dbTags;
         });
     }
 
-    public Task<List<Transaction>> getAlltransactionBetween(int start, int end) {
+    public Task<List<dbTransaction>> getAlltransactionBetween(int start, int end) {
         return asyncCall(() -> {
-            List<Transaction> transactions = new ArrayList<>();
+            List<dbTransaction> dbTransactions = new ArrayList<>();
             if (isConnected()) {
                 String query = "SELECT * FROM Transactions WHERE date BETWEEN ? AND ?;";
                 PreparedStatement stmt = con.prepareStatement(query);
@@ -109,11 +111,11 @@ public class UserDatabase extends Database {
                 stmt.setInt(2, end);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
-                    transactions.add(new Transaction(rs, this));
+                    dbTransactions.add(new dbTransaction(rs, this));
                 };
                 stmt.close();
             }
-            return transactions;
+            return dbTransactions;
         });
     }
 
@@ -160,16 +162,16 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<List<Transaction_tags>> getAllTransaction_tags_per_transaction(int transaction) {
+    public Task<List<dbTransaction_tags>> getAllTransaction_tags_per_transaction(int transaction) {
         return asyncCall(() -> {
-            List<Transaction_tags> tt = new ArrayList<>();
+            List<dbTransaction_tags> tt = new ArrayList<>();
             if (isConnected()) {
                 String query = "SELECT * FROM Transaction_tags WHERE 'transaction' = ?;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setInt(1, transaction);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    tt.add(new Transaction_tags(rs, this));
+                    tt.add(new dbTransaction_tags(rs, this));
                 };
                 stmt.close();
             }
@@ -177,19 +179,196 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<List<Transaction_tags>> getAllTransaction_tags() {
+    public Task<List<dbTransaction_tags>> getAllTransaction_tags() {
         return asyncCall(() -> {
-            List<Transaction_tags> tt = new ArrayList<>();
+            List<dbTransaction_tags> tt = new ArrayList<>();
             if (isConnected()) {
                 String query = "SELECT * FROM Transaction_tags;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
-                    tt.add(new Transaction_tags(rs, this));
+                    tt.add(new dbTransaction_tags(rs, this));
                 };
                 stmt.close();
             }
             return tt;
+        });
+    }
+
+    public Task<List<dbCategory>> getAllCategories(int type) {
+        return asyncCall(() -> {
+            List<dbCategory> categories = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT * FROM Categories WHERE type == ? AND parent_category is null;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, type);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    categories.add(new dbCategory(rs, this));
+                };
+                stmt.close();
+            }
+            return categories;
+        });
+    }
+
+    public Task<dbCategory> getCategory(int id) {
+        return asyncCall(() -> {
+            dbCategory dbCategory = null;
+            if (isConnected()) {
+                String query = "SELECT * FROM Categories WHERE id = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    dbCategory = new dbCategory(rs, this);
+                };
+                stmt.close();
+            }
+            return dbCategory;
+        });
+    }
+
+    public Task<dbCategory> getCategory(String name, int type) {
+        return asyncCall(() -> {
+            dbCategory dbCategory = null;
+            if (isConnected()) {
+                String query = "SELECT * FROM Categories WHERE name = ? AND type = ? AND parent_category is null;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, name);
+                stmt.setInt(2, type);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    dbCategory = new dbCategory(rs, this);
+                };
+                stmt.close();
+            }
+            return dbCategory;
+        });
+    }
+
+    public Task<dbCategory> getSubcategory(String name, int type, int parent_category) {
+        return asyncCall(() -> {
+            dbCategory dbCategory = null;
+            if (isConnected()) {
+                String query = "SELECT * FROM Categories WHERE name = ? AND type = ? AND parent_category = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, name);
+                stmt.setInt(2, type);
+                stmt.setInt(3, parent_category);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    dbCategory = new dbCategory(rs, this);
+                };
+                stmt.close();
+            }
+            return dbCategory;
+        });
+    }
+
+    public Task<Boolean> createCategory(String name, int type) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "INSERT INTO Categories (name, type) VALUES (?, ?);";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, name);
+                stmt.setInt(2, type);
+                stmt.executeUpdate();
+                stmt.close();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public Task<Boolean> createSubcategory(String name, int type, int parent_category) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "INSERT INTO Categories (name, type, parent_category) VALUES (?, ?, ?);";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, name);
+                stmt.setInt(2, type);
+                stmt.setInt(3, parent_category);
+                stmt.executeUpdate();
+                stmt.close();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public Task<Boolean> forceRemoveCategory(int id) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String remove_from_transactions = "UPDATE Transactions SET category = null WHERE category = ?;";
+                PreparedStatement stmt1 = con.prepareStatement(remove_from_transactions);
+                stmt1.setInt(1, id);
+                stmt1.executeUpdate();
+                stmt1.close();
+
+                Task<List<dbCategory>> subc = getAllSubcategories(id);
+                subc.run();
+                subc.get().forEach(sub -> forceRemoveCategory(sub.id()));
+
+                String remove_subcategory = "DELETE FROM Categories WHERE parent_category = ?;";
+                PreparedStatement stmt2 = con.prepareStatement(remove_subcategory);
+                stmt2.setInt(1, id);
+                stmt2.executeUpdate();
+                stmt2.close();
+
+                String remove_category = "DELETE FROM Categories WHERE id = ?;";
+                PreparedStatement stmt3 = con.prepareStatement(remove_category);
+                stmt3.setInt(1, id);
+                stmt3.executeUpdate();
+                stmt3.close();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public Task<Boolean> removeCategory(int id) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "DELETE FROM Categories WHERE id = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                stmt.close();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public Task<Boolean> removeAllSubcategories(int parent_category) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "DELETE FROM Categories WHERE parent_category = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, parent_category);
+                stmt.executeUpdate();
+                stmt.close();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public Task<List<dbCategory>> getAllSubcategories(int parent_category) {
+        return asyncCall(() -> {
+            List<dbCategory> categories = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT * FROM Categories WHERE parent_category = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, parent_category);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    categories.add(new dbCategory(rs, this));
+                };
+                stmt.close();
+            }
+            return categories;
         });
     }
 }

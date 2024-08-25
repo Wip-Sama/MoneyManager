@@ -1,0 +1,11 @@
+/* File: src/main/resources/org/wip/moneymanager/css/alert.css */
+.alert {
+    -fx-background-color: -fu-background-3;
+    -fx-padding: 10;
+    -fx-text-alignment: center;
+}
+
+.alert .label {
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}

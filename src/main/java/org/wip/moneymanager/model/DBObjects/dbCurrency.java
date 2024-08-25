@@ -7,19 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class Currency implements Comparable<Currency>{
+public final class dbCurrency implements Comparable<dbCurrency>{
     private static final MMDatabase db = MMDatabase.getInstance();
     private final String name;
     private double value;
     private int update_date;
 
-    public Currency(String name, double value, int update_date) {
+    public dbCurrency(String name, double value, int update_date) {
         this.name = name;
         this.value = value;
         this.update_date = update_date;
     }
 
-    public Currency(ResultSet rs) throws SQLException {
+    public dbCurrency(ResultSet rs) throws SQLException {
         this(
                 rs.getString("name"),
                 rs.getDouble("value"),
@@ -70,7 +70,7 @@ public final class Currency implements Comparable<Currency>{
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Currency) obj;
+        var that = (dbCurrency) obj;
         return Objects.equals(this.name, that.name) &&
                 Double.doubleToLongBits(this.value) == Double.doubleToLongBits(that.value) &&
                 Objects.equals(this.update_date, that.update_date);
@@ -83,14 +83,14 @@ public final class Currency implements Comparable<Currency>{
 
     @Override
     public String toString() {
-        return "Currency[" +
+        return "dbCurrency[" +
                 "name=" + name + ", " +
                 "value=" + value + ", " +
                 "update_date=" + update_date + ']';
     }
 
     @Override
-    public int compareTo(Currency other) {
+    public int compareTo(dbCurrency other) {
         return this.name.compareTo(other.name);
     }
 }

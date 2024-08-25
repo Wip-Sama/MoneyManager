@@ -1,8 +1,8 @@
 package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
-import org.wip.moneymanager.model.DBObjects.Currency;
-import org.wip.moneymanager.model.DBObjects.User;
+import org.wip.moneymanager.model.DBObjects.dbCurrency;
+import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.utility.Encrypter;
 
 import java.sql.PreparedStatement;
@@ -67,16 +67,16 @@ public class MMDatabase extends Database {
         });
     }
 
-    public Task<Currency> getCurrency(String name) {
+    public Task<dbCurrency> getCurrency(String name) {
         return asyncCall(() -> {
-            Currency currency = null;
+            dbCurrency currency = null;
             if (isConnected()) {
                 String query = "SELECT * FROM Currency where name=?;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setString(1, name);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    currency = new Currency(rs);
+                    currency = new dbCurrency(rs);
                 };
                 stmt.close();
             }
@@ -84,15 +84,15 @@ public class MMDatabase extends Database {
         });
     }
 
-    public Task<List<Currency>> getAllCurrency() {
+    public Task<List<dbCurrency>> getAllCurrency() {
         return asyncCall(() -> {
-            List<Currency> currencies = new ArrayList<>();
+            List<dbCurrency> currencies = new ArrayList<>();
             if (isConnected()) {
                 String query = "SELECT * FROM Currency;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
-                    currencies.add(new Currency(rs));
+                    currencies.add(new dbCurrency(rs));
                 };
                 stmt.close();
             }
@@ -162,20 +162,20 @@ public class MMDatabase extends Database {
         });
     }
 
-    public Task<User> getUser(String username) {
+    public Task<dbUser> getUser(String username) {
         return asyncCall(() -> {
-            User user = null;
+            dbUser dbUser = null;
             if (isConnected()) {
                 String query = "SELECT * FROM Users where username=?;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setString(1, username);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    user = new User(rs);
+                    dbUser = new dbUser(rs);
                 };
                 stmt.close();
             }
-            return user;
+            return dbUser;
         });
     }
 }
