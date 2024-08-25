@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 // perché java non supporta gli alias per gli import...
+// TODO: Sistemare il tooltip quando è temporaneo
+// TODO: Rinominare Elimina con Scarta quando è temporaneo
 
 public class Category extends BorderPane {
     @FXML
@@ -30,9 +32,8 @@ public class Category extends BorderPane {
     public final BooleanProperty selected = new SimpleBooleanProperty(false);
     private long lastClickTime = 0;
     private dbCategory dbcategory;
-
     private String oldName;
-    public boolean is_tmp = true;
+    public BooleanProperty is_tmp = new SimpleBooleanProperty(true);
     private int parent = -1;
     private int type = 0;
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
@@ -45,7 +46,7 @@ public class Category extends BorderPane {
     }
 
     public Category() {
-        is_tmp = false;
+        is_tmp.set(false);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/category.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -66,7 +67,7 @@ public class Category extends BorderPane {
     public Category(int type) {
         this();
         this.type = type;
-        is_tmp = true;
+        is_tmp.set(true);
     }
 
     public Category(int type, int parent) {
@@ -90,13 +91,14 @@ public class Category extends BorderPane {
         onMouseClickedProperty().set(_ -> selected.set(!selected.get()));
 
         onMouseExitedProperty().set(_ -> {
-            if (!is_tmp) {
+            if (!is_tmp.get()) {
                 renaming.set(false);
             }
         });
 
-        rename.onMouseClickedProperty().set(_ -> {
-            renaming.set(!renaming.get());
+        onMouseClickedProperty().set(_ -> {
+            if (!is_tmp.get())
+                selected.set(!selected.get());
         });
 
         category_display.onKeyPressedProperty().set(event -> {
@@ -129,7 +131,7 @@ public class Category extends BorderPane {
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
                     alert.showAndWait();
-                    if (is_tmp) {
+                    if (is_tmp.get()) {
                         destruct.set(true);
                     }
                     return;
@@ -152,10 +154,16 @@ public class Category extends BorderPane {
                                 create = Data.userDatabase.createSubcategory(category_display.getText(), type, parent);
                             }
                             create.run();
-                            Task<dbCategory> ct = Data.userDatabase.getCategory(category_display.getText(), type);
-                            ct.run();
-                            dbcategory = ct.get();
-                            is_tmp = false;
+                            create.get();
+                            Task<dbCategory> created_category;
+                            if (parent == -1) {
+                                created_category = Data.userDatabase.getCategory(category_display.getText(), type);
+                            } else {
+                                created_category = Data.userDatabase.getSubcategory(category_display.getText(), type, parent);
+                            }
+                            created_category.run();
+                            dbcategory = created_category.get();
+                            is_tmp.set(false);
                         } else {
                             dbcategory.setName(category_display.getText());
                         }
@@ -164,7 +172,7 @@ public class Category extends BorderPane {
                         alert.setTitle("Error");
                         alert.setHeaderText(null);
                         alert.showAndWait();
-                        if (is_tmp) {
+                        if (is_tmp.get()) {
                             destruct.set(true);
                             return;
                         } else {
@@ -180,7 +188,7 @@ public class Category extends BorderPane {
 
         category_display.sceneProperty().addListener((_, _, newValue1) -> {
             if (newValue1 != null) {
-                renaming.set(is_tmp);
+                renaming.set(is_tmp.get());
             }
         });
 
@@ -204,7 +212,9 @@ public class Category extends BorderPane {
 
     private void handleMouseClick(boolean shiftDown) {
         long currentTime = System.currentTimeMillis();
-        if (shiftDown) {
+        if (is_tmp.get()) {
+            destruct.set(true);
+        } else if (shiftDown) {
             destruct.set(true);
         } else {
             if (currentTime - lastClickTime <= 200) {
@@ -216,7 +226,10 @@ public class Category extends BorderPane {
 
     public void selectionable(boolean value) {
         if (value) {
-            onMouseClickedProperty().set(_ -> selected.set(!selected.get()));
+            onMouseClickedProperty().set(_ -> {
+                if (!is_tmp.get())
+                    selected.set(!selected.get());
+            });
         } else {
             onMouseClickedProperty().set(_ -> renaming.set(true));
             selected.set(false);

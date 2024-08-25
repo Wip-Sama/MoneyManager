@@ -32,6 +32,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+// Note per il prof: ho provato a fare il category editor direttamente nella classe setting
+// volevo vedere come sarebbe stato se lo avessi fatto così invece che in un suo componente
+// questo è il risultato, non mi piace chissà quanto ma ho deciso di lasciarlo
+// per lo stesso motivo del color picker come popup
+
 public class Settings extends BorderPane {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final MMDatabase db = MMDatabase.getInstance();
@@ -369,12 +374,12 @@ public class Settings extends BorderPane {
 
     private boolean creating_new_category() {
         for (Category category : categories) {
-            if (category.is_tmp) {
+            if (category.is_tmp.get()) {
                 return true;
             }
         }
         for (Category subcategory : subcategories) {
-            if (subcategory.is_tmp) {
+            if (subcategory.is_tmp.get()) {
                 return true;
             }
         }
