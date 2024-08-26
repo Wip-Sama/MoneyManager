@@ -13,7 +13,7 @@
         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="rename" mnemonicParsing="false" styleClass="transparent-button" text="Rename" />
-                <Separator orientation="VERTICAL" prefHeight="200.0" stylesheets="@../../../../style-dark.css" />
+                <Separator mouseTransparent="true" orientation="VERTICAL" prefHeight="200.0" stylesheets="@../../../../style-dark.css" />
                 <Button fx:id="delete" mnemonicParsing="false" text="Delete">
                <HBox.margin>
                   <Insets right="10.0" />

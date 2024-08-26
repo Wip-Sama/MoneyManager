@@ -10,8 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-public class
-Accounts extends BorderPane {
+public class Accounts extends BorderPane {
     @FXML
     private VBox accounts_container;
 
