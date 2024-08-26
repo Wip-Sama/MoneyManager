@@ -1,10 +1,7 @@
 package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
-import org.wip.moneymanager.model.DBObjects.dbCategory;
-import org.wip.moneymanager.model.DBObjects.dbTag;
-import org.wip.moneymanager.model.DBObjects.dbTransaction;
-import org.wip.moneymanager.model.DBObjects.dbTransaction_tags;
+import org.wip.moneymanager.model.DBObjects.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +19,7 @@ public class UserDatabase extends Database {
     }
 
     public UserDatabase() {
-        super("user_dbs/"+Data.username+".db");
+        super("data/user_dbs/"+Data.username+".db");
     }
 
     public Task<Boolean> createTag(String name, String color) {
@@ -369,6 +366,22 @@ public class UserDatabase extends Database {
                 stmt.close();
             }
             return categories;
+        });
+    }
+
+    public Task<List<dbAccount>> getAllAccounts() {
+        return asyncCall(() -> {
+            List<dbAccount> accounts = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT * FROM Accounts;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    accounts.add(new dbAccount(rs, this));
+                };
+                stmt.close();
+            }
+            return accounts;
         });
     }
 }

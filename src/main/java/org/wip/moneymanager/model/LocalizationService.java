@@ -74,6 +74,9 @@ public class LocalizationService {
         return Bindings.createStringBinding(() -> {
             String localizedString = getLocalizedString(key, selectedLanguage.get());
             for (int i = 0; i < args.length; i++) {
+                if (args[i].getValue() == null) {
+                    continue;
+                }
                 localizedString = localizedString.replace("{" + i + "}", args[i].getValue());
             }
             List<String> to_replace = extractTextWithinBrackets(localizedString);

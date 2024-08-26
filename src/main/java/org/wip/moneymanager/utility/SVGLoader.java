@@ -14,6 +14,9 @@ public class SVGLoader {
         if (!path.startsWith("/")) {
             path = "/org/wip/moneymanager/svg/" + path;
         }
+        if (!path.endsWith(".svg")) {
+            path = path + ".svg";
+        }
         loadSVG(path);
         findPath();
     }

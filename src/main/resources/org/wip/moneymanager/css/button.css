@@ -48,3 +48,11 @@
 .icon-toggle-button:selected {
     -fx-background-color: -fu-stroke-selected, -fu-foreground-selected;
 }
+
+.icon-toggle-button:selected:hover {
+    -fx-background-color: -fu-stroke-hover, -fu-foreground-hover;
+}
+
+.icon-toggle-button:selected:pressed {
+    -fx-background-color: -fu-stroke-pressed, -fu-foreground-pressed;
+}

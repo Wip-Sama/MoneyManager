@@ -21,7 +21,7 @@ public class MMDatabase extends Database {
     }
 
     private MMDatabase() {
-        super("money_manager.db");
+        super("data/money_manager.db");
     }
 
     public Task<Boolean> checkUpdate_date() {

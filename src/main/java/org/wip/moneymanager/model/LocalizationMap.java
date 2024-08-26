@@ -10,9 +10,10 @@ import org.wip.moneymanager.model.interfaces.Translation;
 
 public class LocalizationMap implements Translation {
     private final static String base_path = "/org/wip/moneymanager/locale/";
-    private final static LocalizationMap default_properties = new LocalizationMap("en.properties");
+    private final static LocalizationMap default_properties = new LocalizationMap("en.properties", true);
     private final Properties properties = new Properties();
     private final String language;
+    private final boolean isDefault = false;
 
     public LocalizationMap(String language) {
         this.language = language;
@@ -21,6 +22,10 @@ public class LocalizationMap implements Translation {
         } catch (IOException e) {
             throw new IllegalArgumentException("Cannot load properties file: " + language);
         }
+    }
+
+    public LocalizationMap(String language, boolean isDefault) {
+        this(language);
     }
 
     public void load() throws IOException {
@@ -39,7 +44,7 @@ public class LocalizationMap implements Translation {
     }
 
     private String get_defaultProperty(String key) {
-        String value =  default_properties.getProperty(key);
+        String value = default_properties.getProperty(key);
         if (value == null || value.equals("__MISSING__")) {
             throw new IllegalArgumentException("Missing property: " + key);
         }
@@ -50,13 +55,14 @@ public class LocalizationMap implements Translation {
         String value = properties.getProperty(key);
         if (value == null || value.equals("__MISSING__")) {
             setProperty(key);
+            System.out.println("Missing property: " + key + " in " + language);
             try {
                 save();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             // se non lo ha nemmeno questo fail hai sbagliato qualcosa figlio mio...
-            return get_defaultProperty(key);
+            return isDefault ? get_defaultProperty(key) : "__MISSING__"+key+"__";
         }
         return value;
     }

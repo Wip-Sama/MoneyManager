@@ -1,6 +1,8 @@
 package org.wip.moneymanager.model.DBObjects;
 
+import javafx.beans.property.*;
 import org.wip.moneymanager.model.UserDatabase;
+import org.wip.moneymanager.model.types.AccountType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,92 +12,93 @@ import java.util.Objects;
 public final class dbAccount {
     private final UserDatabase db;
     private final int id;
-    private String name;
-    private int type;
-    private double balance;
-    private int creation_date;
-    private int include_into_totals;
+    private final StringProperty name;
+    private final ObjectProperty<AccountType> type;
+    private final DoubleProperty balance;
+    private final IntegerProperty creation_date;
+    private final IntegerProperty include_into_totals;
+    private final StringProperty currency;
 
-    public dbAccount(int id, String name, int type, double balance, int creation_date, int include_into_totals, UserDatabase db) {
+    public dbAccount(int id, String name, int type, double balance, int creation_date, int include_into_totals, String currency, UserDatabase db) {
         this.id = id;
-        this.name = name;
-        this.type = type;
-        this.balance = balance;
-        this.creation_date = creation_date;
-        this.include_into_totals = include_into_totals;
+        this.name = new SimpleStringProperty(name);
+        this.type = new SimpleObjectProperty<>(AccountType.fromInt(type));
+        this.balance = new SimpleDoubleProperty(balance);
+        this.creation_date = new SimpleIntegerProperty(creation_date);
+        this.include_into_totals = new SimpleIntegerProperty(include_into_totals);
+        this.currency = new SimpleStringProperty(currency);
         this.db = db;
     }
 
     public dbAccount(ResultSet rs, UserDatabase db) throws Exception {
         this(
-            rs.getInt("id"),
-            rs.getString("name"),
-            rs.getInt("type"),
-            rs.getDouble("balance"),
-            rs.getInt("creation_date"),
-            rs.getInt("include_into_totals"),
-            db
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getInt("type"),
+                rs.getDouble("balance"),
+                rs.getInt("creation_date"),
+                rs.getInt("include_into_totals"),
+                rs.getString("currency"),
+                db
         );
-        /*
-        Si potrebbe fare anche così ma mi piace l'idea di tenere il minor numero di costruttori primitivi
-        Non mi piace la ripetizione del codice se è così facile da evitare
-        this.id = rs.getInt("id");
-        this.name = rs.getString("name");
-        this.type = rs.getInt("type");
-        this.balance = rs.getDouble("balance");
-        this.creation_date = rs.getInt("creation_date");
-        this.include_into_totals = rs.getInt("include_into_totals");
-        this.db = db;
-        */
     }
 
     public int id() {
         return id;
     }
 
-    public String name() {
+    public ReadOnlyStringProperty nameProperty() {
         return name;
     }
 
-    public int type() {
+    public ReadOnlyObjectProperty<AccountType> typeProperty() {
         return type;
     }
 
-    public double balance() {
+    public ReadOnlyDoubleProperty balanceProperty() {
         return balance;
     }
 
-    public int creation_date() {
+    public ReadOnlyIntegerProperty creationDateProperty() {
         return creation_date;
     }
 
-    public int include_into_totals() {
+    public ReadOnlyIntegerProperty includeIntoTotalsProperty() {
         return include_into_totals;
     }
 
+    public ReadOnlyStringProperty currencyProperty() {
+        return currency;
+    }
+
     public void setName(String name) throws SQLException {
-        this.name = name;
+        this.name.set(name);
         updateField("name", name);
     }
 
-    public void setType(int type) throws SQLException {
-        this.type = type;
-        updateField("type", type);
+    public void setType(AccountType type) throws SQLException {
+        this.type.set(type);
+        updateField("type", type.ordinal());
     }
 
     public void setBalance(double balance) throws SQLException {
-        this.balance = balance;
+        this.balance.set(balance);
         updateField("balance", balance);
     }
 
     public void setCreationDate(int creation_date) throws SQLException {
-        this.creation_date = creation_date;
+        this.creation_date.set(creation_date);
         updateField("creation_date", creation_date);
     }
 
     public void setIncludeIntoTotals(int include_into_totals) throws SQLException {
-        this.include_into_totals = include_into_totals;
+        this.include_into_totals.set(include_into_totals);
         updateField("include_into_totals", include_into_totals);
+    }
+
+    public void setCurrency(String currency) throws SQLException {
+        this.currency.set(currency);
+        updateField("currency", currency);
     }
 
     private void updateField(String fieldName, Object value) throws SQLException {
@@ -113,35 +116,26 @@ public final class dbAccount {
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (dbAccount) obj;
         return this.id == that.id &&
-                Objects.equals(this.name, that.name) &&
-                this.type == that.type &&
-                Double.doubleToLongBits(this.balance) == Double.doubleToLongBits(that.balance) &&
-                this.creation_date == that.creation_date &&
-                this.include_into_totals == that.include_into_totals;
+                Objects.equals(this.name.get(), that.name.get()) &&
+                this.type.get() == that.type.get() &&
+                Double.doubleToLongBits(this.balance.get()) == Double.doubleToLongBits(that.balance.get()) &&
+                this.creation_date.get() == that.creation_date.get() &&
+                this.include_into_totals.get() == that.include_into_totals.get();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, balance, creation_date, include_into_totals);
+        return Objects.hash(id, name.get(), type.get(), balance.get(), creation_date.get(), include_into_totals.get());
     }
 
     @Override
     public String toString() {
         return "dbAccount[" +
                 "id=" + id + ", " +
-                "name=" + name + ", " +
-                "type=" + type + ", " +
-                "balance=" + balance + ", " +
-                "creation_date=" + creation_date + ", " +
-                "include_into_totals=" + include_into_totals + ']';
-    }
-
-    public enum type {
-        CASH,
-        BANK,
-        CREDIT_CARD,
-        DEBIT_CARD,
-        PREPAID_CARD,
-        OTHER
+                "name=" + name.get() + ", " +
+                "type=" + type.get() + ", " +
+                "balance=" + balance.get() + ", " +
+                "creation_date=" + creation_date.get() + ", " +
+                "include_into_totals=" + include_into_totals.get() + ']';
     }
 }

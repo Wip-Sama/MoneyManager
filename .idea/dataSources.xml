@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="money_manager" uuid="ea64c5b8-868c-47d1-8686-eb9c337b270f">
+    <data-source source="LOCAL" name="money_manager" uuid="915ec9ff-3799-492e-8bda-c2d1235ad1ee">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\Programming\MoneyManager\money_manager.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\Programming\MoneyManager\Data\money_manager.db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
@@ -19,11 +19,11 @@
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="user" uuid="37db9427-e9d2-4543-95c8-0aa3e1ababb6">
+    <data-source source="LOCAL" name="user" uuid="2733d035-df81-4c94-8c09-0021a13a8a23">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\Programming\MoneyManager\user_dbs\user.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\Programming\MoneyManager\Data\user_dbs\user.db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
