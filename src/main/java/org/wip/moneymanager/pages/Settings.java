@@ -260,8 +260,12 @@ public class Settings extends BorderPane {
         this.categories.addListener((ListChangeListener<Category>) c -> {
             while (c.next()) {
                 if (c.wasAdded()) {
-                    category_list.getChildren().addAll(c.getAddedSubList());
                     for (Category category : c.getAddedSubList()) {
+                        if (category.is_tmp.get()) {
+                            category_list.getChildren().addFirst(category);
+                        } else {
+                            category_list.getChildren().add(category);
+                        }
                         category.destruct.addListener((_, _, newValue) -> {
                             if (!newValue) {
                                 return;
@@ -307,8 +311,12 @@ public class Settings extends BorderPane {
         this.subcategories.addListener((ListChangeListener<Category>) c -> {
             while (c.next()) {
                 if (c.wasAdded()) {
-                    subcategory_list.getChildren().addAll(c.getAddedSubList());
                     for (Category subcategory : c.getAddedSubList()) {
+                        if (subcategory.is_tmp.get()) {
+                            subcategory_list.getChildren().addFirst(subcategory);
+                        } else {
+                            subcategory_list.getChildren().add(subcategory);
+                        }
                         subcategory.selectionable(false);
                         subcategory.destruct.addListener((_, _, newValue) -> {
                             if (!newValue) {
@@ -407,16 +415,17 @@ public class Settings extends BorderPane {
             if (creating_new_category()) {
                 return;
             }
-            this.categories.add(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1));
+            this.categories.addFirst(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1));
         });
         new_sub_category.onActionProperty().set(_ -> {
             if (creating_new_category()) {
                 return;
             }
             if (selectedCategory.get() != null) {
-                this.subcategories.add(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1, selectedCategory.get().getDbcategory().id()));
+                this.subcategories.addFirst(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1, selectedCategory.get().getDbcategory().id()));
             }
         });
+
 
         page_title.textProperty().bind(Data.lsp.lsb("settings"));
         theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
@@ -459,12 +468,17 @@ public class Settings extends BorderPane {
 
         selectedCategory.addListener((_, oldValue, newValue) -> {
             try {
-                if (oldValue != null)
+                if (oldValue != null) {
                     oldValue.selected.set(false);
-                if (newValue != null)
+                }
+                if (newValue != null) {
                     update_subcategory_list();
-                else
+                    new_sub_category.setDisable(false);
+                }
+                else {
                     subcategories.clear();
+                    new_sub_category.setDisable(true);
+                }
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }

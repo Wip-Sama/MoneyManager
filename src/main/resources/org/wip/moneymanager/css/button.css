@@ -20,6 +20,11 @@
     -fx-background-color: -fu-stroke-selected, -fu-foreground-selected;
 }
 
+.button:disabled {
+    -fx-opacity: .5;
+}
+
+
 .toggle-button {
     -fx-text-fill: -fu-text-1;
     -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;

@@ -19,9 +19,9 @@
 <?import org.wip.moneymanager.components.BalanceEditor?>
 <?import org.wip.moneymanager.components.Switch?>
 
-<fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="600.0" stylesheets="@../../../../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="500.0" stylesheets="@../../../../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane fx:id="edit_pane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="180.0" prefWidth="600.0" styleClass="card-conto-edit" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <BorderPane fx:id="edit_pane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="180.0" styleClass="card-conto-edit" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <center>
             <GridPane hgap="20.0" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                <columnConstraints>
@@ -89,7 +89,7 @@
                   </VBox>
                </children>
                <BorderPane.margin>
-                  <Insets left="60.0" />
+                  <Insets left="40.0" />
                </BorderPane.margin>
             </GridPane>
          </center>
@@ -116,7 +116,7 @@
             <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="delete_button" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-text-fill: red;" styleClass="transparent-button" text="Elimina" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Separator maxHeight="50.0" minHeight="50.0" orientation="VERTICAL" prefHeight="50.0" />
                   <ToggleButton fx:id="edit_pane_toggle" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-text-fill: blue;" styleClass="transparent-button" text="Edit" />
                </children>
             </HBox>
@@ -146,7 +146,7 @@
                   <Label fx:id="account_creation_date" text="Data creazione: xx/xx/xxxx" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <BorderPane.margin>
-                  <Insets left="60.0" />
+                  <Insets left="40.0" />
                </BorderPane.margin>
             </GridPane>
          </center>

@@ -93,6 +93,7 @@ public class Category extends BorderPane {
         onMouseExitedProperty().set(_ -> {
             if (!is_tmp.get()) {
                 renaming.set(false);
+                category_display.deselect();
             }
         });
 
@@ -191,6 +192,8 @@ public class Category extends BorderPane {
                 renaming.set(is_tmp.get());
             }
         });
+
+        rename.onActionProperty().set(_ -> renaming.set(!renaming.get()));
 
         Tooltip tooltip = new Tooltip();
         tooltip.setShowDelay(new Duration(0));

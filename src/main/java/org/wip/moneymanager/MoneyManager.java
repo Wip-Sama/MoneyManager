@@ -44,7 +44,7 @@ public class MoneyManager extends Application {
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setMinHeight(500);
-        stage.setMinWidth(800);
+        stage.setMinWidth(960); //MAX 960 (1920/2)
         stage.setTitle("Money Manager");
         Image icon = new Image(Objects.requireNonNull(MoneyManager.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
         stage.getIcons().add(icon);
