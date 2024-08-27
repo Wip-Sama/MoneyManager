@@ -68,6 +68,13 @@ public class Accounts extends BorderPane {
         accounts.run();
         for (dbAccount account : accounts.get()) {
             CardConto accountComponent = new CardConto(account);
+            accountComponent.destructProperty().addListener((_, _, newValue) -> {
+                if (newValue) {
+                    accounts_container.getChildren().remove(accountComponent);
+                    Task<Boolean> delete = Data.userDatabase.forceRemoveAccount(account.id());
+                    delete.run();
+                }
+            });
             accountComponent.hideBalanceProperty().bind(hide_balance.selectedProperty());
             accounts_container.getChildren().add(accountComponent);
         }

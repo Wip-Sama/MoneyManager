@@ -81,6 +81,12 @@ public class CardConto extends AnchorPane {
     private final ObjectProperty<LocalDateTime> creation_date_time = new SimpleObjectProperty<>();
     private final StringProperty type = new SimpleStringProperty("");
     private final StringProperty name = new SimpleStringProperty("");
+    private final BooleanProperty destruct = new SimpleBooleanProperty(false);
+    private long lastClickTime = 0;
+
+    public ReadOnlyBooleanProperty destructProperty() {
+        return destruct;
+    }
 
     public CardConto() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/cardconto.fxml"));
@@ -182,11 +188,19 @@ public class CardConto extends AnchorPane {
             }
         });
 
+        Tooltip tooltip = new Tooltip();
+        tooltip.setShowDelay(new Duration(0));
+        tooltip.setHideDelay(new Duration(0));
+        tooltip.textProperty().bind(Data.lsp.lsb("cardconto.delete.tooltip"));
+        delete_button.setTooltip(tooltip);
         discard_changes.onActionProperty().set(event -> {
             discardChanges();
         });
+        delete_button.onMouseClickedProperty().set(event -> {
+            handleMouseClick(event.isShiftDown());
+        });
 
-
+        delete_button.setOnMouseEntered(event -> updateTooltipText(tooltip, event.isShiftDown()));
 
         account_name.textProperty().bind(name);
         account_type.textProperty().bind(type);
@@ -265,6 +279,26 @@ public class CardConto extends AnchorPane {
                 }
             }
         });
+    }
+
+    private void handleMouseClick(boolean shiftDown) {
+        long currentTime = System.currentTimeMillis();
+        if (shiftDown) {
+            destruct.set(true);
+        } else {
+            if (currentTime - lastClickTime <= 200) {
+                destruct.set(true);
+            }
+            lastClickTime = currentTime;
+        }
+    }
+
+    private void updateTooltipText(Tooltip tooltip, boolean shiftDown) {
+        if (shiftDown) {
+            tooltip.textProperty().bind(Data.lsp.lsb("cardconto.delete.tooltip_shift"));
+        } else {
+            tooltip.textProperty().bind(Data.lsp.lsb("cardconto.delete.tooltip"));
+        }
     }
 
     public Property<Boolean> hideBalanceProperty() {

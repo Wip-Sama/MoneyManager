@@ -384,4 +384,56 @@ public class UserDatabase extends Database {
             return accounts;
         });
     }
+
+    public Task<dbAccount> getAccount(int id) {
+        return asyncCall(() -> {
+            dbAccount dbAccount = null;
+            if (isConnected()) {
+                String query = "SELECT * FROM Accounts WHERE id = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    dbAccount = new dbAccount(rs, this);
+                };
+                stmt.close();
+            }
+            return dbAccount;
+        });
+    }
+
+    public Task<Boolean> removeAccount(int id) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "DELETE FROM Accounts WHERE id = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                stmt.close();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public Task<Boolean> forceRemoveAccount(int id) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String remove_from_transactions = "DELETE FROM Transactions WHERE account = ? OR second_account = ?;";
+                PreparedStatement stmt1 = con.prepareStatement(remove_from_transactions);
+                stmt1.setInt(1, id);
+                stmt1.setInt(2, id);
+                stmt1.executeUpdate();
+                stmt1.close();
+
+                String remove_account = "DELETE FROM Accounts WHERE id = ?;";
+                PreparedStatement stmt2 = con.prepareStatement(remove_account);
+                stmt2.setInt(1, id);
+                stmt2.executeUpdate();
+                stmt2.close();
+                return true;
+            }
+            return false;
+        });
+    }
 }

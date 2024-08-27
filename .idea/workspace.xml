@@ -4,27 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="Credits alpha">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/AccountType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="account beta">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/BalanceEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/BalanceEditor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/user.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/user.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/DBObjects/dbAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/DBObjects/dbAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/SVGLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/SVGLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/it.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/it.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_dbs/user.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/user.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_dbs/user_copy.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/user_copy.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,35 +68,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.MoneyManager (1).executor": "Run",
-    "Application.MoneyManager (2).executor": "Run",
-    "Application.MoneyManager (3).executor": "Run",
-    "Application.MoneyManager.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Maven.MoneyManager [clean,install].executor": "Run",
-    "Maven.MoneyManager [clean].executor": "Run",
-    "Maven.MoneyManager [install].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "openjdk-22",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Programming/WomToolkitUI_nw",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/WomToolkitUI_nw&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="QodanaReportsService">
     <option name="descriptions">
       <ReportDescription localRun="true" path="C:\Users\sgroo\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="8ca7254b-155a-4df6-8a96-3a6e56699526" reportId="MoneyManager/qodana/2024-08-22" />
@@ -248,7 +236,8 @@
       <workItem from="1724581953905" duration="37000" />
       <workItem from="1724582076137" duration="4506000" />
       <workItem from="1724599981402" duration="16107000" />
-      <workItem from="1724678381102" duration="19247000" />
+      <workItem from="1724678381102" duration="21017000" />
+      <workItem from="1724764155445" duration="2413000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />
@@ -370,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724683586745</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="account beta">
+      <option name="closed" value="true" />
+      <created>1724702591708</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1724702591708</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,7 +398,8 @@
     <MESSAGE value="Settings and category fix" />
     <MESSAGE value="Settings and category" />
     <MESSAGE value="Credits alpha" />
-    <option name="LAST_COMMIT_MESSAGE" value="Credits alpha" />
+    <MESSAGE value="account beta" />
+    <option name="LAST_COMMIT_MESSAGE" value="account beta" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
