@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.wip.moneymanager.components.ColorPickerButton?>
+<?import org.wip.moneymanager.components.ColorPickerPreset?>
+
+<fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../../../../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox alignment="CENTER_LEFT" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <Label fx:id="page_title" text="Impostazioni" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+                <font>
+                    <Font size="20.0" />
+                </font>
+                <opaqueInsets>
+                    <Insets />
+                </opaqueInsets>
+                <padding>
+                    <Insets left="20.0" />
+                </padding>
+            </Label>
+        </HBox>
+    </top>
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+
+                <VBox prefHeight="200.0" prefWidth="100.0">
+
+                    <Label fx:id="theme_label" text="Tema">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font>
+                    </Label>
+                    <ChoiceBox fx:id="theme" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+
+                    <Label fx:id="accent_label" text="Accento">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font>
+                    </Label>
+                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+
+                        <ColorPickerPreset fx:id="preset_blue" blue="183" green="106" prefHeight="30.0" prefWidth="30.0" red="49" />
+                        <ColorPickerPreset fx:id="preset_green" blue="58" green="187" prefHeight="30.0" prefWidth="30.0" red="117" />
+                        <ColorPickerPreset fx:id="preset_yellow" blue="61" green="182" prefHeight="30.0" prefWidth="30.0" red="188" />
+                        <ColorPickerPreset fx:id="preset_orange" blue="33" green="67" prefHeight="30.0" prefWidth="30.0" red="174" />
+                        <ColorPickerButton fx:id="custom_color" prefHeight="30.0" prefWidth="30.0" />
+
+                    </HBox>
+
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+
+                    <Label fx:id="language_label" text="Lingua">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font>
+                    </Label>
+                    <ChoiceBox fx:id="language" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label fx:id="primary_curency_label" text="Valuta primaria">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font>
+                    </Label>
+                    <ChoiceBox fx:id="primary_currency" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                    <Label fx:id="first_day_of_week_label" text="Primo giorno settimana">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font>
+                    </Label>
+                    <ChoiceBox fx:id="first_day_of_week" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <Label fx:id="start_page_label" text="Schermata iniziale">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font>
+                    </Label>
+                    <ChoiceBox fx:id="start_page" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                </VBox>
+
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+            </GridPane>
+            <HBox fx:id="category_editor" style="-fx-background-radius: 10;" styleClass="background-3" VBox.vgrow="ALWAYS">
+                <BorderPane fx:id="category_bp" HBox.hgrow="ALWAYS">
+                    <top>
+                        <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" BorderPane.alignment="CENTER">
+                            <left>
+                                <Label fx:id="category_label" text="Categorie" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets left="20.0" />
+                           </BorderPane.margin></Label>
+                            </left>
+                            <right>
+                                <Button fx:id="new_category" focusTraversable="false" mnemonicParsing="false" text="Nuova categoria" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                           <BorderPane.margin>
+                              <Insets right="20.0" />
+                           </BorderPane.margin></Button>
+                            </right>
+                            <BorderPane.margin>
+                                <Insets />
+                            </BorderPane.margin>
+                     <bottom>
+                        <HBox prefHeight="40.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ToggleButton fx:id="income" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="category_type" />
+                                 </toggleGroup>
+                              </ToggleButton>
+                              <ToggleButton fx:id="expense" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="category-type-toggle" text="ToggleButton" toggleGroup="$category_type" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </bottom>
+                        </BorderPane>
+                    </top>
+                    <center>
+                        <ScrollPane fx:id="category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="background-3" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+                            <VBox fx:id="category_list" prefWidth="181.0" styleClass="background-3">
+                            </VBox>
+                        </ScrollPane>
+                    </center>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
+                    </padding>
+                </BorderPane>
+                <BorderPane fx:id="subcategory_bp" HBox.hgrow="ALWAYS">
+                    <top>
+                        <BorderPane prefHeight="40.0" BorderPane.alignment="CENTER">
+                            <right>
+                                <Button fx:id="new_sub_category" disable="true" focusTraversable="false" mnemonicParsing="false" text="Nuova sottocategoria" BorderPane.alignment="CENTER" />
+                            </right>
+                            <left>
+                                <Label fx:id="sub_category_label" text="Sottocategorie" BorderPane.alignment="CENTER" />
+                            </left>
+                            <padding>
+                                <Insets left="20.0" right="20.0" />
+                            </padding>
+                        </BorderPane>
+                    </top>
+                    <center>
+                        <ScrollPane fx:id="sub_category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="background-3" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+                            <VBox fx:id="subcategory_list" prefWidth="227.0" style="-fx-background-radius: 10;" styleClass="background-4" />
+                        </ScrollPane>
+                    </center>
+                    <padding>
+                        <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
+                    </padding>
+                </BorderPane>
+            </HBox>
+        </VBox>
+    </center>
+</fx:root>

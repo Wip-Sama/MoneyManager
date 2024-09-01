@@ -4,23 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="account beta2">
+    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/user.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/user.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Credits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Credits.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Statistics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/credits.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/credits.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/statistics.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/statistics.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +233,7 @@
       <workItem from="1724678381102" duration="21017000" />
       <workItem from="1724764155445" duration="6074000" />
       <workItem from="1725116261145" duration="4417000" />
-      <workItem from="1725196436625" duration="7350000" />
+      <workItem from="1725196436625" duration="8179000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />
@@ -386,7 +371,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724771772928</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="changes">
+      <option name="closed" value="true" />
+      <created>1725203902202</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1725203902202</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -419,7 +412,8 @@
     <MESSAGE value="Credits alpha" />
     <MESSAGE value="account beta" />
     <MESSAGE value="account beta2" />
-    <option name="LAST_COMMIT_MESSAGE" value="account beta2" />
+    <MESSAGE value="changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
