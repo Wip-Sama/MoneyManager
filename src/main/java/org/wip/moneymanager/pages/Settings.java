@@ -7,7 +7,9 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
@@ -15,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import org.wip.moneymanager.MoneyManager;
 import org.wip.moneymanager.components.Category;
 import org.wip.moneymanager.components.ColorPickerButton;
 import org.wip.moneymanager.components.ColorPickerPreset;
@@ -37,10 +40,7 @@ import java.util.concurrent.Executors;
 // questo è il risultato, non mi piace chissà quanto ma ho deciso di lasciarlo
 // per lo stesso motivo del color picker come popup
 
-public class Settings extends BorderPane {
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private final MMDatabase db = MMDatabase.getInstance();
-
+public class Settings extends BorderPane implements AutoCloseable {
     @FXML
     private Label page_title;
     @FXML
@@ -104,12 +104,29 @@ public class Settings extends BorderPane {
     @FXML
     private ToggleGroup category_type;
 
+    //private final ExecutorService executorService = Executors.newCachedThreadPool();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final MMDatabase db = MMDatabase.getInstance();
     private final ObjectProperty<Category> selectedCategory = new SimpleObjectProperty<>();
     private final ObservableList<Category> categories = FXCollections.observableList(new ArrayList<>());
     private final ObservableList<Category> subcategories = FXCollections.observableList(new ArrayList<>());
-    private boolean somethingnew = false;
 
-    public Settings() {}
+    public Settings() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/settings.fxml"));
+            loader.setRoot(this);
+            loader.setController(this);
+            loader.load();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Closing Settings");
+        executorService.shutdown();
+    }
 
     public double[] getAvailableSpace(ScrollPane scrollPane) {
         Bounds viewportBounds = scrollPane.getViewportBounds();
@@ -121,7 +138,7 @@ public class Settings extends BorderPane {
         return new double[]{viewportBounds.getWidth() - paddingLeft - paddingRight, viewportBounds.getHeight() - paddingTop - paddingBottom};
     }
 
-    private void update_day_of_week() {
+    private void localize_day_of_week() {
         int selectedIndex = first_day_of_week.getSelectionModel().getSelectedIndex();
         first_day_of_week.getItems().setAll(FXCollections.observableArrayList(
                         Data.localizationService.localizedStringBinding("monday").get(),
@@ -136,7 +153,7 @@ public class Settings extends BorderPane {
         first_day_of_week.getSelectionModel().select(selectedIndex);
     }
 
-    private void update_theme() {
+    private void localize_theme() {
         int selectedIndex = theme.getSelectionModel().getSelectedIndex();
         theme.getItems().setAll(FXCollections.observableArrayList(
                         Data.localizationService.localizedStringBinding("theme.light").get(),
@@ -146,7 +163,7 @@ public class Settings extends BorderPane {
         theme.getSelectionModel().select(selectedIndex);
     }
 
-    private void update_start_page() {
+    private void localize_start_page() {
         int selectedIndex = start_page.getSelectionModel().getSelectedIndex();
         start_page.getItems().setAll(FXCollections.observableArrayList(
                         Data.localizationService.localizedStringBinding("homescreen.none").get(),
@@ -158,9 +175,34 @@ public class Settings extends BorderPane {
         start_page.getSelectionModel().select(selectedIndex);
     }
 
-    private void initialize_choice_box() throws ExecutionException, InterruptedException {
-        Data.subscribe_busy();
+    private void update_category_list() throws ExecutionException, InterruptedException {
+        this.categories.clear();
+        category_list.getChildren().clear();
 
+        Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllCategories(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1);
+        executorService.submit(dbCategories);
+        dbCategories.setOnSucceeded(_ -> {
+            for (dbCategory dbCategory : dbCategories.getValue()) {
+                Category category = new Category(dbCategory);
+                this.categories.add(category);
+            }
+        });
+    }
+
+    private void update_subcategory_list() throws ExecutionException, InterruptedException {
+        this.subcategories.clear();
+        subcategory_list.getChildren().clear();
+
+        Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllSubcategories(selectedCategory.get().getDbcategory().id());
+        dbCategories.run();
+        for (dbCategory dbCategory : dbCategories.get()) {
+            Category category = new Category(dbCategory);
+            this.subcategories.add(category);
+        }
+    }
+
+    private void initialize_choice_box() {
+        Data.subscribe_busy();
         language.getItems().addAll(Data.lsp.getAvailableLocales());
         language.setValue(Data.dbUser.languageProperty().get());
         language.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
@@ -172,10 +214,9 @@ public class Settings extends BorderPane {
             Data.lsp.setSelectedLanguage(newValue);
         });
 
-        update_theme();
+        localize_theme();
         theme.getSelectionModel().select(Data.dbUser.themeProperty().get().ordinal()-1);
         theme.valueProperty().addListener((_, _, newValue) -> {
-            //+1 perché System non esiste ma il conteggio del tema parte da 0 (system)
             try {
                 Data.dbUser.setTheme(Theme.fromInt(theme.getSelectionModel().getSelectedIndex()+1));
             } catch (SQLException e) {
@@ -183,7 +224,7 @@ public class Settings extends BorderPane {
             }
         });
 
-        update_day_of_week();
+        localize_day_of_week();
         first_day_of_week.getSelectionModel().select(Data.dbUser.week_startProperty().get().ordinal());
         first_day_of_week.valueProperty().addListener((_, _, newValue) -> {
             try {
@@ -193,7 +234,7 @@ public class Settings extends BorderPane {
             }
         });
 
-        update_start_page();
+        localize_start_page();
         start_page.getSelectionModel().select(Data.dbUser.home_screenProperty().get().ordinal());
         start_page.valueProperty().addListener((_, _, newValue) -> {
             try {
@@ -209,13 +250,16 @@ public class Settings extends BorderPane {
         });
 
         Task<List<String>> currencies = db.getAllCurrencyName();
-        currencies.run();
-        currencies.get().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.toUpperCase()));
-        primary_currency.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
+        executorService.submit(currencies);
+        currencies.setOnSucceeded(_ -> {
+            primary_currency.setValue(Data.dbUser.main_currencyProperty().get());
+            currencies.getValue().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.toUpperCase()));
+        });
+
         Data.unsubscribe_busy();
     }
 
-    private void deselect_all_presets() {
+    private void deselect_all_colors() {
         preset_blue.selected.set(false);
         preset_green.selected.set(false);
         preset_yellow.selected.set(false);
@@ -223,7 +267,7 @@ public class Settings extends BorderPane {
         custom_color.selected.set(false);
     }
 
-    private void set_selected() {
+    private void set_selected_color() {
         int[] rgb = Data.dbUser.accentProperty().get().getRGB();
 
         if (Arrays.equals(preset_orange.getRGB(), rgb)) {
@@ -241,13 +285,13 @@ public class Settings extends BorderPane {
     }
 
     private void initialize_accent_selector() {
-        set_selected();
+        set_selected_color();
         Data.dbUser.accentProperty().addListener((_, _, newValue) -> {
             if (newValue == null) {
                 return;
             }
-            deselect_all_presets();
-            set_selected();
+            deselect_all_colors();
+            set_selected_color();
             try {
                 Data.dbUser.setAccent(Data.dbUser.accentProperty().get());
             } catch (SQLException e) {
@@ -277,9 +321,9 @@ public class Settings extends BorderPane {
                             }
 
                             Task<List<dbCategory>> hasSub = Data.userDatabase.getAllSubcategories(category.getDbcategory().id());
-                            hasSub.run();
-                            try {
-                                if (!hasSub.get().isEmpty()) {
+                            executorService.submit(hasSub);
+                            hasSub.setOnSucceeded(e -> {
+                                if (!hasSub.getValue().isEmpty()) {
                                     Alert alert = new Alert(Alert.AlertType.WARNING, Data.lsp.lsb("alert.you_cant_delete_category_with_subcategories").get(), ButtonType.OK);
                                     alert.setTitle("Error");
                                     alert.setHeaderText(null);
@@ -287,12 +331,10 @@ public class Settings extends BorderPane {
                                     category.destruct.set(false);
                                 } else {
                                     Task<Boolean> result = Data.userDatabase.forceRemoveCategory(category.getDbcategory().id());
-                                    result.run();
-                                    categories.remove(category);
+                                    executorService.submit(result);
+                                    result.setOnSucceeded(_ -> categories.remove(category));
                                 }
-                            } catch (InterruptedException | ExecutionException e) {
-                                throw new RuntimeException(e);
-                            }
+                            });
                         });
                         category.selected.addListener((_, _, newValue) -> {
                             if (newValue) {
@@ -356,30 +398,6 @@ public class Settings extends BorderPane {
         update_category_list();
     }
 
-    private void update_category_list() throws ExecutionException, InterruptedException {
-        this.categories.clear();
-        category_list.getChildren().clear();
-
-        Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllCategories(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1);
-        dbCategories.run();
-        for (dbCategory dbCategory : dbCategories.get()) {
-            Category category = new Category(dbCategory);
-            this.categories.add(category);
-        }
-    }
-
-    private void update_subcategory_list() throws ExecutionException, InterruptedException {
-        this.subcategories.clear();
-        subcategory_list.getChildren().clear();
-
-        Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllSubcategories(selectedCategory.get().getDbcategory().id());
-        dbCategories.run();
-        for (dbCategory dbCategory : dbCategories.get()) {
-            Category category = new Category(dbCategory);
-            this.subcategories.add(category);
-        }
-    }
-
     private boolean creating_new_category() {
         for (Category category : categories) {
             if (category.is_tmp.get()) {
@@ -426,7 +444,6 @@ public class Settings extends BorderPane {
             }
         });
 
-
         page_title.textProperty().bind(Data.lsp.lsb("settings"));
         theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
         accent_label.textProperty().bind(Data.lsp.lsb("settings.accent"));
@@ -465,7 +482,6 @@ public class Settings extends BorderPane {
                 throw new RuntimeException(e);
             }
         });
-
         selectedCategory.addListener((_, oldValue, newValue) -> {
             try {
                 if (oldValue != null) {
@@ -484,14 +500,19 @@ public class Settings extends BorderPane {
             }
         });
 
-        executorService.shutdown();
         Data.unsubscribe_busy();
+
+        sceneProperty().addListener((_, _, newValue) -> {
+            if (newValue != null) {
+
+            }
+        });
 
         /* Update stage */
         Data.lsp.selectedLanguageProperty().addListener((_, _, _) -> {
-            update_day_of_week();
-            update_theme();
-            update_start_page();
+            localize_day_of_week();
+            localize_theme();
+            localize_start_page();
         });
     }
 }

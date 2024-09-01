@@ -3,7 +3,9 @@ package org.wip.moneymanager.pages;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
+import org.wip.moneymanager.MoneyManager;
 import org.wip.moneymanager.components.CardConto;
 import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
@@ -19,8 +22,10 @@ import org.wip.moneymanager.utility.SVGLoader;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Accounts extends BorderPane {
+public class Accounts extends BorderPane implements AutoCloseable {
     @FXML
     private VBox accounts_container;
     @FXML
@@ -36,23 +41,26 @@ public class Accounts extends BorderPane {
 
     private final static String show_eye = new SVGLoader("ic_fluent_eye_show_24_filled").getPath();
     private final static String hide_eye = new SVGLoader("ic_fluent_eye_hide_24_filled").getPath();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public ReadOnlyBooleanProperty hideBalanceProperty() {
         return hide_balance.selectedProperty();
     }
 
     public Accounts() {
-        /*
-        non è un componente
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/pages/Accounts.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
         try {
-            fxmlLoader.load();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/accounts.fxml"));
+            loader.setRoot(this);
+            loader.setController(this);
+            loader.load();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        */
+    }
+    @Override
+    public void close() {
+        System.out.println("Closing Settings");
+        executorService.shutdown();
     }
 
     public double getAvailableSpace(ScrollPane scrollPane) {

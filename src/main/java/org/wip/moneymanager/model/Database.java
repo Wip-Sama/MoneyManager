@@ -43,8 +43,9 @@ public class Database implements AutoCloseable {
     public void close() {
         executorService.shutdown();
         try {
-            if(con != null)
+            if(con != null) {
                 con.close();
+            }
         } catch (SQLException ignored) {
         }
     }

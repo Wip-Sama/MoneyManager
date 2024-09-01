@@ -55,10 +55,12 @@ public class MoneyManager extends Application {
         Task<Void> update_currency = new Task<>() {
             @Override
             protected Void call() throws Exception {
+                System.out.println("Checking for currency updates...");
                 MMDatabase db = MMDatabase.getInstance();
                 Task<Boolean> checked = db.checkUpdate_date();
                 checked.run();
                 if (checked.get() == null || !checked.get()) {
+                    System.out.println("Updating currency...");
                     Task<List<dbCurrency>> currencies = db.getAllCurrency();
                     currencies.run();
 
@@ -103,6 +105,7 @@ public class MoneyManager extends Application {
                         e.printStackTrace();
                     }
                 }
+                System.out.println("Currency update complete!");
                 return null;
             }
         };

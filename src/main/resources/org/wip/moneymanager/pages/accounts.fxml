@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../../../../style-dark.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.pages.Accounts">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../../../../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <ScrollPane fx:id="scroll_miservesoloperingrandireilvbox" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" styleClass="background-3" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
@@ -59,4 +59,4 @@
          </padding>
       </BorderPane>
    </top>
-</BorderPane>
+</fx:root>

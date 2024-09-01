@@ -2,17 +2,37 @@
 package org.wip.moneymanager.pages;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.wip.moneymanager.MoneyManager;
 
-public class Credits extends BorderPane {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Credits extends BorderPane implements AutoCloseable {
     @FXML
     private ScrollPane scroller;
     @FXML
     private VBox credit_container;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Credits() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/credits.fxml"));
+            loader.setRoot(this);
+            loader.setController(this);
+            loader.load();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void close() {
+        System.out.println("Closing Settings");
+        executorService.shutdown();
     }
 
     private void update_available_with_without_scrollbars() {

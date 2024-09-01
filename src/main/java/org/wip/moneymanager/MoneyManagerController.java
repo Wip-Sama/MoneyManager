@@ -14,6 +14,7 @@ import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 import org.wip.moneymanager.model.UserDatabase;
 import org.wip.moneymanager.model.types.Theme;
+import org.wip.moneymanager.pages.*;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -37,6 +38,20 @@ public class MoneyManagerController {
     @FXML
     private ProgressBar busy_indicator;
 
+    private Settings settings_loader;
+    private Statistics statistics_loader;
+    private Accounts accounts_loader;
+    private Transactions transactions_loader;
+    private Credits credits_loader;
+
+    private void clearLoaders() {
+        settings_loader = null;
+        statistics_loader = null;
+        accounts_loader = null;
+        transactions_loader = null;
+        credits_loader = null;
+    }
+
     @FXML
     public void initialize() throws ExecutionException, InterruptedException {
         // TODO: da rimuovere dopo che avremo fatto la schermata di login/register
@@ -55,62 +70,53 @@ public class MoneyManagerController {
 
         transactions.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
-                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Transactions.fxml"));
-                try {
-                    Parent root = fxmlLoader.load();
-                    change_pane.setCenter(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                clearLoaders();
+                transactions_loader = new Transactions();
+                change_pane.setCenter(transactions_loader);
+            } else {
+                transactions_loader = null;
             }
         });
-
         accounts.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
-                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Accounts.fxml"));
-                try {
-                    Parent root = fxmlLoader.load();
-                    change_pane.setCenter(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                clearLoaders();
+                accounts_loader = new Accounts();
+                change_pane.setCenter(accounts_loader);
+            } else {
+                accounts_loader = null;
             }
         });
-
         statistics.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
-                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Statistics.fxml"));
-                try {
-                    Parent root = fxmlLoader.load();
-                    change_pane.setCenter(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                statistics_loader = new Statistics();
+                change_pane.setCenter(statistics_loader);
+            } else {
+                statistics_loader = null;
             }
         });
-
         settings.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
-                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/Settings.fxml"));
-                try {
-                    Parent root = fxmlLoader.load();
-                    change_pane.setCenter(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                clearLoaders();
+                settings_loader = new Settings();
+                change_pane.setCenter(settings_loader);
+            } else {
+                settings_loader = null;
             }
         });
         settings.toggleGroupProperty().get().selectedToggleProperty().addListener((_, _, newValue) -> {
             if (newValue == null) {
-                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/credits.fxml"));
-                try {
-                    Parent root = fxmlLoader.load();
-                    change_pane.setCenter(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                clearLoaders();
+                credits_loader = new Credits();
+                change_pane.setCenter(credits_loader);
+            } else {
+                credits_loader = null;
             }
         });
+
+        transactions.textProperty().bind(Data.lsp.lsb("homescreen.transactions"));
+        accounts.textProperty().bind(Data.lsp.lsb("homescreen.accounts"));
+        statistics.textProperty().bind(Data.lsp.lsb("homescreen.statistics"));
+        settings.textProperty().bind(Data.lsp.lsb("homescreen.settings"));
 
         Data.dbUser.themeProperty().addListener((_, _, newValue) -> {
             Scene scene = accounts.getScene();
@@ -125,39 +131,23 @@ public class MoneyManagerController {
                     break;
             }
         });
-
         Data.dbUser.accentProperty().addListener((_, _, newValue) -> {
             Scene scene = accounts.getScene();
             scene.getRoot().setStyle("-fu-accent: " + newValue.getHex() + ";");
         });
 
-        transactions.textProperty().bind(Data.lsp.lsb("homescreen.transactions"));
-        accounts.textProperty().bind(Data.lsp.lsb("homescreen.accounts"));
-        statistics.textProperty().bind(Data.lsp.lsb("homescreen.statistics"));
-        settings.textProperty().bind(Data.lsp.lsb("homescreen.settings"));
-
-        // il pulsante non è inizializzato durante questa fase
-        // quindi per assicurarci che il tutto parta con il colore giusto dobbiamo fare sta roba
-        // e tutte quelle dopo
         accounts.sceneProperty().addListener((_, _, newValue) -> {
             if (newValue != null) {
-                // Alternativa:
-                // Non funzioan per System
-                // newValue.getStylesheets().add("style-"+Data.dbUser.themeProperty().get().toString().toLowerCase()+".css");
                 if (Data.dbUser.themeProperty().get() == Theme.LIGHT) {
                     newValue.getStylesheets().add("style-light.css");
+                    newValue.getStylesheets().remove("style-dark.css");
                 } else {
                     newValue.getStylesheets().add("style-dark.css");
+                    newValue.getStylesheets().remove("style-light.css");
                 }
                 newValue.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
                 Data.lsp.setSelectedLanguage(Data.dbUser.languageProperty().get());
-                FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("pages/credits.fxml"));
-                try {
-                    Parent root = fxmlLoader.load();
-                    change_pane.setCenter(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                change_pane.setCenter(new Credits());
             }
         });
         Data.userDatabase = new UserDatabase();
