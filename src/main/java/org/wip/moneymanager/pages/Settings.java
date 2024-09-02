@@ -112,6 +112,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     private final ObservableList<Category> subcategories = FXCollections.observableList(new ArrayList<>());
 
     public Settings() {
+        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/settings.fxml"));
             loader.setRoot(this);

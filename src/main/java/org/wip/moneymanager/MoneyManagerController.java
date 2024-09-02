@@ -100,7 +100,10 @@ public class MoneyManagerController {
                 settings_loader = new Settings();
                 change_pane.setCenter(settings_loader);
             } else {
-                settings_loader = null;
+                if (settings_loader != null) {
+                    settings_loader.close();
+                    settings_loader = null;
+                }
             }
         });
         settings.toggleGroupProperty().get().selectedToggleProperty().addListener((_, _, newValue) -> {

@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.model.Data;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,6 +21,7 @@ public class Credits extends BorderPane implements AutoCloseable {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Credits() {
+        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/credits.fxml"));
             loader.setRoot(this);

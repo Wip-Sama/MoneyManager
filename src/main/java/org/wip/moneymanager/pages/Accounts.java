@@ -5,7 +5,6 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -48,6 +47,7 @@ public class Accounts extends BorderPane implements AutoCloseable {
     }
 
     public Accounts() {
+        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/accounts.fxml"));
             loader.setRoot(this);
@@ -59,7 +59,7 @@ public class Accounts extends BorderPane implements AutoCloseable {
     }
     @Override
     public void close() {
-        System.out.println("Closing Settings");
+        //Tanto non va ma per ora lo lascio
         executorService.shutdown();
     }
 

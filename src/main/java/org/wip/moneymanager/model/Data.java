@@ -17,7 +17,9 @@ public class Data {
 
     public static dbUser dbUser;
 
-    // BUSY status
+    public static ExecutorsServiceManager esm = new ExecutorsServiceManager();
+
+    // BUSY counter
     private static final IntegerProperty busy = new SimpleIntegerProperty(0);
 
     public static ReadOnlyIntegerProperty busyProperty() {

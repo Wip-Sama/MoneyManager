@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.model.Data;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,6 +13,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Transactions() {
+        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/transactions.fxml"));
             loader.setRoot(this);

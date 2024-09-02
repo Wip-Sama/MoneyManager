@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.wip.moneymanager.model.DBObjects.dbCurrency;
+import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 
 import java.io.IOException;
@@ -129,5 +130,10 @@ public class MoneyManager extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void stop() {
+        Data.esm.shutdown();
     }
 }
