@@ -8,6 +8,7 @@ public class Data {
     public static final MMDatabase mmDatabase = MMDatabase.getInstance();
 
     public static UserDatabase userDatabase;
+    public static final BooleanProperty userUpdated = new SimpleBooleanProperty(false);
 
     public static final LocalizationService localizationService = new LocalizationService("en");
     public static final LocalizationService lsp = localizationService;
@@ -37,4 +38,6 @@ public class Data {
             //busy.set(0);
         }
     }
+
+    public static final String users_images_directory = "Data/user_imgs";
 }

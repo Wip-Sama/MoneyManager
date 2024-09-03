@@ -17,7 +17,7 @@ public final class dbUser {
     private final int id;
     private final StringProperty username;
     private final StringProperty password_hash;
-    private final StringProperty safe_login;
+    private final BooleanProperty safe_login;
     private final ObjectProperty<Theme> theme;
     private final ObjectProperty<Color> accent;
     private final ObjectProperty<HomeScreen> home_screen;
@@ -29,7 +29,7 @@ public final class dbUser {
     public dbUser(int id,
                   String username,
                   String password_hash,
-                  String safe_login,
+                  int safe_login,
                   int theme,
                   String accent,
                   int home_screen,
@@ -40,7 +40,7 @@ public final class dbUser {
         this.id = id;
         this.username = new SimpleStringProperty(username);
         this.password_hash = new SimpleStringProperty(password_hash);
-        this.safe_login = new SimpleStringProperty(safe_login);
+        this.safe_login = new SimpleBooleanProperty(safe_login == 1);
         this.theme = new SimpleObjectProperty<>(Theme.fromInt(theme));
         this.accent = new SimpleObjectProperty<>(new Color(accent));
         this.home_screen = new SimpleObjectProperty<HomeScreen>(HomeScreen.fromInt(home_screen)); // -> string -> Object
@@ -56,7 +56,7 @@ public final class dbUser {
                 rs.getInt("id"),
                 rs.getString("username"),
                 rs.getString("password_hash"),
-                rs.getString("safe_login"),
+                rs.getInt("safe_login"),
                 rs.getInt("theme"),
                 rs.getString("accent"),
                 rs.getInt("home_screen"),
@@ -79,7 +79,7 @@ public final class dbUser {
         return password_hash;
     }
 
-    public ReadOnlyStringProperty safe_login() {
+    public ReadOnlyBooleanProperty safe_login() {
         return safe_login;
     }
 
@@ -112,8 +112,8 @@ public final class dbUser {
     }
 
     public void setUsername(String username) throws SQLException {
-        this.username.set(username);
         updateField("username", username);
+        this.username.set(username);
     }
 
     public void setPassword_hash(String password_hash) throws SQLException {
@@ -121,9 +121,9 @@ public final class dbUser {
         updateField("password_hash", password_hash);
     }
 
-    public void setSafe_login(String safe_login) throws SQLException {
+    public void setSafe_login(boolean safe_login) throws SQLException {
         this.safe_login.set(safe_login);
-        updateField("safe_login", safe_login);
+        updateField("safe_login", safe_login ? 1 : 0);
     }
 
     public void setTheme(Theme theme) throws SQLException {

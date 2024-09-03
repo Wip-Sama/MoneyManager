@@ -13,7 +13,8 @@ public class ExecutorsServiceManager {
 
     public void shutdown() {
         for (ExecutorService es : registered_services) {
-            es.shutdown();
+            if (es != null && !es.isShutdown())
+                es.shutdown();
         }
     }
 }

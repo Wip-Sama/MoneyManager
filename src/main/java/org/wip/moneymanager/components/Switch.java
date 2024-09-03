@@ -49,6 +49,10 @@ public class Switch extends AnchorPane {
         updateIndicatorPosition();
     }
 
+    public void updateState(boolean state) {
+        this.state.set(state);
+    }
+
     public BooleanProperty stateProperty() {
         return state;
     }

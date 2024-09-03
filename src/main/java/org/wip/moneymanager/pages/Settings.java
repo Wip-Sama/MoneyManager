@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 // Note per il prof: ho provato a fare il category editor direttamente nella classe setting
 // volevo vedere come sarebbe stato se lo avessi fatto così invece che in un suo componente
@@ -105,7 +106,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     private ToggleGroup category_type;
 
     //private final ExecutorService executorService = Executors.newCachedThreadPool();
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService = Executors.newFixedThreadPool(8);
     private final MMDatabase db = MMDatabase.getInstance();
     private final ObjectProperty<Category> selectedCategory = new SimpleObjectProperty<>();
     private final ObservableList<Category> categories = FXCollections.observableList(new ArrayList<>());
@@ -181,7 +182,9 @@ public class Settings extends BorderPane implements AutoCloseable {
         category_list.getChildren().clear();
 
         Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllCategories(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1);
-        executorService.submit(dbCategories);
+        Thread t = new Thread(dbCategories);
+        t.setDaemon(true);
+        executorService.submit(t);
         dbCategories.setOnSucceeded(_ -> {
             for (dbCategory dbCategory : dbCategories.getValue()) {
                 Category category = new Category(dbCategory);
@@ -225,6 +228,7 @@ public class Settings extends BorderPane implements AutoCloseable {
             }
         });
 
+        long start2 = System.currentTimeMillis();
         localize_day_of_week();
         first_day_of_week.getSelectionModel().select(Data.dbUser.week_startProperty().get().ordinal());
         first_day_of_week.valueProperty().addListener((_, _, newValue) -> {
@@ -234,6 +238,7 @@ public class Settings extends BorderPane implements AutoCloseable {
                 throw new RuntimeException(e);
             }
         });
+        System.out.println("Time to load first day of week in settings: " + (System.currentTimeMillis() - start2));
 
         localize_start_page();
         start_page.getSelectionModel().select(Data.dbUser.home_screenProperty().get().ordinal());
@@ -251,10 +256,19 @@ public class Settings extends BorderPane implements AutoCloseable {
         });
 
         Task<List<String>> currencies = db.getAllCurrencyName();
+
         executorService.submit(currencies);
         currencies.setOnSucceeded(_ -> {
             primary_currency.setValue(Data.dbUser.main_currencyProperty().get());
-            currencies.getValue().stream().sorted().forEach(currency -> primary_currency.getItems().add(currency.toUpperCase()));
+            List<String> soemthing;
+
+            long start = System.currentTimeMillis();
+            soemthing = currencies.getValue().stream().sorted().toList();
+            System.out.println("Time to sort currencies in settings: " + (System.currentTimeMillis() - start));
+            ObservableList<String> tempList = FXCollections.observableArrayList(soemthing);
+            System.out.println("Time to sort collection in settings: " + (System.currentTimeMillis() - start));
+            primary_currency.setItems(tempList);
+            System.out.println("Time to load currencies in settings: " + (System.currentTimeMillis() - start));
         });
 
         Data.unsubscribe_busy();
@@ -426,9 +440,9 @@ public class Settings extends BorderPane implements AutoCloseable {
             subcategory_list.setMinHeight(availableSpace[1]);
         });
 
+        initialize_category_list();
         initialize_choice_box();
         initialize_accent_selector();
-        initialize_category_list();
 
         new_category.onActionProperty().set(_ -> {
             if (creating_new_category()) {

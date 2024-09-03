@@ -44,11 +44,15 @@ public class MoneyManager extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("base_menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
-        stage.setMinHeight(500);
+        stage.setMinHeight(540); //MAX 540 (1080/2)
         stage.setMinWidth(960); //MAX 960 (1920/2)
         stage.setTitle("Money Manager");
         Image icon = new Image(Objects.requireNonNull(MoneyManager.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
         stage.getIcons().add(icon);
+
+//        stage.setOnCloseRequest(e -> {
+//            System.exit(0);
+//        });
 
         stage.setScene(scene);
         stage.show();

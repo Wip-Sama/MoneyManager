@@ -2,6 +2,7 @@ package org.wip.moneymanager.components;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -30,7 +31,7 @@ public class ComboPasswordField extends StackPane {
     private final int[] selection = new int[2];
     private String show_eye;
     private String hide_eye;
-    public final Property<String> password = new SimpleStringProperty();
+    public final StringProperty password = new SimpleStringProperty();
 
     public ComboPasswordField() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/combopasswordfield.fxml"));

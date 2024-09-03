@@ -15,6 +15,8 @@ import org.wip.moneymanager.model.Data;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.UnaryOperator;
 
 public class BalanceEditor extends HBox {
@@ -26,6 +28,7 @@ public class BalanceEditor extends HBox {
 
     private final PseudoClass FOCUSED_PSEUDO_CLASS = PseudoClass.getPseudoClass("focused");
     private final DoubleProperty balance = new SimpleDoubleProperty(0);
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public BalanceEditor() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/balanceeditor.fxml"));
@@ -39,6 +42,7 @@ public class BalanceEditor extends HBox {
     }
 
     public void initialize() throws ExecutionException, InterruptedException {
+        Data.esm.register(executorService);
         UnaryOperator<TextFormatter.Change> text_filter = change -> {
             String newText = change.getControlNewText();
             if (newText.isEmpty()) {
@@ -67,9 +71,16 @@ public class BalanceEditor extends HBox {
 
         Data.subscribe_busy();
         Task<List<String>> currencies = Data.mmDatabase.getAllCurrencyName();
-        currencies.run();
-        currencies.get().stream().sorted().forEach(currency -> currency_field.getItems().add(currency.toUpperCase()));
+        executorService.submit(currencies);
+        currencies.setOnSucceeded(_ -> {
+            long start = System.currentTimeMillis();
+            currencies.getValue().stream().sorted().forEach(currency -> currency_field.getItems().add(currency.toUpperCase()));
+            System.out.println("Time to load currencies in cardconto: " + (System.currentTimeMillis() - start));
+        });
+
+
         currency_field.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
+
         Data.unsubscribe_busy();
         currency_field.setValue("EUR");
     }
