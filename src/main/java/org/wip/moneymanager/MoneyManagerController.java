@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MoneyManagerController {
 
+
     @FXML
     private ToggleButton accounts;
     @FXML
@@ -56,12 +57,12 @@ public class MoneyManagerController {
     private final Image mm_logo = new Image(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png"));
 
     private void clearLoaders() {
-        settings_loader = null;
-        statistics_loader = null;
-        accounts_loader = null;
-        transactions_loader = null;
-        credits_loader = null;
-        profile_loader = null;
+//        settings_loader = null;
+//        statistics_loader = null;
+//        accounts_loader = null;
+//        transactions_loader = null;
+//        credits_loader = null;
+//        profile_loader = null;
     }
 
     @FXML
@@ -85,8 +86,6 @@ public class MoneyManagerController {
                 clearLoaders();
                 transactions_loader = new Transactions();
                 change_pane.setCenter(transactions_loader);
-            } else {
-                transactions_loader = null;
             }
         });
         accounts.selectedProperty().addListener((_, _, newValue) -> {
@@ -94,16 +93,12 @@ public class MoneyManagerController {
                 clearLoaders();
                 accounts_loader = new Accounts();
                 change_pane.setCenter(accounts_loader);
-            } else {
-                accounts_loader = null;
             }
         });
         statistics.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
                 statistics_loader = new Statistics();
                 change_pane.setCenter(statistics_loader);
-            } else {
-                statistics_loader = null;
             }
         });
         settings.selectedProperty().addListener((_, _, newValue) -> {
@@ -111,11 +106,6 @@ public class MoneyManagerController {
                 clearLoaders();
                 settings_loader = new Settings();
                 change_pane.setCenter(settings_loader);
-            } else {
-                if (settings_loader != null) {
-                    settings_loader.close();
-                    settings_loader = null;
-                }
             }
         });
 
@@ -124,8 +114,6 @@ public class MoneyManagerController {
                 clearLoaders();
                 credits_loader = new Credits();
                 change_pane.setCenter(credits_loader);
-            } else {
-                credits_loader = null;
             }
         });
 

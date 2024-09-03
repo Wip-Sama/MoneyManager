@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-
-<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" />
+<fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../../../../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox alignment="CENTER_LEFT" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <Label fx:id="page_title" text="Statistiche" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+                <font>
+                    <Font size="20.0" />
+                </font>
+                <opaqueInsets>
+                    <Insets />
+                </opaqueInsets>
+                <padding>
+                    <Insets left="20.0" />
+                </padding>
+            </Label>
+        </HBox>
+    </top>
+</fx:root>

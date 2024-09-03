@@ -1,15 +1,18 @@
 package org.wip.moneymanager.components;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import org.wip.moneymanager.model.Data;
 
 import java.io.IOException;
@@ -22,6 +25,9 @@ import java.util.function.UnaryOperator;
 public class BalanceEditor extends HBox {
     @FXML
     private TextField balance_field;
+
+    @FXML
+    private Separator sep;
 
     @FXML
     private ChoiceBox<String> currency_field;
@@ -41,7 +47,7 @@ public class BalanceEditor extends HBox {
         }
     }
 
-    public void initialize() throws ExecutionException, InterruptedException {
+    public void initialize() {
         Data.esm.register(executorService);
         UnaryOperator<TextFormatter.Change> text_filter = change -> {
             String newText = change.getControlNewText();
@@ -62,27 +68,24 @@ public class BalanceEditor extends HBox {
 
         balance_field.setTextFormatter(new TextFormatter<>(text_filter));
         balance_field.focusedProperty().addListener((_, _, newValue) -> {
-            if (newValue) {
-                pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, true);
-            } else {
-                pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, false);
-            }
+            pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, newValue);
         });
-
-        Data.subscribe_busy();
         Task<List<String>> currencies = Data.mmDatabase.getAllCurrencyName();
         executorService.submit(currencies);
         currencies.setOnSucceeded(_ -> {
-            long start = System.currentTimeMillis();
             currencies.getValue().stream().sorted().forEach(currency -> currency_field.getItems().add(currency.toUpperCase()));
-            System.out.println("Time to load currencies in cardconto: " + (System.currentTimeMillis() - start));
         });
 
-
         currency_field.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
+    }
 
-        Data.unsubscribe_busy();
-        currency_field.setValue("EUR");
+    public void only_choice_box() {
+        balance_field.setVisible(false);
+        balance_field.setManaged(false);
+        sep.setVisible(false);
+        sep.setManaged(false);
+        HBox.setHgrow(currency_field, Priority.ALWAYS);
+        currency_field.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
     public void setBalance(double balance) {
@@ -99,5 +102,9 @@ public class BalanceEditor extends HBox {
 
     public String getCurrency() {
         return currency_field.getValue();
+    }
+
+    public ReadOnlyObjectProperty<String> currencyProperty() {
+        return currency_field.valueProperty();
     }
 }

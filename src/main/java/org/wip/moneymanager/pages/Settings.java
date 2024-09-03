@@ -9,7 +9,6 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
@@ -18,9 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.wip.moneymanager.MoneyManager;
-import org.wip.moneymanager.components.Category;
-import org.wip.moneymanager.components.ColorPickerButton;
-import org.wip.moneymanager.components.ColorPickerPreset;
+import org.wip.moneymanager.components.*;
 import org.wip.moneymanager.model.*;
 import org.wip.moneymanager.model.DBObjects.dbCategory;
 import org.wip.moneymanager.model.types.HomeScreen;
@@ -66,8 +63,10 @@ public class Settings extends BorderPane implements AutoCloseable {
     private ChoiceBox<String> language;
     @FXML
     private Label primary_curency_label;
+    //    @FXML
+//    private ChoiceBox<String> primary_currency;
     @FXML
-    private ChoiceBox<String> primary_currency;
+    private BalanceEditor primary_currency;
     @FXML
     private Label first_day_of_week_label;
     @FXML
@@ -105,8 +104,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     @FXML
     private ToggleGroup category_type;
 
-    //private final ExecutorService executorService = Executors.newCachedThreadPool();
-    private final ExecutorService executorService = Executors.newFixedThreadPool(8);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final MMDatabase db = MMDatabase.getInstance();
     private final ObjectProperty<Category> selectedCategory = new SimpleObjectProperty<>();
     private final ObservableList<Category> categories = FXCollections.observableList(new ArrayList<>());
@@ -124,22 +122,39 @@ public class Settings extends BorderPane implements AutoCloseable {
         }
     }
 
+    @FXML
+    public void initialize() throws ExecutionException, InterruptedException {
+        initialize_category_list();
+        initialize_accent_selector();
+        initialize_choice_box();
+
+        /* Localizzazione */
+        page_title.textProperty().bind(Data.lsp.lsb("settings"));
+        theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
+        accent_label.textProperty().bind(Data.lsp.lsb("settings.accent"));
+        language_label.textProperty().bind(Data.lsp.lsb("settings.language"));
+        primary_curency_label.textProperty().bind(Data.lsp.lsb("settings.primary_currency"));
+        first_day_of_week_label.textProperty().bind(Data.lsp.lsb("settings.first_day_of_week"));
+        start_page_label.textProperty().bind(Data.lsp.lsb("settings.start_page"));
+        category_label.textProperty().bind(Data.lsp.lsb("settings.categories"));
+        sub_category_label.textProperty().bind(Data.lsp.lsb("settings.subcategories"));
+        new_category.textProperty().bind(Data.lsp.lsb("settings.new_category"));
+        new_sub_category.textProperty().bind(Data.lsp.lsb("settings.new_subcategory"));
+        income.textProperty().bind(Data.lsp.lsb("settings.income"));
+        expense.textProperty().bind(Data.lsp.lsb("settings.expense"));
+        Data.lsp.selectedLanguageProperty().addListener((_, _, _) -> {
+            localize_day_of_week();
+            localize_theme();
+            localize_start_page();
+        });
+    }
+
     @Override
     public void close() {
-        System.out.println("Closing Settings");
         executorService.shutdown();
     }
 
-    public double[] getAvailableSpace(ScrollPane scrollPane) {
-        Bounds viewportBounds = scrollPane.getViewportBounds();
-        Region content = (Region) scrollPane.getContent();
-        double paddingLeft = content.getPadding().getLeft();
-        double paddingRight = content.getPadding().getRight();
-        double paddingTop = content.getPadding().getTop();
-        double paddingBottom = content.getPadding().getBottom();
-        return new double[]{viewportBounds.getWidth() - paddingLeft - paddingRight, viewportBounds.getHeight() - paddingTop - paddingBottom};
-    }
-
+    //Localizzation
     private void localize_day_of_week() {
         int selectedIndex = first_day_of_week.getSelectionModel().getSelectedIndex();
         first_day_of_week.getItems().setAll(FXCollections.observableArrayList(
@@ -177,7 +192,18 @@ public class Settings extends BorderPane implements AutoCloseable {
         start_page.getSelectionModel().select(selectedIndex);
     }
 
-    private void update_category_list() throws ExecutionException, InterruptedException {
+    //Category
+    public double[] getAvailableSpace(ScrollPane scrollPane) {
+        Bounds viewportBounds = scrollPane.getViewportBounds();
+        Region content = (Region) scrollPane.getContent();
+        double paddingLeft = content.getPadding().getLeft();
+        double paddingRight = content.getPadding().getRight();
+        double paddingTop = content.getPadding().getTop();
+        double paddingBottom = content.getPadding().getBottom();
+        return new double[]{viewportBounds.getWidth() - paddingLeft - paddingRight, viewportBounds.getHeight() - paddingTop - paddingBottom};
+    }
+
+    private void update_category_list() {
         this.categories.clear();
         category_list.getChildren().clear();
 
@@ -193,129 +219,23 @@ public class Settings extends BorderPane implements AutoCloseable {
         });
     }
 
-    private void update_subcategory_list() throws ExecutionException, InterruptedException {
+    private void update_subcategory_list() {
         this.subcategories.clear();
         subcategory_list.getChildren().clear();
 
         Task<List<dbCategory>> dbCategories = Data.userDatabase.getAllSubcategories(selectedCategory.get().getDbcategory().id());
-        dbCategories.run();
-        for (dbCategory dbCategory : dbCategories.get()) {
-            Category category = new Category(dbCategory);
-            this.subcategories.add(category);
-        }
-    }
-
-    private void initialize_choice_box() {
-        Data.subscribe_busy();
-        language.getItems().addAll(Data.lsp.getAvailableLocales());
-        language.setValue(Data.dbUser.languageProperty().get());
-        language.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
-            try {
-                Data.dbUser.setLanguage(newValue);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            Data.lsp.setSelectedLanguage(newValue);
-        });
-
-        localize_theme();
-        theme.getSelectionModel().select(Data.dbUser.themeProperty().get().ordinal()-1);
-        theme.valueProperty().addListener((_, _, newValue) -> {
-            try {
-                Data.dbUser.setTheme(Theme.fromInt(theme.getSelectionModel().getSelectedIndex()+1));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        long start2 = System.currentTimeMillis();
-        localize_day_of_week();
-        first_day_of_week.getSelectionModel().select(Data.dbUser.week_startProperty().get().ordinal());
-        first_day_of_week.valueProperty().addListener((_, _, newValue) -> {
-            try {
-                Data.dbUser.setWeek_start(Week.fromInt(first_day_of_week.getSelectionModel().getSelectedIndex()));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        System.out.println("Time to load first day of week in settings: " + (System.currentTimeMillis() - start2));
-
-        localize_start_page();
-        start_page.getSelectionModel().select(Data.dbUser.home_screenProperty().get().ordinal());
-        start_page.valueProperty().addListener((_, _, newValue) -> {
-            try {
-                Data.dbUser.setHome_screen(HomeScreen.fromInt(start_page.getSelectionModel().getSelectedIndex()));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        category_editor.widthProperty().addListener((_, _, _) -> {
-            category_bp.setMaxWidth(category_editor.getWidth()/2);
-            subcategory_bp.setMaxWidth(category_editor.getWidth()/2);
-        });
-
-        Task<List<String>> currencies = db.getAllCurrencyName();
-
-        executorService.submit(currencies);
-        currencies.setOnSucceeded(_ -> {
-            primary_currency.setValue(Data.dbUser.main_currencyProperty().get());
-            List<String> soemthing;
-
-            long start = System.currentTimeMillis();
-            soemthing = currencies.getValue().stream().sorted().toList();
-            System.out.println("Time to sort currencies in settings: " + (System.currentTimeMillis() - start));
-            ObservableList<String> tempList = FXCollections.observableArrayList(soemthing);
-            System.out.println("Time to sort collection in settings: " + (System.currentTimeMillis() - start));
-            primary_currency.setItems(tempList);
-            System.out.println("Time to load currencies in settings: " + (System.currentTimeMillis() - start));
-        });
-
-        Data.unsubscribe_busy();
-    }
-
-    private void deselect_all_colors() {
-        preset_blue.selected.set(false);
-        preset_green.selected.set(false);
-        preset_yellow.selected.set(false);
-        preset_orange.selected.set(false);
-        custom_color.selected.set(false);
-    }
-
-    private void set_selected_color() {
-        int[] rgb = Data.dbUser.accentProperty().get().getRGB();
-
-        if (Arrays.equals(preset_orange.getRGB(), rgb)) {
-            preset_orange.selected.set(true);
-        } else if (Arrays.equals(preset_yellow.getRGB(), rgb)) {
-            preset_yellow.selected.set(true);
-        } else if (Arrays.equals(preset_green.getRGB(), rgb)) {
-            preset_green.selected.set(true);
-        } else if (Arrays.equals(preset_blue.getRGB(), rgb)) {
-            preset_blue.selected.set(true);
-        } else {
-            custom_color.selected.set(true);
-            custom_color.setRGB(rgb);
-        }
-    }
-
-    private void initialize_accent_selector() {
-        set_selected_color();
-        Data.dbUser.accentProperty().addListener((_, _, newValue) -> {
-            if (newValue == null) {
-                return;
-            }
-            deselect_all_colors();
-            set_selected_color();
-            try {
-                Data.dbUser.setAccent(Data.dbUser.accentProperty().get());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        Thread t = new Thread(dbCategories);
+        t.setDaemon(true);
+        executorService.submit(t);
+        dbCategories.setOnSucceeded(_ -> {
+            for (dbCategory dbCategory : dbCategories.getValue()) {
+                Category category = new Category(dbCategory);
+                this.subcategories.add(category);
             }
         });
     }
 
-    private void initialize_category_list() throws ExecutionException, InterruptedException {
+    private void initialize_category_list() {
         this.categories.addListener((ListChangeListener<Category>) c -> {
             while (c.next()) {
                 if (c.wasAdded()) {
@@ -337,7 +257,7 @@ public class Settings extends BorderPane implements AutoCloseable {
 
                             Task<List<dbCategory>> hasSub = Data.userDatabase.getAllSubcategories(category.getDbcategory().id());
                             executorService.submit(hasSub);
-                            hasSub.setOnSucceeded(e -> {
+                            hasSub.setOnSucceeded(_ -> {
                                 if (!hasSub.getValue().isEmpty()) {
                                     Alert alert = new Alert(Alert.AlertType.WARNING, Data.lsp.lsb("alert.you_cant_delete_category_with_subcategories").get(), ButtonType.OK);
                                     alert.setTitle("Error");
@@ -385,23 +305,9 @@ public class Settings extends BorderPane implements AutoCloseable {
                                 return;
                             }
 
-                            Task<List<dbCategory>> hasSub = Data.userDatabase.getAllSubcategories(subcategory.getDbcategory().id());
-                            hasSub.run();
-                            try {
-                                if (!hasSub.get().isEmpty()) {
-                                    Alert alert = new Alert(Alert.AlertType.WARNING, Data.lsp.lsb("alert.you_cant_delete_category_with_subcategories").get(), ButtonType.OK);
-                                    alert.setTitle("Error");
-                                    alert.setHeaderText(null);
-                                    alert.showAndWait();
-                                    subcategory.destruct.set(false);
-                                } else {
-                                    Task<Boolean> result = Data.userDatabase.forceRemoveCategory(subcategory.getDbcategory().id());
-                                    result.run();
-                                    subcategories.remove(subcategory);
-                                }
-                            } catch (InterruptedException | ExecutionException e) {
-                                throw new RuntimeException(e);
-                            }
+                            Task<Boolean> result = Data.userDatabase.forceRemoveCategory(subcategory.getDbcategory().id());
+                            executorService.submit(result);
+                            result.setOnSucceeded(_ -> subcategories.remove(subcategory));
                         });
                     }
                 }
@@ -410,6 +316,74 @@ public class Settings extends BorderPane implements AutoCloseable {
                 }
             }
         });
+
+        category_container.viewportBoundsProperty().addListener((_, _, _) -> {
+            double[] availableSpace = getAvailableSpace(category_container);
+            category_list.setPrefWidth(availableSpace[0]);
+            category_list.setMinHeight(availableSpace[1]);
+        });
+        sub_category_container.viewportBoundsProperty().addListener((_, _, _) -> {
+            double[] availableSpace = getAvailableSpace(sub_category_container);
+            subcategory_list.setPrefWidth(availableSpace[0]);
+            subcategory_list.setMinHeight(availableSpace[1]);
+        });
+
+        new_category.onActionProperty().set(_ -> {
+            if (creating_new_category()) {
+                return;
+            }
+            this.categories.addFirst(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1));
+        });
+        new_sub_category.onActionProperty().set(_ -> {
+            if (creating_new_category()) {
+                return;
+            }
+            if (selectedCategory.get() != null) {
+                this.subcategories.addFirst(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1, selectedCategory.get().getDbcategory().id()));
+            }
+        });
+
+        income.selectedProperty().addListener((_, _, newValue) -> {
+            if (!newValue && !expense.isSelected()) {
+                income.setSelected(true);
+            }
+        });
+        expense.selectedProperty().addListener((_, _, newValue) -> {
+            if (!newValue && !income.isSelected()) {
+                expense.setSelected(true);
+            }
+        });
+
+        category_type.selectedToggleProperty().addListener((_, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
+
+            if (!newValue.equals(oldValue)) {
+                selectedCategory.set(null);
+            }
+
+            update_category_list();
+        });
+        selectedCategory.addListener((_, oldValue, newValue) -> {
+            if (oldValue != null) {
+                oldValue.selected.set(false);
+            }
+            if (newValue != null) {
+                update_subcategory_list();
+                new_sub_category.setDisable(false);
+            }
+            else {
+                subcategories.clear();
+                new_sub_category.setDisable(true);
+            }
+        });
+
+        category_editor.widthProperty().addListener((_, _, _) -> {
+            category_bp.setMaxWidth(category_editor.getWidth()/2);
+            subcategory_bp.setMaxWidth(category_editor.getWidth()/2);
+        });
+
         update_category_list();
     }
 
@@ -427,107 +401,99 @@ public class Settings extends BorderPane implements AutoCloseable {
         return false;
     }
 
-    public void initialize() throws ExecutionException, InterruptedException {
-        Data.subscribe_busy();
-        category_container.viewportBoundsProperty().addListener((_, _, _) -> {
-            double[] availableSpace = getAvailableSpace(category_container);
-            category_list.setPrefWidth(availableSpace[0]);
-            category_list.setMinHeight(availableSpace[1]);
-        });
-        sub_category_container.viewportBoundsProperty().addListener((_, _, _) -> {
-            double[] availableSpace = getAvailableSpace(sub_category_container);
-            subcategory_list.setPrefWidth(availableSpace[0]);
-            subcategory_list.setMinHeight(availableSpace[1]);
-        });
+    //Accent Selector
+    private void deselect_all_colors() {
+        preset_blue.selected.set(false);
+        preset_green.selected.set(false);
+        preset_yellow.selected.set(false);
+        preset_orange.selected.set(false);
+        custom_color.selected.set(false);
+    }
 
-        initialize_category_list();
-        initialize_choice_box();
-        initialize_accent_selector();
+    private void set_selected_color() {
+        int[] rgb = Data.dbUser.accentProperty().get().getRGB();
 
-        new_category.onActionProperty().set(_ -> {
-            if (creating_new_category()) {
-                return;
-            }
-            this.categories.addFirst(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1));
-        });
-        new_sub_category.onActionProperty().set(_ -> {
-            if (creating_new_category()) {
-                return;
-            }
-            if (selectedCategory.get() != null) {
-                this.subcategories.addFirst(new Category(category_type.selectedToggleProperty().get().equals(income) ? 0 : 1, selectedCategory.get().getDbcategory().id()));
-            }
-        });
+        if (Arrays.equals(preset_orange.getRGB(), rgb)) {
+            preset_orange.selected.set(true);
+        } else if (Arrays.equals(preset_yellow.getRGB(), rgb)) {
+            preset_yellow.selected.set(true);
+        } else if (Arrays.equals(preset_green.getRGB(), rgb)) {
+            preset_green.selected.set(true);
+        } else if (Arrays.equals(preset_blue.getRGB(), rgb)) {
+            preset_blue.selected.set(true);
+        } else {
+            custom_color.selected.set(true);
+            custom_color.setRGB(rgb);
+        }
+    }
 
-        page_title.textProperty().bind(Data.lsp.lsb("settings"));
-        theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
-        accent_label.textProperty().bind(Data.lsp.lsb("settings.accent"));
-        language_label.textProperty().bind(Data.lsp.lsb("settings.language"));
-        primary_curency_label.textProperty().bind(Data.lsp.lsb("settings.primary_currency"));
-        first_day_of_week_label.textProperty().bind(Data.lsp.lsb("settings.first_day_of_week"));
-        start_page_label.textProperty().bind(Data.lsp.lsb("settings.start_page"));
-        category_label.textProperty().bind(Data.lsp.lsb("settings.categories"));
-        sub_category_label.textProperty().bind(Data.lsp.lsb("settings.subcategories"));
-        new_category.textProperty().bind(Data.lsp.lsb("settings.new_category"));
-        new_sub_category.textProperty().bind(Data.lsp.lsb("settings.new_subcategory"));
-        income.textProperty().bind(Data.lsp.lsb("settings.income"));
-        expense.textProperty().bind(Data.lsp.lsb("settings.expense"));
-
-        income.selectedProperty().addListener((_, _, newValue) -> {
-            if (!newValue && !expense.isSelected()) {
-                income.setSelected(true);
-            }
-        });
-        expense.selectedProperty().addListener((_, _, newValue) -> {
-            if (!newValue && !income.isSelected()) {
-                expense.setSelected(true);
-            }
-        });
-
-        category_type.selectedToggleProperty().addListener((_, oldValue, newValue) -> {
+    private void initialize_accent_selector() {
+        set_selected_color();
+        Data.dbUser.accentProperty().addListener((_, _, newValue) -> {
             if (newValue == null) {
                 return;
             }
-            if (!newValue.equals(oldValue)) {
-                selectedCategory.set(null);
-            }
+            deselect_all_colors();
+            set_selected_color();
             try {
-                update_category_list();
-            } catch (ExecutionException | InterruptedException e) {
+                Data.dbUser.setAccent(Data.dbUser.accentProperty().get());
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
-        selectedCategory.addListener((_, oldValue, newValue) -> {
+    }
+
+    //Choice Box
+    private void initialize_choice_box() {
+        Data.lsp.getAvailableLocales().forEach(locale -> language.getItems().add(locale.substring(0, 1).toUpperCase() + locale.substring(1).toLowerCase()));
+        String selected_locale = Data.dbUser.languageProperty().get();
+        language.setValue(selected_locale.substring(0, 1).toUpperCase() + selected_locale.substring(1).toLowerCase());
+        language.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
             try {
-                if (oldValue != null) {
-                    oldValue.selected.set(false);
-                }
-                if (newValue != null) {
-                    update_subcategory_list();
-                    new_sub_category.setDisable(false);
-                }
-                else {
-                    subcategories.clear();
-                    new_sub_category.setDisable(true);
-                }
-            } catch (ExecutionException | InterruptedException e) {
+                Data.dbUser.setLanguage(newValue.toLowerCase());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Data.lsp.setSelectedLanguage(newValue.toLowerCase());
+        });
+
+        localize_theme();
+        theme.getSelectionModel().select(Data.dbUser.themeProperty().get().ordinal()-1);
+        theme.valueProperty().addListener((_, _, _) -> {
+            try {
+                Data.dbUser.setTheme(Theme.fromInt(theme.getSelectionModel().getSelectedIndex()+1));
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
 
-        Data.unsubscribe_busy();
-
-        sceneProperty().addListener((_, _, newValue) -> {
-            if (newValue != null) {
-
+        localize_day_of_week();
+        first_day_of_week.getSelectionModel().select(Data.dbUser.week_startProperty().get().ordinal());
+        first_day_of_week.valueProperty().addListener((_, _, _) -> {
+            try {
+                Data.dbUser.setWeek_start(Week.fromInt(first_day_of_week.getSelectionModel().getSelectedIndex()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         });
 
-        /* Update stage */
-        Data.lsp.selectedLanguageProperty().addListener((_, _, _) -> {
-            localize_day_of_week();
-            localize_theme();
-            localize_start_page();
+        localize_start_page();
+        start_page.getSelectionModel().select(Data.dbUser.home_screenProperty().get().ordinal());
+        start_page.valueProperty().addListener((_, _, _) -> {
+            try {
+                Data.dbUser.setHome_screen(HomeScreen.fromInt(start_page.getSelectionModel().getSelectedIndex()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        primary_currency.only_choice_box();
+        primary_currency.currencyProperty().addListener((_, _, _) -> {
+            try {
+                Data.dbUser.setMain_currency(primary_currency.getCurrency());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 }
