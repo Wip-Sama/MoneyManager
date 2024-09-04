@@ -133,7 +133,23 @@ public class Profile extends BorderPane implements AutoCloseable {
             Data.userUpdated.set(true);
         });
         discard.setOnAction(_ -> {
-            username_field.setText(Data.username);
+            username_field.setText(Data.dbUser.username().get());
+            use_password_field.updateState(Data.dbUser.safe_login().get());
+
+            File dir = new File(Data.users_images_directory);
+            String user_id = String.valueOf(Data.dbUser.id());
+
+            File[] old_files = dir.listFiles((_, name) -> name.startsWith(user_id + "."));
+            File[] new_files = dir.listFiles((_, name) -> name.startsWith(user_id + "_tmp."));
+
+            if (new_files != null && new_files.length > 0) {
+                new_files[0].delete();
+            }
+
+            assert old_files != null;
+            String fileExtension = old_files[0].getName().substring(old_files[0].getName().lastIndexOf('.'));
+            File oldFile = new File(Data.users_images_directory, user_id + fileExtension);
+            pic.setImage(new Image(oldFile.toURI().toString()));
         });
     }
 
