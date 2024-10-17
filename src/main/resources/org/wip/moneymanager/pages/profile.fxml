@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <?import org.wip.moneymanager.components.ComboPasswordField?>
 <?import org.wip.moneymanager.components.Switch?>
 

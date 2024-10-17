@@ -29,6 +29,9 @@ public class SVGLoader {
     }
 
     private void findPath() {
+//        Could be removed, is used if we put only the path without all the other svg stuff
+//        Potrebbe beneficiare da un controllo per vedere se il path è effettivamente valido ma potrebbe essere eccessivo
+        // Mi piace alternare inglese ed italiano
         if (!full_svg.contains("d=\"")) {
             svg_path = full_svg;
             return;

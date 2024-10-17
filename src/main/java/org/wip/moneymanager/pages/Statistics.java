@@ -10,6 +10,8 @@ import org.wip.moneymanager.model.Data;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+//
+//import eu.hansolo.fx.charts.PlayfairChart;
 
 public class Statistics extends BorderPane implements AutoCloseable {
     @FXML
@@ -31,6 +33,8 @@ public class Statistics extends BorderPane implements AutoCloseable {
     @FXML
     public void initialize() {
         page_title.textProperty().bind(Data.lsp.lsb("statistics"));
+
+//        setCenter(new );
     }
 
     @Override

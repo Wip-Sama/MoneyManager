@@ -1,6 +1,5 @@
 package org.wip.moneymanager.model.types;
 
-import org.wip.moneymanager.MoneyManager;
 import org.wip.moneymanager.model.Data;
 
 public enum Week {
@@ -34,15 +33,7 @@ public enum Week {
     }
 
     public static String toString(Week week) {
-        return switch (week) {
-            case MONDAY -> Data.lsp.lsb("Monday").get();
-            case TUESDAY -> Data.lsp.lsb("tuesday").get();
-            case WEDNESDAY -> Data.lsp.lsb("wednesday").get();
-            case THURSDAY -> Data.lsp.lsb("thursday").get();
-            case FRIDAY -> Data.lsp.lsb("friday").get();
-            case SATURDAY -> Data.lsp.lsb("saturday").get();
-            case SUNDAY -> Data.lsp.lsb("sunday").get();
-        };
+        return Data.lsp.lsb(week.toString().toLowerCase()).get();
     }
 
     @Override
@@ -50,16 +41,10 @@ public enum Week {
         return Week.toString(this);
     }
 
-    public static Week fromInt(int week) {
-        return switch (week) {
-            case 0 -> MONDAY;
-            case 1 -> TUESDAY;
-            case 2 -> WEDNESDAY;
-            case 3 -> THURSDAY;
-            case 4 -> FRIDAY;
-            case 5 -> SATURDAY;
-            case 6 -> SUNDAY;
-            default -> null;
-        };
+    public static Week fromInt(int type) {
+        if (type < 0 || type >= values().length) {
+            return null;
+        }
+        return values()[type];
     }
 }

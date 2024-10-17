@@ -23,14 +23,11 @@ public enum Theme {
             return Theme.DARK;
         }
         return null;
+
     }
 
     public static String toString(Theme theme) {
-        return switch (theme) {
-            case SYSTEM -> Data.lsp.lsb("system").get();
-            case LIGHT -> Data.lsp.lsb("light").get();
-            case DARK -> Data.lsp.lsb("dark").get();
-        };
+        return Data.lsp.lsb(theme.toString().toLowerCase()).get();
     }
 
     @Override
@@ -38,12 +35,10 @@ public enum Theme {
         return Theme.toString(this);
     }
 
-    public static Theme fromInt(int theme) {
-        return switch (theme) {
-            case 0 -> SYSTEM;
-            case 1 -> LIGHT;
-            case 2 -> DARK;
-            default -> null;
-        };
+    public static Theme fromInt(int type) {
+        if (type < 0 || type >= values().length) {
+            return null;
+        }
+        return values()[type];
     }
 }

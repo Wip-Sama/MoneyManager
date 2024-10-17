@@ -23,21 +23,13 @@ public enum HomeScreen {
     }
 
     public static String toString(HomeScreen home_screen) {
-        return switch (home_screen) {
-            case NONE -> "None";
-            case TRANSACTIONS -> "Transactions";
-            case ACCOUNTS -> "Accounts";
-            case STATISTICS -> "Statistics";
-        };
+        return Data.lsp.lsb(home_screen.toString().toLowerCase()).get();
     }
 
-    public static HomeScreen fromInt(int home_screen) {
-        return switch (home_screen) {
-            case 0 -> HomeScreen.NONE;
-            case 1 -> HomeScreen.TRANSACTIONS;
-            case 2 -> HomeScreen.ACCOUNTS;
-            case 3 -> HomeScreen.STATISTICS;
-            default -> null;
-        };
+    public static HomeScreen fromInt(int type) {
+        if (type < 0 || type >= values().length) {
+            return null;
+        }
+        return values()[type];
     }
 }

@@ -49,6 +49,7 @@ public class LocalizationService {
     public StringBinding lsb(String key) {
         return localizedStringBinding(key);
     }
+
     public StringBinding localizedStringBinding(String key) {
         return Bindings.createStringBinding(() -> {
             String localizedString = getLocalizedString(key, selectedLanguage.get());
@@ -65,6 +66,7 @@ public class LocalizationService {
     public final StringBinding lsb(String key, ObservableValue<String>... arg) {
         return localizedStringBinding(key, arg);
     }
+
     @SafeVarargs
     public final StringBinding localizedStringBinding(String key, ObservableValue<String>... args) {
         Observable[] observables = new Observable[args.length + 1];

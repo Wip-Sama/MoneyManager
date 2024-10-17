@@ -158,13 +158,13 @@ public class Settings extends BorderPane implements AutoCloseable {
     private void localize_day_of_week() {
         int selectedIndex = first_day_of_week.getSelectionModel().getSelectedIndex();
         first_day_of_week.getItems().setAll(FXCollections.observableArrayList(
-                        Data.localizationService.localizedStringBinding("monday").get(),
-                        Data.localizationService.localizedStringBinding("tuesday").get(),
-                        Data.localizationService.localizedStringBinding("wednesday").get(),
-                        Data.localizationService.localizedStringBinding("thursday").get(),
-                        Data.localizationService.localizedStringBinding("friday").get(),
-                        Data.localizationService.localizedStringBinding("saturday").get(),
-                        Data.localizationService.localizedStringBinding("sunday").get()
+                        Data.lsp.lsb("monday").get(),
+                        Data.lsp.lsb("tuesday").get(),
+                        Data.lsp.lsb("wednesday").get(),
+                        Data.lsp.lsb("thursday").get(),
+                        Data.lsp.lsb("friday").get(),
+                        Data.lsp.lsb("saturday").get(),
+                        Data.lsp.lsb("sunday").get()
                 )
         );
         first_day_of_week.getSelectionModel().select(selectedIndex);

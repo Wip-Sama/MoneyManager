@@ -35,29 +35,13 @@ public enum AccountType {
     }
 
     public static String toString(AccountType account_type) {
-        return switch (account_type) {
-            case CASH -> Data.lsp.lsb("accounttype.cash").get();
-            case BANK -> Data.lsp.lsb("accounttype.bank").get();
-            case CREDIT_CARD -> Data.lsp.lsb("accounttype.credit_card").get();
-            case DEBIT_CARD -> Data.lsp.lsb("accounttype.debit_card").get();
-            case SAVINGS -> Data.lsp.lsb("accounttype.savings").get();
-            case INVESTMENT -> Data.lsp.lsb("accounttype.investment").get();
-            case LOAN -> Data.lsp.lsb("accounttype.loan").get();
-            case OTHER -> Data.lsp.lsb("accounttype.other").get();
-        };
+        return Data.lsp.lsb("accounttype."+account_type.toString().toLowerCase()).get();
     }
 
-    public static AccountType fromInt(int account_type) {
-        return switch (account_type) {
-            case 0 -> AccountType.CASH;
-            case 1 -> AccountType.BANK;
-            case 2 -> AccountType.CREDIT_CARD;
-            case 3 -> AccountType.DEBIT_CARD;
-            case 4 -> AccountType.SAVINGS;
-            case 5 -> AccountType.INVESTMENT;
-            case 6 -> AccountType.LOAN;
-            case 7 -> AccountType.OTHER;
-            default -> null;
-        };
+    public static AccountType fromInt(int type) {
+        if (type < 0 || type >= values().length) {
+            return null;
+        }
+        return values()[type];
     }
 }

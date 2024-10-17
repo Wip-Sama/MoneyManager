@@ -4,11 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="migliramenti vari">
+    <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="fixes to profile page discard">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/charts/maintmp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/user_dbs/user.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/user.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/AccountType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/AccountType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/HomeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Theme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Theme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Week.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/types/Week.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Statistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/SVGLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/SVGLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/profile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/style-light.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style-light.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +36,8 @@
         <option value="Record" />
         <option value="Interface" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -66,12 +81,16 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.LineChartTest.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.MoneyManager (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.MoneyManager (2).executor&quot;: &quot;Run&quot;,
     &quot;Application.MoneyManager (3).executor&quot;: &quot;Run&quot;,
     &quot;Application.MoneyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SunburstChartTest.executor&quot;: &quot;Run&quot;,
     &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.linechartdemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.maintmp.executor&quot;: &quot;Run&quot;,
     &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
@@ -80,7 +99,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/sgroo/AppData/Local/SceneBuilder/SceneBuilder.exe&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sgroo/OneDrive - Università della Calabria/3° Anno/Ingegneria Del Software/Esercitazioni/JUnitExample&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -90,7 +109,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -112,6 +131,9 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.wip.moneymanager" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.wip.moneymanager" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -119,51 +141,12 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.MoneyManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.model.types.Main" />
+    <configuration name="LineChartTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.charts.LineChartTest" />
       <module name="MoneyManager" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MoneyManager (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.MoneyManager" />
-      <module name="MoneyManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MoneyManager (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.MoneyManager" />
-      <module name="MoneyManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MoneyManager (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.MoneyManager" />
-      <module name="MoneyManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wip.moneymanager.*" />
+          <option name="PATTERN" value="org.wip.moneymanager.charts.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -178,20 +161,72 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MoneyManager" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.MoneyManager" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.charts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SunburstChartTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.charts.SunburstChartTest" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.charts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="linechartdemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.linechartdemo" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.charts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="maintmp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wip.moneymanager.charts.maintmp" />
+      <module name="MoneyManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wip.moneymanager.charts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MoneyManager (3)" />
-        <item itemvalue="Application.MoneyManager (2)" />
-        <item itemvalue="Application.MoneyManager (1)" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.LineChartTest" />
+        <item itemvalue="Application.maintmp" />
+        <item itemvalue="Application.SunburstChartTest" />
+        <item itemvalue="Application.linechartdemo" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -241,7 +276,35 @@
       <workItem from="1725268786719" duration="13620000" />
       <workItem from="1725285956855" duration="16112000" />
       <workItem from="1725364973249" duration="13626000" />
-      <workItem from="1725452408783" duration="2595000" />
+      <workItem from="1725452408783" duration="4361000" />
+      <workItem from="1725461181604" duration="42000" />
+      <workItem from="1725549784821" duration="959000" />
+      <workItem from="1725567402828" duration="3427000" />
+      <workItem from="1725639548816" duration="1536000" />
+      <workItem from="1725807273815" duration="438000" />
+      <workItem from="1726072070576" duration="365000" />
+      <workItem from="1726072520493" duration="5000" />
+      <workItem from="1726073603535" duration="1559000" />
+      <workItem from="1726310914392" duration="3421000" />
+      <workItem from="1727023069469" duration="525000" />
+      <workItem from="1727160298942" duration="345000" />
+      <workItem from="1727162316906" duration="74000" />
+      <workItem from="1727165405523" duration="2355000" />
+      <workItem from="1727340730746" duration="88000" />
+      <workItem from="1727611999359" duration="1000" />
+      <workItem from="1727770078251" duration="836000" />
+      <workItem from="1727945939800" duration="2070000" />
+      <workItem from="1728046463912" duration="219000" />
+      <workItem from="1728050567770" duration="1146000" />
+      <workItem from="1728556872185" duration="848000" />
+      <workItem from="1728916735430" duration="315000" />
+      <workItem from="1729090113157" duration="532000" />
+      <workItem from="1729091942122" duration="688000" />
+      <workItem from="1729161054253" duration="209000" />
+      <workItem from="1729161536219" duration="116000" />
+      <workItem from="1729161842851" duration="49000" />
+      <workItem from="1729162558115" duration="73000" />
+      <workItem from="1729183840473" duration="182000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />
@@ -419,7 +482,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725378634530</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fixes to profile page discard">
+      <option name="closed" value="true" />
+      <created>1725457454188</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1725457454188</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -456,16 +527,12 @@
     <MESSAGE value="ExecutorsServiceManager" />
     <MESSAGE value="Profile page v1" />
     <MESSAGE value="migliramenti vari" />
-    <option name="LAST_COMMIT_MESSAGE" value="migliramenti vari" />
+    <MESSAGE value="fixes to profile page discard" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes to profile page discard" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/DBObjects/dbCategory.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/wip/moneymanager/MoneyManagerController.java</url>
           <line>158</line>
