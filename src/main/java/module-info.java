@@ -8,7 +8,6 @@ module org.wip.moneymanager {
     requires java.desktop;
     requires java.net.http;
 
-    requires spring.core;
     requires spring.security.crypto;
     requires eu.hansolo.fx.charts;
 

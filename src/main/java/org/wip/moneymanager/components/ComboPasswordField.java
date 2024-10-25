@@ -1,6 +1,5 @@
 package org.wip.moneymanager.components;
 
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -29,8 +28,8 @@ public class ComboPasswordField extends StackPane {
 
     private boolean requesting_focus;
     private final int[] selection = new int[2];
-    private String show_eye;
-    private String hide_eye;
+    private final String show_eye;
+    private final String hide_eye;
     public final StringProperty password = new SimpleStringProperty();
 
     public ComboPasswordField() {

@@ -11,9 +11,9 @@ import java.util.Objects;
 public final class dbCategory {
     private final UserDatabase db;
     private final int id;
-    private IntegerProperty type;
-    private StringProperty name;
-    private IntegerProperty parent_category;
+    private final IntegerProperty type;
+    private final StringProperty name;
+    private final IntegerProperty parent_category;
 
     public dbCategory(int id, int type, String name, int parent_category, UserDatabase db) {
         this.id = id;

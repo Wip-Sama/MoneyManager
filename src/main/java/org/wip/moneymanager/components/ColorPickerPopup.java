@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 import org.wip.moneymanager.MoneyManager;
 import javafx.scene.Parent;
 
@@ -48,11 +47,11 @@ public class ColorPickerPopup {
 
     private double xOffset = 0;
     private double yOffset = 0;
-    public Property<Number> red_channel = new SimpleDoubleProperty(0);
-    public Property<Number> green_channel = new SimpleDoubleProperty(0);
-    public Property<Number> blue_channel = new SimpleDoubleProperty(0);
+    public final Property<Number> red_channel = new SimpleDoubleProperty(0);
+    public final Property<Number> green_channel = new SimpleDoubleProperty(0);
+    public final Property<Number> blue_channel = new SimpleDoubleProperty(0);
 
-    public int[] rgb = new int[3];
+    public final int[] rgb = new int[3];
 
     private final Popup popup = new Popup();
     private final Window node;

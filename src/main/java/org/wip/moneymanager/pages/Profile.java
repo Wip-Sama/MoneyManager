@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,7 +56,7 @@ public class Profile extends BorderPane implements AutoCloseable {
     @FXML
     private Pane profile_pane;
 
-    private final static Image mm_logo = new Image(MoneyManager.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png"));
+    private final static Image mm_logo = new Image(Objects.requireNonNull(MoneyManager.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Profile() {

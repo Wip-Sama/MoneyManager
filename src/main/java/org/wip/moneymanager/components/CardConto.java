@@ -5,7 +5,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -13,21 +12,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import javafx.util.converter.IntegerStringConverter;
 import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.types.AccountType;
-import org.wip.moneymanager.model.types.Theme;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class CardConto extends AnchorPane {
     @FXML
@@ -72,7 +64,7 @@ public class CardConto extends AnchorPane {
     private Label account_creation_date;
 
     private dbAccount account = null;
-    public BooleanProperty hide_balance = new SimpleBooleanProperty(false);
+    public final BooleanProperty hide_balance = new SimpleBooleanProperty(false);
 
     private final static StringProperty hidden_balance = new SimpleStringProperty("00,0");
     private final StringProperty amount = new SimpleStringProperty();
@@ -193,12 +185,8 @@ public class CardConto extends AnchorPane {
         tooltip.setHideDelay(new Duration(0));
         tooltip.textProperty().bind(Data.lsp.lsb("cardconto.delete.tooltip"));
         delete_button.setTooltip(tooltip);
-        discard_changes.onActionProperty().set(event -> {
-            discardChanges();
-        });
-        delete_button.onMouseClickedProperty().set(event -> {
-            handleMouseClick(event.isShiftDown());
-        });
+        discard_changes.onActionProperty().set(event -> discardChanges());
+        delete_button.onMouseClickedProperty().set(event -> handleMouseClick(event.isShiftDown()));
 
         delete_button.setOnMouseEntered(event -> updateTooltipText(tooltip, event.isShiftDown()));
 
@@ -210,7 +198,7 @@ public class CardConto extends AnchorPane {
         /* Update part */
         Data.localizationService.selectedLanguageProperty().addListener((_, _, _) -> {
             // Realisticamente non c'è il pericolo che cambi la lingua mentre ci troviamo qui...
-            // ma meglio prevenire che curare
+            // Ma meglio prevenire che curare
             update_type_field();
         });
         sceneProperty().addListener((_, _, newValue) -> {
@@ -223,9 +211,7 @@ public class CardConto extends AnchorPane {
                     type.bind(Data.lsp.lsb("accounttype." + account.typeProperty().get().toString().toLowerCase()));
                     currency.set(account.currencyProperty().get());
 
-                    creation_date_time.addListener((_, _, newCreationDate) -> {
-                        creation_date_field.setValue(newCreationDate.toLocalDate());
-                    });
+                    creation_date_time.addListener((_, _, newCreationDate) -> creation_date_field.setValue(newCreationDate.toLocalDate()));
 
                     name_field.setText(name.get());
                     balance_field.setBalance(Double.parseDouble(amount.get()));
@@ -234,12 +220,8 @@ public class CardConto extends AnchorPane {
                     include_into_totals_field.setState(account.includeIntoTotalsProperty().get() == 0);
 
                     // Si può fare con un binding, ma è più bello vedere 4 listener di fila
-                    account.nameProperty().addListener((_, _, newName) -> {
-                        name.set(newName);
-                    });
-                    account.balanceProperty().addListener((_, _, newBalance) -> {
-                        amount.set(String.valueOf(newBalance.doubleValue()));
-                    });
+                    account.nameProperty().addListener((_, _, newName) -> name.set(newName));
+                    account.balanceProperty().addListener((_, _, newBalance) -> amount.set(String.valueOf(newBalance.doubleValue())));
                     account.creationDateProperty().addListener((_, _, newCreationDate) -> {
                         Instant instant = Instant.ofEpochSecond(newCreationDate.intValue());
                         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
@@ -271,9 +253,7 @@ public class CardConto extends AnchorPane {
                                 break;
                         }
                     });
-                    account.currencyProperty().addListener((_, _, newCurrency) -> {
-                        currency.set(newCurrency);
-                    });
+                    account.currencyProperty().addListener((_, _, newCurrency) -> currency.set(newCurrency));
 
                     initializeChoiceBox();
                 }

@@ -25,7 +25,6 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-import java.util.List;
 /*Premessa per il prof:
  * In questo codice troverete diversi metodi apparentemente inutilizzati
  * Ora probabilmente qualcuno è effettivamente inutilizzato ma la maggior parte sono utilizzati da scenebuilder
@@ -35,7 +34,7 @@ import java.util.List;
 public class MoneyManager extends Application {
     private Set<String> initialThreads;
     @Override
-    public void start(Stage stage) throws IOException, SQLException {
+    public void start(Stage stage) throws IOException {
         initialThreads = Thread.getAllStackTraces().keySet().stream()
                 .map(Thread::getName)
                 .collect(Collectors.toSet());
@@ -70,44 +69,45 @@ public class MoneyManager extends Application {
                     currencies.run();
 
                     String url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json";
-                    HttpClient client = HttpClient.newBuilder()
+                    try (HttpClient client = HttpClient.newBuilder()
                             .connectTimeout(Duration.ofSeconds(10))
-                            .build();
-                    HttpRequest request = HttpRequest.newBuilder()
-                            .GET()
-                            .uri(URI.create(url))
-                            .build();
-                    HttpResponse<String> response;
+                            .build()) {
+                        HttpRequest request = HttpRequest.newBuilder()
+                                .GET()
+                                .uri(URI.create(url))
+                                .build();
+                        HttpResponse<String> response;
 
-                    try {
-                        response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                        try {
+                            response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-                        JSONObject jsonObject = new JSONObject(response.body());
-                        JSONObject tmp = jsonObject.getJSONObject("eur");
+                            JSONObject jsonObject = new JSONObject(response.body());
+                            JSONObject tmp = jsonObject.getJSONObject("eur");
 
-                        List<dbCurrency> currenciesList = currencies.get();
-                        System.out.println(currenciesList.size());
+                            List<dbCurrency> currenciesList = currencies.get();
+                            System.out.println(currenciesList.size());
 
 
-                        for (dbCurrency currency : currenciesList) {
-                            if (tmp.has(currency.name())) {
-                                currency.setUpdate_date();
-                                currency.setValue(tmp.getDouble(currency.name()));
-                                tmp.remove(currency.name());
+                            for (dbCurrency currency : currenciesList) {
+                                if (tmp.has(currency.name())) {
+                                    currency.setUpdate_date();
+                                    currency.setValue(tmp.getDouble(currency.name()));
+                                    tmp.remove(currency.name());
+                                }
                             }
-                        }
 
-                        if (tmp.keySet() != null) {
-                            for (String key : tmp.keySet()) {
-                                Task<Boolean> createCurrencyTask = db.createCurrency(key, tmp.getDouble(key));
-                                createCurrencyTask.run();
-                                createCurrencyTask.get();
+                            if (tmp.keySet() != null) {
+                                for (String key : tmp.keySet()) {
+                                    Task<Boolean> createCurrencyTask = db.createCurrency(key, tmp.getDouble(key));
+                                    createCurrencyTask.run();
+                                    createCurrencyTask.get();
+                                }
                             }
+                        } catch (HttpTimeoutException e) {
+                            System.err.println("Request timed out: " + e.getMessage());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (HttpTimeoutException e) {
-                        System.err.println("Request timed out: " + e.getMessage());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
                 }
                 System.out.println("Currency update complete!");
@@ -115,9 +115,10 @@ public class MoneyManager extends Application {
             }
         };
 
-        final ExecutorService executorService = Executors.newCachedThreadPool();
-        executorService.submit(update_currency);
-        executorService.shutdown();
+        try (ExecutorService executorService = Executors.newCachedThreadPool()) {
+            executorService.submit(update_currency);
+            executorService.shutdown();
+        }
 
         // Add a ShutdownHook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

@@ -21,11 +21,7 @@ public class LocalizationService {
 
     public LocalizationService(String locale) {
         selectedLanguage = new SimpleStringProperty(locale);
-        try {
-            loadAllLocales();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        loadAllLocales();
     }
 
     public ReadOnlyStringProperty selectedLanguageProperty() {
@@ -97,7 +93,7 @@ public class LocalizationService {
         return localizationData.get(locale).translate(key);
     }
 
-    public void loadAllLocales() throws IOException {
+    public void loadAllLocales() {
         File dir = new File(Objects.requireNonNull(MoneyManager.class.getResource(base_path)).getFile());
         File[] files = dir.listFiles();
         assert files != null;

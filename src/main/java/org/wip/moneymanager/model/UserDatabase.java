@@ -19,7 +19,7 @@ public class UserDatabase extends Database {
     }
 
     public UserDatabase() {
-        super("data/user_dbs/"+Data.username+".db");
+        super("data/user_dbs/"+Data.uid+".db");
     }
 
     public Task<Boolean> createTag(String name, String color) {
@@ -75,7 +75,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     dbTag = new dbTag(rs, this);
-                };
+                }
                 stmt.close();
             }
             return dbTag;
@@ -91,7 +91,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     dbTags.add(new dbTag(rs, this));
-                };
+                }
                 stmt.close();
             }
             return dbTags;
@@ -109,7 +109,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     dbTransactions.add(new dbTransaction(rs, this));
-                };
+                }
                 stmt.close();
             }
             return dbTransactions;
@@ -169,7 +169,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     tt.add(new dbTransaction_tags(rs, this));
-                };
+                }
                 stmt.close();
             }
             return tt;
@@ -185,7 +185,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     tt.add(new dbTransaction_tags(rs, this));
-                };
+                }
                 stmt.close();
             }
             return tt;
@@ -202,7 +202,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     categories.add(new dbCategory(rs, this));
-                };
+                }
                 stmt.close();
             }
             return categories;
@@ -219,7 +219,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     dbCategory = new dbCategory(rs, this);
-                };
+                }
                 stmt.close();
             }
             return dbCategory;
@@ -237,7 +237,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     dbCategory = new dbCategory(rs, this);
-                };
+                }
                 stmt.close();
             }
             return dbCategory;
@@ -256,7 +256,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     dbCategory = new dbCategory(rs, this);
-                };
+                }
                 stmt.close();
             }
             return dbCategory;
@@ -362,7 +362,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     categories.add(new dbCategory(rs, this));
-                };
+                }
                 stmt.close();
             }
             return categories;
@@ -378,7 +378,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     accounts.add(new dbAccount(rs, this));
-                };
+                }
                 stmt.close();
             }
             return accounts;
@@ -395,7 +395,7 @@ public class UserDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     dbAccount = new dbAccount(rs, this);
-                };
+                }
                 stmt.close();
             }
             return dbAccount;

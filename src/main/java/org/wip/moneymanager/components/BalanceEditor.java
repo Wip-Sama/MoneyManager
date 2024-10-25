@@ -17,7 +17,6 @@ import org.wip.moneymanager.model.Data;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.UnaryOperator;
@@ -67,14 +66,10 @@ public class BalanceEditor extends HBox {
         };
 
         balance_field.setTextFormatter(new TextFormatter<>(text_filter));
-        balance_field.focusedProperty().addListener((_, _, newValue) -> {
-            pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, newValue);
-        });
+        balance_field.focusedProperty().addListener((_, _, newValue) -> pseudoClassStateChanged(FOCUSED_PSEUDO_CLASS, newValue));
         Task<List<String>> currencies = Data.mmDatabase.getAllCurrencyName();
         executorService.submit(currencies);
-        currencies.setOnSucceeded(_ -> {
-            currencies.getValue().stream().sorted().forEach(currency -> currency_field.getItems().add(currency.toUpperCase()));
-        });
+        currencies.setOnSucceeded(_ -> currencies.getValue().stream().sorted().forEach(currency -> currency_field.getItems().add(currency.toUpperCase())));
 
         currency_field.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
     }

@@ -77,7 +77,7 @@ public class MMDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     currency = new dbCurrency(rs);
-                };
+                }
                 stmt.close();
             }
             return currency;
@@ -93,7 +93,7 @@ public class MMDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     currencies.add(new dbCurrency(rs));
-                };
+                }
                 stmt.close();
             }
             return currencies;
@@ -109,7 +109,7 @@ public class MMDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     currencies.add(rs.getString("name"));
-                };
+                }
                 stmt.close();
             }
             return currencies;
@@ -172,7 +172,24 @@ public class MMDatabase extends Database {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     dbUser = new dbUser(rs);
-                };
+                }
+                stmt.close();
+            }
+            return dbUser;
+        });
+    }
+
+    public Task<dbUser> getUser(int uid) {
+        return asyncCall(() -> {
+            dbUser dbUser = null;
+            if (isConnected()) {
+                String query = "SELECT * FROM Users where id=?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, uid);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    dbUser = new dbUser(rs);
+                }
                 stmt.close();
             }
             return dbUser;

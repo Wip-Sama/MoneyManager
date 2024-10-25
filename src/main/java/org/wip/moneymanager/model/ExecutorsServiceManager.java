@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 public class ExecutorsServiceManager {
-    private List<ExecutorService> registered_services = new ArrayList<>();
+    private final List<ExecutorService> registered_services = new ArrayList<>();
 
     public void register(ExecutorService es) {
         registered_services.add(es);

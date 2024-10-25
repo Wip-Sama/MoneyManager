@@ -9,9 +9,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
-import javafx.scene.control.Button;
 import javafx.scene.control.*;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -31,7 +29,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 // Note per il prof: ho provato a fare il category editor direttamente nella classe setting
 // volevo vedere come sarebbe stato se lo avessi fatto così invece che in un suo componente
@@ -123,7 +120,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     }
 
     @FXML
-    public void initialize() throws ExecutionException, InterruptedException {
+    public void initialize() {
         initialize_category_list();
         initialize_accent_selector();
         initialize_choice_box();

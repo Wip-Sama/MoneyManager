@@ -53,9 +53,7 @@ public class ColorPickerPreset extends AnchorPane {
                 }
             }
         });
-        selected.addListener((_, _, newValue) -> {
-                pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue);
-            }
+        selected.addListener((_, _, newValue) -> pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue)
         );
     }
 

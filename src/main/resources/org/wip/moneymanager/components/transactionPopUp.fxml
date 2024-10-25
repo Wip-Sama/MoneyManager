@@ -13,7 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane stylesheets="@../../../../style-light.css" styleClass="rounded-border-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane stylesheets="@../../../../style-light.css" styleClass="rounded-border-pane"
+            xmlns="http://javafx.com/javafx/21">
    <center>
       <VBox alignment="CENTER" prefWidth="364.0" stylesheets="@../../../../style-light.css">
          <padding>

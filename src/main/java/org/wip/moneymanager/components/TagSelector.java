@@ -12,10 +12,8 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class TagSelector extends BorderPane {
     @FXML
@@ -51,9 +49,9 @@ public class TagSelector extends BorderPane {
         contextMenu = new ContextMenu(customMenuItem);
         contextMenu.getStyleClass().add("tag-filter-context-menu");
 
-        // sarebbe meglio avere tutto in tag-filter-context-menu
+        // Sarebbe meglio avere tutto in tag-filter-context-menu
         // quindi tag-filter-context-menu.menu-item ecc...
-        // ma per ora funziona in caso lo cambierò in futuro
+        // Ma per ora funziona in caso lo cambierò in futuro
         // è più una mia preferenza che altro
     }
 

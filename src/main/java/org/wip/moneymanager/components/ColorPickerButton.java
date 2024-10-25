@@ -27,9 +27,9 @@ public class ColorPickerButton extends AnchorPane {
     // TODO: Shift + click = setta il colore già presente nel color picker
     // TODO: Cambiare il colore cambia il tema globale
 
-    protected Property<Number> red = new SimpleDoubleProperty(0);
-    protected Property<Number> green = new SimpleDoubleProperty(0);
-    protected Property<Number> blue = new SimpleDoubleProperty(0);
+    protected final Property<Number> red = new SimpleDoubleProperty(0);
+    protected final Property<Number> green = new SimpleDoubleProperty(0);
+    protected final Property<Number> blue = new SimpleDoubleProperty(0);
 
     protected Parent loaded;
     private ColorPickerPopup colorPickerPopup;
@@ -45,14 +45,12 @@ public class ColorPickerButton extends AnchorPane {
             e.printStackTrace();
         }
 
-        selected.addListener((_, _, newValue) -> {
-                    pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue);
-                }
+        selected.addListener((_, _, newValue) -> pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue)
         );
     }
 
     @FXML
-    protected void initialize() throws IOException {
+    protected void initialize() {
         red.addListener(_ -> updateColors());
         green.addListener(_ -> updateColors());
         blue.addListener(_ -> updateColors());

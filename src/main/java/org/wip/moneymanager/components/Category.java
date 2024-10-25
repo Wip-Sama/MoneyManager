@@ -33,7 +33,7 @@ public class Category extends BorderPane {
     private long lastClickTime = 0;
     private dbCategory dbcategory;
     private String oldName;
-    public BooleanProperty is_tmp = new SimpleBooleanProperty(true);
+    public final BooleanProperty is_tmp = new SimpleBooleanProperty(true);
     private int parent = -1;
     private int type = 0;
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
@@ -84,9 +84,7 @@ public class Category extends BorderPane {
     public void initialize() {
         update_rename_button();
         delete.textProperty().bind(Data.lsp.lsb("categoryeditor.delete"));
-        selected.addListener((_, _, newValue) -> {
-            pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue);
-        });
+        selected.addListener((_, _, newValue) -> pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, newValue));
 
         onMouseClickedProperty().set(_ -> selected.set(!selected.get()));
 

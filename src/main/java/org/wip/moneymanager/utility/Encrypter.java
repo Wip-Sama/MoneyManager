@@ -6,6 +6,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.io.File;
 
@@ -35,7 +36,7 @@ public class Encrypter {
     }
 
     public String encrypt_string(String str) throws Exception {
-        byte[] utf8 = str.getBytes("UTF8");
+        byte[] utf8 = str.getBytes(StandardCharsets.UTF_8);
         byte[] enc = ecipher.doFinal(utf8);
         return Base64.getEncoder().encodeToString(enc);
     }
@@ -43,7 +44,7 @@ public class Encrypter {
     public String decrypt_string(String str) throws Exception {
         byte[] dec = Base64.getDecoder().decode(str);
         byte[] utf8 = dcipher.doFinal(dec);
-        return new String(utf8, "UTF8");
+        return new String(utf8, StandardCharsets.UTF_8);
     }
 
     public void encrypt_file(String input_path, String output_path) throws Exception {

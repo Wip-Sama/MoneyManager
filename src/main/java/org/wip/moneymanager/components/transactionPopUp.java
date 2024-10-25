@@ -31,13 +31,13 @@ public class transactionPopUp {
     // Metodo per gestire il click sul pulsante "Salva"
     @FXML
     private void handleSaveButtonClick() {
-        // Implementa la logica di salvataggio qui
+        //TODO: Implementa la logica di salvataggio qui
     }
 
     // Metodo per gestire il click sul pulsante "Annulla"
     @FXML
     private void handleCancelButtonClick() {
-        // Implementa la logica di annullamento qui
+        //TODO: Implementa la logica di annullamento qui
     }
 }
 

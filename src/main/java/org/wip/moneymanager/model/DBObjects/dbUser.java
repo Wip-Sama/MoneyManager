@@ -43,8 +43,8 @@ public final class dbUser {
         this.safe_login = new SimpleBooleanProperty(safe_login == 1);
         this.theme = new SimpleObjectProperty<>(Theme.fromInt(theme));
         this.accent = new SimpleObjectProperty<>(new Color(accent));
-        this.home_screen = new SimpleObjectProperty<HomeScreen>(HomeScreen.fromInt(home_screen)); // -> string -> Object
-        this.week_start = new SimpleObjectProperty<Week>(Week.fromInt(week_start)); // -> string -> Object
+        this.home_screen = new SimpleObjectProperty<>(HomeScreen.fromInt(home_screen)); // -> string -> Object
+        this.week_start = new SimpleObjectProperty<>(Week.fromInt(week_start)); // -> string -> Object
         this.main_currency = new SimpleStringProperty(main_currency); // -> Object
         this.language = new SimpleStringProperty(language); // -> Object // Forse no
         this.last_login = new SimpleIntegerProperty(last_login); // Qualcosa che indichi la data???

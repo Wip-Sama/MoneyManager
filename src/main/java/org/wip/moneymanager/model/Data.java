@@ -14,11 +14,11 @@ public class Data {
     public static final LocalizationService lsp = localizationService;
 
     // Solo per i test "user"
-    public static String username = "user";
+    public static final int uid = 1;
 
     public static dbUser dbUser;
 
-    public static ExecutorsServiceManager esm = new ExecutorsServiceManager();
+    public static final ExecutorsServiceManager esm = new ExecutorsServiceManager();
 
     // BUSY counter
     private static final IntegerProperty busy = new SimpleIntegerProperty(0);

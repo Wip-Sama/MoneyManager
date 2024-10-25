@@ -18,8 +18,7 @@ import org.wip.moneymanager.model.types.Theme;
 import org.wip.moneymanager.pages.*;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class MoneyManagerController {
@@ -54,7 +53,7 @@ public class MoneyManagerController {
     private Transactions transactions_loader;
     private Credits credits_loader;
     private Profile profile_loader;
-    private final Image mm_logo = new Image(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png"));
+    private final Image mm_logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
 
     private void clearLoaders() {
 //        settings_loader = null;
@@ -68,7 +67,7 @@ public class MoneyManagerController {
     @FXML
     public void initialize() throws ExecutionException, InterruptedException {
         // TODO: da rimuovere dopo che avremo fatto la schermata di login/register
-        Task<dbUser> t = MMDatabase.getInstance().getUser(Data.username);
+        Task<dbUser> t = MMDatabase.getInstance().getUser(Data.uid);
         t.run();
         Data.dbUser = t.get();
 

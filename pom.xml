@@ -79,18 +79,20 @@
 			<artifactId>controlsfx</artifactId>
 			<version>11.2.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/eu.hansolo.fx/charts -->
 		<dependency>
 			<groupId>eu.hansolo.fx</groupId>
 			<artifactId>charts</artifactId>
-			<version>21.0.19</version>
+			<version>21.0.21</version>
 		</dependency>
+
 
 		<!-- Security related stuff -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>6.3.1</version>
+			<version>6.3.4</version>
 		</dependency>
 
 		<!-- Col cazzo che smadonno col pars di un ogetto json in javamerda, ma si può tutto sto bordello per leggere 2 valori del cazzo -->
