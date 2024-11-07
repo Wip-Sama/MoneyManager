@@ -27,7 +27,7 @@ public class MMDatabase extends Database {
     public Task<Boolean> checkUpdate_date() {
         return asyncCall(() -> {
             if (isConnected()) {
-                String query = "SELECT CASE WHEN EXISTS (SELECT 1 FROM Currency WHERE date(update_date) = date('now')) THEN 1 ELSE 0 END AS result;";
+                String query = "SELECT CASE WHEN EXISTS (SELECT 1 FROM Currency WHERE update_date < date('now', 'start of day')) THEN 1 ELSE 0 END AS result;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery();
                 int res = rs.getInt("result");
