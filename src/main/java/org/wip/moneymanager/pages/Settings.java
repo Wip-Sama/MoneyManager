@@ -14,7 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.View.MoneyManager;
 import org.wip.moneymanager.components.*;
 import org.wip.moneymanager.model.*;
 import org.wip.moneymanager.model.DBObjects.dbCategory;
@@ -26,7 +26,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

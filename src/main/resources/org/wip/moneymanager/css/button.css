@@ -3,7 +3,7 @@
     -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 6, 4;
-    -fx-padding: 5;
+    -fx-padding: 8 5 8 5;
     -fx-text-alignment: CENTER;
     -fx-alignment: CENTER;
 }
@@ -55,4 +55,28 @@
 
 .icon-toggle-button:selected:pressed {
     -fx-background-color: -fu-stroke-pressed, -fu-foreground-pressed;
+}
+
+
+.buttons_login_register_secondary {
+    -fx-text-fill: -fu-accent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
+}
+
+.buttons_login_register_secondary:hover {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.5;
+}
+
+.buttons_login_register_secondary:pressed {
+    -fx-background-color: transparent;
+}
+
+.buttons_login_register_secondary:disabled {
+    -fx-opacity: 0.5;
 }

@@ -5,11 +5,10 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
-import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.View.MoneyManager;
 import org.wip.moneymanager.model.interfaces.Translation;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

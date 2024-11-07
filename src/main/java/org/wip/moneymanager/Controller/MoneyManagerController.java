@@ -1,4 +1,4 @@
-package org.wip.moneymanager;
+package org.wip.moneymanager.Controller;
 
 import javafx.animation.FadeTransition;
 import javafx.concurrent.Task;
@@ -140,12 +140,12 @@ public class MoneyManagerController {
             Scene scene = accounts.getScene();
             switch (newValue) {
                 case DARK, SYSTEM:
-                    scene.getStylesheets().remove("style-light.css");
-                    scene.getStylesheets().add("style-dark.css");
+                    scene.getStylesheets().remove("org/wip/moneymanager/style-light.css");
+                    scene.getStylesheets().add("org/wip/moneymanager/style-dark.css");
                     break;
                 case LIGHT:
-                    scene.getStylesheets().remove("style-dark.css");
-                    scene.getStylesheets().add("style-light.css");
+                    scene.getStylesheets().remove("org/wip/moneymanager/style-dark.css");
+                    scene.getStylesheets().add("org/wip/moneymanager/style-light.css");
                     break;
             }
         });
@@ -169,11 +169,11 @@ public class MoneyManagerController {
         accounts.sceneProperty().addListener((_, _, newValue) -> {
             if (newValue != null) {
                 if (Data.dbUser.themeProperty().get() == Theme.LIGHT) {
-                    newValue.getStylesheets().add("style-light.css");
-                    newValue.getStylesheets().remove("style-dark.css");
+                    newValue.getStylesheets().add("org/wip/moneymanager/style-light.css");
+                    newValue.getStylesheets().remove("org/wip/moneymanager/style-dark.css");
                 } else {
-                    newValue.getStylesheets().add("style-dark.css");
-                    newValue.getStylesheets().remove("style-light.css");
+                    newValue.getStylesheets().add("org/wip/moneymanager/style-dark.css");
+                    newValue.getStylesheets().remove("org/wip/moneymanager/style-light.css");
                 }
                 newValue.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
                 Data.lsp.setSelectedLanguage(Data.dbUser.languageProperty().get());

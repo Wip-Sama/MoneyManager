@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.View.MoneyManager;
 import org.wip.moneymanager.components.ComboPasswordField;
 import org.wip.moneymanager.components.Switch;
 import org.wip.moneymanager.model.DBObjects.dbUser;

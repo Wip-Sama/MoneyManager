@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
-import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.View.MoneyManager;
 import org.wip.moneymanager.components.CardConto;
 import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
@@ -49,7 +49,7 @@ public class Accounts extends BorderPane implements AutoCloseable {
     public Accounts() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/accounts.fxml"));
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/accounts.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();

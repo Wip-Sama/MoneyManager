@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.6" prefWidth="120.0" styleClass="balance_editor" stylesheets="@../../../../style-dark.css" type="HBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.6" prefWidth="120.0" styleClass="balance_editor" stylesheets="@../style-dark.css" type="HBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="balance_field" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="2.0" prefHeight="26.6" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
       <Separator fx:id="sep" maxWidth="-Infinity" minWidth="-Infinity" mouseTransparent="true" orientation="VERTICAL" prefWidth="8.0" style="-fx-border-radius: 10;" />

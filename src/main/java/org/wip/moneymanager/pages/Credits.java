@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.View.MoneyManager;
 import org.wip.moneymanager.model.Data;
 
 import java.util.concurrent.ExecutorService;

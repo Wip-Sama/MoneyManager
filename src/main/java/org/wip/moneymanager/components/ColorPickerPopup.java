@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
-import org.wip.moneymanager.MoneyManager;
+import org.wip.moneymanager.View.MoneyManager;
 import javafx.scene.Parent;
 
 import java.io.IOException;

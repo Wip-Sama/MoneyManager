@@ -1,5 +1,5 @@
 /* è molto più facile in caso avessimo più temi base avere tutti i css in un solo punto */
-@import "org/wip/moneymanager/css/everycss.css";
+@import "css/everycss.css";
 
 /*
 Design directions:
@@ -7,6 +7,9 @@ Design directions:
 - Minimum Dynamic size (1/2 of every direction of the display) (1/4 total display size)
 - Minimum Minimum size (800x600)
 */
+* {
+    -fx-font-size: 14px;
+}
 
 .root {
     /* Accento */

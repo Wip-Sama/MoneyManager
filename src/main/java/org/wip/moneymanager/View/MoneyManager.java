@@ -1,4 +1,4 @@
-package org.wip.moneymanager;
+package org.wip.moneymanager.View;
 
 import javafx.application.Application;
 import javafx.concurrent.Task;
@@ -19,7 +19,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
-import java.sql.*;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -39,8 +38,8 @@ public class MoneyManager extends Application {
                 .map(Thread::getName)
                 .collect(Collectors.toSet());
 
-        setUserAgentStylesheet("style-dark.css");
-        FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("base_menu.fxml"));
+        setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
+        FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/base_menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setMinHeight(540); //MAX 540 (1080/2)

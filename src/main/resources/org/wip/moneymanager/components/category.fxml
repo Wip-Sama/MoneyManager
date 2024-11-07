@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root fx:id="category_editor" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="600.0" styleClass="category_editor" stylesheets="@../../../../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="category_editor" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="600.0" styleClass="category_editor" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <right>
         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="rename" mnemonicParsing="false" styleClass="transparent-button" text="Rename" />
-                <Separator mouseTransparent="true" orientation="VERTICAL" prefHeight="200.0" stylesheets="@../../../../style-dark.css" />
+                <Separator mouseTransparent="true" orientation="VERTICAL" prefHeight="200.0" stylesheets="@../style-dark.css" />
                 <Button fx:id="delete" mnemonicParsing="false" text="Delete">
                <HBox.margin>
                   <Insets right="10.0" />

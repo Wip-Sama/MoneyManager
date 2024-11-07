@@ -48,6 +48,8 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.46.0.1</version>
 		</dependency>
+
+
 		<!-- Molto meglio questo di sqllite
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -129,7 +131,7 @@
 						<!-- Default configuration for running with: mvn clean javafx:run -->
 						<id>default-cli</id>
 						<configuration>
-							<mainClass>org.wip.moneymanager/org.wip.moneymanager.MoneyManager</mainClass>
+							<mainClass>org.wip.moneymanager/org.wip.moneymanager.View.MoneyManager</mainClass>
 							<launcher>app</launcher>
 							<jlinkZipName>app</jlinkZipName>
 							<jlinkImageName>app</jlinkImageName>

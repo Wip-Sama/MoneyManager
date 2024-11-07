@@ -2,9 +2,11 @@ package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
 import org.wip.moneymanager.model.DBObjects.*;
+import org.wip.moneymanager.utility.Encrypter;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -436,4 +438,7 @@ public class UserDatabase extends Database {
             return false;
         });
     }
+
+
+
 }

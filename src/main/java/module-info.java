@@ -29,6 +29,8 @@ module org.wip.moneymanager {
     exports org.wip.moneymanager.model.DBObjects;
     exports org.wip.moneymanager.model.types;
     opens org.wip.moneymanager.model.types to javafx.fxml;
-    exports org.wip.moneymanager.charts;
-    opens org.wip.moneymanager.charts to javafx.fxml;
+    exports org.wip.moneymanager.Controller;
+    opens org.wip.moneymanager.Controller to javafx.fxml;
+    exports org.wip.moneymanager.View;
+    opens org.wip.moneymanager.View to javafx.fxml;
 }
