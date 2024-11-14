@@ -3,6 +3,7 @@ package org.wip.moneymanager.Controller;
 import javafx.animation.FadeTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -10,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import org.wip.moneymanager.View.MoneyManager;
+import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
@@ -18,12 +21,11 @@ import org.wip.moneymanager.model.types.Theme;
 import org.wip.moneymanager.pages.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class MoneyManagerController {
-
-
     @FXML
     private ToggleButton accounts;
     @FXML
@@ -62,12 +64,21 @@ public class MoneyManagerController {
 //        profile_loader = null;
     }
 
-    @FXML
     public void initialize() throws ExecutionException, InterruptedException {
+        System.out.println("MoneyManagerController initialized");
         // TODO: da rimuovere dopo che avremo fatto la schermata di login/register
         Task<dbUser> t = MMDatabase.getInstance().getUser(Data.uid);
         t.run();
         Data.dbUser = t.get();
+
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/base_menu.fxml"));
+//        fxmlLoader.setController(this);
+//        fxmlLoader.setRoot(this);
+//        try {
+//            fxmlLoader.load();
+//        } catch (IOException exception) {
+//            throw new RuntimeException(exception);
+//        }
 
         busy_indicator.setVisible(false);
         Data.busyProperty().addListener((_, _, newValue) -> {
@@ -128,12 +139,13 @@ public class MoneyManagerController {
             }
             change_pane.setCenter(profile_loader);
         });
-        user_logout.setOnAction(_ -> {
-            Data.dbUser = null;
-            remove_user();
-        });
+//        user_logout.setOnAction(_ -> {
+//            Data.dbUser = null;
+//            remove_user();
+//        });
 
         Data.dbUser.themeProperty().addListener((_, _, newValue) -> {
+            System.out.println("Theme changed to " + newValue);
             Scene scene = accounts.getScene();
             switch (newValue) {
                 case DARK, SYSTEM:
@@ -146,6 +158,7 @@ public class MoneyManagerController {
                     break;
             }
         });
+
         Data.dbUser.accentProperty().addListener((_, _, newValue) -> {
             Scene scene = accounts.getScene();
             scene.getRoot().setStyle("-fu-accent: " + newValue.getHex() + ";");
@@ -171,7 +184,6 @@ public class MoneyManagerController {
                 } else {
                     newValue.getStylesheets().remove(getClass().getResource("/org/wip/moneymanager/style-light.css").toExternalForm());
                     newValue.getStylesheets().add(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
-
                 }
                 newValue.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
                 Data.lsp.setSelectedLanguage(Data.dbUser.languageProperty().get());

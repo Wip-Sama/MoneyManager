@@ -7,9 +7,6 @@ Design directions:
 - Minimum Dynamic size (1/2 of every direction of the display) (1/4 total display size)
 - Minimum Minimum size (800x600)
 */
-* {
-    -fx-font-size: 14px;
-}
 
 .root {
     /* Accento */

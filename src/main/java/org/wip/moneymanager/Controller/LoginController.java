@@ -14,8 +14,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.ComboPasswordField;
+import org.wip.moneymanager.model.DBObjects.dbUser;
+import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 import javafx.scene.paint.Color;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class LoginController {
 
@@ -76,7 +82,16 @@ public class LoginController {
             loginTask.setOnSucceeded(e -> {
                 boolean isAuthenticated = loginTask.getValue();
                 if (isAuthenticated) {
-                    SceneHandler.startMoneyManager();
+                    ExecutorService executorService = Executors.newSingleThreadExecutor();
+                    Data.esm.register(executorService);
+                    Task<dbUser> user = Data.mmDatabase.getUser(username);
+                    executorService.submit(user);
+                    user.setOnSucceeded(_ -> {
+                        Data.dbUser = user.getValue();
+                    });
+                    executorService.shutdown();
+
+                    SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).startMoneyManager();
                 } else {
                     showError("Username or Password Wrong");
                     animateFieldError(usernameField);

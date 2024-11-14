@@ -28,3 +28,7 @@
 @import "category-type-button.css";
 @import "profile.css";
 @import "text.css";
+
+* {
+    -fx-font-size: 14px;
+}

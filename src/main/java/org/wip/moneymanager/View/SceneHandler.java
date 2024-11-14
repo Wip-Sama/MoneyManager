@@ -4,6 +4,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import org.wip.moneymanager.Controller.MoneyManagerController;
+import org.wip.moneymanager.model.Data;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -69,8 +72,6 @@ public class SceneHandler {
             primaryStage.setWidth(lastWidth);
             primaryStage.setHeight(lastHeight);
 
-
-
             primaryStage.setTitle("Money Manager - Register");
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
             primaryStage.getIcons().add(icon);
@@ -82,13 +83,27 @@ public class SceneHandler {
         }
     }
 
-
-
-    public static void startMoneyManager() {
+    public void startMoneyManager() {
         try {
-            MoneyManager moneyManager = new MoneyManager();
-            moneyManager.start(primaryStage); // Avvia MoneyManager sulla stessa finestra
-            primaryStage.close(); // Chiude la finestra di login se necessario
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/base_menu.fxml"));
+
+            Scene scene = new Scene(loader.load());
+
+            lastWidth = primaryStage.getWidth();
+            lastHeight = primaryStage.getHeight();
+
+            primaryStage.setMinHeight(540);
+            primaryStage.setMinWidth(960);
+
+            primaryStage.setWidth(lastWidth);
+            primaryStage.setHeight(lastHeight);
+
+            primaryStage.setTitle("Money Manager - Register");
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
+            primaryStage.getIcons().add(icon);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
