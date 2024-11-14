@@ -1,6 +1,6 @@
 .full_button {
     -fx-background-radius: 6;
-    -fx-background-color: -fu-accent;
+    -fx-background-color: rgba(0, 0, 0, 0);
 }
 
 .full_button:hover {

@@ -4,27 +4,27 @@
     /*-fx-background-insets: 0, 6 125 6 0; /* Posiziona il bordo a sinistra */
     -fx-background-insets: 0, 5.5 174 5.5 0; /* Posiziona il bordo a sinistra */
     -fx-background-radius: 6, 10;
-    -fx-background-position: top, left;
+    -fx-background-position: center, left;
     -fx-text-fill: -fu-text-1;
-    -fx-label-padding: 0 0 0 40;
+    -fx-label-padding: 0 0 0 16;
 }
 
 .side-button:hover {
     /*background, accent*/
-    -fx-background-color: rgb(0, 0, 0, .3), transparent;
+    -fx-background-color: -fu-foreground-hover, transparent;
 }
 
 .side-button:pressed {
     /*background, accent*/
-    -fx-background-color: rgb(0, 0, 0, .2), transparent;
+    -fx-background-color: -fu-foreground-pressed, transparent;
 }
 
 .side-button:selected {
     /*background, accent*/
-    -fx-background-color: rgba(0, 0, 0, .3), -fu-accent;
+    -fx-background-color: -fu-foreground-selected, -fu-accent;
 }
 
 .side-button:selected:hover {
     /*background, accent*/
-    -fx-background-color: rgba(0, 0, 0, .3), -fu-accent;
+    -fx-background-color: -fu-foreground-selected, -fu-accent;
 }

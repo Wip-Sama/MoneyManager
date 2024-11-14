@@ -39,13 +39,11 @@ public class MoneyManagerController {
     @FXML
     private Label user_username;
     @FXML
-    private Label user_something;
-    @FXML
     private ImageView user_pic;
     @FXML
-    private MenuItem user_profile;
+    private Button user_profile;
     @FXML
-    private MenuItem user_logout;
+    private Button user_logout;
 
     private Settings settings_loader;
     private Statistics statistics_loader;
@@ -120,7 +118,6 @@ public class MoneyManagerController {
         accounts.textProperty().bind(Data.lsp.lsb("homescreen.accounts"));
         statistics.textProperty().bind(Data.lsp.lsb("homescreen.statistics"));
         settings.textProperty().bind(Data.lsp.lsb("homescreen.settings"));
-        user_logout.textProperty().bind(Data.lsp.lsb("basemenu.logout"));
         user_profile.textProperty().bind(Data.lsp.lsb("basemenu.profile"));
 
         user_profile.setOnAction(_ -> {
@@ -140,12 +137,12 @@ public class MoneyManagerController {
             Scene scene = accounts.getScene();
             switch (newValue) {
                 case DARK, SYSTEM:
-                    scene.getStylesheets().remove("org/wip/moneymanager/style-light.css");
-                    scene.getStylesheets().add("org/wip/moneymanager/style-dark.css");
+                    scene.getStylesheets().remove(getClass().getResource("/org/wip/moneymanager/style-light.css").toExternalForm());
+                    scene.getStylesheets().add(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
                     break;
                 case LIGHT:
-                    scene.getStylesheets().remove("org/wip/moneymanager/style-dark.css");
-                    scene.getStylesheets().add("org/wip/moneymanager/style-light.css");
+                    scene.getStylesheets().remove(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
+                    scene.getStylesheets().add(getClass().getResource("/org/wip/moneymanager/style-light.css").toExternalForm());
                     break;
             }
         });
@@ -169,11 +166,12 @@ public class MoneyManagerController {
         accounts.sceneProperty().addListener((_, _, newValue) -> {
             if (newValue != null) {
                 if (Data.dbUser.themeProperty().get() == Theme.LIGHT) {
-                    newValue.getStylesheets().add("org/wip/moneymanager/style-light.css");
-                    newValue.getStylesheets().remove("org/wip/moneymanager/style-dark.css");
+                    newValue.getStylesheets().remove(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
+                    newValue.getStylesheets().add(getClass().getResource("/org/wip/moneymanager/style-light.css").toExternalForm());
                 } else {
-                    newValue.getStylesheets().add("org/wip/moneymanager/style-dark.css");
-                    newValue.getStylesheets().remove("org/wip/moneymanager/style-light.css");
+                    newValue.getStylesheets().remove(getClass().getResource("/org/wip/moneymanager/style-light.css").toExternalForm());
+                    newValue.getStylesheets().add(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
+
                 }
                 newValue.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
                 Data.lsp.setSelectedLanguage(Data.dbUser.languageProperty().get());
@@ -198,13 +196,11 @@ public class MoneyManagerController {
             user_pic.setImage(mm_logo);
         }
         user_username.setText(Data.dbUser.username().get());
-        user_something.setText("test updated");
     }
 
     public void remove_user() {
         user_pic.setImage(mm_logo);
         user_username.setText("Money Manager");
-        user_something.setText("test removed");
     }
 
     public void show_busy_indicator() {

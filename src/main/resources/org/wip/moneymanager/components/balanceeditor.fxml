@@ -7,17 +7,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.6" prefWidth="120.0" styleClass="balance_editor" stylesheets="@../style-dark.css" type="HBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" minHeight="-Infinity" prefHeight="35.0" styleClass="balance_editor" stylesheets="@../style-dark.css" type="HBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="balance_field" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="2.0" prefHeight="26.6" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+      <TextField fx:id="balance_field" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
       <Separator fx:id="sep" maxWidth="-Infinity" minWidth="-Infinity" mouseTransparent="true" orientation="VERTICAL" prefWidth="8.0" style="-fx-border-radius: 10;" />
-      <ChoiceBox fx:id="currency_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.6" prefWidth="50.0" HBox.hgrow="ALWAYS">
+      <ChoiceBox fx:id="currency_field" minWidth="-Infinity" prefHeight="28.0" prefWidth="58.0" HBox.hgrow="ALWAYS">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <HBox.margin>
             <Insets />
          </HBox.margin>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
       </ChoiceBox>
    </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </fx:root>

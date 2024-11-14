@@ -38,7 +38,7 @@ public class MoneyManager extends Application {
                 .map(Thread::getName)
                 .collect(Collectors.toSet());
 
-        setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
+        setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-light.css").toExternalForm());
         FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/base_menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 

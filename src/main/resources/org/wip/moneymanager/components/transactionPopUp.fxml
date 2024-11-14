@@ -14,7 +14,7 @@
 
 
 <BorderPane stylesheets="@../style-light.css" styleClass="rounded-border-pane"
-            xmlns="http://javafx.com/javafx/21">
+            xmlns="http://javafx.com/javafx/22">
    <center>
       <VBox alignment="CENTER" prefWidth="364.0" stylesheets="@../style-light.css">
          <padding>

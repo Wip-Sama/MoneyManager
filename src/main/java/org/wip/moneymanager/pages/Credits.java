@@ -22,7 +22,7 @@ public class Credits extends BorderPane implements AutoCloseable {
     public Credits() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/credits.fxml"));
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/credits.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();

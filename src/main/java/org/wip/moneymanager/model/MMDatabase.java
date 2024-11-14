@@ -124,10 +124,11 @@ public class MMDatabase extends Database {
                 stmt.setString(1, username);
                 ResultSet rs = stmt.executeQuery();
                 String passwd = rs.getString("password_hash");
-                stmt.close();
+
                 if (rs.next()) {
                     return Encrypter.check_string_bcrypt(password, passwd);
                 }
+                stmt.close();
             }
             return false;
         });

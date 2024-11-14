@@ -30,7 +30,7 @@ public class SceneHandler {
 
     public void showLoginScreen() {
         try {
-            setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
+            setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-light.css").toExternalForm());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/login.fxml"));
             Scene scene = new Scene(loader.load());
 

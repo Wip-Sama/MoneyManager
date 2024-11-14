@@ -6,24 +6,24 @@
     -fx-border-style: dashed;
 }
 
-.category_editor:contorno_abilitato {
-    -fx-border-color: -fu-accent;
-}
-
 .category_editor:hover .separator .line {
-    -fx-border-color: -fu-accent;
+    -fx-border-color: -fu-stroke-pressed;
 }
 
 .category_editor:pressed {
-    -fx-background-color: -fu-foreground-pressed;
+    -fx-background-color: transparent;
 }
 
 .category_editor:selected .separator .line {
     -fx-border-color: -fu-accent;
 }
 
+.category_editor:selected .hseparator .line {
+    -fx-border-color:  -fu-stroke-pressed;
+}
+
 .category_editor:selected {
-    -fx-background-color: -fu-foreground-selected;
+    -fx-background-color: transparent;
 }
 
 .category_editor:selected:pressed {
@@ -35,6 +35,11 @@
     -fx-background-color: transparent;
 }
 
+.category-background {
+    -fx-background-color: -fu-foreground-rest;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+}
 .category_editor .double-click:phase_1 {
     -fx-background-color: -fu-accent;
 }

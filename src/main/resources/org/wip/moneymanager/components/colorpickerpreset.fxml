@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.SVGPath?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="colorpickerpreset" stylesheets="@../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="colorpickerpreset" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane mouseTransparent="true" prefHeight="14.0" prefWidth="14.0" styleClass="colorpickerpreset_under_checkmark" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <SVGPath content="m8.5 16.586-3.793-3.793a1 1 0 0 0-1.414 1.414l4.5 4.5a1 1 0 0 0 1.414 0l11-11a1 1 0 0 0-1.414-1.414L8.5 16.586Z" mouseTransparent="true" scaleX="0.9" scaleY="0.9" styleClass="colorpickerpreset_center_checkmark" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="6.0" />

@@ -1,29 +1,23 @@
 .colorpickerbutton > .button {
     -fx-text-fill: transparent;
-    -fx-background-color: -fu-stroke-rest, black;
+    -fx-background-color: -fu-foreground-rest;
     -fx-background-insets: 0 0 0 0, 3 3 3 3;
     -fx-background-radius: 10, 8;
 }
 
 .colorpickerbutton:hover > .button {
-    -fx-background-color: -fu-stroke-hover, black;
+    -fx-background-color: -fu-stroke-hover;
 }
 
 .colorpickerbutton:pressed > .button {
-    -fx-background-color: -fu-stroke-pressed, black;
+    -fx-background-color: -fu-stroke-pressed;
 }
 
 .colorpickerbutton SVGPath {
-    -fx-fill: -fu-stroke-rest;
+    -fx-fill: -fu-text-1;
 }
 
-.colorpickerbutton:hover SVGPath {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
-}
 
-.colorpickerbutton:pressed SVGPath {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
-}
 
 .colorpickerbutton:selected SVGPath {
     -fx-fill: transparent;
@@ -44,12 +38,10 @@
 
 .colorpickerbutton:hover > .colorpickerpreset_center_checkmark {
     -fx-fill: -fu-stroke-rest;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }
 
 .colorpickerbutton:selected > .colorpickerpreset_upper_checkmark {
     -fx-fill: -fu-text-1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }
 
 .colorpickerbutton:selected > .colorpickerpreset_under_checkmark {

@@ -8,13 +8,22 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root fx:id="category_editor" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="600.0" styleClass="category_editor" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="category_editor" maxHeight="49.0" minHeight="37.0" prefHeight="44.0" prefWidth="600.0" styleClass="category_editor" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <right>
         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="rename" mnemonicParsing="false" styleClass="transparent-button" text="Rename" />
-                <Separator mouseTransparent="true" orientation="VERTICAL" prefHeight="200.0" stylesheets="@../style-dark.css" />
-                <Button fx:id="delete" mnemonicParsing="false" text="Delete">
+                <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" orientation="VERTICAL" prefHeight="20.0" prefWidth="10.0" styleClass="hseparator" stylesheets="@../style-dark.css">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></Separator>
+                <Button fx:id="delete" mnemonicParsing="false" text="Delete" style="-fx-text-fill: red;">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -30,9 +39,6 @@
     </padding>
     <bottom>
         <Separator mouseTransparent="true" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets top="6.0" />
-            </padding>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>

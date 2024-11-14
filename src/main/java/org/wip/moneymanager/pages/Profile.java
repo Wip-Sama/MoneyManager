@@ -62,7 +62,7 @@ public class Profile extends BorderPane implements AutoCloseable {
     public Profile() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/profile.fxml"));
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/profile.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();

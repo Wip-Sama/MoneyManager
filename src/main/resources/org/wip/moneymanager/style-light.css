@@ -18,21 +18,21 @@ Design directions:
 
     /* Variabili per la modalità chiara */
     -fu-background-1: rgb(255, 255, 255);
-    -fu-background-2: rgb(245, 245, 245);
+    -fu-background-2: rgb(228, 228, 228);
     -fu-background-3: rgb(234, 234, 234);
     -fu-background-4: rgb(224, 224, 224);
 
-    -fu-foreground-rest: rgba(239, 239, 239, 1);
-    -fu-foreground-hover: rgba(227, 227, 227, 1);
-    -fu-foreground-pressed: rgba(247, 247, 247, 1);
-    -fu-foreground-selected: rgba(210, 210, 210, 1);
+    -fu-foreground-rest: rgb(255, 255, 255);
+    -fu-foreground-hover: rgb(255, 255, 255);
+    -fu-foreground-pressed: rgb(255, 255, 255);
+    -fu-foreground-selected: rgb(255, 255, 255);
 
-    -fu-stroke-rest: rgba(198, 198, 198, 1);
-    -fu-stroke-hover: rgba(198, 198, 198, 1);
-    -fu-stroke-pressed: rgba(198, 198, 198, 1);
-    -fu-stroke-selected: rgba(198, 198, 198, 1);
+    -fu-stroke-rest: rgb(213, 213, 213);
+    -fu-stroke-hover: rgb(193, 193, 193);
+    -fu-stroke-pressed: rgb(193, 193, 193);
+    -fu-stroke-selected: rgb(193, 193, 193);
 
-    -fu-text-1: #000000;
+    -fu-text-1: rgb(21, 21, 21);
     -fu-text-2: #555555;
 
     /* Opacità per lo stato disabilitato */

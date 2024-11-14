@@ -36,8 +36,6 @@ import java.util.concurrent.Executors;
 
 public class Settings extends BorderPane implements AutoCloseable {
     @FXML
-    private Label page_title;
-    @FXML
     private Label theme_label;
     @FXML
     private ChoiceBox<String> theme;
@@ -109,7 +107,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     public Settings() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/settings.fxml"));
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/settings.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();
@@ -125,7 +123,6 @@ public class Settings extends BorderPane implements AutoCloseable {
         initialize_choice_box();
 
         /* Localizzazione */
-        page_title.textProperty().bind(Data.lsp.lsb("settings"));
         theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
         accent_label.textProperty().bind(Data.lsp.lsb("settings.accent"));
         language_label.textProperty().bind(Data.lsp.lsb("settings.language"));

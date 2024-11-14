@@ -1,4 +1,4 @@
-.button {
+.button* {
     -fx-text-fill: -fu-text-1;
     -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
     -fx-background-insets: 0, 2;
@@ -8,6 +8,10 @@
     -fx-alignment: CENTER;
 }
 
+.icon_general {
+    -fx-fill: -fu-text-1;
+    -fx-padding: 9 15 9 15;
+}
 .button:hover {
     -fx-background-color: -fu-stroke-hover, -fu-foreground-hover;
 }
@@ -21,7 +25,7 @@
 }
 
 .button:disabled {
-    -fx-opacity: .5;
+    -fx-opacity: 0.5;
 }
 
 
@@ -47,6 +51,10 @@
 
 .icon-toggle-button:selected {
     -fx-background-color: -fu-stroke-selected, -fu-foreground-selected;
+}
+
+.icon-toggle-button {
+    -fx-padding: 8 15 8 15;
 }
 
 .icon-toggle-button:selected:hover {
@@ -80,3 +88,14 @@
 .buttons_login_register_secondary:disabled {
     -fx-opacity: 0.5;
 }
+
+
+.edit-profile-button {
+    -fx-text-fill: -fu-accent;
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+    -fx-alignment: left;
+}
+
+
+

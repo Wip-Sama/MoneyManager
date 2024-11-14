@@ -4,12 +4,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.666" prefWidth="53.2" styleClass="switch" stylesheets="@../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="80.0" styleClass="switch" stylesheets="@../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane fx:id="under_switch_state_indicator" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.6" prefWidth="26.6" style="-fx-background-color: rgb(140,0,0); -fx-background-insets: 5 -4 5 2; -fx-background-radius: 2 0 0 2;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Pane fx:id="switch_state_indicator" prefHeight="26.6" prefWidth="26.6" styleClass="switch_state_indicator" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Label fx:id="text_off" alignment="CENTER" layoutX="5.0" layoutY="4.0" mouseTransparent="true" prefHeight="20.0" prefWidth="20.0" text="No" AnchorPane.leftAnchor="3.3" AnchorPane.topAnchor="3.3" />
-      <Label fx:id="text_on" alignment="CENTER" layoutX="33.0" layoutY="4.0" mouseTransparent="true" prefHeight="20.0" prefWidth="20.0" text="Si" textAlignment="CENTER" AnchorPane.rightAnchor="3.3" AnchorPane.topAnchor="3.3" />
+      <Pane fx:id="under_switch_state_indicator" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgb(140,0,0); -fx-background-insets: 5 -4 5 2; -fx-background-radius: 2 0 0 2;" visible="false" AnchorPane.leftAnchor="0.0" />
+      <Pane fx:id="switch_state_indicator" prefHeight="40.0" prefWidth="40.0" styleClass="switch_state_indicator" AnchorPane.leftAnchor="0.0" />
+      <Label fx:id="text_off" alignment="CENTER" layoutX="5.0" layoutY="4.0" mouseTransparent="true" text="No" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="text_on" alignment="CENTER" layoutX="33.0" layoutY="4.0" mouseTransparent="true" prefHeight="20.0" prefWidth="20.0" text="Si" textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
    </children>
 </fx:root>

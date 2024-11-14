@@ -1,9 +1,10 @@
 .colorpickerpreset {
     -fx-text-fill: transparent;
-    -fx-background-color: -fu-stroke-rest, -fu-accent;
+    -fx-background-color: -fu-foreground-rest, -fu-accent;
     -fx-background-insets: 0 0 0 0, 3 3 3 3;
     -fx-background-radius: 10, 8;
 }
+
 
 .colorpickerpreset > .colorpickerpreset_upper_checkmark {
     -fx-fill: transparent;
@@ -20,17 +21,15 @@
 }
 
 .colorpickerpreset:hover > .colorpickerpreset_center_checkmark {
-    -fx-fill: -fu-stroke-rest;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
+    -fx-fill: -fu-text-1;
 }
 
 .colorpickerpreset:selected > .colorpickerpreset_upper_checkmark {
     -fx-fill: -fu-text-1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 14, 0.2, 0, 0);
 }
 
 .colorpickerpreset:selected > .colorpickerpreset_under_checkmark {
-    -fx-background-color: -fu-stroke-rest;
+    -fx-background-color: -fu-foreground-rest;
     -fx-background-radius: 0;
 }
 

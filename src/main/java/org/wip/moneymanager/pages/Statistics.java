@@ -20,7 +20,7 @@ public class Statistics extends BorderPane implements AutoCloseable {
     public Statistics() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("pages/statistics.fxml"));
+            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/statistics.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();
