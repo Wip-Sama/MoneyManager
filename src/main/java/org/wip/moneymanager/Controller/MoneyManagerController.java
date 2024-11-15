@@ -65,11 +65,10 @@ public class MoneyManagerController {
     }
 
     public void initialize() throws ExecutionException, InterruptedException {
-        System.out.println("MoneyManagerController initialized");
         // TODO: da rimuovere dopo che avremo fatto la schermata di login/register
-        Task<dbUser> t = MMDatabase.getInstance().getUser(Data.uid);
-        t.run();
-        Data.dbUser = t.get();
+        //Task<dbUser> t = MMDatabase.getInstance().getUser(Data.uid);
+        //t.run();
+        //Data.dbUser = t.get();
 
 //        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/base_menu.fxml"));
 //        fxmlLoader.setController(this);

@@ -88,10 +88,9 @@ public class LoginController {
                     executorService.submit(user);
                     user.setOnSucceeded(_ -> {
                         Data.dbUser = user.getValue();
+                        SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).startMoneyManager();
                     });
                     executorService.shutdown();
-
-                    SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).startMoneyManager();
                 } else {
                     showError("Username or Password Wrong");
                     animateFieldError(usernameField);

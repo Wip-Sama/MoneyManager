@@ -10,7 +10,7 @@ Design directions:
 
 .root {
     /* Accento */
-    -fu-accent: rgba(255, 0, 0, 1);
+    -fu-accent: red;
     -fu-accent-rest: -fu-accent;
     -fu-accent-hover: -fu-accent;
     -fu-accent-pressed: -fu-accent;
