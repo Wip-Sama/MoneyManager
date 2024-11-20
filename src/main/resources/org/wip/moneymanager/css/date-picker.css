@@ -80,11 +80,11 @@ Voglio lasciare questo commento per commemorare la mia sofferenza
 }
 .date-picker-popup > * > .spinner > .button:hover,
 .date-picker-popup > .month-year-pane > .button:hover {
-    -fx-background-color: -fu-foreground-hover;
+    -fx-background-color: -fu-stroke-hover;
 }
 
 .date-picker-popup > * {
-    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-color: -fu-foreground-rest, -fu-foreground-rest;
     -fx-background-insets: 0, 0 2 2 2;
     -fx-background-radius: 5, 0 0 6 6;
 }
@@ -93,7 +93,7 @@ Voglio lasciare questo commento per commemorare la mia sofferenza
 .date-picker-popup > * > .spinner > .button > .right-arrow,
 .date-picker-popup > .month-year-pane > .button > .left-arrow,
 .date-picker-popup > .month-year-pane > .button > .right-arrow {
-    -fx-background-color: -fu-stroke-rest;
+    -fx-background-color: -fu-foreground-rest;
     -fx-effect: null;
 }
 .date-picker-popup > * > .spinner > .button > .left-arrow,

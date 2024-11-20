@@ -3,7 +3,7 @@
 }
 
 .text-title {
-    -fx-font-size: 16px;
+    -fx-font-size: 18px;
     -fx-text-fill: -fu-text-1;
 }
 .text-body {
@@ -15,3 +15,4 @@
     -fx-font-size: 12px;
     -fx-text-fill: -fu-text-1;
 }
+

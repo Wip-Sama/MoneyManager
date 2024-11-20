@@ -49,7 +49,8 @@ public class LoginController {
     @FXML
     private TextField usernameField;
 
-    private final MMDatabase db = MMDatabase.getInstance();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
 
     @FXML
     void ChangeToRegister(ActionEvent event) {
@@ -66,24 +67,22 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.password.get();
 
-        // Verifica la presenza dei campi
-        if (username.isEmpty() && (password == null || password.isEmpty()) ) {
-            showError("Username and Password are required.");
+        if (username.isEmpty() && (password == null || password.isEmpty())) {
+            showError("login.error.missing");
             animateFieldError(usernameField);
             animateFieldError(passwordField);
         } else if (username.isEmpty()) {
-            showError("Username is required.");
+            showError("login.error.username");
             animateFieldError(usernameField);
         } else if (password == null || password.isEmpty()) {
-            showError("Password is required.");
+            showError("login.error.password");
             animateFieldError(passwordField);
         } else {
-            Task<Boolean> loginTask = db.checkPassword(username, password);
+            Task<Boolean> loginTask = Data.mmDatabase.checkPassword(username, password);
+            executorService.submit(loginTask);
             loginTask.setOnSucceeded(e -> {
                 boolean isAuthenticated = loginTask.getValue();
                 if (isAuthenticated) {
-                    ExecutorService executorService = Executors.newSingleThreadExecutor();
-                    Data.esm.register(executorService);
                     Task<dbUser> user = Data.mmDatabase.getUser(username);
                     executorService.submit(user);
                     user.setOnSucceeded(_ -> {
@@ -92,19 +91,17 @@ public class LoginController {
                     });
                     executorService.shutdown();
                 } else {
-                    showError("Username or Password Wrong");
+                    showError("login.error.invalid");
                     animateFieldError(usernameField);
                     animateFieldError(passwordField);
                 }
             });
 
             loginTask.setOnFailed(e -> {
-                showError("An error occurred during login.");
+                showError("login.error.generic");
                 animateFieldError(usernameField);
                 animateFieldError(passwordField);
             });
-
-            new Thread(loginTask).start();
         }
     }
 
@@ -147,11 +144,8 @@ public class LoginController {
     }
 
 
-
-    // Metodo per visualizzare il messaggio di errore con animazione
     private void showError(String message) {
-        errorLabel.setText(message);
-
+        errorLabel.textProperty().bind(Data.lsp.lsb(message));
         // Animazione di "fade in" per il messaggio di errore
         Timeline fadeInTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> errorLabel.setOpacity(0)),
@@ -163,6 +157,14 @@ public class LoginController {
 
     @FXML
     private void initialize() {
+        Data.esm.register(executorService);
+        loginButton.textProperty().bind(Data.lsp.lsb("login.logintext"));
+        labelUsername.textProperty().bind(Data.lsp.lsb("login.username"));
+        labelPassword.textProperty().bind(Data.lsp.lsb("login.password"));
+        registerButton.textProperty().bind(Data.lsp.lsb("login.register"));
+        LabelRegister.textProperty().bind(Data.lsp.lsb("login.registerlabel"));
+        errorLabel.textProperty().bind(Data.lsp.lsb("login.error"));
+
         // Listener per il campo username
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {

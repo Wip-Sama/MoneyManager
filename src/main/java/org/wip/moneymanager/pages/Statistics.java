@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import org.wip.moneymanager.View.MoneyManager;
+import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.Data;
 
 import java.util.concurrent.ExecutorService;
@@ -20,7 +20,7 @@ public class Statistics extends BorderPane implements AutoCloseable {
     public Statistics() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/statistics.fxml"));
+            FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/statistics.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();

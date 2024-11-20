@@ -15,8 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
-import org.wip.moneymanager.View.MoneyManager;
 import javafx.scene.Parent;
+import org.wip.moneymanager.View.SceneHandler;
 
 import java.io.IOException;
 import java.util.function.UnaryOperator;
@@ -58,7 +58,7 @@ public class ColorPickerPopup {
 
     public ColorPickerPopup(Window window) throws IOException {
         node = window;
-        FXMLLoader fxmlLoader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/components/colorpickerpopup.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/components/colorpickerpopup.fxml"));
         fxmlLoader.setRoot(new BorderPane()); /* L'alternativa è extends Borderpane e setRoot(this) */
         fxmlLoader.setController(this);
         // realisticamente non dovrebbe mai fallire ma anche se lo facesse non è lui a dover gestire l'errore

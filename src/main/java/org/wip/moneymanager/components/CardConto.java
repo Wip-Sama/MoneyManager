@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class CardConto extends AnchorPane {
     @FXML
@@ -135,7 +136,6 @@ public class CardConto extends AnchorPane {
     private void updateAccount() throws SQLException {
         account.setName(name_field.getText());
         account.setBalance(balance_field.getBalance());
-        //(int) (Timestamp.valueOf(creation_date_time.get()).getTime() / 1000)
         account.setCreationDate((int) creation_date_field.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond());
         account.setType(AccountType.fromInt(type_field.getSelectionModel().getSelectedIndex()));
         account.setIncludeIntoTotals(include_into_totals_field.getState() ? 0 : 1);
@@ -143,7 +143,6 @@ public class CardConto extends AnchorPane {
     }
 
     public void initialize() {
-        /* Graphics part */
         Rectangle clip = new Rectangle();
         clip.setArcWidth(20);
         clip.setArcHeight(20);
@@ -151,24 +150,33 @@ public class CardConto extends AnchorPane {
         clip.heightProperty().bind(heightProperty());
         clip.setMouseTransparent(true);
         setClip(clip);
+
         edit_pane_toggle.selectedProperty().addListener((_, _, newValue) -> {
-            // metto 160 e non edit_pane.getHeight() perché altrimenti con i bordi arrotondati non si vede bene
             double endHeight = newValue ? display_pane.getHeight() + 160 : display_pane.getHeight();
             Timeline timeline = new Timeline();
             KeyValue keyValue = new KeyValue(this.prefHeightProperty(), endHeight);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue); // Adjust duration as needed
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
             timeline.play();
         });
 
-        /* Edit part */
         hide_balance.addListener((_, _, newValue) -> {
             if (newValue) {
-                account_balance.setStyle("-fx-text-fill: -fu-text-2");
+                account_balance.setStyle("-fx-text-fill: -fu-text-2"); // Stile per bilancio nascosto
                 account_balance.textProperty().bind(Data.lsp.lsb("cardconto.balance", hidden_balance, currency));
             } else {
-                account_balance.setStyle("-fx-text-fill: -fu-text-1");
                 account_balance.textProperty().bind(Data.lsp.lsb("cardconto.balance", amount, currency));
+                // Aggiorna lo stile in base al valore del bilancio
+                try {
+                    double balance = Double.parseDouble(amount.get());
+                    if (balance < 0) {
+                        account_balance.setStyle("-fx-text-fill: #ff0000;"); // Rosso per bilancio negativo
+                    } else {
+                        account_balance.setStyle("-fx-text-fill: #00df00;"); // Verde per bilancio positivo
+                    }
+                } catch (NumberFormatException e) {
+                    account_balance.setStyle("-fx-text-fill: -fx-text-1"); // Colore di fallback
+                }
             }
         });
 
@@ -177,6 +185,22 @@ public class CardConto extends AnchorPane {
                 updateAccount();
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+        });
+
+        amount.addListener((observable, oldValue, newValue) -> {
+            // Cambia stile solo se il bilancio non è nascosto
+            if (!hide_balance.get()) {
+                try {
+                    double balance = Double.parseDouble(newValue);
+                    if (balance < 0) {
+                        account_balance.setStyle("-fx-text-fill: #ff0000;"); // Rosso per bilancio negativo
+                    } else {
+                        account_balance.setStyle("-fx-text-fill: #00df00;"); // Verde per bilancio positivo
+                    }
+                } catch (NumberFormatException e) {
+                    account_balance.setStyle("-fx-text-fill: -fx-text-1"); // Colore di fallback per valori non numerici
+                }
             }
         });
 
@@ -195,19 +219,17 @@ public class CardConto extends AnchorPane {
         account_balance.textProperty().bind(Data.lsp.lsb("cardconto.balance", amount, currency));
         account_creation_date.textProperty().bind(Data.lsp.lsb("cardconto.creation_date", creation_date));
 
-        /* Update part */
         Data.localizationService.selectedLanguageProperty().addListener((_, _, _) -> {
-            // Realisticamente non c'è il pericolo che cambi la lingua mentre ci troviamo qui...
-            // Ma meglio prevenire che curare
             update_type_field();
         });
+
         sceneProperty().addListener((_, _, newValue) -> {
             if (newValue != null) {
                 if (account != null) {
                     name.set(account.nameProperty().get());
                     amount.set(String.valueOf(account.balanceProperty().get()));
                     creation_date_time.set(LocalDateTime.ofInstant(Instant.ofEpochSecond(account.creationDateProperty().get()), ZoneId.systemDefault()));
-                    creation_date.set(creation_date_time.get().toString());
+                    creation_date.set(creation_date_time.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                     type.bind(Data.lsp.lsb("accounttype." + account.typeProperty().get().toString().toLowerCase()));
                     currency.set(account.currencyProperty().get());
 
@@ -219,13 +241,12 @@ public class CardConto extends AnchorPane {
                     creation_date_field.setValue(creation_date_time.get().toLocalDate());
                     include_into_totals_field.setState(account.includeIntoTotalsProperty().get() == 0);
 
-                    // Si può fare con un binding, ma è più bello vedere 4 listener di fila
                     account.nameProperty().addListener((_, _, newName) -> name.set(newName));
                     account.balanceProperty().addListener((_, _, newBalance) -> amount.set(String.valueOf(newBalance.doubleValue())));
                     account.creationDateProperty().addListener((_, _, newCreationDate) -> {
                         Instant instant = Instant.ofEpochSecond(newCreationDate.intValue());
                         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-                        creation_date.set(localDateTime.toString());
+                        creation_date.set(localDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                         creation_date_time.set(localDateTime);
                     });
                     account.typeProperty().addListener((_, _, newType) -> {

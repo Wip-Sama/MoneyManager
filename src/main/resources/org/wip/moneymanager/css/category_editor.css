@@ -22,6 +22,10 @@
     -fx-border-color:  -fu-stroke-pressed;
 }
 
+.category_editor:contorno_abilitato {
+    -fx-border-color: -fu-accent;
+}
+
 .category_editor:selected {
     -fx-background-color: transparent;
 }
@@ -40,6 +44,8 @@
     -fx-background-radius: 6;
     -fx-border-color: transparent;
 }
+
+
 .category_editor .double-click:phase_1 {
     -fx-background-color: -fu-accent;
 }

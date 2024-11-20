@@ -68,7 +68,7 @@ public class ComboPasswordField extends StackPane {
                 else
                     text_field.positionCaret(selection[0]);
                 password_field.setVisible(false);
-                visible_icon.setContent(hide_eye);
+                visible_icon.setContent(show_eye);
             } else {
                 password_field.setVisible(true);
                 password_field.requestFocus();
@@ -77,7 +77,7 @@ public class ComboPasswordField extends StackPane {
                 else
                     password_field.positionCaret(selection[0]);
                 text_field.setVisible(false);
-                visible_icon.setContent(show_eye);
+                visible_icon.setContent(hide_eye);
             }
             requesting_focus = false;
         });
@@ -111,6 +111,12 @@ public class ComboPasswordField extends StackPane {
                     selection[1] = newValue.getEnd();
             }
         });
+    }
+
+    public void clear() {
+        password.set("");
+        text_field.clear();
+        password_field.clear();
     }
 
 

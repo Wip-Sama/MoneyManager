@@ -14,7 +14,7 @@
 
 <fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <ScrollPane fx:id="scroll_miservesoloperingrandireilvbox" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" styleClass="background-3" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scroll_miservesoloperingrandireilvbox" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="accounts_container" spacing="10.0" VBox.vgrow="ALWAYS">
             </VBox>
@@ -27,7 +27,7 @@
    <top>
       <BorderPane maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <left>
-            <Label fx:id="your_accounts" alignment="TOP_LEFT" text="I Tuoi Conti" BorderPane.alignment="CENTER">
+            <Label fx:id="your_accounts" alignment="TOP_LEFT" text="I Tuoi Conti" BorderPane.alignment="CENTER" styleClass="text-title">
                <font>
                   <Font size="20.0" />
                </font>

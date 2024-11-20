@@ -1,16 +1,24 @@
-.full_button {
-    -fx-background-radius: 6;
-    -fx-background-color: rgba(0, 0, 0, 0);
+.full-button {
+    -fx-text-fill: -fu-text-1;
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6, 4;
+    -fx-padding: 8 5 8 5;
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
 }
 
-.full_button:hover {
-    -fx-background-color: -fu-accent-hover;
+.full-button:hover {
+    -fx-background-color: -fu-stroke-hover, -fu-accent;
+    -fx-text-fill: -fu-text-3;
 }
 
-.full_button:pressed {
-    -fx-background-color: -fu-accent-hover;
+.full-button:pressed {
+    -fx-background-color: -fu-stroke-pressed, -fu-accent;
+    -fx-text-fill: -fu-text-3;
 }
 
-.full_button:hover:pressed {
-    -fx-background-color: -fu-accent-pressed;
+.full-button:hover:pressed {
+    -fx-background-color: -fu-stroke-selected, -fu-accent;
+    -fx-text-fill: -fu-text-3;
 }

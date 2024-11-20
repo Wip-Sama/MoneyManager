@@ -99,7 +99,7 @@ public class SceneHandler {
             primaryStage.setWidth(lastWidth);
             primaryStage.setHeight(lastHeight);
 
-            primaryStage.setTitle("Money Manager - Register");
+            primaryStage.setTitle("Money Manager");
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
             primaryStage.getIcons().add(icon);
 

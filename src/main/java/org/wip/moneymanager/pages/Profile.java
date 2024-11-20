@@ -13,11 +13,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import org.wip.moneymanager.View.MoneyManager;
+import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.ComboPasswordField;
 import org.wip.moneymanager.components.Switch;
 import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.utility.AlertMessages;
 import org.wip.moneymanager.utility.Encrypter;
 
 import java.io.File;
@@ -47,6 +48,13 @@ public class Profile extends BorderPane implements AutoCloseable {
     private Label use_password_label;
     @FXML
     private Switch use_password_field;
+
+    @FXML
+    private ComboPasswordField old_password_field;
+
+    @FXML
+    private Label old_password_label;
+
     @FXML
     private Button save;
     @FXML
@@ -56,13 +64,14 @@ public class Profile extends BorderPane implements AutoCloseable {
     @FXML
     private Pane profile_pane;
 
-    private final static Image mm_logo = new Image(Objects.requireNonNull(MoneyManager.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
+
+    private final static Image mm_logo = new Image(Objects.requireNonNull(SceneHandler.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Profile() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/profile.fxml"));
+            FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/profile.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();
@@ -76,6 +85,7 @@ public class Profile extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
+        old_password_label.textProperty().bind(Data.lsp.lsb("profile.old_password"));
         save.textProperty().bind(Data.lsp.lsb("profile.save"));
         discard.textProperty().bind(Data.lsp.lsb("profile.discard"));
         username_label.textProperty().bind(Data.lsp.lsb("profile.username"));
@@ -127,10 +137,14 @@ public class Profile extends BorderPane implements AutoCloseable {
         save.setOnAction(_ -> {
             update_stuff();
             update_pic();
+
             username_field.setText(Data.dbUser.username().get());
             use_password_field.updateState(Data.dbUser.safe_login().get());
             Data.userUpdated.set(true);
+
+
         });
+
         discard.setOnAction(_ -> {
             username_field.setText(Data.dbUser.username().get());
             use_password_field.updateState(Data.dbUser.safe_login().get());
@@ -173,37 +187,93 @@ public class Profile extends BorderPane implements AutoCloseable {
     }
 
     private void update_stuff() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        Task<dbUser> dbUser = Data.mmDatabase.getUser(username_field.getText());
-        executorService.submit(dbUser);
-        try {
-            if (dbUser.getValue() != null && !dbUser.getValue().username().get().equals(Data.dbUser.username().get())) {
-                alert.setContentText("Username already exists");
-                alert.showAndWait();
-                return;
-            }
-            if (use_password_field.getState() && (new_password_field.password.get() == null || new_password_field.password.get().isEmpty())) {
-                alert.setContentText("Password cannot be empty if you want to use it");
-                alert.showAndWait();
-                return;
-            }
-            if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty() && new_password_field.password.get().matches("[a-zA-Z0-9_]")) {
-                alert.setContentText("Password must contain at least one special character");
-                alert.showAndWait();
+        Alert alertE = new Alert(Alert.AlertType.ERROR);
+        Alert alertI = new Alert(Alert.AlertType.INFORMATION);
+
+
+
+        if (old_password_field.password.get() == null || old_password_field.password.get().isEmpty()) {
+            alertE.setContentText(AlertMessages.getOldPasswordEmptyMessage().get());
+            alertE.showAndWait();
+            return;
+        }
+
+        Task<Boolean> checkPasswordTask = Data.mmDatabase.checkPassword(Data.dbUser.username().get(), old_password_field.password.get());
+        checkPasswordTask.setOnSucceeded(event -> {
+            Boolean isOldPasswordCorrect = checkPasswordTask.getValue();
+            if (!isOldPasswordCorrect) {
+                alertE.setContentText(AlertMessages.getOldPasswordIncorrectMessage().get());
+                alertE.showAndWait();
                 return;
             }
 
-            Data.dbUser.setUsername(username_field.getText());
-            Data.dbUser.setSafe_login(use_password_field.getState());
-            if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty())
-                Data.dbUser.setPassword_hash(Encrypter.encrypt_string_bcrypt(new_password_field.password.get()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            try {
+                Task<dbUser> dbUser = Data.mmDatabase.getUser(username_field.getText());
+                executorService.submit(dbUser);
+
+                if (dbUser.getValue() != null && !dbUser.getValue().username().get().equals(Data.dbUser.username().get())) {
+                    alertE.setContentText(AlertMessages.getUsernameExistsMessage().get());
+                    alertE.showAndWait();
+                    return;
+                }
+
+                if (use_password_field.getState() && (new_password_field.password.get() == null || new_password_field.password.get().isEmpty())) {
+                    alertE.setContentText(AlertMessages.getPasswordEmptyMessage().get());
+                    alertE.showAndWait();
+                    return;
+                }
+
+                if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty() && new_password_field.password.get().matches("[a-zA-Z0-9_]")) {
+                    alertE.setContentText(AlertMessages.getPasswordSpecialMessage().get());
+                    alertE.showAndWait();
+                    return;
+                }
+
+                Data.dbUser.setUsername(username_field.getText());
+                Data.dbUser.setSafe_login(use_password_field.getState());
+
+                Task<Void> savePasswordTask = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty()) {
+                            Data.dbUser.setPassword_hash(Encrypter.encrypt_string_bcrypt(new_password_field.password.get()));
+                        }
+                        return null;
+                    }
+                };
+
+                savePasswordTask.setOnSucceeded(event2 -> {
+                    alertE.setContentText(AlertMessages.getSuccessMessage().get());
+                    alertE.showAndWait();
+
+                    old_password_field.clear();
+                    new_password_field.clear();
+                });
+
+                savePasswordTask.setOnFailed(event2 -> {
+                    alertE.setContentText(AlertMessages.getErrorSavePasswordMessage().get());
+                    alertE.showAndWait();
+                });
+
+                executorService.submit(savePasswordTask);
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        checkPasswordTask.setOnFailed(e -> {
+            alertE.setContentText(AlertMessages.getErrorCheckPasswordMessage().get());
+            alertE.showAndWait();
+        });
+
+        executorService.submit(checkPasswordTask);
     }
+
 
     @Override
     public void close() {
         executorService.shutdown();
     }
+
 }
