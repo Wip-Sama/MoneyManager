@@ -1,6 +1,7 @@
 package org.wip.moneymanager.model.DBObjects;
 
 import javafx.beans.property.*;
+import javafx.concurrent.Task;
 import org.wip.moneymanager.model.MMDatabase;
 import org.wip.moneymanager.model.types.Color;
 import org.wip.moneymanager.model.types.HomeScreen;
@@ -116,9 +117,10 @@ public final class dbUser {
         this.username.set(username);
     }
 
-    public void setPassword_hash(String password_hash) throws SQLException {
+    public Task<Void> setPassword_hash(String password_hash) throws SQLException {
         this.password_hash.set(password_hash);
         updateField("password_hash", password_hash);
+        return null;
     }
 
     public void setSafe_login(boolean safe_login) throws SQLException {

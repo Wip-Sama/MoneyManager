@@ -9,6 +9,9 @@ module org.wip.moneymanager {
     requires java.net.http;
 
     requires spring.security.crypto;
+
+    requires org.slf4j;
+    requires ch.qos.logback.classic;
     requires eu.hansolo.fx.charts;
 
     requires org.json;

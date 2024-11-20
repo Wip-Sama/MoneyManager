@@ -10,7 +10,7 @@ Design directions:
 
 .root {
     /* Accento */
-    -fu-accent: rgba(255, 0, 0, 1);
+    -fu-accent: red;
     -fu-accent-rest: -fu-accent;
     -fu-accent-hover: -fu-accent;
     -fu-accent-pressed: -fu-accent;
@@ -31,13 +31,16 @@ Design directions:
     -fu-foreground-pressed: rgba(18, 18, 18, 1);
     -fu-foreground-selected: rgba(22, 22, 22, 1);
 
-    -fu-stroke-rest: rgba(66, 66, 66, 1);
-    -fu-stroke-hover: rgba(66, 66, 66, 1);
-    -fu-stroke-pressed: rgba(66, 66, 66, 1);
-    -fu-stroke-selected: rgba(66, 66, 66, 1);
+    -fu-stroke-colors: rgba(66, 66, 66, 1);
+    -fu-stroke-rest: rgb(58, 58, 58);
+    -fu-stroke-hover: rgb(58, 58, 58);
+    -fu-stroke-pressed: rgb(57, 57, 57);
+    -fu-stroke-selected: rgb(57, 57, 57);
 
+    -fu-barra: #c3c3c3;
     -fu-text-1: #ffffff;
     -fu-text-2: #737373;
+    -fu-text-3: #ffffff;
 
     /* Opacità per lo stato disabilitato */
     /* Opacità impostata al 80/70% */

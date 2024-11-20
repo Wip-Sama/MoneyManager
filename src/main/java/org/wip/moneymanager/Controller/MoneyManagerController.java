@@ -1,9 +1,8 @@
 package org.wip.moneymanager.Controller;
 
 import javafx.animation.FadeTransition;
-import javafx.concurrent.Task;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -11,17 +10,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import org.wip.moneymanager.View.MoneyManager;
-import org.wip.moneymanager.View.SceneHandler;
-import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.model.MMDatabase;
 import org.wip.moneymanager.model.UserDatabase;
+import org.wip.moneymanager.model.types.HomeScreen;
 import org.wip.moneymanager.model.types.Theme;
 import org.wip.moneymanager.pages.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
@@ -56,30 +51,15 @@ public class MoneyManagerController {
     private final Image mm_logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
 
     private void clearLoaders() {
-//        settings_loader = null;
-//        statistics_loader = null;
-//        accounts_loader = null;
-//        transactions_loader = null;
-//        credits_loader = null;
-//        profile_loader = null;
+        //transactions_loader = null;
+        //accounts_loader = null;
+        //statistics_loader = null;
+        //settings_loader = null;
+        //credits_loader = null;
+        //profile_loader = null;
     }
 
     public void initialize() throws ExecutionException, InterruptedException {
-        System.out.println("MoneyManagerController initialized");
-        // TODO: da rimuovere dopo che avremo fatto la schermata di login/register
-        Task<dbUser> t = MMDatabase.getInstance().getUser(Data.uid);
-        t.run();
-        Data.dbUser = t.get();
-
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/base_menu.fxml"));
-//        fxmlLoader.setController(this);
-//        fxmlLoader.setRoot(this);
-//        try {
-//            fxmlLoader.load();
-//        } catch (IOException exception) {
-//            throw new RuntimeException(exception);
-//        }
-
         busy_indicator.setVisible(false);
         Data.busyProperty().addListener((_, _, newValue) -> {
             if (newValue.intValue() > 0) {
@@ -96,6 +76,7 @@ public class MoneyManagerController {
                 change_pane.setCenter(transactions_loader);
             }
         });
+
         accounts.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
                 clearLoaders();
@@ -103,12 +84,14 @@ public class MoneyManagerController {
                 change_pane.setCenter(accounts_loader);
             }
         });
+
         statistics.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
                 statistics_loader = new Statistics();
                 change_pane.setCenter(statistics_loader);
             }
         });
+
         settings.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
                 clearLoaders();
@@ -139,11 +122,8 @@ public class MoneyManagerController {
             }
             change_pane.setCenter(profile_loader);
         });
-//        user_logout.setOnAction(_ -> {
-//            Data.dbUser = null;
-//            remove_user();
-//        });
 
+        // Listen for theme changes
         Data.dbUser.themeProperty().addListener((_, _, newValue) -> {
             System.out.println("Theme changed to " + newValue);
             Scene scene = accounts.getScene();
@@ -190,10 +170,12 @@ public class MoneyManagerController {
                 change_pane.setCenter(new Credits());
             }
         });
-        Circle clip = new Circle(25, 25, 25);
+
+        Circle clip = new Circle(20, 20, 20);
         user_pic.setClip(clip);
         Data.userDatabase = new UserDatabase();
         update_user();
+        loadStartPage();
     }
 
     public void update_user() {
@@ -230,4 +212,20 @@ public class MoneyManagerController {
         fadeOut.setOnFinished(_ -> busy_indicator.setVisible(false));
         fadeOut.play();
     }
+
+    private void loadStartPage() {
+        HomeScreen startPage = Data.dbUser.home_screenProperty().get();
+
+        Platform.runLater(() -> {
+            if (startPage == HomeScreen.TRANSACTIONS) {
+                transactions.setSelected(true);
+            } else if (startPage == HomeScreen.ACCOUNTS) {
+                accounts.setSelected(true);
+            } else if (startPage == HomeScreen.STATISTICS) {
+                statistics.setSelected(true);
+            }
+        });
+    }
+
+
 }

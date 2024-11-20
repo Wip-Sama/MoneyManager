@@ -180,6 +180,21 @@ public class MMDatabase extends Database {
         });
     }
 
+    public Task<Boolean> userExists(String username) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "SELECT COUNT(*) AS count FROM Users WHERE username = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, username);
+                ResultSet rs = stmt.executeQuery();
+                boolean exists = rs.getInt("count") > 0;
+                stmt.close();
+                return exists;
+            }
+            return false;
+        });
+    }
+
     public Task<dbUser> getUser(int uid) {
         return asyncCall(() -> {
             dbUser dbUser = null;

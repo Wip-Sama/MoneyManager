@@ -5,7 +5,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
-import org.wip.moneymanager.View.MoneyManager;
+import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.interfaces.Translation;
 
 import java.io.File;
@@ -93,7 +93,7 @@ public class LocalizationService {
     }
 
     public void loadAllLocales() {
-        File dir = new File(Objects.requireNonNull(MoneyManager.class.getResource(base_path)).getFile());
+        File dir = new File(Objects.requireNonNull(SceneHandler.class.getResource(base_path)).getFile());
         File[] files = dir.listFiles();
         assert files != null;
         for (File file : files) {

@@ -5,16 +5,17 @@ import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.wip.moneymanager.components.ComboPasswordField;
-import org.wip.moneymanager.model.MMDatabase; // Import your MMDatabase class
-import org.wip.moneymanager.View.SceneHandler; // Import the SceneHandler class
+import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.model.MMDatabase;
+import org.wip.moneymanager.View.SceneHandler;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RegisterController {
 
@@ -34,7 +35,13 @@ public class RegisterController {
     private Label labelUsername;
 
     @FXML
+    private Label labelConfirmPassword;
+
+    @FXML
     private ComboPasswordField passwordFieldRegister;
+
+    @FXML
+    private ComboPasswordField passwordConfirmPassword;
 
     @FXML
     private Button registerButton;
@@ -46,7 +53,6 @@ public class RegisterController {
 
     @FXML
     void ChangeToLogin(ActionEvent event) {
-        // Use SceneHandler to show the login screen
         SceneHandler.getInstance((Stage) loginChangeButton.getScene().getWindow()).showLoginScreen();
     }
 
@@ -54,52 +60,87 @@ public class RegisterController {
     void RegisterUser(ActionEvent event) {
         String username = usernameFieldRegister.getText();
         String password = passwordFieldRegister.password.get();
+        String confirmPassword = passwordConfirmPassword.password.get();
 
-        // Validate input
-        if (username.isEmpty() && (password == null || password.isEmpty())) {
-            showError("Username and Password cannot be empty.");
+        if (username.isEmpty() && (password == null || password.isEmpty()) && (confirmPassword == null || confirmPassword.isEmpty())) {
+            showError("register.error.missing");
+            animateFieldError(usernameFieldRegister);
+            animateFieldError(passwordFieldRegister);
+            animateFieldError(passwordConfirmPassword);
+        } else if (username.isEmpty() && (password == null || password.isEmpty())) {
+            showError("register.error.missing");
             animateFieldError(usernameFieldRegister);
             animateFieldError(passwordFieldRegister);
             return;
         } else if (username.isEmpty()) {
-            showError("Username cannot be empty.");
+            showError("register.error.username");
             animateFieldError(usernameFieldRegister);
             return;
-        } else if (password.isEmpty()) {
-            showError("Password cannot be empty.");
+        } else if (password == null || password.isEmpty()) {
+            showError("register.error.password");
             animateFieldError(passwordFieldRegister);
             return;
+        } else if (confirmPassword == null || confirmPassword.isEmpty()) {
+            showError("register.error.confirm");
+            animateFieldError(passwordConfirmPassword);
+            return;
+        } else if (!password.equals(confirmPassword)) {
+            showError("register.error.mismatch");
+            animateFieldError(passwordFieldRegister);
+            animateFieldError(passwordConfirmPassword);
+            return;
+        } else {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            Data.esm.register(executorService);
+
+            Task<Boolean> existTask = Data.mmDatabase.userExists(username);
+
+
+            existTask.setOnSucceeded(existEvent -> {  // Cambio nome del parametro
+                Boolean exist = existTask.getValue();
+                if (exist != null && !exist) {
+                    // Utente non esiste, procedi con la registrazione
+                    Task<Boolean> registrationTask = Data.mmDatabase.createUser(username, password);
+                    registrationTask.setOnSucceeded(registrationEvent -> {  // Cambio nome del parametro
+                        Boolean isRegistered = registrationTask.getValue();
+                        if (isRegistered != null && isRegistered) {
+                            errorLabel.setText(Data.lsp.lsb("register.success").get());
+                            errorLabel.setTextFill(Color.GREEN);
+                            errorLabel.setOpacity(1);
+                            SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).showLoginScreen();
+                        } else {
+                            showError("register.error.generic");
+                        }
+                        executorService.shutdown();
+                    });
+
+                    registrationTask.setOnFailed(registrationEvent -> {  // Cambio nome del parametro
+                        showError("register.error.generic");
+                        executorService.shutdown();
+                    });
+
+                    executorService.submit(registrationTask);
+                } else {
+                    // Utente già esistente
+                    showError("register.error.exists");
+                    executorService.shutdown();
+                }
+            });
+
+            existTask.setOnFailed(existEvent -> {  // Cambio nome del parametro
+                showError("register.error.generic");
+                executorService.shutdown();
+            });
+
+
+            executorService.submit(existTask);
+
+
         }
-
-        // Create a task to register the user
-        Task<Boolean> registrationTask = db.createUser(username, password);
-
-        registrationTask.setOnSucceeded(e -> {
-            boolean isRegistered = registrationTask.getValue(); // Get the result of the task
-            if (isRegistered) {
-                errorLabel.setText("Registration successful!");
-                errorLabel.setOpacity(1);
-                // Optionally navigate to the login screen or perform other actions here
-                SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).showLoginScreen();
-            } else {
-                errorLabel.setText("Registration failed!");
-                errorLabel.setOpacity(1);
-            }
-        });
-
-        registrationTask.setOnFailed(e -> {
-            errorLabel.setText("An error occurred during registration.");
-            errorLabel.setOpacity(1);
-        });
-
-        // Start the task in a new thread
-        new Thread(registrationTask).start();
     }
 
-
-    // Metodo per applicare animazione sul bordo rosso dei campi di input
     private void animateFieldError(javafx.scene.control.TextInputControl field) {
-        field.setStyle("-fx-background-color: transparent;");  // Imposta il bordo iniziale trasparente
+        field.setStyle("-fx-background-color: transparent;");
         Timeline shakeTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> field.setStyle("-fx-background-color: red, red, -fu-foreground-rest; ")),
                 new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
@@ -113,16 +154,15 @@ public class RegisterController {
     }
 
     private void animateFieldError(ComboPasswordField field) {
-
         for (javafx.scene.Node child : field.getChildren()) {
             if (child instanceof TextField) {
-                ((TextField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest; ");
+                ((TextField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest;");
             } else if (child instanceof PasswordField) {
-                ((PasswordField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest; ");
+                ((PasswordField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest;");
             }
         }
 
-        field.setStyle("-fx-background-color: transparent;");  // Imposta il bordo iniziale trasparente
+        field.setStyle("-fx-background-color: transparent;");
         Timeline shakeTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
                 new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
@@ -134,11 +174,8 @@ public class RegisterController {
         shakeTimeline.play();
     }
 
-    // Metodo per visualizzare il messaggio di errore con animazione
     private void showError(String message) {
-        errorLabel.setText(message);
-
-        // Animazione di "fade in" per il messaggio di errore
+        errorLabel.textProperty().bind(Data.lsp.lsb(message));
         Timeline fadeInTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> errorLabel.setOpacity(0)),
                 new KeyFrame(Duration.seconds(0.2), e -> errorLabel.setOpacity(1))
@@ -149,31 +186,33 @@ public class RegisterController {
 
     @FXML
     private void initialize() {
-        // Listener per il campo username
+        labelLogin.textProperty().bind(Data.lsp.lsb("register.loginlabel"));
+        labelUsername.textProperty().bind(Data.lsp.lsb("register.username"));
+        labelPassword.textProperty().bind(Data.lsp.lsb("register.password"));
+        labelConfirmPassword.textProperty().bind(Data.lsp.lsb("register.confirmpassword"));
+        registerButton.textProperty().bind(Data.lsp.lsb("register.registertext"));
+        loginChangeButton.textProperty().bind(Data.lsp.lsb("register.changetologin"));
+
         usernameFieldRegister.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                removeErrorStyles(usernameFieldRegister);  // Rimuove gli stili di errore
-                errorLabel.setOpacity(0);  // Nasconde il messaggio di errore
+                removeErrorStyles(usernameFieldRegister);
+                errorLabel.setOpacity(0);
             }
         });
 
-        // Listener per il campo password
         passwordFieldRegister.password.addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                removeErrorStyles(passwordFieldRegister);  // Rimuove gli stili di errore
-                errorLabel.setOpacity(0);  // Nasconde il messaggio di errore
+                removeErrorStyles(passwordFieldRegister);
+                errorLabel.setOpacity(0);
             }
         });
     }
 
-    // Metodo per rimuovere gli stili di errore dai campi di input
     private void removeErrorStyles(javafx.scene.control.TextInputControl field) {
-        field.setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");  // Rimuove il bordo rosso
+        field.setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");
     }
 
-
     private void removeErrorStyles(ComboPasswordField field) {
-
         for (javafx.scene.Node child : field.getChildren()) {
             if (child instanceof TextField) {
                 ((TextField) child).setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");

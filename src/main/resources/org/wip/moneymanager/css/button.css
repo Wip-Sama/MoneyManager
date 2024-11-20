@@ -92,9 +92,80 @@
 
 .edit-profile-button {
     -fx-text-fill: -fu-accent;
+    -fx-opacity: 1;
     -fx-background-color: transparent;
-    -fx-padding: 2;
-    -fx-alignment: left;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+}
+
+.edit-profile-button:hover {
+    -fx-text-fill: -fu-accent;
+    -fx-opacity: 0.5;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.edit-profile-button:pressed {
+    -fx-text-fill: -fu-accent;
+    -fx-opacity: 0.5;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+
+}
+
+.edit-profile-button:selected {
+    -fx-text-fill: -fu-accent;
+    -fx-opacity: 0.5;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.logout-button SVGPath {
+    -fx-fill: -fu-text-1;
+    -fx-opacity: 0.5;
+}
+
+.logout-button:hover SVGPath{
+    -fx-fill: -fu-text-1;
+    -fx-opacity: 1;
+}
+
+.logout-button:pressed SVGPath{
+    -fx-fill: -fu-text-1;
+    -fx-opacity: 1;
+}
+
+.logout-button:selected SVGPath{
+    -fx-fill: -fu-text-1;
+    -fx-opacity: 1;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.logout-button:hover {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.logout-button:pressed {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-o: transparent;
+}
+
+.logout-button:selected {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
 }
 
 

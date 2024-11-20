@@ -14,7 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import org.wip.moneymanager.View.MoneyManager;
+import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.*;
 import org.wip.moneymanager.model.*;
 import org.wip.moneymanager.model.DBObjects.dbCategory;
@@ -107,7 +107,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     public Settings() {
         Data.esm.register(executorService);
         try {
-            FXMLLoader loader = new FXMLLoader(MoneyManager.class.getResource("/org/wip/moneymanager/pages/settings.fxml"));
+            FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/settings.fxml"));
             loader.setRoot(this);
             loader.setController(this);
             loader.load();

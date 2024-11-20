@@ -10,22 +10,21 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <?import org.wip.moneymanager.components.ComboPasswordField?>
 <?import org.wip.moneymanager.components.Switch?>
 
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="549.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="150.0" styleClass="profile_image">
                <children>
-                  <Pane fx:id="profile_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="150.0" styleClass="profile_pane" />
                   <ImageView fx:id="pic" fitHeight="150.0" fitWidth="150.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" styleClass="profile_pic" StackPane.alignment="TOP_LEFT">
                      <viewport>
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
+                  <Pane fx:id="profile_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="150.0" styleClass="profile_pane" />
                   <Label fx:id="profile_label" mouseTransparent="true" styleClass="profile_label" text="Edit Image" />
                </children>
             </StackPane>
@@ -41,20 +40,26 @@
             </VBox>
             <VBox prefWidth="100.0">
                <children>
+                  <Label fx:id="old_password_label" text="Label" />
+                  <ComboPasswordField fx:id="old_password_field" />
+               </children>
+            </VBox>
+            <VBox prefWidth="100.0">
+               <children>
                   <Label fx:id="new_password_label" text="Label" />
                   <ComboPasswordField fx:id="new_password_field" />
                </children>
             </VBox>
-            <VBox prefWidth="100.0">
+            <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label fx:id="use_password_label" text="Label" />
                   <Switch fx:id="use_password_field" />
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" spacing="5.0">
+            <VBox spacing="5.0">
                <children>
-                  <Button fx:id="save" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" styleClass="full_button" text="Button" />
-                  <Button fx:id="discard" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" styleClass="transparent-button" text="Button" />
+                  <Button fx:id="discard" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="35.0" styleClass="transparent-button" text="Button" textFill="RED" />
+                  <Button fx:id="save" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="full-button" text="Button" />
                </children>
             </VBox>
          </children>

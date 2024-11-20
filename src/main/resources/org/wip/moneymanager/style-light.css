@@ -23,17 +23,20 @@ Design directions:
     -fu-background-4: rgb(224, 224, 224);
 
     -fu-foreground-rest: rgb(255, 255, 255);
-    -fu-foreground-hover: rgb(255, 255, 255);
+    -fu-foreground-hover: rgb(243, 243, 243);
     -fu-foreground-pressed: rgb(255, 255, 255);
     -fu-foreground-selected: rgb(255, 255, 255);
 
+    -fu-stroke-colors: rgb(255, 255, 255);
     -fu-stroke-rest: rgb(213, 213, 213);
     -fu-stroke-hover: rgb(193, 193, 193);
     -fu-stroke-pressed: rgb(193, 193, 193);
     -fu-stroke-selected: rgb(193, 193, 193);
 
+    -fu-barra: rgb(119, 119, 119);
     -fu-text-1: rgb(21, 21, 21);
     -fu-text-2: #555555;
+    -fu-text-3: #ffffff;
 
     /* Opacità per lo stato disabilitato */
     /* Opacità impostata al 80/70% */

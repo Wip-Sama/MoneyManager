@@ -30,10 +30,6 @@ public enum Theme {
         return Data.lsp.lsb(theme.toString().toLowerCase()).get();
     }
 
-    @Override
-    public String toString() {
-        return Theme.toString(this);
-    }
 
     public static Theme fromInt(int type) {
         if (type < 0 || type >= values().length) {

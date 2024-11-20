@@ -58,7 +58,7 @@ public class ColorPickerPreset extends AnchorPane {
     }
 
     public void updateColor() {
-        setStyle("-fx-background-color: -fu-stroke-rest, rgb(" + red.getValue() + "," + green.getValue() + "," + blue.getValue() + ")");
+        setStyle("-fx-background-color: -fu-stroke-colors, rgb(" + red.getValue() + "," + green.getValue() + "," + blue.getValue() + ")");
     }
 
     @FXML

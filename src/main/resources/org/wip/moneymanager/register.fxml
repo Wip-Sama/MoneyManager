@@ -3,16 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
-
 <?import org.wip.moneymanager.components.ComboPasswordField?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" styleClass="background-4" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.Controller.RegisterController">
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" styleClass="background-4" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.Controller.RegisterController">
    <children>
       <BorderPane prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -38,7 +37,8 @@
                   <Label fx:id="labelUsername" text="Username">
                      <VBox.margin>
                         <Insets bottom="2.0" />
-                     </VBox.margin></Label>
+                     </VBox.margin>
+                  </Label>
                   <TextField fx:id="usernameFieldRegister">
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -47,8 +47,15 @@
                   <Label fx:id="labelPassword" text="Password">
                      <VBox.margin>
                         <Insets bottom="2.0" />
-                     </VBox.margin></Label>
+                     </VBox.margin>
+                  </Label>
                   <ComboPasswordField fx:id="passwordFieldRegister">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </ComboPasswordField>
+                  <Label fx:id="labelConfirmPassword" text="Confirm Password" />
+                  <ComboPasswordField fx:id="passwordConfirmPassword">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -58,14 +65,14 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#RegisterUser" prefHeight="26.0" prefWidth="378.0" text="Register">
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#RegisterUser" prefHeight="26.0" prefWidth="378.0" styleClass="full-button" text="Register">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Label fx:id="LabelLogin" alignment="CENTER" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="386.0" text="Do you already have an account?" textOverrun="CLIP">
+                  <Label fx:id="labelLogin" alignment="CENTER" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="386.0" text="Do you already have an account?" textOverrun="CLIP">
                      <graphic>
-                        <Button fx:id="loginChangeButton" mnemonicParsing="false" onAction="#ChangeToLogin" text="Login" styleClass="buttons_login_register_secondary" />
+                        <Button fx:id="loginChangeButton" mnemonicParsing="false" onAction="#ChangeToLogin" styleClass="buttons_login_register_secondary" text="Login" />
                      </graphic>
                   </Label>
                </children>

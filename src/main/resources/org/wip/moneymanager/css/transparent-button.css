@@ -49,3 +49,25 @@
     -fx-padding: 0;
 }
 
+.transparent-button {
+    -fx-background-radius: 6;
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-text-fill: -fu-text-1;
+    -fx-opacity: 0.5;
+    -fx-text-alignment: left;
+}
+
+.terms-hypertext {
+    -fx-text-fill: -fu-accent;
+    -fx-opacity: 0.5;
+}
+
+.terms-hypertext:hover {
+    -fx-opacity: 1;
+}
+
+.terms-hypertext:pressed {
+    -fx-opacity: 1;
+}
+
+
