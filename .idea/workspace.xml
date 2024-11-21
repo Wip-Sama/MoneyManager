@@ -5,22 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
-      <change afterPath="$PROJECT_DIR$/Data/money_manager_backup.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/915ec9ff-3799-492e-8bda-c2d1235ad1ee.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/915ec9ff-3799-492e-8bda-c2d1235ad1ee.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/97982926-12f9-449a-a01a-b575da57f2bb/storage_v2/_src_/schema/main.uQUzAA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/42e30ef7-3781-4f89-a7a1-c0200438af08.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/42e30ef7-3781-4f89-a7a1-c0200438af08/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/dbabd810-edf9-4753-bd2d-06256c43ee45.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/dbabd810-edf9-4753-bd2d-06256c43ee45/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/user_dbs/1.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1_copy.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/1_copy.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_imgs/1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_imgs/1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_imgs/6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_imgs/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/DBObjects/dbUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/DBObjects/dbUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/databases/money_manager_template.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/databases/money_manager_template.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,53 +79,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.LineChartTest.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MoneyManager (1).executor": "Run",
-    "Application.MoneyManager (2).executor": "Run",
-    "Application.MoneyManager (3).executor": "Run",
-    "Application.MoneyManager.executor": "Debug",
-    "Application.SunburstChartTest.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.linechartdemo.executor": "Run",
-    "Application.maintmp.executor": "Run",
-    "Application.org.wip.moneymanager.View.MoneyManager.executor": "Run",
-    "Maven.MoneyManager [clean,install].executor": "Run",
-    "Maven.MoneyManager [clean].executor": "Run",
-    "Maven.MoneyManager [compile].executor": "Run",
-    "Maven.MoneyManager [install].executor": "Run",
-    "Maven.MoneyManager [package].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Login",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-22",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sebas/Desktop/MoneyManager/Data/user_imgs",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.LineChartTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SunburstChartTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.linechartdemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.maintmp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.wip.moneymanager.View.MoneyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Login&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sebas/Desktop/MoneyManager/src/main/resources/org/wip/moneymanager/databases&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager\databases" />
+      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\Data\user_imgs" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\Data\user_dbs" />
-      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager\pages" />
-      <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
@@ -369,6 +365,11 @@
       <workItem from="1732119432833" duration="5694000" />
       <workItem from="1732132712535" duration="4812000" />
       <workItem from="1732173888173" duration="5426000" />
+      <workItem from="1732184334355" duration="1027000" />
+      <workItem from="1732185480230" duration="822000" />
+      <workItem from="1732186427912" duration="433000" />
+      <workItem from="1732187120081" duration="1651000" />
+      <workItem from="1732188818782" duration="69000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />
@@ -602,21 +603,6 @@
     <MESSAGE value="fixes to profile page discard" />
     <MESSAGE value="better enum and small stuff" />
     <option name="LAST_COMMIT_MESSAGE" value="better enum and small stuff" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/LoginController.java</url>
-          <line>64</line>
-          <properties class="org.wip.moneymanager.Controller.LoginController" method="CheckLogin">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

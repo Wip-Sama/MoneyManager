@@ -67,10 +67,16 @@ public class RegisterController {
             animateFieldError(usernameFieldRegister);
             animateFieldError(passwordFieldRegister);
             animateFieldError(passwordConfirmPassword);
+
         } else if (username.isEmpty() && (password == null || password.isEmpty())) {
             showError("register.error.missing");
             animateFieldError(usernameFieldRegister);
             animateFieldError(passwordFieldRegister);
+            return;
+        } else if (username.isEmpty() && (confirmPassword == null || confirmPassword.isEmpty())) {
+            showError("register.error.missing");
+            animateFieldError(usernameFieldRegister);
+            animateFieldError(passwordConfirmPassword);
             return;
         } else if (username.isEmpty()) {
             showError("register.error.username");
@@ -203,6 +209,13 @@ public class RegisterController {
         passwordFieldRegister.password.addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
                 removeErrorStyles(passwordFieldRegister);
+                errorLabel.setOpacity(0);
+            }
+        });
+
+        passwordConfirmPassword.password.addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                removeErrorStyles(passwordConfirmPassword);
                 errorLabel.setOpacity(0);
             }
         });

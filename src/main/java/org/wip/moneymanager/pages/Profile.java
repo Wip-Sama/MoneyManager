@@ -243,8 +243,8 @@ public class Profile extends BorderPane implements AutoCloseable {
                 };
 
                 savePasswordTask.setOnSucceeded(event2 -> {
-                    alertE.setContentText(AlertMessages.getSuccessMessage().get());
-                    alertE.showAndWait();
+                    alertI.setContentText(AlertMessages.getSuccessMessage().get());
+                    alertI.showAndWait();
 
                     old_password_field.clear();
                     new_password_field.clear();
