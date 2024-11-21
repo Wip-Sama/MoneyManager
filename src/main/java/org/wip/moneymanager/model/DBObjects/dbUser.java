@@ -58,7 +58,7 @@ public final class dbUser {
                 rs.getString("username"),
                 rs.getString("password_hash"),
                 rs.getInt("safe_login"),
-                rs.getInt("theme"),
+                rs.getInt("thene"),
                 rs.getString("accent"),
                 rs.getInt("home_screen"),
                 rs.getInt("week_start"),
