@@ -142,6 +142,15 @@ public class MMDatabase extends Database {
                 stmt.setString(1, username);
                 stmt.setString(2, Encrypter.encrypt_string_bcrypt(password));
                 stmt.executeUpdate();
+
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int userId = rs.getInt(1); // Ottieni l'ID generato
+                    rs.close();
+                    stmt.close();
+                    createNewUserDB(userId);
+                }
+                rs.close();
                 stmt.close();
                 return true;
             }

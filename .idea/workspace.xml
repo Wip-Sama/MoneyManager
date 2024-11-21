@@ -5,55 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/utility/AlertMessages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/scroll-box.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/money_manager_backup.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/915ec9ff-3799-492e-8bda-c2d1235ad1ee.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/915ec9ff-3799-492e-8bda-c2d1235ad1ee.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/97982926-12f9-449a-a01a-b575da57f2bb/storage_v2/_src_/schema/main.uQUzAA.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/1.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1_copy.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/1_copy.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_imgs/1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_imgs/1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_imgs/6.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/MoneyManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/MoneyManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/View/MoneyManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/View/SceneHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/View/SceneHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardConto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPreset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ComboPasswordField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/DBObjects/dbUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/DBObjects/dbUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/LocalizationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/MMDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Credits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Credits.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Statistics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/base_menu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardconto.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardconto.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/combopasswordfield.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/combopasswordfield.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/switch.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/switch.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/category_editor.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/category_editor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/everycss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/full-button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/full-button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/profile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/scroll-bar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/text-input.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/text-input.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/text.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/text.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/transparent-button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/transparent-button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/it.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/it.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/accounts.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/profile.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/settings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/register.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/style-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/style-dark.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/style-light.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/style-light.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +35,7 @@
         <option value="Enum" />
         <option value="FxmlFile" />
         <option value="CSS File" />
+        <option value="JavaFXApplication" />
         <option value="Class" />
       </list>
     </option>
@@ -122,7 +90,7 @@
     "Application.MoneyManager (1).executor": "Run",
     "Application.MoneyManager (2).executor": "Run",
     "Application.MoneyManager (3).executor": "Run",
-    "Application.MoneyManager.executor": "Run",
+    "Application.MoneyManager.executor": "Debug",
     "Application.SunburstChartTest.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "Application.linechartdemo.executor": "Run",
@@ -140,7 +108,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sebas/Desktop/MoneyManager/src/main/resources/org/wip/moneymanager/pages",
+    "last_opened_file_path": "C:/Users/sebas/Desktop/MoneyManager/Data/user_imgs",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -157,18 +125,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data\user_imgs" />
+      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data\user_dbs" />
+      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager\pages" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager\components" />
-      <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager" />
-      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data\user_dbs" />
-      <recent name="D:\Programming\MoneyManager\user_dbs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager\css" />
       <recent name="D:\Programming\MoneyManager\Data\user_imgs" />
       <recent name="D:\Programming\MoneyManager\Data" />
-      <recent name="D:\Programming\MoneyManager\src\main\java\org\wip\moneymanager\pages" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.wip.moneymanager" />
@@ -398,6 +366,9 @@
       <workItem from="1731939110237" duration="234000" />
       <workItem from="1732015506583" duration="26870000" />
       <workItem from="1732088160358" duration="12552000" />
+      <workItem from="1732119432833" duration="5694000" />
+      <workItem from="1732132712535" duration="4812000" />
+      <workItem from="1732173888173" duration="5426000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />
@@ -631,6 +602,21 @@
     <MESSAGE value="fixes to profile page discard" />
     <MESSAGE value="better enum and small stuff" />
     <option name="LAST_COMMIT_MESSAGE" value="better enum and small stuff" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Controller/LoginController.java</url>
+          <line>64</line>
+          <properties class="org.wip.moneymanager.Controller.LoginController" method="CheckLogin">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

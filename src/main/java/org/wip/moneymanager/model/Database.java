@@ -1,5 +1,10 @@
 package org.wip.moneymanager.model;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,7 +18,8 @@ import java.util.concurrent.Executors;
 public class Database implements AutoCloseable {
 
     protected Connection con = null;
-
+    private static final String TEMPLATE_PATH = "src/main/resources/org/wip/moneymanager/databases/user_template.db";
+    private static final String USER_DB_FOLDER = "Data/user_dbs";
     public Connection getConnection() {
         return con;
     }
@@ -30,6 +36,7 @@ public class Database implements AutoCloseable {
             e.printStackTrace();
         }
     }
+
 
     public boolean isConnected() {
         try {
@@ -49,6 +56,21 @@ public class Database implements AutoCloseable {
         } catch (SQLException ignored) {
         }
     }
+
+    public static void createNewUserDB(int id) throws IOException {
+        Path templatePath = Paths.get(TEMPLATE_PATH); // Percorso assoluto o relativo del template
+        Path userDbPath = Paths.get(USER_DB_FOLDER, id + ".db"); // Destinazione
+
+
+        try {
+            Files.copy(templatePath, userDbPath, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("File db copy success: " + userDbPath.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException("Errore during copy db", e);
+        }
+    }
+
 
     protected <T> Task<T> asyncCall(Callable<T> callable) {
         return new Task<>() {
