@@ -21,7 +21,7 @@ public class UserDatabase extends Database {
     }
 
     public UserDatabase() {
-        super("data/user_dbs/"+Data.uid+".db");
+        super("data/user_dbs/"+Data.dbUser.id()+".db");
     }
 
     public Task<Boolean> createTag(String name, String color) {

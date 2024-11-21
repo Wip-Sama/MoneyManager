@@ -13,9 +13,6 @@ public class Data {
     public static final LocalizationService localizationService = new LocalizationService("en");
     public static final LocalizationService lsp = localizationService;
 
-    // Solo per i test "user"
-    public static final int uid = 1;
-
     public static dbUser dbUser;
 
     public static final ExecutorsServiceManager esm = new ExecutorsServiceManager();

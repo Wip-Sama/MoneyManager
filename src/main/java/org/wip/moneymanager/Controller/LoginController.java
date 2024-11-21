@@ -61,7 +61,6 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
     @FXML
     void CheckLogin(ActionEvent event) {
         String username = usernameField.getText();
@@ -79,21 +78,35 @@ public class LoginController {
             animateFieldError(passwordField);
         } else {
             Task<Boolean> loginTask = Data.mmDatabase.checkPassword(username, password);
+
+            // Invio il task al pool
             executorService.submit(loginTask);
+
             loginTask.setOnSucceeded(e -> {
                 boolean isAuthenticated = loginTask.getValue();
                 if (isAuthenticated) {
                     Task<dbUser> user = Data.mmDatabase.getUser(username);
+
+                    // Invio il secondo task al pool
                     executorService.submit(user);
+
                     user.setOnSucceeded(_ -> {
                         Data.dbUser = user.getValue();
                         SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).startMoneyManager();
+
+                        // Chiudo il pool quando tutti i task sono completati
+                        executorService.shutdown();
                     });
-                    executorService.shutdown();
+
+                    user.setOnFailed(_ -> {
+                        showError("login.error.generic");
+                        executorService.shutdown(); // Anche in caso di errore
+                    });
                 } else {
                     showError("login.error.invalid");
                     animateFieldError(usernameField);
                     animateFieldError(passwordField);
+                    executorService.shutdown();
                 }
             });
 
@@ -101,6 +114,7 @@ public class LoginController {
                 showError("login.error.generic");
                 animateFieldError(usernameField);
                 animateFieldError(passwordField);
+                executorService.shutdown();
             });
         }
     }
