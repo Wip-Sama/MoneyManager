@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -14,7 +15,10 @@ import org.wip.moneymanager.components.ComboPasswordField;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 import org.wip.moneymanager.View.SceneHandler;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -64,124 +68,92 @@ public class RegisterController {
         String password = passwordFieldRegister.password.get();
         String confirmPassword = passwordConfirmPassword.password.get();
 
+        Map<Node, String> validationErrorsRegister = new LinkedHashMap<>();
+
         if (username.isEmpty() && (password == null || password.isEmpty()) && (confirmPassword == null || confirmPassword.isEmpty())) {
-            showError("register.error.missing");
-            animateFieldError(usernameFieldRegister);
-            animateFieldError(passwordFieldRegister);
-            animateFieldError(passwordConfirmPassword);
-
-        } else if (username.isEmpty() && (password == null || password.isEmpty())) {
-            showError("register.error.missing");
-            animateFieldError(usernameFieldRegister);
-            animateFieldError(passwordFieldRegister);
-            return;
-        } else if (username.isEmpty() && (confirmPassword == null || confirmPassword.isEmpty())) {
-            showError("register.error.missing");
-            animateFieldError(usernameFieldRegister);
-            animateFieldError(passwordConfirmPassword);
-            return;
-        } else if (username.isEmpty()) {
-            showError("register.error.username");
-            animateFieldError(usernameFieldRegister);
-            return;
-        } else if (password == null || password.isEmpty()) {
-            showError("register.error.password");
-            animateFieldError(passwordFieldRegister);
-            return;
-        } else if (confirmPassword == null || confirmPassword.isEmpty()) {
-            showError("register.error.confirm");
-            animateFieldError(passwordConfirmPassword);
-            return;
-        } else if (!password.equals(confirmPassword)) {
-            showError("register.error.mismatch");
-            animateFieldError(passwordFieldRegister);
-            animateFieldError(passwordConfirmPassword);
-            return;
+            validationErrorsRegister.put(usernameFieldRegister, "register.error.missing");
+            validationErrorsRegister.put(passwordFieldRegister, "register.error.missing");
+            validationErrorsRegister.put(passwordConfirmPassword, "register.error.missing");
         } else {
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            Data.esm.register(executorService);
-
-            Task<Boolean> existTask = Data.mmDatabase.userExists(username);
-
-
-            existTask.setOnSucceeded(existEvent -> {  // Cambio nome del parametro
-                Boolean exist = existTask.getValue();
-                if (exist != null && !exist) {
-                    // Utente non esiste, procedi con la registrazione
-                    Task<Boolean> registrationTask = Data.mmDatabase.createUser(username, password);
-                    registrationTask.setOnSucceeded(registrationEvent -> {  // Cambio nome del parametro
-                        Boolean isRegistered = registrationTask.getValue();
-                        if (isRegistered != null && isRegistered) {
-                            errorLabel.setText(Data.lsp.lsb("register.success").get());
-                            errorLabel.setTextFill(Color.GREEN);
-                            errorLabel.setOpacity(1);
-                            SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).showLoginScreen();
-                        } else {
-                            showError("register.error.generic");
-                        }
-                        executorService.shutdown();
-                    });
-
-                    registrationTask.setOnFailed(registrationEvent -> {  // Cambio nome del parametro
-                        showError("register.error.generic");
-                        executorService.shutdown();
-                    });
-
-                    executorService.submit(registrationTask);
-                } else {
-                    // Utente già esistente
-                    showError("register.error.exists");
-                    executorService.shutdown();
-                }
-            });
-
-            existTask.setOnFailed(existEvent -> {  // Cambio nome del parametro
-                showError("register.error.generic");
-                executorService.shutdown();
-            });
-
-
-            executorService.submit(existTask);
-
-
-        }
-    }
-
-    private void animateFieldError(javafx.scene.control.TextInputControl field) {
-        if (!field.getStyleClass().contains("errore")) {
-            field.getStyleClass().add("errore");
-        }
-        Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), e -> field.setTranslateX(0)),
-                new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.15), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.20), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.25), e -> field.setTranslateX(0))
-        );
-        shakeTimeline.setCycleCount(1);
-        shakeTimeline.play();
-    }
-
-    private void animateFieldError(ComboPasswordField field) {
-        for (javafx.scene.Node child : field.getChildren()) {
-            if (child instanceof TextField || child instanceof PasswordField) {
-                if (!child.getStyleClass().contains("errore")) {
-                    child.getStyleClass().add("errore");
-                }
+            if (username.isEmpty()) {
+                validationErrorsRegister.put(usernameFieldRegister, "register.error.username");
+            }
+            if (password == null || password.isEmpty()) {
+                validationErrorsRegister.put(passwordFieldRegister, "register.error.password");
+            }
+            if (confirmPassword == null || confirmPassword.isEmpty()) {
+                validationErrorsRegister.put(passwordConfirmPassword, "register.error.confirm");
+            }
+            if (password != null && confirmPassword != null && !password.equals(confirmPassword)) {
+                validationErrorsRegister.put(passwordFieldRegister, "register.error.mismatch");
+                validationErrorsRegister.put(passwordConfirmPassword, "register.error.mismatch");
             }
         }
 
-        Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.15), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.20), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.25), e -> field.setTranslateX(0))
-        );
-        shakeTimeline.setCycleCount(1);
-        shakeTimeline.play();
+        handleValidationErrors(validationErrorsRegister);
+        if (!validationErrorsRegister.isEmpty()) return;
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Task<Boolean> existTask = Data.mmDatabase.userExists(username);
+
+        existTask.setOnSucceeded(e -> {
+            Boolean exists = existTask.getValue();
+            if (exists != null && !exists) {
+                registerNewUser(username, password, executorService);
+            } else {
+                showError("register.error.exists");
+                executorService.shutdown();
+            }
+        });
+
+        existTask.setOnFailed(e -> {
+            showError("register.error.generic");
+            executorService.shutdown();
+        });
+
+        executorService.submit(existTask);
     }
+
+
+    private void registerNewUser(String username, String password, ExecutorService executorService) {
+        Task<Boolean> registrationTask = Data.mmDatabase.createUser(username, password);
+
+        registrationTask.setOnSucceeded(e -> {
+            Boolean isRegistered = registrationTask.getValue();
+            if (isRegistered != null && isRegistered) {
+                errorLabel.setText(Data.lsp.lsb("register.success").get());
+                errorLabel.setTextFill(Color.GREEN);
+                errorLabel.setOpacity(1);
+                SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).showLoginScreen();
+            } else {
+                showError("register.error.generic");
+            }
+            executorService.shutdown();
+        });
+
+        registrationTask.setOnFailed(e -> {
+            showError("register.error.generic");
+            executorService.shutdown();
+        });
+
+        executorService.submit(registrationTask);
+    }
+
+    private void handleValidationErrors(Map<Node, String> validationErrors) {
+        if (!validationErrors.isEmpty()) {
+            validationErrors.forEach((field, errorKey) -> {
+                showError(errorKey);
+                if (field instanceof TextField) {
+                    FieldAnimationUtils.animateFieldError((TextField) field);
+                } else if (field instanceof ComboPasswordField) {
+                    FieldAnimationUtils.animateFieldError((ComboPasswordField) field);
+                }
+            });
+        }
+    }
+
+
+
 
     private void showError(String message) {
         errorLabel.textProperty().bind(Data.lsp.lsb(message));
@@ -233,33 +205,24 @@ public class RegisterController {
 
         usernameFieldRegister.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                removeErrorStyles(usernameFieldRegister);
+                FieldAnimationUtils.removeErrorStyles(usernameFieldRegister);
                 errorLabel.setOpacity(0);
             }
         });
 
         passwordFieldRegister.password.addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                removeErrorStyles(passwordFieldRegister);
+                FieldAnimationUtils.removeErrorStyles(passwordFieldRegister);
                 errorLabel.setOpacity(0);
             }
         });
 
         passwordConfirmPassword.password.addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                removeErrorStyles(passwordConfirmPassword);
+                FieldAnimationUtils.removeErrorStyles(passwordConfirmPassword);
                 errorLabel.setOpacity(0);
             }
         });
     }
 
-    private void removeErrorStyles(javafx.scene.control.TextInputControl field) {
-        field.getStyleClass().remove("errore");
-    }
-
-    private void removeErrorStyles(ComboPasswordField field) {
-        for (javafx.scene.Node child : field.getChildren()) {
-            child.getStyleClass().remove("errore");
-        }
-    }
 }

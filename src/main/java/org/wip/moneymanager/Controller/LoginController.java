@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -19,8 +20,11 @@ import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 import javafx.scene.paint.Color;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -63,91 +67,92 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
     @FXML
     void CheckLogin(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.password.get();
 
+        Map<Node, String> validationErrors = new LinkedHashMap<>();
+
         if (username.isEmpty() && (password == null || password.isEmpty())) {
-            showError("login.error.missing");
-            animateFieldError(usernameField);
-            animateFieldError(passwordField);
-        } else if (username.isEmpty()) {
-            showError("login.error.username");
-            animateFieldError(usernameField);
-        } else if (password == null || password.isEmpty()) {
-            showError("login.error.password");
-            animateFieldError(passwordField);
+            validationErrors.put(usernameField, "login.error.missing");
+            validationErrors.put(passwordField, "login.error.missing");
         } else {
-            Task<Boolean> loginTask = Data.mmDatabase.checkPassword(username, password);
-            executorService.submit(loginTask);
-
-            loginTask.setOnSucceeded(e -> {
-                boolean isAuthenticated = loginTask.getValue();
-                if (isAuthenticated) {
-                    Task<dbUser> user = Data.mmDatabase.getUser(username);
-                    executorService.submit(user);
-
-                    user.setOnSucceeded(_ -> {
-                        Data.dbUser = user.getValue();
-                        SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).startMoneyManager();
-                    });
-                    user.setOnFailed(_ -> {
-                        showError("login.error.generic");
-                    });
-                } else {
-                    showError("login.error.invalid");
-                    animateFieldError(usernameField);
-                    animateFieldError(passwordField);
-                }
-            });
-
-            loginTask.setOnFailed(e -> {
-                showError("login.error.generic");
-                animateFieldError(usernameField);
-                animateFieldError(passwordField);
-            });
-        }
-    }
-
-
-    // Metodo per applicare animazione sul bordo rosso dei campi di input
-    private void animateFieldError(javafx.scene.control.TextInputControl field) {
-        if (!field.getStyleClass().contains("errore")) {
-            field.getStyleClass().add("errore");
-        }
-        Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), e -> field.setTranslateX(0)),
-                new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.15), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.20), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.25), e -> field.setTranslateX(0))
-        );
-        shakeTimeline.setCycleCount(1);
-        shakeTimeline.play();
-    }
-
-    private void animateFieldError(ComboPasswordField field) {
-
-        for (javafx.scene.Node child : field.getChildren()) {
-            if (child instanceof TextField || child instanceof PasswordField) {
-                if (!child.getStyleClass().contains("errore")) {
-                    child.getStyleClass().add("errore");
-                }
+            if (username.isEmpty()) {
+                validationErrors.put(usernameField, "login.error.username");
+            }
+            if (password == null || password.isEmpty()) {
+                validationErrors.put(passwordField, "login.error.password");
             }
         }
 
-        Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.15), e -> field.setTranslateX(-2)),
-                new KeyFrame(Duration.seconds(0.20), e -> field.setTranslateX(2)),
-                new KeyFrame(Duration.seconds(0.25), e -> field.setTranslateX(0))
-        );
-        shakeTimeline.setCycleCount(1);
-        shakeTimeline.play();
+        handleValidationErrors(validationErrors);
+        if (!validationErrors.isEmpty()) return;
+
+        Task<Boolean> loginTask = Data.mmDatabase.checkPassword(username, password);
+        executorService.submit(loginTask);
+
+        loginTask.setOnSucceeded(e -> {
+            boolean isAuthenticated = loginTask.getValue();
+            if (isAuthenticated) {
+                handleSuccessfulLogin(username);
+            } else {
+                handleFailedLogin();
+            }
+        });
+
+        loginTask.setOnFailed(e -> {
+            showError("login.error.generic");
+            animateErrorFields(usernameField, passwordField);
+        });
     }
+
+
+    private void handleSuccessfulLogin(String username) {
+        Task<dbUser> userTask = Data.mmDatabase.getUser(username);
+        executorService.submit(userTask);
+
+        userTask.setOnSucceeded(e -> {
+            Data.dbUser = userTask.getValue();
+            SceneHandler.getInstance((Stage) loginButton.getScene().getWindow()).startMoneyManager();
+        });
+
+        userTask.setOnFailed(e -> {
+            showError("login.error.generic");
+        });
+    }
+
+    private void handleFailedLogin() {
+        showError("login.error.invalid");
+        animateErrorFields(usernameField, passwordField);
+    }
+
+    public static void animateErrorFields(Object... fields) {
+        for (Object field : fields) {
+            if (field instanceof TextField) {
+                FieldAnimationUtils.animateFieldError((TextField) field);
+            } else if (field instanceof ComboPasswordField) {
+                FieldAnimationUtils.animateFieldError((ComboPasswordField) field);
+            } else {
+                throw new IllegalArgumentException("Unsupported field type: " + field.getClass().getName());
+            }
+        }
+    }
+
+    private void handleValidationErrors(Map<Node, String> validationErrors) {
+        if (!validationErrors.isEmpty()) {
+            validationErrors.forEach((field, errorKey) -> {
+                showError(errorKey);
+                if (field instanceof TextField) {
+                    FieldAnimationUtils.animateFieldError((TextField) field);
+                } else if (field instanceof ComboPasswordField) {
+                    FieldAnimationUtils.animateFieldError((ComboPasswordField) field);
+                }
+            });
+        }
+    }
+
 
 
     private void showError(String message) {
@@ -189,7 +194,7 @@ public class LoginController {
         // Listener per il campo username
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                removeErrorStyles(usernameField);  // Rimuove gli stili di errore
+                FieldAnimationUtils.removeErrorStyles(usernameField);  // Rimuove gli stili di errore
                 errorLabel.setOpacity(0);  // Nasconde il messaggio di errore
             }
         });
@@ -197,20 +202,10 @@ public class LoginController {
         // Listener per il campo password
         passwordField.password.addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                removeErrorStyles(passwordField);
+                FieldAnimationUtils.removeErrorStyles(passwordField);
                 errorLabel.setOpacity(0);  // Nascondi l'alert quando l'utente inizia a scrivere
             }
         });
     }
 
-    // Metodo per rimuovere gli stili di errore dai campi di input
-    private void removeErrorStyles(javafx.scene.control.TextInputControl field) {
-        field.getStyleClass().remove("errore");  // Rimuove il bordo rosso
-    }
-
-    private void removeErrorStyles(ComboPasswordField field) {
-        for (javafx.scene.Node child : field.getChildren()) {
-            child.getStyleClass().remove("errore");
-        }
-    }
 }
