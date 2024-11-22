@@ -36,20 +36,20 @@
                   </VBox>
                   <Label fx:id="labelUsername" text="Username">
                      <VBox.margin>
-                        <Insets bottom="2.0" />
+                        <Insets />
                      </VBox.margin></Label>
                   <TextField fx:id="usernameField">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0" top="5.0" />
                      </VBox.margin>
                   </TextField>
                   <Label fx:id="labelPassword" text="Password">
                      <VBox.margin>
-                        <Insets bottom="2.0" />
+                        <Insets />
                      </VBox.margin></Label>
                   <ComboPasswordField fx:id="passwordField">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0" top="5.0" />
                      </VBox.margin>
                   </ComboPasswordField>
                   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.0" prefHeight="18.0" prefWidth="368.0" text="Error" textFill="RED">

@@ -138,7 +138,6 @@ public class Profile extends BorderPane implements AutoCloseable {
             update_stuff();
             update_pic();
 
-            username_field.setText(Data.dbUser.username().get());
             use_password_field.updateState(Data.dbUser.safe_login().get());
             Data.userUpdated.set(true);
 
@@ -190,8 +189,6 @@ public class Profile extends BorderPane implements AutoCloseable {
         Alert alertE = new Alert(Alert.AlertType.ERROR);
         Alert alertI = new Alert(Alert.AlertType.INFORMATION);
 
-
-
         if (old_password_field.password.get() == null || old_password_field.password.get().isEmpty()) {
             alertE.setContentText(AlertMessages.getOldPasswordEmptyMessage().get());
             alertE.showAndWait();
@@ -207,30 +204,42 @@ public class Profile extends BorderPane implements AutoCloseable {
                 return;
             }
 
-            try {
-                Task<dbUser> dbUser = Data.mmDatabase.getUser(username_field.getText());
-                executorService.submit(dbUser);
+            Task<dbUser> dbUser = Data.mmDatabase.getUser(username_field.getText());
+            executorService.submit(dbUser);
 
-                if (dbUser.getValue() != null && !dbUser.getValue().username().get().equals(Data.dbUser.username().get())) {
+            if (use_password_field.getState() && (new_password_field.password.get() == null || new_password_field.password.get().isEmpty())) {
+                alertE.setContentText(AlertMessages.getPasswordEmptyMessage().get());
+                alertE.showAndWait();
+                return;
+            }
+
+            if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty() && new_password_field.password.get().matches("[a-zA-Z0-9_]")) {
+                alertE.setContentText(AlertMessages.getPasswordSpecialMessage().get());
+                alertE.showAndWait();
+                return;
+            }
+
+            Task<Boolean> existTask = Data.mmDatabase.userExists(username_field.getText());
+            existTask.setOnSucceeded(eventexist -> {
+                boolean usernameExists = existTask.getValue();
+
+                if (!Objects.equals(username_field.getText(), Data.dbUser.username().get()) && usernameExists) {
                     alertE.setContentText(AlertMessages.getUsernameExistsMessage().get());
                     alertE.showAndWait();
-                    return;
+                    return;  // Interrompe l'esecuzione se il nome utente esiste
                 }
 
-                if (use_password_field.getState() && (new_password_field.password.get() == null || new_password_field.password.get().isEmpty())) {
-                    alertE.setContentText(AlertMessages.getPasswordEmptyMessage().get());
-                    alertE.showAndWait();
-                    return;
+                try {
+                    Data.dbUser.setUsername(username_field.getText());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
 
-                if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty() && new_password_field.password.get().matches("[a-zA-Z0-9_]")) {
-                    alertE.setContentText(AlertMessages.getPasswordSpecialMessage().get());
-                    alertE.showAndWait();
-                    return;
+                try {
+                    Data.dbUser.setSafe_login(use_password_field.getState());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
-
-                Data.dbUser.setUsername(username_field.getText());
-                Data.dbUser.setSafe_login(use_password_field.getState());
 
                 Task<Void> savePasswordTask = new Task<Void>() {
                     @Override
@@ -246,20 +255,23 @@ public class Profile extends BorderPane implements AutoCloseable {
                     alertI.setContentText(AlertMessages.getSuccessMessage().get());
                     alertI.showAndWait();
 
+                    username_field.setText(Data.dbUser.username().get());
                     old_password_field.clear();
                     new_password_field.clear();
                 });
 
                 savePasswordTask.setOnFailed(event2 -> {
+                    username_field.setText(Data.dbUser.username().get());
                     alertE.setContentText(AlertMessages.getErrorSavePasswordMessage().get());
                     alertE.showAndWait();
                 });
 
                 executorService.submit(savePasswordTask);
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            });
+
+            executorService.submit(existTask);
+
         });
 
         checkPasswordTask.setOnFailed(e -> {
@@ -269,6 +281,7 @@ public class Profile extends BorderPane implements AutoCloseable {
 
         executorService.submit(checkPasswordTask);
     }
+
 
 
     @Override

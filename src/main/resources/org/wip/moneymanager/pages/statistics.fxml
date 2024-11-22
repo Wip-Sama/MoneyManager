@@ -16,9 +16,6 @@
                 <opaqueInsets>
                     <Insets />
                 </opaqueInsets>
-                <padding>
-                    <Insets left="20.0" />
-                </padding>
             </Label>
         </HBox>
     </top>

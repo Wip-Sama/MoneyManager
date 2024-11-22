@@ -22,6 +22,7 @@ module org.wip.moneymanager {
     opens org.wip.moneymanager to javafx.fxml;
     exports org.wip.moneymanager;
 
+
     opens org.wip.moneymanager.components to javafx.fxml;
     exports org.wip.moneymanager.components;
 
@@ -34,6 +35,5 @@ module org.wip.moneymanager {
     opens org.wip.moneymanager.model.types to javafx.fxml;
     exports org.wip.moneymanager.Controller;
     opens org.wip.moneymanager.Controller to javafx.fxml;
-    exports org.wip.moneymanager.View;
-    opens org.wip.moneymanager.View to javafx.fxml;
+
 }

@@ -9,7 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.UserDatabase;
 import org.wip.moneymanager.model.types.HomeScreen;
@@ -225,6 +227,15 @@ public class MoneyManagerController {
                 statistics.setSelected(true);
             }
         });
+    }
+
+    @FXML
+    public void logout() {
+        // Reset dello stato utente
+        Data.dbUser = null; // Rimuove l'utente attualmente loggato
+
+        // Reindirizza alla schermata di login
+        SceneHandler.getInstance((Stage) user_logout.getScene().getWindow()).showLoginScreen();
     }
 
 

@@ -2,6 +2,7 @@ package org.wip.moneymanager.model.DBObjects;
 
 import javafx.beans.property.*;
 import javafx.concurrent.Task;
+import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 import org.wip.moneymanager.model.types.Color;
 import org.wip.moneymanager.model.types.HomeScreen;
@@ -12,6 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class dbUser {
     private static final MMDatabase db = MMDatabase.getInstance();
@@ -112,9 +116,10 @@ public final class dbUser {
         return last_login;
     }
 
-    public void setUsername(String username) throws SQLException {
-        updateField("username", username);
-        this.username.set(username);
+
+    public void setUsername(String newusername) throws SQLException {
+        updateField("username", newusername);
+        this.username.set(newusername);
     }
 
     public Task<Void> setPassword_hash(String password_hash) throws SQLException {
@@ -171,14 +176,16 @@ public final class dbUser {
         updateField("last_login", last_login);
     }
 
+
     private void updateField(String fieldName, Object value) throws SQLException {
         String query = "UPDATE Users SET " + fieldName + " = ? WHERE username = ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
             stmt.setObject(1, value);
             stmt.setString(2, username.get());
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
         }
     }
+
 
     @Override
     public boolean equals(Object obj) {

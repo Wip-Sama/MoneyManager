@@ -15,12 +15,12 @@
 }
 
 .text-input:hover, .text-area:hover, .text-field:hover {
-    -fx-background-color:  -fu-stroke-hover, -fu-stroke-hover, -fu-foreground-hover;
+    -fx-background-color:  -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
 }
 
 .text-input:focused, .text-area:focused, .text-field:focused {
-    -fx-background-color: -fu-stroke-hover, -fu-stroke-selected, -fu-foreground-selected;
+    -fx-background-color: -fu-accent, -fu-stroke-selected, -fu-foreground-selected;
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
 }
 
@@ -51,4 +51,8 @@
 .transparent-text-field:focused {
     -fx-background-color: transparent;
     -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3 2;
+}
+
+.errore {
+    -fx-background-color: red, red, -fu-foreground-rest;
 }

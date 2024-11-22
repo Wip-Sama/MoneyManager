@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -20,6 +21,7 @@ import org.wip.moneymanager.model.MMDatabase;
 import javafx.scene.paint.Color;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -111,9 +113,11 @@ public class LoginController {
 
     // Metodo per applicare animazione sul bordo rosso dei campi di input
     private void animateFieldError(javafx.scene.control.TextInputControl field) {
-        field.setStyle("-fx-background-color: transparent;");  // Imposta il bordo iniziale trasparente
+        if (!field.getStyleClass().contains("errore")) {
+            field.getStyleClass().add("errore");
+        }
         Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), e -> field.setStyle("-fx-background-color: red, red, -fu-foreground-rest; ")),
+                new KeyFrame(Duration.seconds(0), e -> field.setTranslateX(0)),
                 new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
                 new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
                 new KeyFrame(Duration.seconds(0.15), e -> field.setTranslateX(-2)),
@@ -127,14 +131,13 @@ public class LoginController {
     private void animateFieldError(ComboPasswordField field) {
 
         for (javafx.scene.Node child : field.getChildren()) {
-            if (child instanceof TextField) {
-                ((TextField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest; ");
-            } else if (child instanceof PasswordField) {
-                ((PasswordField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest; ");
+            if (child instanceof TextField || child instanceof PasswordField) {
+                if (!child.getStyleClass().contains("errore")) {
+                    child.getStyleClass().add("errore");
+                }
             }
         }
 
-        field.setStyle("-fx-background-color: transparent;");  // Imposta il bordo iniziale trasparente
         Timeline shakeTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
                 new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
@@ -168,6 +171,21 @@ public class LoginController {
         LabelRegister.textProperty().bind(Data.lsp.lsb("login.registerlabel"));
         errorLabel.textProperty().bind(Data.lsp.lsb("login.error"));
 
+        usernameField.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                if(!(passwordField.password.get() == null || passwordField.password.get().isEmpty())){
+                    loginButton.fire();
+                } else {
+                passwordField.requestFocusOnPassword();
+            }
+            }
+        });
+
+        passwordField.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                loginButton.fire(); // Simula il click sul bottone di login
+            }
+        });
         // Listener per il campo username
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
@@ -187,17 +205,12 @@ public class LoginController {
 
     // Metodo per rimuovere gli stili di errore dai campi di input
     private void removeErrorStyles(javafx.scene.control.TextInputControl field) {
-        field.setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");  // Rimuove il bordo rosso
+        field.getStyleClass().remove("errore");  // Rimuove il bordo rosso
     }
 
     private void removeErrorStyles(ComboPasswordField field) {
-
         for (javafx.scene.Node child : field.getChildren()) {
-            if (child instanceof TextField) {
-                ((TextField) child).setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");
-            } else if (child instanceof PasswordField) {
-                ((PasswordField) child).setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");
-            }
+            child.getStyleClass().remove("errore");
         }
     }
 }

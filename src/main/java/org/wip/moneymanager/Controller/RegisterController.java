@@ -6,6 +6,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -14,6 +15,7 @@ import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 import org.wip.moneymanager.View.SceneHandler;
 
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -146,9 +148,11 @@ public class RegisterController {
     }
 
     private void animateFieldError(javafx.scene.control.TextInputControl field) {
-        field.setStyle("-fx-background-color: transparent;");
+        if (!field.getStyleClass().contains("errore")) {
+            field.getStyleClass().add("errore");
+        }
         Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), e -> field.setStyle("-fx-background-color: red, red, -fu-foreground-rest; ")),
+                new KeyFrame(Duration.seconds(0), e -> field.setTranslateX(0)),
                 new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
                 new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
                 new KeyFrame(Duration.seconds(0.15), e -> field.setTranslateX(-2)),
@@ -161,14 +165,13 @@ public class RegisterController {
 
     private void animateFieldError(ComboPasswordField field) {
         for (javafx.scene.Node child : field.getChildren()) {
-            if (child instanceof TextField) {
-                ((TextField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest;");
-            } else if (child instanceof PasswordField) {
-                ((PasswordField) child).setStyle("-fx-background-color: red, red, -fu-foreground-rest;");
+            if (child instanceof TextField || child instanceof PasswordField) {
+                if (!child.getStyleClass().contains("errore")) {
+                    child.getStyleClass().add("errore");
+                }
             }
         }
 
-        field.setStyle("-fx-background-color: transparent;");
         Timeline shakeTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.05), e -> field.setTranslateX(-2)),
                 new KeyFrame(Duration.seconds(0.1), e -> field.setTranslateX(2)),
@@ -199,6 +202,35 @@ public class RegisterController {
         registerButton.textProperty().bind(Data.lsp.lsb("register.registertext"));
         loginChangeButton.textProperty().bind(Data.lsp.lsb("register.changetologin"));
 
+
+        usernameFieldRegister.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                if (!(passwordFieldRegister.password.get() == null || passwordFieldRegister.password.get().isEmpty()) &&
+                        !(passwordConfirmPassword.password.get() == null || passwordConfirmPassword.password.get().isEmpty())) {
+                    registerButton.fire();
+                } else {
+                    passwordFieldRegister.requestFocusOnPassword();
+                }
+            }
+        });
+
+        passwordFieldRegister.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                if (!(usernameFieldRegister.getText() == null || usernameFieldRegister.getText().isEmpty()) &&
+                        !(passwordConfirmPassword.password.get() == null || passwordConfirmPassword.password.get().isEmpty())) {
+                    registerButton.fire();
+                } else {
+                    passwordConfirmPassword.requestFocusOnPassword();
+                }
+            }
+        });
+
+        passwordConfirmPassword.setOnKeyPressed(event -> {
+            if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
+                registerButton.fire();
+            }
+        });
+
         usernameFieldRegister.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
                 removeErrorStyles(usernameFieldRegister);
@@ -222,16 +254,12 @@ public class RegisterController {
     }
 
     private void removeErrorStyles(javafx.scene.control.TextInputControl field) {
-        field.setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");
+        field.getStyleClass().remove("errore");
     }
 
     private void removeErrorStyles(ComboPasswordField field) {
         for (javafx.scene.Node child : field.getChildren()) {
-            if (child instanceof TextField) {
-                ((TextField) child).setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");
-            } else if (child instanceof PasswordField) {
-                ((PasswordField) child).setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest");
-            }
+            child.getStyleClass().remove("errore");
         }
     }
 }

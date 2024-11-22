@@ -19,7 +19,7 @@ import java.io.*;
 
 public class ComboPasswordField extends StackPane {
     @FXML
-    private PasswordField password_field;
+    private  PasswordField password_field;
 
     @FXML
     private TextField text_field;
@@ -35,6 +35,14 @@ public class ComboPasswordField extends StackPane {
     private final String show_eye;
     private final String hide_eye;
     public final StringProperty password = new SimpleStringProperty();
+
+    public void requestFocusOnPassword() {
+        if (password_field.isVisible()) {
+            password_field.requestFocus(); // Focus sul password_field se visibile
+        } else {
+            text_field.requestFocus(); // Altrimenti, focus sul text_field (campo password visibile)
+        }
+    }
 
     public ComboPasswordField() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/combopasswordfield.fxml"));
@@ -56,31 +64,44 @@ public class ComboPasswordField extends StackPane {
         text_field.textProperty().bindBidirectional(password);
         password_field.textProperty().bindBidirectional(password);
 
+        password_field.setFocusTraversable(true);
+        text_field.setFocusTraversable(false);
+
         icon_pane.setOnMouseClicked(_ -> {
             // dato che richiediamo il focus mentre copiamo i dati è importante che non vengano aggiornati dai listener
             // vorrei far notare che sono riuscito a far mantenete la selezione tra lo swap di text e passwordfield
             requesting_focus = true;
             if (password_field.isVisible()) {
+                password_field.setFocusTraversable(false);
+                text_field.setFocusTraversable(true);
                 text_field.setVisible(true);
                 text_field.requestFocus();
+
                 if (selection[0] != selection[1])
                     text_field.selectRange(selection[0], selection[1]);
                 else
                     text_field.positionCaret(selection[0]);
                 password_field.setVisible(false);
+
                 visible_icon.setContent(show_eye);
             } else {
                 password_field.setVisible(true);
+                password_field.setFocusTraversable(true);
+                text_field.setFocusTraversable(false);
+
                 password_field.requestFocus();
                 if (selection[0] != selection[1])
                     password_field.selectRange(selection[0], selection[1]);
                 else
                     password_field.positionCaret(selection[0]);
                 text_field.setVisible(false);
+
                 visible_icon.setContent(hide_eye);
             }
             requesting_focus = false;
         });
+
+
 
         password_field.caretPositionProperty().addListener((_, _, newValue) -> {
             if (requesting_focus)
