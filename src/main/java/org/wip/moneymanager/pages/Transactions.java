@@ -2,7 +2,9 @@ package org.wip.moneymanager.pages;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.Data;
@@ -13,6 +15,18 @@ import java.util.concurrent.Executors;
 public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
     private Label page_title;
+
+    @FXML
+    private Button add_favourite;
+
+    @FXML
+    private Button filter;
+
+    @FXML
+    private Button new_transaction;
+
+    @FXML
+    private ScrollPane scrollpane_transaction;
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -37,4 +51,6 @@ public class Transactions extends BorderPane implements AutoCloseable {
     public void close() {
         executorService.shutdown();
     }
+
+
 }

@@ -25,19 +25,20 @@
       </ScrollPane>
    </center>
    <top>
-      <BorderPane maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <left>
-            <Label fx:id="your_accounts" alignment="TOP_LEFT" text="I Tuoi Conti" BorderPane.alignment="CENTER" styleClass="text-title">
+      <VBox minHeight="-Infinity" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="your_accounts" alignment="TOP_LEFT" styleClass="text-title" text="I Tuoi Conti">
                <font>
                   <Font size="20.0" />
                </font>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </Label>
-         </left>
-         <right>
-            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="10.0">
                <children>
                   <Button fx:id="new_account" mnemonicParsing="false" styleClass="icon_general" text="Nuovo conto">
                      <graphic>
@@ -56,8 +57,11 @@
                      </graphic>
                   </ToggleButton>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
             </HBox>
-         </right>
-      </BorderPane>
+         </children>
+      </VBox>
    </top>
 </fx:root>
