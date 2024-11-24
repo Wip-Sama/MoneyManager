@@ -1,15 +1,18 @@
 .full-button {
     -fx-text-fill: -fu-text-1;
-    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-color: -fu-stroke-rest, -fu-accent;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 6, 4;
     -fx-padding: 8 5 8 5;
     -fx-text-alignment: CENTER;
     -fx-alignment: CENTER;
+    -fx-opacity: 0.7;
 }
 
 .full-button:hover {
     -fx-background-color: -fu-stroke-hover, -fu-accent;
+    -fx-opacity: 1;
+
     -fx-text-fill: -fu-text-3;
 }
 

@@ -1,6 +1,6 @@
 .category-type-toggle {
     /*background, accent*/
-    -fx-background-color: rgba(0, 0, 0, 0), transparent;
+    -fx-background-color: transparent, transparent;
     -fx-background-insets: 0, 38 0 0 0;
     -fx-background-radius: 0, 0;
     -fx-background-position: top, left;
@@ -16,7 +16,7 @@
 .category-type-toggle:pressed {
     /*background, accent*/
     -fx-background-color: transparent, -fu-text-2;
-    -fx-background-insets: 0;
+    -fx-background-insets: 0, 38 0 0 0;
 }
 
 .category-type-toggle:selected {

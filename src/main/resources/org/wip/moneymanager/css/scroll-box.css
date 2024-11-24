@@ -8,6 +8,12 @@
     -fx-padding: 1;
 }
 
+.scroll-bar:vertical, .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+
+
 .scroll-bar > .track-background {
     -fx-background-color: -fu-background-3;
     -fx-background-radius: 10;

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -14,25 +13,25 @@
 
 <fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" styleClass="background-3" BorderPane.alignment="CENTER">
          <center>
-            <ScrollPane fx:id="scrollpane_transaction" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" BorderPane.alignment="CENTER">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
+            <ScrollPane fx:id="scrollpane_transaction" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
+               <content>
+                  <BorderPane style="-fx-background-radius: 0 0 0 6;" styleClass="background-1" />
+               </content>
             </ScrollPane>
          </center>
          <top>
             <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0">
                      <children>
-                        <ToggleButton layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
-                        <ToggleButton layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="toggle-button-transactions" text="ToggleButton" HBox.hgrow="ALWAYS" />
-                        <ToggleButton layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="toggle-button-transactions" text="ToggleButton" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="incomeTransactionsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="expenseTransactionsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="transfersTransactionsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="background-3">

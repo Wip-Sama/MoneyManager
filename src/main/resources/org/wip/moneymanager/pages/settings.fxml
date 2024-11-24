@@ -100,7 +100,7 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
             </GridPane>
-            <HBox fx:id="category_editor" style="-fx-background-radius: 10;" styleClass="background-3" VBox.vgrow="ALWAYS">
+            <HBox fx:id="category_editor" style="-fx-background-radius: 6; -fx-padding: 0 5 5 5" spacing="5" styleClass="background-3" VBox.vgrow="ALWAYS">
                 <BorderPane fx:id="category_bp" HBox.hgrow="ALWAYS">
                     <top>
                         <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" BorderPane.alignment="CENTER">
@@ -134,8 +134,8 @@
                         </BorderPane>
                     </top>
                     <center>
-                        <ScrollPane fx:id="category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="category-background"  vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
-                            <VBox fx:id="category_list" prefWidth="181.0" styleClass="background-1">
+                        <ScrollPane fx:id="category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="e"  vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+                            <VBox fx:id="category_list" prefWidth="181.0"  style="-fx-background-radius: 0 0 0 6;" styleClass="background-1">
                             </VBox>
                         </ScrollPane>
                     </center>
@@ -165,7 +165,7 @@
                     </top>
                     <center>
                         <ScrollPane fx:id="sub_category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="category-background" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER" >
-                            <VBox fx:id="subcategory_list" prefWidth="227.0" style="-fx-background-radius: 10;" styleClass="background-1" />
+                            <VBox fx:id="subcategory_list" prefWidth="227.0" style="-fx-background-radius: 6 0 0 6;" styleClass="background-1" />
                         </ScrollPane>
                     </center>
                     <padding>
