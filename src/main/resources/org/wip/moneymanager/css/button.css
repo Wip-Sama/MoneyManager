@@ -92,7 +92,7 @@
 
 .edit-profile-button {
     -fx-text-fill: -fu-accent;
-    -fx-opacity: 1;
+    -fx-opacity: 0.8;
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-color: transparent;
@@ -101,7 +101,7 @@
 
 .edit-profile-button:hover {
     -fx-text-fill: -fu-accent;
-    -fx-opacity: 0.5;
+    -fx-opacity: 1;
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-color: transparent;
@@ -109,7 +109,7 @@
 
 .edit-profile-button:pressed {
     -fx-text-fill: -fu-accent;
-    -fx-opacity: 0.5;
+    -fx-opacity: 1;
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-color: transparent;
@@ -118,7 +118,7 @@
 
 .edit-profile-button:selected {
     -fx-text-fill: -fu-accent;
-    -fx-opacity: 0.5;
+    -fx-opacity: 1;
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-color: transparent;
@@ -168,5 +168,42 @@
     -fx-border-color: transparent;
 }
 
+.arrow-date{
+    -fx-background-color: transparent;
 
+}
+
+.arrow-date SVGPath{
+    -fx-fill: -fu-text-1;
+}
+
+.arrow-date:hover{
+    -fx-background-color: transparent;
+
+}
+
+.arrow-date:hover SVGPath{
+    -fx-fill: -fu-accent;
+    -fx-opacity: 0.8;
+}
+
+arrow-date:pressed{
+    -fx-background-color: transparent;
+
+}
+
+.arrow-date:pressed SVGPath{
+    -fx-fill: -fu-accent;
+    -fx-opacity: 1;
+}
+
+arrow-date:selected{
+    -fx-background-color: transparent;
+
+}
+
+.arrow-date:selected SVGPath{
+    -fx-fill: -fu-accent;
+    -fx-opacity: 1;
+}
 

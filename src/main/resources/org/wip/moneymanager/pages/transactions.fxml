@@ -10,12 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
+<?import org.wip.moneymanager.components.DateTransactions?>
 
 <fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" styleClass="background-3" BorderPane.alignment="CENTER">
          <center>
-            <ScrollPane fx:id="scrollpane_transaction" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+            <ScrollPane fx:id="scrollpaneTransaction" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
                <padding>
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
@@ -45,9 +46,9 @@
                         </HBox>
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="200.0" styleClass="labels-transactions">
                            <children>
-                              <Label fx:id="label_in" alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: green;" text="Label" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                              <Label fx:id="label_out" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" style="-fx-text-fill: red;" text="Label" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                              <Label fx:id="label_tot" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="labelIncome" alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: green;" text="Label" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="labelExpense" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" style="-fx-text-fill: red;" text="Label" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="labelTransfer" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -63,7 +64,7 @@
    <top>
       <VBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-               <Label fx:id="page_title" text="Transazioni">
+               <Label fx:id="pageTitle" text="Transazioni">
                    <font>
                        <Font size="20.0" />
                    </font>
@@ -74,28 +75,39 @@
                   <Insets top="20.0" />
                </VBox.margin>
                </Label>
-            <HBox alignment="CENTER_RIGHT" spacing="10.0">
-               <children>
-                  <Button fx:id="new_transaction" mnemonicParsing="false" styleClass="icon_general" text="Add new">
-                     <graphic>
-                        <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" fill="WHITE" translateX="-3.0" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="add_favourite" mnemonicParsing="false" styleClass="icon_general" text="Preferiti" textFill="WHITE">
-                     <graphic>
-                        <SVGPath content="M10.788 3.103c.495-1.004 1.926-1.004 2.421 0l2.358 4.777 5.273.766c1.107.161 1.549 1.522.748 2.303l-.906.883a6.5 6.5 0 0 0-9.442 7.43l-3.957 2.08c-.99.521-2.148-.32-1.96-1.423l.901-5.25-3.815-3.72c-.801-.78-.359-2.142.748-2.303L8.43 7.88l2.358-4.777Z M22.998 17.5a5.5 5.5 0 1 0-11 0 5.5 5.5 0 0 0 11 0Zm-5 .5L18 20.504a.5.5 0 1 1-1 0V18h-2.505a.5.5 0 0 1 0-1h2.505l-.001-2.5a.5.5 0 1 1 1 0V17h2.497a.5.5 0 0 1 0 1h-2.496Z" fill="WHITE" styleClass="icon_general" translateX="-3.0" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="filter" mnemonicParsing="false" styleClass="icon_general" text="Filtra">
-                     <graphic>
-                        <SVGPath content="M10 16h4a1 1 0 0 1 .117 1.993L14 18h-4a1 1 0 0 1-.117-1.993L10 16h4-4Zm-2-5h8a1 1 0 0 1 .117 1.993L16 13H8a1 1 0 0 1-.117-1.993L8 11h8-8ZM5 6h14a1 1 0 0 1 .117 1.993L19 8H5a1 1 0 0 1-.117-1.993L5 6h14H5Z" fill="WHITE" translateX="-3.0" />
-                     </graphic>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </HBox>
+            <BorderPane VBox.vgrow="ALWAYS">
+               <left>
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                     <children>
+                        <DateTransactions fx:id="datePickerTransactions" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" />
+                     </children>
+                  </HBox>
+               </left>
+               <right>
+                  <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="newTransaction" mnemonicParsing="false" styleClass="icon_general" text="Add new">
+                           <graphic>
+                              <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" fill="WHITE" translateX="-3.0" />
+                           </graphic>
+                        </Button>
+                        <ToggleButton fx:id="favouriteToggle" mnemonicParsing="false" styleClass="icon-toggle-button" text="Preferiti">
+                           <graphic>
+                              <SVGPath content="M7.1939 2.10167C7.52403 1.43275 8.47789 1.43274 8.80802 2.10167L10.3291 5.18372L13.7304 5.67795C14.4685 5.78522 14.7633 6.69239 14.2291 7.21307L11.768 9.61212L12.349 12.9996C12.4751 13.7348 11.7034 14.2955 11.0431 13.9484L8.00096 12.349L4.95879 13.9484C4.29853 14.2955 3.52684 13.7348 3.65294 12.9996L4.23394 9.61212L1.77277 7.21307C1.23861 6.69239 1.53336 5.78522 2.27156 5.67795L5.67281 5.18372L7.1939 2.10167ZM8.00096 2.72593L6.54628 5.67343C6.41519 5.93906 6.16178 6.12317 5.86864 6.16577L2.61588 6.63842L4.9696 8.93273C5.18171 9.13949 5.27851 9.43739 5.22843 9.72935L4.6728 12.969L7.58215 11.4394C7.84434 11.3016 8.15758 11.3016 8.41977 11.4394L11.3291 12.969L10.7735 9.72935C10.7234 9.43739 10.8202 9.13949 11.0323 8.93273L13.386 6.63842L10.1333 6.16577C9.84014 6.12317 9.58673 5.93906 9.45564 5.67343L8.00096 2.72593Z" fill="WHITE" scaleX="1.3" scaleY="1.3" styleClass="icon_general" translateX="-3.0" />
+                           </graphic>
+                        </ToggleButton>
+                        <Button fx:id="filter" mnemonicParsing="false" styleClass="icon_general" text="Filtra">
+                           <graphic>
+                              <SVGPath content="M10 16h4a1 1 0 0 1 .117 1.993L14 18h-4a1 1 0 0 1-.117-1.993L10 16h4-4Zm-2-5h8a1 1 0 0 1 .117 1.993L16 13H8a1 1 0 0 1-.117-1.993L8 11h8-8ZM5 6h14a1 1 0 0 1 .117 1.993L19 8H5a1 1 0 0 1-.117-1.993L5 6h14H5Z" fill="WHITE" translateX="-3.0" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </right>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </BorderPane>
          </children>
       </VBox>
    </top>

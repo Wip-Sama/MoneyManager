@@ -2,12 +2,10 @@ package org.wip.moneymanager.pages;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.wip.moneymanager.View.SceneHandler;
+import org.wip.moneymanager.components.DateTransactions;
 import org.wip.moneymanager.model.Data;
 
 import java.util.concurrent.ExecutorService;
@@ -15,10 +13,10 @@ import java.util.concurrent.Executors;
 
 public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
-    private Button add_favourite;
+    private ToggleButton expenseTransactionsButton;
 
     @FXML
-    private ToggleButton expenseTransactionsButton;
+    private ToggleButton favouriteToggle;
 
     @FXML
     private Button filter;
@@ -27,25 +25,29 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private ToggleButton incomeTransactionsButton;
 
     @FXML
-    private Label label_in;
+    private Label labelExpense;
 
     @FXML
-    private Label label_out;
+    private Label labelIncome;
 
     @FXML
-    private Label label_tot;
+    private Label labelTransfer;
 
     @FXML
-    private Button new_transaction;
+    private Button newTransaction;
 
     @FXML
-    private Label page_title;
+    private Label pageTitle;
 
     @FXML
-    private ScrollPane scrollpane_transaction;
+    private ScrollPane scrollpaneTransaction;
 
     @FXML
     private ToggleButton transfersTransactionsButton;
+
+    @FXML
+    private DateTransactions datePickerTransactions;
+
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -63,7 +65,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
-        page_title.textProperty().bind(Data.lsp.lsb("transactions"));
+        pageTitle.textProperty().bind(Data.lsp.lsb("transactions"));
     }
 
     @Override

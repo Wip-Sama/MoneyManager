@@ -93,8 +93,8 @@ public class SceneHandler {
             lastWidth = primaryStage.getWidth();
             lastHeight = primaryStage.getHeight();
 
-            primaryStage.setMinHeight(540);
-            primaryStage.setMinWidth(960);
+            primaryStage.setMinHeight(810);
+            primaryStage.setMinWidth(1440);
 
             primaryStage.setWidth(lastWidth);
             primaryStage.setHeight(lastHeight);
@@ -104,6 +104,7 @@ public class SceneHandler {
             primaryStage.getIcons().add(icon);
 
             primaryStage.setScene(scene);
+            primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
