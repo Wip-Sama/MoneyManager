@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.DBObjects.dbCurrency;
+import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.MMDatabase;
 
@@ -18,6 +19,7 @@ import java.net.http.HttpTimeoutException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -33,10 +35,22 @@ public class Main extends Application {
         try {
             // Crea un'istanza della classe Login e mostralo
             SceneHandler sceneHandler = SceneHandler.getInstance(primaryStage);
-            sceneHandler.showLoginScreen(); // Chiama il metodo per mostrare la schermata di login
+            //sceneHandler.showLoginScreen(); // Chiama il metodo per mostrare la schermata di login
+
+
+            //per accendere direttamente con utente1
+            Task<dbUser> userTask = Data.mmDatabase.getUser("utente1");
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.submit(userTask);
+
+            userTask.setOnSucceeded(e -> {
+                Data.dbUser = userTask.getValue();
+                sceneHandler.startMoneyManager();
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //per accendere direttamente con utente1
 
         Task<Void> update_currency = new Task<>() {
             @Override
