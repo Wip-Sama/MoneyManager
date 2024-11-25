@@ -2,6 +2,7 @@ package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
 import org.wip.moneymanager.model.DBObjects.*;
+import org.wip.moneymanager.model.types.AccountType;
 import org.wip.moneymanager.utility.Encrypter;
 
 import java.sql.PreparedStatement;
@@ -438,6 +439,33 @@ public class UserDatabase extends Database {
             return false;
         });
     }
+
+    public Task<Boolean> addAccount(String name, int type, double balance, int creationDate, int includeIntoTotals, String currency) {
+        return asyncCall(() -> {
+            try {
+                String query = "INSERT INTO Accounts (name, type, balance, creation_date, include_into_totals , currency) VALUES (?, ?, ?, ?, ?, ?);";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, name);
+                stmt.setInt(2, type);
+                stmt.setDouble(3, balance);
+                stmt.setInt(4, creationDate);
+                stmt.setInt(5, includeIntoTotals);
+                stmt.setString(6, currency);
+                int rowsAffected = stmt.executeUpdate();
+                stmt.close();
+
+
+                return true;
+            } catch (SQLException e) {
+                System.err.println("SQL Error during account insertion: " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+        });
+    }
+
+
+
 
 
 

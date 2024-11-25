@@ -16,7 +16,7 @@
    <center>
       <ScrollPane fx:id="scroll_miservesoloperingrandireilvbox" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="accounts_container" alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-radius: 6 0 0 6;" VBox.vgrow="ALWAYS">
+            <VBox fx:id="accounts_container" spacing="10.0" style="-fx-background-radius: 6 0 0 6;" VBox.vgrow="ALWAYS">
             </VBox>
          </content>
          <padding>

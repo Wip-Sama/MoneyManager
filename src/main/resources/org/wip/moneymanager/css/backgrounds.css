@@ -13,3 +13,12 @@
 .background-4 {
     -fx-background-color: -fu-background-4;
 }
+
+
+.background-pop-up {
+    -fx-background-color: -fu-background-3;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: -fu-stroke-colors;
+    -fx-border-width: 2;
+}

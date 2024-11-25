@@ -83,4 +83,8 @@ public class Switch extends AnchorPane {
         });
         onMouseClickedProperty().set(_ -> state.set(!state.get()));
     }
+
+    public void reset() {
+        setState(false);
+    }
 }

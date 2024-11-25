@@ -42,7 +42,7 @@ public class BalanceEditor extends HBox {
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
         }
     }
 
@@ -51,12 +51,12 @@ public class BalanceEditor extends HBox {
         UnaryOperator<TextFormatter.Change> text_filter = change -> {
             String newText = change.getControlNewText();
             if (newText.isEmpty()) {
-                change.setText("0");
+                change.setText("");
                 return change;
             }
             try {
                 if (newText.length() > 1) {
-                    newText = newText.replaceAll("^0+(?!$)", "");
+                    newText = newText.replaceAll("^+(?!$)", "");
                 }
                 Double.parseDouble(newText);
                 return change;
@@ -102,4 +102,10 @@ public class BalanceEditor extends HBox {
     public ReadOnlyObjectProperty<String> currencyProperty() {
         return currency_field.valueProperty();
     }
+
+    public void reset() {
+        balance_field.setText("");
+        currency_field.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
+    }
+
 }

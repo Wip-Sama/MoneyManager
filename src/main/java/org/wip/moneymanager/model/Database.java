@@ -73,11 +73,15 @@ public class Database implements AutoCloseable {
 
 
     protected <T> Task<T> asyncCall(Callable<T> callable) {
-        return new Task<>() {
+        Task<T> task = new Task<>() {
             @Override
             protected T call() throws Exception {
                 return callable.call();
             }
         };
+        new Thread(task).start();  // Start the task in a new thread
+        return task;
     }
+
+
 }

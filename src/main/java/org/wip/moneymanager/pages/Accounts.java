@@ -5,6 +5,8 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -13,12 +15,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.CardConto;
+import org.wip.moneymanager.components.ColorPickerPopup;
 import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.popUp.AddNewAccountController;
 import org.wip.moneymanager.utility.SVGLoader;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -38,6 +46,9 @@ public class Accounts extends BorderPane implements AutoCloseable {
     @FXML
     private SVGPath eye_svg;
 
+    protected Parent loaded;
+    private AddNewAccountController AddNewAccount;
+
     private final static String show_eye = new SVGLoader("ic_fluent_eye_show_24_filled").getPath();
     private final static String hide_eye = new SVGLoader("ic_fluent_eye_hide_24_filled").getPath();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -52,7 +63,7 @@ public class Accounts extends BorderPane implements AutoCloseable {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/accounts.fxml"));
             loader.setRoot(this);
             loader.setController(this);
-            loader.load();
+            loaded = loader.load();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -109,5 +120,23 @@ public class Accounts extends BorderPane implements AutoCloseable {
                 hide_balance.textProperty().bind(Data.lsp.lsb("accounts.hide_balance"));
             }
         });
+
+
+        new_account.setOnAction(event -> {
+            try {
+                // Verifica se AddNewAccount è già inizializzato
+                if (AddNewAccount == null) {
+                    AddNewAccount = new AddNewAccountController(loaded.getScene().getWindow(), this);
+                }
+                AddNewAccount.show(); // Mostra il popup
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void refreshAccounts() throws ExecutionException, InterruptedException {
+        accounts_container.getChildren().clear(); // Svuota il contenitore
+        initialize_accounts();
     }
 }
