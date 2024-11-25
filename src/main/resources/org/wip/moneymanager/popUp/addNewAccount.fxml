@@ -76,7 +76,7 @@
          <bottom>
             <HBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="transparent-button" text="Annulla" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="transparent-button" style="-fx-text-fill: red" text="Annulla" HBox.hgrow="ALWAYS" />
                   <Button fx:id="saveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="full-button" text="Salva" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>

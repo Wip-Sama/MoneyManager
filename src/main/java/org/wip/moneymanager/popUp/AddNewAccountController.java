@@ -113,7 +113,7 @@ public class AddNewAccountController extends BorderPane {
         labelDate.setText(Data.lsp.lsb("newAddAccount.dateLabel").get());
         labelInclude.setText(Data.lsp.lsb("newAddAccount.includeLabel").get());
         labelType.setText(Data.lsp.lsb("newAddAccount.typeLabel").get());
-        ErrorLabel.textProperty().bind(Data.lsp.lsb("login.error"));
+        ErrorLabel.textProperty().bind(Data.lsp.lsb("addnewaccount.error"));
 
         update_type_field();
         popUpPanell.setOnMousePressed(event -> {
@@ -248,7 +248,7 @@ public class AddNewAccountController extends BorderPane {
 
         // Mostra un unico messaggio di errore se c'è un errore
         if (hasError) {
-            showError("login.error.missing");
+            showError("addnewaccount.error");
         }
 
         return !hasError; // Valido se non ci sono errori
