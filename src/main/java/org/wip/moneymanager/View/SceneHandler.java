@@ -87,6 +87,7 @@ public class SceneHandler {
 
     public void startMoneyManager() {
         try {
+            setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/base_menu.fxml"));
             Scene scene = new Scene(loader.load());
 
