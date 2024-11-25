@@ -7,6 +7,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -91,12 +92,17 @@ public class AddNewAccountController extends BorderPane {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         Parent loaded = fxmlLoader.load();
+
+        Scene popupScene = new Scene(loaded);
+        popupScene.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
+
         popup.getContent().add(loaded);
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
     @FXML
     public void initialize() {
+
         ErrorLabel.setOpacity(0);
         // Traduzioni tramite lsp
         cancelButton.setText(Data.lsp.lsb("newAddAccount.cancelButtonLabel").get());
@@ -185,6 +191,13 @@ public class AddNewAccountController extends BorderPane {
         dateField.setValue(null);
         includeSwitch.reset();
         typeAccountField.getSelectionModel().clearSelection();
+
+        FieldAnimationUtils.removeErrorStyles(newAccountField);
+        FieldAnimationUtils.removeErrorStyles(bilanceField);
+        FieldAnimationUtils.removeErrorStyles(dateField);
+        FieldAnimationUtils.removeErrorStyles(dateField);
+        FieldAnimationUtils.removeErrorStyles(typeAccountField);
+        
     }
 
     private void update_type_field() {

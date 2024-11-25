@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -17,6 +18,7 @@ import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.scene.Parent;
 import org.wip.moneymanager.View.SceneHandler;
+import org.wip.moneymanager.model.Data;
 
 import java.io.IOException;
 import java.util.function.UnaryOperator;
@@ -64,6 +66,8 @@ public class ColorPickerPopup {
         // realisticamente non dovrebbe mai fallire ma anche se lo facesse non è lui a dover gestire l'errore
         // dato che viene chiamato sempre da una classe e non fxml è quella classe che deve accollarsi l'errore
         Parent loaded = fxmlLoader.load();
+        Scene popupScene = new Scene(loaded);
+        popupScene.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
         popup.getContent().add(loaded);
 
         /* Controlliamo se l'utente interagisce con la finestra sottostante e in caso chiusiamo il pulsante*/
