@@ -2,13 +2,16 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import org.wip.moneymanager.components.BalanceEditor?>
 
-<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: #1E1E1E;" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.wip.moneymanager.popUp.transactionPopupController">
+<fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" styleClass="background-pop-up" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" spacing="15.0">
             <padding>
@@ -17,24 +20,24 @@
 
                      <!-- Navigation Buttons -->
             <HBox alignment="CENTER" prefWidth="Infinity" spacing="10.0" stylesheets="@../css/transaction-popup.css">
-                <Button fx:id="inButton" maxWidth="120" onAction="#handleInButton" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="nav-button" stylesheets="@../css/transaction-popup.css" text="In" HBox.hgrow="ALWAYS" />
-                <Button fx:id="speseButton" maxWidth="120" onAction="#handleButtonClick" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="nav-button" text="Spese" HBox.hgrow="ALWAYS" />
-                <Button fx:id="trasferimentiButton" maxWidth="120" onAction="#handleButtonClick" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="nav-button" text="Trasferimenti" HBox.hgrow="ALWAYS" />
+                <Button fx:id="incomeButton" maxWidth="120" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="nav-button" stylesheets="@../css/transaction-popup.css" text="In" HBox.hgrow="ALWAYS" />
+                <Button fx:id="expenseButton" maxWidth="120" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="nav-button" text="Spese" HBox.hgrow="ALWAYS" />
+                <Button fx:id="trasferButton" maxWidth="120" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="nav-button" text="Trasferimenti" HBox.hgrow="ALWAYS" />
             </HBox>
 
                      <!-- Form Fields -->
             <VBox spacing="10.0">
-                <Label style="-fx-text-fill: white;" text="Giorno" />
-                <TextField fx:id="giornoField" style="-fx-background-color: #2E2E2E; -fx-text-fill: white;" />
+                <Label style="-fx-text-fill: white;" text="Data " />
+            <DatePicker maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
                          <Label style="-fx-text-fill: white;" text="Importo" />
-                <TextField fx:id="importoField" style="-fx-background-color: #2E2E2E; -fx-text-fill: white;" />
+            <BalanceEditor maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
                          <Label style="-fx-text-fill: white;" text="Categoria" />
-                <TextField fx:id="categoriaField" style="-fx-background-color: #2E2E2E; -fx-text-fill: white;" />
+            <ChoiceBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
                          <Label style="-fx-text-fill: white;" text="Conto" />
-                <TextField fx:id="contoField" style="-fx-background-color: #2E2E2E; -fx-text-fill: white;" />
+            <ChoiceBox layoutX="10.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
                          <Label style="-fx-text-fill: white;" text="Tags" />
                 <TextField fx:id="tagsField" style="-fx-background-color: #2E2E2E; -fx-text-fill: white;" />
@@ -42,9 +45,9 @@
 
                      <!-- Action Buttons -->
             <VBox spacing="10.0">
-                <Button fx:id="salvaButton" maxWidth="Infinity" styleClass="full-button" text="Salva" />
+                <Button fx:id="saveButton" maxWidth="Infinity" styleClass="full-button" text="Salva" />
 
-                         <Button fx:id="annullaButton" maxWidth="Infinity" styleClass="transparent-button" stylesheets="@../css/button.css" text="Annulla" />
+                         <Button fx:id="cancelButton" maxWidth="Infinity" styleClass="transparent-button" stylesheets="@../css/button.css" text="Annulla" />
             <VBox.margin>
                <Insets top="20.0" />
             </VBox.margin>
