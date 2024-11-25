@@ -15,6 +15,7 @@ module org.wip.moneymanager {
     requires eu.hansolo.fx.charts;
 
     requires org.json;
+    requires jdk.jfr;
 
     opens org.wip.moneymanager.model to javafx.fxml;
     exports org.wip.moneymanager.model;

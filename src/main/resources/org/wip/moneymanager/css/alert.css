@@ -9,3 +9,28 @@
     -fx-font-weight: bold;
     -fx-padding: 10;
 }
+
+
+.errore {
+    -fx-background-color: red, red, -fu-foreground-rest;
+}
+
+
+
+/* Stile per il DatePicker con errore */
+.combo-box-base.date-picker.errore-bordi .text-input {
+    -fx-background-color: red, red, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 0 2 2;
+    -fx-background-radius: 4 0 0 4, 3 0 0 0, 3 0 0 3;
+    -fx-padding: .333333em .583em .444444em .583em;
+    -fx-content-display: LEFT;
+    -fx-cursor: text;
+}
+
+/* Stile per il pulsante di dropdown (arrow-button) con errore */
+.combo-box-base.date-picker.errore-bordi .arrow-button {
+    -fx-background-color: red, red, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 0;
+    -fx-background-radius: 0 4 4 0, 0 3 0 0, 0 4 4 0;
+    -fx-padding: .333333em .583em .444444em .583em;
+}

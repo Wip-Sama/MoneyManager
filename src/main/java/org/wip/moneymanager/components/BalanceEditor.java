@@ -32,7 +32,7 @@ public class BalanceEditor extends HBox {
     private ChoiceBox<String> currency_field;
 
     private final PseudoClass FOCUSED_PSEUDO_CLASS = PseudoClass.getPseudoClass("focused");
-    private final DoubleProperty balance = new SimpleDoubleProperty(0);
+   private final DoubleProperty balance = new SimpleDoubleProperty(0);
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public BalanceEditor() {
@@ -108,4 +108,15 @@ public class BalanceEditor extends HBox {
         currency_field.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
     }
 
+    public String getText(){
+        return balance_field.getText();
+    }
+
+    public DoubleProperty balanceProperty() {
+        return balance;
+    }
+
+    public TextField getTextField() {
+        return balance_field;
+    }
 }

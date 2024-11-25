@@ -143,6 +143,15 @@ public class CardConto extends AnchorPane {
     }
 
     public void initialize() {
+        name_label.setText(Data.lsp.lsb("cardconto.name_label").get());
+        balance_label.setText(Data.lsp.lsb("cardconto.balance_label").get());
+        type_label.setText(Data.lsp.lsb("cardconto.type_label").get());
+        creation_date_label.setText(Data.lsp.lsb("cardconto.creation_date_label").get());
+        include_into_totals_label.setText(Data.lsp.lsb("cardconto.include_into_totals_label").get());
+        discard_changes.setText(Data.lsp.lsb("cardconto.discard_changes").get());
+        save_changes.setText(Data.lsp.lsb("cardconto.save_changes").get());
+        delete_button.setText(Data.lsp.lsb("cardconto.delete_button").get());
+
         Rectangle clip = new Rectangle();
         clip.setArcWidth(20);
         clip.setArcHeight(20);
@@ -219,8 +228,21 @@ public class CardConto extends AnchorPane {
         account_balance.textProperty().bind(Data.lsp.lsb("cardconto.balance", amount, currency));
         account_creation_date.textProperty().bind(Data.lsp.lsb("cardconto.creation_date", creation_date));
 
-        Data.localizationService.selectedLanguageProperty().addListener((_, _, _) -> {
+        Data.localizationService.selectedLanguageProperty().addListener((observable, oldValue, newValue) -> {
+            // Aggiorna il tipo di account (ChoiceBox)
             update_type_field();
+
+            // Assicurati di aggiornare anche tutte le etichette
+            account_name.textProperty().bind(Data.lsp.lsb("cardconto.name", name));
+            account_balance.textProperty().bind(Data.lsp.lsb("cardconto.balance", amount, currency));
+            account_creation_date.textProperty().bind(Data.lsp.lsb("cardconto.creation_date", creation_date));
+            account_type.textProperty().bind(Data.lsp.lsb("accounttype." + account.typeProperty().get().toString().toLowerCase()));
+
+
+            tooltip.setShowDelay(new Duration(0));
+            tooltip.setHideDelay(new Duration(0));
+            tooltip.textProperty().bind(Data.lsp.lsb("cardconto.delete.tooltip"));
+            delete_button.setTooltip(tooltip);
         });
 
         sceneProperty().addListener((_, _, newValue) -> {

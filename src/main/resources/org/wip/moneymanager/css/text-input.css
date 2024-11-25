@@ -55,6 +55,3 @@
     -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3 2;
 }
 
-.errore {
-    -fx-background-color: red, red, -fu-foreground-rest;
-}
