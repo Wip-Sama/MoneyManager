@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" styleClass="tag-selector" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" styleClass="tag-selector" stylesheets="@../../../../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <ScrollPane hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" style="-fx-background-color: transparent;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
