@@ -7,15 +7,11 @@
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1_copy.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/backup.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/2.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/3.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/user.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/user_dbs/user_copy.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/DateTransactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/DateTransactions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/databases/user_template.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/databases/user_template.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/dateTransactions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/dateTransactions.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,57 +75,57 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.LineChartTest.executor": "Run",
-    "Application.MM.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MoneyManager (1).executor": "Run",
-    "Application.MoneyManager (2).executor": "Run",
-    "Application.MoneyManager (3).executor": "Run",
-    "Application.MoneyManager.executor": "Run",
-    "Application.SunburstChartTest.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.linechartdemo.executor": "Run",
-    "Application.maintmp.executor": "Run",
-    "Application.org.wip.moneymanager.View.MoneyManager.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Maven.MoneyManager [clean,install].executor": "Run",
-    "Maven.MoneyManager [clean].executor": "Run",
-    "Maven.MoneyManager [compile].executor": "Run",
-    "Maven.MoneyManager [install].executor": "Run",
-    "Maven.MoneyManager [package].executor": "Run",
-    "Maven.MoneyManager [validate].executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Login",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-22",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sebas/Desktop/MoneyManager/Data",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.31465092",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.LineChartTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MM.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MoneyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SunburstChartTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.linechartdemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.maintmp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.wip.moneymanager.View.MoneyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MoneyManager [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Login&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sebas/Desktop/MoneyManager/Data&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.31465092&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
@@ -182,8 +178,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -315,6 +311,8 @@
       <workItem from="1732547781089" duration="2755000" />
       <workItem from="1732551049999" duration="4608000" />
       <workItem from="1732608114721" duration="4258000" />
+      <workItem from="1732636496941" duration="3160000" />
+      <workItem from="1732639738349" duration="3539000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />

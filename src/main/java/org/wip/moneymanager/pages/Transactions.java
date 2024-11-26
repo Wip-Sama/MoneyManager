@@ -17,16 +17,19 @@ import java.util.concurrent.Executors;
 
 public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
-    private ToggleButton expenseTransactionsButton;
+    private ToggleButton calendar;
+
+    @FXML
+    private ToggleButton daily;
+
+    @FXML
+    private DateTransactions datePickerTransactions;
 
     @FXML
     private ToggleButton favouriteToggle;
 
     @FXML
     private Button filter;
-
-    @FXML
-    private ToggleButton incomeTransactionsButton;
 
     @FXML
     private Label labelExpense;
@@ -38,6 +41,9 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private Label labelTransfer;
 
     @FXML
+    private ToggleButton monthly;
+
+    @FXML
     private Button newTransaction;
 
     @FXML
@@ -45,12 +51,6 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     private ScrollPane scrollpaneTransaction;
-
-    @FXML
-    private ToggleButton transfersTransactionsButton;
-
-    @FXML
-    private DateTransactions datePickerTransactions;
 
     protected Parent loaded;
     private transactionPopupController AddNewController;
@@ -72,18 +72,46 @@ public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
     public void initialize() {
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions"));
+
+        // Listener per forzare la selezione singola
+        daily.setOnAction(event -> {
+            if (daily.isSelected()) {
+                monthly.setSelected(false);
+                calendar.setSelected(false);
+                datePickerTransactions.setDateFormat(DateTransactions.DateFormatType.DAILY); // Imposta formato giornaliero
+            }
+        });
+
+        monthly.setOnAction(event -> {
+            if (monthly.isSelected()) {
+                daily.setSelected(false);
+                calendar.setSelected(false);
+                datePickerTransactions.setDateFormat(DateTransactions.DateFormatType.MONTHLY); // Imposta formato mensile
+            }
+        });
+
+        calendar.setOnAction(event -> {
+            if (calendar.isSelected()) {
+                monthly.setSelected(false);
+                daily.setSelected(false);
+                datePickerTransactions.setDateFormat(DateTransactions.DateFormatType.CALENDAR); // Imposta formato calendar
+            }
+        });
+
+        // Configura il bottone "newTransaction"
         newTransaction.setOnAction(event -> {
             try {
-                // Verifica se AddNewAccount è già inizializzato
                 if (AddNewController == null) {
                     AddNewController = new transactionPopupController(loaded.getScene().getWindow());
                 }
-                AddNewController.show(); // Mostra il popup
+                AddNewController.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
+
+
 
 
     @Override

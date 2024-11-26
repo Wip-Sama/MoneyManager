@@ -31,9 +31,9 @@
                <children>
                   <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0">
                      <children>
-                        <ToggleButton fx:id="incomeTransactionsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
-                        <ToggleButton fx:id="expenseTransactionsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
-                        <ToggleButton fx:id="transfersTransactionsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="daily" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="monthly" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="calendar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="category-type-toggle" text="ToggleButton" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="background-3">
