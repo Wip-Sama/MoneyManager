@@ -6,11 +6,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.popUp.AddNewAccountController;
+import org.wip.moneymanager.popUp.AddNewTagController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +26,11 @@ public class TagSelector extends BorderPane {
     @FXML
     private Button add_tag;
 
+    @FXML
+    private Button add_new_tag;
+
+    protected Parent loaded;
+    private AddNewTagController AddNewtag;
     private final TagFilter tagFilter = new TagFilter();
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu;
@@ -36,7 +45,7 @@ public class TagSelector extends BorderPane {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
-            fxmlLoader.load();
+            loaded = fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
@@ -69,6 +78,17 @@ public class TagSelector extends BorderPane {
             tmp.setVisible(false);
             tags.add(tmp);
         }
+
+        add_new_tag.setOnAction(event -> {
+            try {
+                if (AddNewtag == null) {
+                    AddNewtag = new AddNewTagController(loaded.getScene().getWindow());
+                }
+                AddNewtag.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void show_tag_filter() {

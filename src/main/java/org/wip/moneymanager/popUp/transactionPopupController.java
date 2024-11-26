@@ -15,6 +15,7 @@ import org.wip.moneymanager.model.Data;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ChoiceBox;
 import org.wip.moneymanager.components.BalanceEditor;
+import javafx.scene.control.Label;
 
 import org.wip.moneymanager.pages.Accounts;
 
@@ -23,6 +24,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class transactionPopupController extends BorderPane {
+    @FXML
+    private Label labelTitle;
 
     @FXML
     private ToggleButton incomeButton;

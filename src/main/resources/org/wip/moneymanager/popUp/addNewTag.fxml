@@ -10,35 +10,37 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../style-dark.css">
+<fx:root fx:id="popUpAddTags" styleClass="background-pop-up" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Tag Preview" />
+                  <Label fx:id="labelPreview" text="Tag Preview:" />
                   <ToggleButton fx:id="previewToggleButton" mnemonicParsing="false" styleClass="tag" text="Tag Name" />
                </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </VBox>
+            </HBox>
             <HBox alignment="CENTER" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Tag Name" />
+                        <Label fx:id="labelName" text="Tag Name" />
                         <TextField fx:id="tagNameField" prefHeight="35.0" prefWidth="300.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Color" />
+                        <Label fx:id="labelColor" text="Color" />
                         <ChoiceBox fx:id="colorChoiceBox" prefHeight="35.0" prefWidth="150.0" />
                      </children>
                   </VBox>
                </children>
             </HBox>
+            <Label fx:id="ErrorLabel" text="ErrorLabel" textFill="RED">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
             <HBox spacing="10.0">
                <children>
                   <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="transparent-button" text="Cancel" HBox.hgrow="ALWAYS" />
@@ -51,4 +53,10 @@
    <padding>
       <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
    </padding>
+   <top>
+      <Label fx:id="labelTitleAddNewTag" styleClass="text-title" text="Add New Tag" BorderPane.alignment="TOP_LEFT">
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin></Label>
+   </top>
 </fx:root>

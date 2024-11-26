@@ -23,36 +23,38 @@ import java.util.concurrent.Executors;
 
 
 public class AddNewTagController extends BorderPane {
-
-    @FXML
-    private Button AddTagButton;
-
-    @FXML
-    private Button CancelButton;
-
-    @FXML
-    private ChoiceBox<String> ChoiceColor;
-
-    @FXML
-    private Label ColorLabel;
-
     @FXML
     private Label ErrorLabel;
 
     @FXML
-    private Label TagNameLabel;
+    private Label labelTitleAddNewTag;
 
     @FXML
-    private TextField nameField;
+    private Button addButton;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private ChoiceBox<String> colorChoiceBox;
+
+    @FXML
+    private Label labelColor;
+
+    @FXML
+    private Label labelName;
+
+    @FXML
+    private Label labelPreview;
 
     @FXML
     private BorderPane popUpAddTags;
 
     @FXML
-    private ToggleButton tagEdit;
+    private ToggleButton previewToggleButton;
 
     @FXML
-    private Label tagPreviewLabel;
+    private TextField tagNameField;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -70,17 +72,18 @@ public class AddNewTagController extends BorderPane {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewTag.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        Parent loaded = fxmlLoader.load();
+        Parent loadPopup = fxmlLoader.load();
 
-        Scene popupScene = new Scene(loaded);
+        Scene popupScene = new Scene(loadPopup );
         popupScene.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
 
-        popup.getContent().add(loaded);
+        popup.getContent().add(loadPopup);
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
     @FXML
     public void initialize() {
+        ErrorLabel.setOpacity(0);
         popUpAddTags.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -90,12 +93,12 @@ public class AddNewTagController extends BorderPane {
             popup.setY(event.getScreenY() - yOffset);
         });
 
-        CancelButton.setOnAction(event -> {
+        cancelButton.setOnAction(event -> {
             clearFields();
             hide();
         });
 
-        AddTagButton.setOnAction(event -> {
+        addButton.setOnAction(event -> {
             if (validateFields()) {
                 addTag();
             }
