@@ -5,12 +5,12 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.wip.moneymanager.components.BalanceEditor?>
+<?import org.wip.moneymanager.components.TagSelector?>
 
 <fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" styleClass="background-pop-up" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <center>
@@ -34,15 +34,15 @@
                          <Label text="Importo" />
             <BalanceEditor fx:id="balanceEditor" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
-                         <Label  text="Categoria" />
+                         <Label text="Categoria" />
             <ChoiceBox fx:id="categoryChoiceBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
-                         <Label  text="Conto" />
+                         <Label text="Conto" />
             <ChoiceBox fx:id="accountChoiceBox" layoutX="10.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
-                         <Label  text="Tags" />
-                <TextField fx:id="tagsField"  />
+                         <Label text="Tags" />
             </VBox>
+         <TagSelector />
 
                      <!-- Action Buttons -->
             <VBox spacing="10.0">

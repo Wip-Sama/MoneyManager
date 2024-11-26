@@ -6,19 +6,22 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <TextField fx:id="search_bar" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <ScrollPane fx:id="scroll_pane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="189.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scroll_pane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="139.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
             <FlowPane fx:id="tag_pane" hgap="2.0" maxHeight="-Infinity" minHeight="-Infinity" vgap="2.0">
                <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </FlowPane>
          </content>
+         <padding>
+            <Insets bottom="5.0" left="2.0" right="2.0" top="5.0" />
+         </padding>
       </ScrollPane>
    </center>
 </fx:root>

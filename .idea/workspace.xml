@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/SearchBar.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/searchbar.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tag.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tag.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagfilter.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagfilter.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/popUp/transactionPopUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/popUp/transactionPopUp.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,7 +312,8 @@
       <workItem from="1732608114721" duration="4258000" />
       <workItem from="1732636496941" duration="3160000" />
       <workItem from="1732639738349" duration="3539000" />
-      <workItem from="1732652364832" duration="299000" />
+      <workItem from="1732652364832" duration="611000" />
+      <workItem from="1732653000914" duration="2144000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />
