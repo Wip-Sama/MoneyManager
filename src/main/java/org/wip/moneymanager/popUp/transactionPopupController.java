@@ -5,11 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import org.wip.moneymanager.model.Data;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ChoiceBox;
+import org.wip.moneymanager.components.BalanceEditor;
+
 import org.wip.moneymanager.pages.Accounts;
 
 import java.io.IOException;
@@ -19,17 +25,26 @@ import java.util.concurrent.Executors;
 public class transactionPopupController extends BorderPane {
 
     @FXML
-    private Button incomeButton;
+    private ToggleButton incomeButton;
     @FXML
-    private Button expenseButton;
+    private ToggleButton expenseButton;
     @FXML
-    private Button transferButton;
+    private ToggleButton transferButton;
     @FXML
     private Button saveButton;
     @FXML
     private Button cancelButton;
     @FXML
     private BorderPane BoderPanePopup;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private BalanceEditor balanceEditor;
+    @FXML
+    private ChoiceBox<String> categoryChoiceBox;
+    @FXML
+    private ChoiceBox<String> accountChoiceBox;
+
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -65,8 +80,25 @@ public class transactionPopupController extends BorderPane {
             popup.setX(event.getScreenX() - xOffset);
             popup.setY(event.getScreenY() - yOffset);
         });
-    }
 
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+        incomeButton.setToggleGroup(toggleGroup);
+        expenseButton.setToggleGroup(toggleGroup);
+        transferButton.setToggleGroup(toggleGroup);
+
+        incomeButton.setOnAction(e -> {
+            System.out.println("Income button clicked");
+        });
+
+        expenseButton.setOnAction(e -> {
+            System.out.println("Expense button clicked");
+        });
+
+        transferButton.setOnAction(e -> {
+            System.out.println("Transfer button clicked");
+        });
+    }
 
     private void hide() {
         popup.hide();

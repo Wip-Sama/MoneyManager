@@ -1,26 +1,31 @@
 .nav-button {
     -fx-border-width: 1px;
-    -fx-border-radius: 3;
+    -fx-border-radius: 6;
     -fx-background-radius: 3;
     -fx-cursor: hand;
     -fx-border-color: #808080;
 }
 
-.nav-button:hover, .nav-button.selected {
+#incomeButton:hover, #incomeButton:selected, .incomeButton-active {
     -fx-border-color: green;
 }
 
-#speseButton:hover, #speseButton.selected {
+#expenseButton:hover, #expenseButton:selected, .expenseButton-active {
     -fx-border-color: #DC3545;
 }
 
-#trasferimentiButton:hover, #trasferimentiButton.selected {
-    -fx-border-color: white;
+#transferButton:hover, #transferButton:selected, .transferButton-active {
+    -fx-border-color: -fu-text-1;
 }
 
-#trasferimentiButton:hover {
-    -fx-border-color: white;
+#transferButton:hover {
+    -fx-border-color: -fu-text-1;
 }
+
+.button-income {
+    -fx-border-color: -fu-stroke-rest;
+}
+
 
 .text-field {
     -fx-border-width: 1px;
