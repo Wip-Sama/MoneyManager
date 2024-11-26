@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/CardTransactions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardTransaction1.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/cardTransaction2.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/arrow_transaction.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1_copy.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/backup.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/2.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/3.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/user.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/user_copy.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/databases/user_template.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/databases/user_template.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +110,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/HP/Desktop/MoneyManager/MoneyManager/src/main/resources/org/wip/moneymanager/svg",
+    "last_opened_file_path": "C:/Users/sebas/Desktop/MoneyManager/Data",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -118,14 +123,19 @@
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
       <recent name="C:\Users\HP\Desktop\MoneyManager\MoneyManager\src\main\resources\org\wip\moneymanager\svg" />
       <recent name="C:\Users\HP\Desktop\MoneyManager\MoneyManager\src\main\resources\org\wip\moneymanager\components" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\src\main\resources\org\wip\moneymanager\databases" />
-      <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
       <recent name="C:\Users\sebas\Desktop\MoneyManager\Data\user_imgs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -172,8 +182,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -304,6 +314,7 @@
       <workItem from="1732521464240" duration="23731000" />
       <workItem from="1732547781089" duration="2755000" />
       <workItem from="1732551049999" duration="4608000" />
+      <workItem from="1732608114721" duration="4258000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />

@@ -8,6 +8,7 @@ import org.wip.moneymanager.utility.Encrypter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -462,7 +463,156 @@ public class UserDatabase extends Database {
                 return false;
             }
         });
+        }
+
+
+        //Tutti metodi per la schermata che servono alla schermata transictions
+
+
+    //Entrate e Spese
+        public Task<Boolean> addTransaction(int date, int type, double amount, int account, String note, Integer category) {
+            return asyncCall(() -> {
+                try {
+                    String query = "INSERT INTO Transactions (date, type, amount, account, note, category) VALUES (?, ?, ?, ?, ?, ?);";
+                    PreparedStatement stmt = con.prepareStatement(query);
+                    stmt.setInt(1, date);
+                    stmt.setInt(2, type);
+                    stmt.setDouble(3, amount);
+                    stmt.setInt(4, account);
+
+                    if (note != null && !note.isEmpty()) {
+                        stmt.setString(5, note);
+                    } else {
+                        stmt.setNull(5, Types.VARCHAR);
+                    }
+
+
+                    if (category != null) {
+                        stmt.setInt(6, category);
+                    } else {
+                        stmt.setNull(6, java.sql.Types.INTEGER);
+                    }
+
+                    int rowsAffected = stmt.executeUpdate();
+                    stmt.close();
+
+                    return rowsAffected > 0;
+                } catch (SQLException e) {
+                    System.err.println("SQL Error during transaction insertion: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            });
+        }
+
+
+        //metodo per trasferimenti con aggiornamento dei bilanci, metto commenti per farti capire gli step
+        public Task<Boolean> addTransferWithBalanceUpdate(int date, double amount, int account, int secondAccount, String note) {
+            return asyncCall(() -> {
+                try {
+                    // Step 1: Inserire il trasferimento nella tabella Transactions
+                    String insertTransactionQuery = "INSERT INTO Transactions (date, type, amount, account, second_account, note) VALUES (?, ?, ?, ?, ?, ?);";
+                    PreparedStatement transactionStmt = con.prepareStatement(insertTransactionQuery);
+                    transactionStmt.setInt(1, date);
+                    transactionStmt.setInt(2, 2); // Tipo 2: trasferimento
+                    transactionStmt.setDouble(3, amount);
+                    transactionStmt.setInt(4, account);
+                    transactionStmt.setInt(5, secondAccount);
+
+                    if (note != null && !note.isEmpty()) {
+                        transactionStmt.setString(6, note);
+                    } else {
+                        transactionStmt.setNull(6, java.sql.Types.VARCHAR);
+                    }
+
+                    int rowsTransaction = transactionStmt.executeUpdate();
+                    transactionStmt.close();
+
+                    // Step 2: Aggiornare il saldo dell'account di origine
+                    String updateSourceAccountQuery = "UPDATE Accounts SET balance = balance - ? WHERE id = ?;";
+                    PreparedStatement sourceAccountStmt = con.prepareStatement(updateSourceAccountQuery);
+                    sourceAccountStmt.setDouble(1, amount);
+                    sourceAccountStmt.setInt(2, account);
+                    int rowsSourceAccount = sourceAccountStmt.executeUpdate();
+                    sourceAccountStmt.close();
+
+                    // Step 3: Aggiornare il saldo dell'account di destinazione
+                    String updateDestinationAccountQuery = "UPDATE Accounts SET balance = balance + ? WHERE id = ?;";
+                    PreparedStatement destinationAccountStmt = con.prepareStatement(updateDestinationAccountQuery);
+                    destinationAccountStmt.setDouble(1, amount);
+                    destinationAccountStmt.setInt(2, secondAccount);
+                    int rowsDestinationAccount = destinationAccountStmt.executeUpdate();
+                    destinationAccountStmt.close();
+
+                    // Verifica che tutte le operazioni abbiano avuto successo
+                    return rowsTransaction > 0 && rowsSourceAccount > 0 && rowsDestinationAccount > 0;
+                } catch (SQLException e) {
+                    System.err.println("SQL Error during transfer with balance update: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            });
+        }
+
+
+
+    //metodo per i tags commento tutto per farti capire qualcosa
+    public Task<Boolean> linkTagToTransaction(String transactionName, String tagName) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                try {
+                    // Recupera l'ID della transazione in base al nome
+                    String transactionIdQuery = "SELECT id FROM Transactions WHERE note = ?;";
+                    PreparedStatement transactionStmt = con.prepareStatement(transactionIdQuery);
+                    transactionStmt.setString(1, transactionName);
+                    ResultSet transactionRs = transactionStmt.executeQuery();
+
+                    if (!transactionRs.next()) {
+                        transactionStmt.close();
+                        System.err.println("Transaction not found for name: " + transactionName);
+                        return false;
+                    }
+                    int transactionId = transactionRs.getInt("id");
+                    transactionStmt.close();
+
+                    // Recupera l'ID del tag in base al nome
+                    String tagIdQuery = "SELECT id FROM Tag WHERE name = ?;";
+                    PreparedStatement tagStmt = con.prepareStatement(tagIdQuery);
+                    tagStmt.setString(1, tagName);
+                    ResultSet tagRs = tagStmt.executeQuery();
+
+                    if (!tagRs.next()) {
+                        tagStmt.close();
+                        System.err.println("Tag not found for name: " + tagName);
+                        return false;
+                    }
+                    int tagId = tagRs.getInt("id");
+                    tagStmt.close();
+
+                    // Collega l'ID della transazione con l'ID del tag
+                    String linkQuery = "INSERT INTO Transaction_tags (transaction, tag) VALUES (?, ?);";
+                    PreparedStatement linkStmt = con.prepareStatement(linkQuery);
+                    linkStmt.setInt(1, transactionId);
+                    linkStmt.setInt(2, tagId);
+                    int rowsInserted = linkStmt.executeUpdate();
+                    linkStmt.close();
+
+                    return rowsInserted > 0;
+                } catch (SQLException e) {
+                    System.err.println("SQL Error during linking tag to transaction: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            return false;
+        });
     }
+
+
+
+}
+
+
 
 
 
