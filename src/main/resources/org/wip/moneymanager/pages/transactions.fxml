@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.wip.moneymanager.components.DateTransactions?>
 
-<fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="526.0" prefWidth="750.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" styleClass="background-3" BorderPane.alignment="CENTER">
          <center>
@@ -93,7 +93,7 @@
                      <children>
                         <Button fx:id="newTransaction" mnemonicParsing="false" styleClass="icon_general" text="Add new">
                            <graphic>
-                              <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" fill="WHITE" translateX="-3.0" />
+                              <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" fill="WHITE" styleClass="icon_general" translateX="-3.0" />
                            </graphic>
                         </Button>
                         <ToggleButton fx:id="favouriteToggle" mnemonicParsing="false" styleClass="icon-toggle-button" text="Preferiti">
@@ -103,7 +103,7 @@
                         </ToggleButton>
                         <Button fx:id="filter" mnemonicParsing="false" styleClass="icon_general" text="Filtra">
                            <graphic>
-                              <SVGPath content="M10 16h4a1 1 0 0 1 .117 1.993L14 18h-4a1 1 0 0 1-.117-1.993L10 16h4-4Zm-2-5h8a1 1 0 0 1 .117 1.993L16 13H8a1 1 0 0 1-.117-1.993L8 11h8-8ZM5 6h14a1 1 0 0 1 .117 1.993L19 8H5a1 1 0 0 1-.117-1.993L5 6h14H5Z" fill="WHITE" translateX="-3.0" />
+                              <SVGPath content="M10 16h4a1 1 0 0 1 .117 1.993L14 18h-4a1 1 0 0 1-.117-1.993L10 16h4-4Zm-2-5h8a1 1 0 0 1 .117 1.993L16 13H8a1 1 0 0 1-.117-1.993L8 11h8-8ZM5 6h14a1 1 0 0 1 .117 1.993L19 8H5a1 1 0 0 1-.117-1.993L5 6h14H5Z" fill="WHITE" styleClass="icon_general" translateX="-3.0" />
                            </graphic>
                         </Button>
                      </children>

@@ -5,13 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/SearchBar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/AddNewTagController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/svg/search_icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/DateTransactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/DateTransactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/dateTransactions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/dateTransactions.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/View/SceneHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/View/SceneHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tag.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tag.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagfilter.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/tagselector.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/it.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/locale/it.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/transactions.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/popUp/addNewAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/popUp/addNewAccount.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
