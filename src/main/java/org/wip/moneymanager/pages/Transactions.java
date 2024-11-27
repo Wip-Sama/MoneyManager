@@ -9,6 +9,7 @@ import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.DateTransactions;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.AddNewAccountController;
+import org.wip.moneymanager.popUp.popUpFilterController;
 import org.wip.moneymanager.popUp.transactionPopupController;
 
 import java.io.IOException;
@@ -54,6 +55,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     protected Parent loaded;
     private transactionPopupController AddNewController;
+    private popUpFilterController AddNewFilterController;
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -109,9 +111,22 @@ public class Transactions extends BorderPane implements AutoCloseable {
                 e.printStackTrace();
             }
         });
+
+        filter.setOnAction(event -> {
+            try {
+                if (AddNewFilterController== null) {
+                    AddNewFilterController= new popUpFilterController(loaded.getScene().getWindow());
+                }
+                AddNewFilterController.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
+
     }
-
-
 
 
     @Override
