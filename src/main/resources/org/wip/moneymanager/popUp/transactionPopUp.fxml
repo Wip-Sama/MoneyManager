@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,9 +13,9 @@
 <?import org.wip.moneymanager.components.BalanceEditor?>
 <?import org.wip.moneymanager.components.TagSelector?>
 
-<fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" styleClass="background-pop-up" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" styleClass="background-pop-up" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" spacing="15.0">
+        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" spacing="15.0">
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
@@ -33,24 +34,28 @@
 
                      <!-- Form Fields -->
             <VBox spacing="10.0">
-                <Label text="Data " />
+                <Label fx:id="date" text="Data " />
             <DatePicker fx:id="datePicker" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
-                         <Label text="Importo" />
+                         <Label fx:id="amount" text="Importo" />
             <BalanceEditor fx:id="balanceEditor" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
-                         <Label text="Categoria" />
+                <Label fx:id="account" text="Conto" />
+                <ChoiceBox fx:id="accountChoiceBox" layoutX="10.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+
+                         <Label fx:id="category" text="Categoria" />
             <ChoiceBox fx:id="categoryChoiceBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
-                         <Label text="Conto" />
-            <ChoiceBox fx:id="accountChoiceBox" layoutX="10.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
 
-                         <Label text="Tags" />
+                         <Label fx:id="tags" text="Tags" />
+            <TagSelector fx:id="tagSelector" />
+            <Label text="Note Aggiuntive" />
+            <TextField minHeight="-Infinity" prefHeight="50.0" />
             </VBox>
-         <TagSelector />
 
                      <!-- Action Buttons -->
-            <VBox spacing="10.0">
+            <VBox alignment="CENTER" spacing="10.0">
+            <Label fx:id="errorLabel" text="Error" />
                 <Button fx:id="saveButton" maxWidth="Infinity" styleClass="full-button" text="Salva" />
 
                          <Button fx:id="cancelButton" maxWidth="Infinity" styleClass="transparent-button" stylesheets="@../css/button.css" text="Annulla" />

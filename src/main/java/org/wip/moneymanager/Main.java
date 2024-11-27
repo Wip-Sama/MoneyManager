@@ -38,7 +38,7 @@ public class Main extends Application {
             sceneHandler.showLoginScreen(); // Chiama il metodo per mostrare la schermata di login
 
 
-            /*per accendere direttamente con utente1
+            //per accendere direttamente con utente1
             Task<dbUser> userTask = Data.mmDatabase.getUser("utente1");
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.submit(userTask);
@@ -46,7 +46,8 @@ public class Main extends Application {
             userTask.setOnSucceeded(e -> {
                 Data.dbUser = userTask.getValue();
                 sceneHandler.startMoneyManager();
-            });*/
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -406,6 +406,38 @@ public class UserDatabase extends Database {
         });
     }
 
+    public Task<List<String>> getAllAccountNames() {
+        return asyncCall(() -> {
+            List<String> accountNames = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT name FROM Accounts;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    accountNames.add(rs.getString("name"));
+                }
+                stmt.close();
+            }
+            return accountNames;
+        });
+    }
+
+    public Task<List<String>> getAllCategoryNames() {
+        return asyncCall(() -> {
+            List<String> categoryNames = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT name FROM Categories;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    categoryNames.add(rs.getString("name"));
+                }
+                stmt.close();
+            }
+            return categoryNames;
+        });
+    }
+
     public Task<Boolean> removeAccount(int id) {
         return asyncCall(() -> {
             if (isConnected()) {

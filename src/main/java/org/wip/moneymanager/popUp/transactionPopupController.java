@@ -11,22 +11,26 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+import org.wip.moneymanager.components.TagSelector;
+import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ChoiceBox;
 import org.wip.moneymanager.components.BalanceEditor;
 import javafx.scene.control.Label;
+import org.wip.moneymanager.model.UserDatabase;
 
-import org.wip.moneymanager.pages.Accounts;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class transactionPopupController extends BorderPane {
     @FXML
+    private BorderPane BoderPanePopup;
+    @FXML
     private Label labelTitle;
-
     @FXML
     private ToggleButton incomeButton;
     @FXML
@@ -34,19 +38,31 @@ public class transactionPopupController extends BorderPane {
     @FXML
     private ToggleButton transferButton;
     @FXML
-    private Button saveButton;
-    @FXML
-    private Button cancelButton;
-    @FXML
-    private BorderPane BoderPanePopup;
+    private Label date;
     @FXML
     private DatePicker datePicker;
     @FXML
+    private Label amount;
+    @FXML
     private BalanceEditor balanceEditor;
+    @FXML
+    private Label category;
     @FXML
     private ChoiceBox<String> categoryChoiceBox;
     @FXML
+    private Label account;
+    @FXML
     private ChoiceBox<String> accountChoiceBox;
+    @FXML
+    private Label tags;
+    @FXML
+    private TagSelector tagSelector;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
 
 
     private double xOffset = 0;
@@ -91,17 +107,55 @@ public class transactionPopupController extends BorderPane {
         transferButton.setToggleGroup(toggleGroup);
 
         incomeButton.setOnAction(e -> {
+            //faccio in modo che quando clicco su income, il conto ritorna "Conto" e la categoria ritorna "Categoria"
+            account.setText("Conto");
+            category.setText("Categoria");
             System.out.println("Income button clicked");
+
         });
 
         expenseButton.setOnAction(e -> {
+            account.setText("Conto");
+            category.setText("Categoria");
             System.out.println("Expense button clicked");
         });
 
         transferButton.setOnAction(e -> {
+            // quando clicco su trasferimento, il conto diventa "Mittente" e la categoria diventa "Destinatario"
+            account.setText("Mittente");
+            category.setText("Destinatario");
             System.out.println("Transfer button clicked");
         });
+
+        populateChoiceBoxes();
+
     }
+
+    @FXML
+    private void populateChoiceBoxes() {
+        UserDatabase userDatabase = UserDatabase.getInstance();
+
+        userDatabase.getAllAccountNames().run();
+        try {
+            List<String> accountNames = userDatabase.getAllAccountNames().get();
+
+            if (accountNames.isEmpty()) {
+                System.err.println("La lista dei nomi degli account è vuota!");
+            } else {
+                System.out.println("Account trovati: " + accountNames);
+            }
+
+            // Popola le ChoiceBox
+            categoryChoiceBox.getItems().setAll(accountNames);
+            accountChoiceBox.getItems().setAll(accountNames);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Errore durante il popolamento delle ChoiceBox: " + e.getMessage());
+        }
+    }
+
+
 
     private void hide() {
         popup.hide();
