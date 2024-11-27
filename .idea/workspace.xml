@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/popUpFilterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/user_dbs/1.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/1.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/popUpFilterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/popUpFilterController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -314,6 +317,11 @@
       <workItem from="1732653000914" duration="6436000" />
       <workItem from="1732717023503" duration="4198000" />
       <workItem from="1732722162905" duration="325000" />
+      <workItem from="1732722826404" duration="285000" />
+      <workItem from="1732724718111" duration="6338000" />
+      <workItem from="1732731140000" duration="136000" />
+      <workItem from="1732731346341" duration="4256000" />
+      <workItem from="1732736782004" duration="550000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />

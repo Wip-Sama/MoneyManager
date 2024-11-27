@@ -13,6 +13,7 @@ import org.wip.moneymanager.popUp.popUpFilterController;
 import org.wip.moneymanager.popUp.transactionPopupController;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -56,6 +57,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     protected Parent loaded;
     private transactionPopupController AddNewController;
     private popUpFilterController AddNewFilterController;
+
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -118,12 +120,11 @@ public class Transactions extends BorderPane implements AutoCloseable {
                     AddNewFilterController= new popUpFilterController(loaded.getScene().getWindow());
                 }
                 AddNewFilterController.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
-
 
 
     }

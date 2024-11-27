@@ -18,6 +18,7 @@ import org.wip.moneymanager.popUp.AddNewTagController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TagSelector extends BorderPane {
     @FXML
@@ -96,4 +97,5 @@ public class TagSelector extends BorderPane {
         double screenY = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinY()+50;
         contextMenu.show(this, screenX, screenY);
     }
+
 }
