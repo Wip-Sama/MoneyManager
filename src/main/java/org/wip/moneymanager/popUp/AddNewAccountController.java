@@ -296,4 +296,5 @@ public class AddNewAccountController extends BorderPane {
         hide();
         accountsPage.refreshAccounts();
     }
+
 }

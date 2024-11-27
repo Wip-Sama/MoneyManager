@@ -13,12 +13,14 @@ public class Tag extends BorderPane {
     @FXML
     private Label tagLabel;
 
+    @FXML
+    private BorderPane tagBackground;
 
-    /*TODO: non so se vogliamo far in modo che i tag abbiamo un colore selezionabile dall'utente
-    *  vorrei evitare ma nel dubbio metto le property pronte casomai volessimo farlo*/
     public final IntegerProperty red = new SimpleIntegerProperty(0);
     public final IntegerProperty green = new SimpleIntegerProperty(0);
     public final IntegerProperty blue = new SimpleIntegerProperty(0);
+
+    private final StringProperty color = new SimpleStringProperty();
 
     private final IntegerProperty tag_status = new SimpleIntegerProperty(0);
     private final StringProperty tag = new SimpleStringProperty();
@@ -52,11 +54,17 @@ public class Tag extends BorderPane {
         });
     }
 
-    public Tag(String _tag, int _tag_status, int _modalita) {
+    public Tag(String _tag, int _tag_status, int _modalita, String color) {
         this();
         this.tag.set(_tag);
         this.tag_status.set(_tag_status);
         this.modalita.set(_modalita);
+        this.color.set(color);
+        setColor(color);
+    }
+
+    private void setColor(String color) {
+        tagBackground.setStyle("-fx-background-color: " + color + ";");
     }
 
     @FXML
@@ -108,5 +116,9 @@ public class Tag extends BorderPane {
 
     public IntegerProperty tagStatusProperty() {
         return tag_status;
+    }
+
+    public String getColor() {
+        return color.get();
     }
 }

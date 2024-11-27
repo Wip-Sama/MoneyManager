@@ -5,15 +5,21 @@ import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import org.wip.moneymanager.model.DBObjects.dbTag;
+import org.wip.moneymanager.model.Data;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class TagFilter extends BorderPane {
@@ -26,9 +32,17 @@ public class TagFilter extends BorderPane {
     @FXML
     public ScrollPane scroll_pane;
 
-    private final ArrayList<Tag> tagsList = new ArrayList<>();
-    private final ObservableList<Tag> observableTagList = FXCollections.observableArrayList(tagsList);
-    private final ListProperty<Tag> tags = new SimpleListProperty<>(observableTagList);
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+    private static final ArrayList<Tag> tagsList = new ArrayList<>();
+    private static final ObservableList<Tag> observableTagList = FXCollections.observableArrayList(tagsList);
+    private static final ListProperty<Tag> tags = new SimpleListProperty<>(observableTagList);
+
+    public static void refreshTags() {
+        tags.clear();
+        initializeTags();
+
+    }
 
     public ReadOnlyListProperty<Tag> tagsProperty() {
         return tags;
@@ -61,9 +75,30 @@ public class TagFilter extends BorderPane {
                 tag.managedProperty().bindBidirectional(tag.visibleProperty());
             }
         });
-        //TODO: Sostituire con un get dal org.wip.moneymanager.model
-        for (int i = 0; i < 100; i++) {
-            tags.add(new Tag("Tag test " + i, 0, 2));
-        }
+
+        initializeTags();
+    }
+
+
+    private static void initializeTags() {
+        Task<List<dbTag>> loadTagsTask = Data.userDatabase.getAllTag();
+        loadTagsTask.setOnSucceeded(event -> {
+            List<dbTag> dbTags = loadTagsTask.getValue();
+            if (dbTags != null) {
+                // Converti dbTag in Tag e aggiungili alla lista
+                for (dbTag dbTagItem : dbTags) {
+                    Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color()); // Adatta i parametri secondo dbTag
+                    tags.add(tag);
+                }
+            }
+        });
+        loadTagsTask.setOnFailed(event -> {
+            // Log dell'errore o altra gestione
+            Throwable exception = loadTagsTask.getException();
+            exception.printStackTrace();
+        });
+
+        executorService.submit(loadTagsTask);
     }
 }
+

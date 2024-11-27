@@ -1,5 +1,8 @@
 package org.wip.moneymanager.popUp;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,13 +16,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+import javafx.util.Duration;
+import org.wip.moneymanager.components.TagFilter;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.pages.Accounts;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static javafx.scene.paint.Color.rgb;
 
 
 public class AddNewTagController extends BorderPane {
@@ -84,6 +92,29 @@ public class AddNewTagController extends BorderPane {
     @FXML
     public void initialize() {
         ErrorLabel.setOpacity(0);
+        ErrorLabel.setOpacity(0);
+        addButton.setText(Data.lsp.lsb("addNewTag.addButtonLabel").get());
+        cancelButton.setText(Data.lsp.lsb("addNewTag.cancelButtonLabel").get());
+        labelTitleAddNewTag.setText(Data.lsp.lsb("addNewTag.titleLabel").get());
+        labelColor.setText(Data.lsp.lsb("addNewTag.colorLabel").get());
+        labelName.setText(Data.lsp.lsb("addNewTag.nameLabel").get());
+        labelPreview.setText(Data.lsp.lsb("addNewTag.previewLabel").get());
+        ErrorLabel.textProperty().bind(Data.lsp.lsb("addNewTag.error"));
+
+
+        colorChoiceBox.getItems().addAll("Rosso", "Blu", "Verde", "Giallo", "Arancione");
+
+        tagNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updatePreview();
+            FieldAnimationUtils.removeErrorStyles(tagNameField);
+            ErrorLabel.setOpacity(0);
+        });
+
+        colorChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            updatePreview();
+            FieldAnimationUtils.removeErrorStyles(colorChoiceBox);
+            ErrorLabel.setOpacity(0);
+        });
         popUpAddTags.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -103,21 +134,87 @@ public class AddNewTagController extends BorderPane {
                 addTag();
             }
         });
-
-
-
-
     }
 
     private void addTag() {
+        String tagName = tagNameField.getText().trim();
+        String selectedColor = colorChoiceBox.getValue();
+        if (selectedColor != null && !tagName.isEmpty()) {
+            String colorHex = getColorHex(selectedColor);
+            Task<Boolean> taskAddTag =  Data.userDatabase.createTag(tagName, colorHex);
+            executorService.submit(taskAddTag);
 
+            taskAddTag.setOnSucceeded(workerStateEvent -> {
+                TagFilter.refreshTags();
+            });
+
+            clearFields();
+            hide();
+        } else {
+            showError("addNewTag.error");
+        }
+    }
+
+
+    private String getColorHex(String colorName) {
+        return switch (colorName) {
+            case "Rosso" -> "#FF0000";
+            case "Blu" -> "#0000FF";
+            case "Verde" -> "#008000";
+            case "Giallo" -> "#cfb721";
+            case "Arancione" -> "#FFA500";
+            default -> "#FFFFFF"; // Default a bianco
+        };
     }
 
     private boolean validateFields() {
-        return true;
+        String tagName = tagNameField.getText();
+        String selectedColor = colorChoiceBox.getValue();
+        boolean hasError = false;
+
+        if (tagName == null || tagName.trim().isEmpty()) {
+            FieldAnimationUtils.animateFieldError(tagNameField);
+            hasError = true;
+        }
+
+        if (selectedColor == null || selectedColor.isEmpty()) {
+            FieldAnimationUtils.animateFieldError(colorChoiceBox);
+            hasError = true;
+        }
+
+        if (hasError) {
+            showError("addNewTag.error");
+        }
+
+        return !hasError;
+    }
+
+    private void showError(String message) {
+        ErrorLabel.textProperty().bind(Data.lsp.lsb(message));
+        ErrorLabel.setTextFill(rgb(255, 0, 0));
+        Timeline fadeInTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> ErrorLabel.setOpacity(0)),
+                new KeyFrame(Duration.seconds(0.2), e -> ErrorLabel.setOpacity(1))
+        );
+        fadeInTimeline.setCycleCount(1);
+        fadeInTimeline.play();
+    }
+
+    private void updatePreview() {
+        String tagName = tagNameField.getText();
+        String selectedColor = colorChoiceBox.getValue();
+
+        if (selectedColor != null) {
+            String colorHex = getColorHex(selectedColor);
+            previewToggleButton.setText(tagName.isEmpty() ? "Anteprima" : tagName);
+            previewToggleButton.setStyle("-fx-background-color: " + colorHex + ";");
+        }
     }
 
     private void clearFields() {
+        tagNameField.clear();
+        colorChoiceBox.getSelectionModel().selectFirst();
+        updatePreview();
     }
 
     public void show() {
