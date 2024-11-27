@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.model.ExecutorsServiceManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class TagFilter extends BorderPane {
     public static void refreshTags() {
         tags.clear();
         initializeTags();
-
     }
 
     public ReadOnlyListProperty<Tag> tagsProperty() {
@@ -49,6 +49,7 @@ public class TagFilter extends BorderPane {
     }
 
     public TagFilter() {
+        Data.esm.register(executorService);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/tagfilter.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -75,10 +76,8 @@ public class TagFilter extends BorderPane {
                 tag.managedProperty().bindBidirectional(tag.visibleProperty());
             }
         });
-
         initializeTags();
     }
-
 
     private static void initializeTags() {
         Task<List<dbTag>> loadTagsTask = Data.userDatabase.getAllTag();

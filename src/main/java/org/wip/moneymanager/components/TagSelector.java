@@ -1,6 +1,7 @@
 package org.wip.moneymanager.components;
 
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,8 +13,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.popUp.AddNewAccountController;
 import org.wip.moneymanager.popUp.AddNewTagController;
 
 import java.io.IOException;
@@ -40,6 +39,16 @@ public class TagSelector extends BorderPane {
     private final ArrayList<Tag> tagsList = new ArrayList<>();
     private final ObservableList<Tag> observableTagList = FXCollections.observableArrayList(tagsList);
     private final ListProperty<Tag> tags = new SimpleListProperty<>(observableTagList);
+
+    public List<Tag> get_selected_tags() {
+        List<Tag> selected_tags = new ArrayList<>();
+        for (Tag tag : tags) {
+            if (tag.getTagStatus() == 1) {
+                selected_tags.add(tag);
+            }
+        }
+        return selected_tags;
+    }
 
     public TagSelector() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/tagselector.fxml"));
@@ -71,14 +80,22 @@ public class TagSelector extends BorderPane {
             tag_list.getChildren().clear();
             tag_list.getChildren().addAll(newValue);
         });
-        for (Tag tag : tagFilter.tagsProperty()) {
-            Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita());
-            tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
-            tmp.tagStatusProperty().addListener((_, _, newValue) -> tmp.setVisible(newValue.intValue() != 0));
-            tmp.managedProperty().bindBidirectional(tmp.visibleProperty());
-            tmp.setVisible(false);
-            tags.add(tmp);
-        }
+        tagFilter.tagsProperty().addListener((_, _, newValue) -> {
+            loops:
+            for (Tag tag : tagFilter.tagsProperty()) {
+                for (Tag tag1 : tags) {
+                    if (tag1.getTag().equals(tag.getTag())) {
+                        continue loops;
+                    }
+                }
+                Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita(), tag.getColor());
+                tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
+                tmp.tagStatusProperty().addListener((_, _, newValue1) -> tmp.setVisible(newValue1.intValue() != 0));
+                tmp.managedProperty().bindBidirectional(tmp.visibleProperty());
+                tmp.setVisible(false);
+                tags.add(tmp);
+            }
+        });
 
         add_new_tag.setOnAction(event -> {
             try {
@@ -97,5 +114,4 @@ public class TagSelector extends BorderPane {
         double screenY = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinY()+50;
         contextMenu.show(this, screenX, screenY);
     }
-
 }
