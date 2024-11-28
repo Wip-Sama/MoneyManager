@@ -2,6 +2,7 @@ package org.wip.moneymanager.pages;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -102,6 +103,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
             }
         });
 
+/*
         // Configura il bottone "newTransaction"
         newTransaction.setOnAction(event -> {
             try {
@@ -113,20 +115,28 @@ public class Transactions extends BorderPane implements AutoCloseable {
                 e.printStackTrace();
             }
         });
+*/
+        newTransaction.setOnAction(event -> open_popup());
 
-        filter.setOnAction(event -> {
-            try {
-                if (AddNewFilterController== null) {
-                    AddNewFilterController= new popUpFilterController(loaded.getScene().getWindow());
-                }
-                AddNewFilterController.show();
+    }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+//nuovo metodo per aprire il popup, dopo il cambio a contest menu
+    private void open_popup() {
+        try {
+            if (AddNewController == null) {
+                AddNewController = new transactionPopupController(newTransaction.getScene().getWindow());
             }
-        });
 
+            Bounds bounds = newTransaction.localToScreen(newTransaction.getBoundsInLocal());
 
+            double popupWidth = 910.0;
+            double x = bounds.getMaxX() - popupWidth;
+            double y = bounds.getMaxY();
+
+            AddNewController.toggle(x, y);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

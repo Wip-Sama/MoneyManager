@@ -3,15 +3,12 @@ package org.wip.moneymanager.popUp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Popup;
 import javafx.stage.Window;
 import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.TagSelector;
-import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.components.BalanceEditor;
 import org.wip.moneymanager.model.UserDatabase;
@@ -63,65 +60,58 @@ public class transactionPopupController extends BorderPane {
     @FXML
     private Button cancelButton;
 
-
-    private double xOffset = 0;
-    private double yOffset = 0;
-    private final Popup popup = new Popup();
-    private final Window ownerWindow;
+    private final CustomMenuItem customMenuItem;
+    private final ContextMenu contextMenu = new ContextMenu();
+    private final Window node;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    //variabili per memorizzare i dati presi dalle query;
     private List<String> accountNames;
     private List<String> categoryNames;
-
     private String lastTransactionType = "income"; // Valore iniziale
 
     public transactionPopupController(Window window) throws IOException {
         Data.esm.register(executorService);
-        this.ownerWindow = window;
+        this.node = window;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/transactionPopUp.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         Parent loaded = fxmlLoader.load();
 
-        Scene popupScene = new Scene(loaded);
-        popupScene.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
+        customMenuItem = new CustomMenuItem(loaded);
+        customMenuItem.getStyleClass().add("tag-filter-menu-item");
+        customMenuItem.hideOnClickProperty().set(false);
+        contextMenu.getItems().add(customMenuItem);
 
-        popup.getContent().add(loaded);
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
-    //cancelButton.setOnAction(e -> hide());
-
     @FXML
     private void initialize() {
-
         cancelButton.setOnAction(e -> hide());
-
-        BoderPanePopup.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        BoderPanePopup.setOnMouseDragged(event -> {
-            popup.setX(event.getScreenX() - xOffset);
-            popup.setY(event.getScreenY() - yOffset);
-        });
 
         ToggleGroup toggleGroup = new ToggleGroup();
         incomeButton.setToggleGroup(toggleGroup);
         expenseButton.setToggleGroup(toggleGroup);
         transferButton.setToggleGroup(toggleGroup);
 
+        //imposta l'incomeButton come default
+        incomeButton.setSelected(true);
+
+        //impedisce che il toggle venga deselezionato
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                toggleGroup.selectToggle(oldValue);
+            }
+        });
+
         incomeButton.setOnAction(e -> {
             System.out.println("Income button clicked");
             onToggleButtonChange(false);
-
         });
 
         expenseButton.setOnAction(e -> {
             System.out.println("Expense button clicked");
             onToggleButtonChange(false);
-
         });
 
         transferButton.setOnAction(e -> {
@@ -229,11 +219,10 @@ public class transactionPopupController extends BorderPane {
                 !balanceEditor.getText().isEmpty() ||
                 !categoryChoiceBox.getSelectionModel().isEmpty() ||
                 !accountChoiceBox.getSelectionModel().isEmpty();
-                //aggiungere controllo tag
+        //aggiungere controllo tag
     }
 
     private void onToggleButtonChange(boolean isTransfer) {
-
         if(isAnyFieldFilled()){
             resetScreen();
         }
@@ -241,10 +230,18 @@ public class transactionPopupController extends BorderPane {
     }
 
     private void hide() {
-        popup.hide();
+        contextMenu.hide();
     }
 
-    public void show() {
-        popup.show(ownerWindow);
+    public void show(double x, double y) {
+        contextMenu.show(node, x, y);
+    }
+
+    public void toggle(double x, double y) {
+        if (contextMenu.isShowing()) {
+            hide();
+        } else {
+            show(x, y);
+        }
     }
 }
