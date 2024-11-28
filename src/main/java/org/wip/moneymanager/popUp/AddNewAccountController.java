@@ -7,11 +7,9 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import org.wip.moneymanager.components.BalanceEditor;
@@ -22,11 +20,12 @@ import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-import static java.awt.Color.red;
 import static javafx.scene.paint.Color.rgb;
 
 public class AddNewAccountController extends BorderPane {
@@ -215,37 +214,53 @@ public class AddNewAccountController extends BorderPane {
         int accountType = typeAccountField.getSelectionModel().getSelectedIndex();
 
 
-        boolean hasError = false;
+
+
+
+        AtomicBoolean hasError = new AtomicBoolean(false);
 
         // Controlla se il nome è vuoto
         if (name == null || name.trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(newAccountField);
-            hasError = true;
+            hasError.set(true);
         }
+
 
         if (dateField.getValue() == null) {
             FieldAnimationUtils.animateFieldError(dateField);
-            hasError = true;
+            hasError.set(true);
         }
 
         // Controlla se il balance è vuoto
         if (balanceText == null || balanceText.trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(bilanceField);
-            hasError = true;
+            hasError.set(true);
         }
 
         // Controlla se il tipo di account è selezionato
         if (accountType == -1) {
             FieldAnimationUtils.animateFieldError(typeAccountField);
-            hasError = true;
+            hasError.set(true);
         }
 
         // Mostra un unico messaggio di errore se c'è un errore
-        if (hasError) {
+        if (hasError.get()) {
             showError("addnewaccount.error");
         }
 
-        return !hasError; // Valido se non ci sono errori
+        Task<List<String>> namesAccountsTask = Data.userDatabase.getAllAccountNames();
+        namesAccountsTask.setOnSucceeded(event -> {
+            List<String> accountNames = namesAccountsTask.getValue();
+            if (accountNames.contains(name)) {
+                hasError.set(true);
+                showError("addnewaccount.samename");
+                FieldAnimationUtils.animateFieldError(newAccountField);
+            }
+        });
+        executorService.submit(namesAccountsTask);
+
+
+        return !hasError.get(); // Valido se non ci sono errori
     }
 
 

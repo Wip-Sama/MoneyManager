@@ -29,7 +29,7 @@ public class TagSelector extends BorderPane {
     private Button add_new_tag;
 
     protected Parent loaded;
-    private AddNewTagController AddNewtag;
+    private AddNewTagController addNewTagController;
     private final TagFilter tagFilter = new TagFilter();
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu;
@@ -58,7 +58,6 @@ public class TagSelector extends BorderPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        tagFilter.setPrefWidth(400);
 
         customMenuItem = new CustomMenuItem(tagFilter);
         customMenuItem.getStyleClass().add("tag-filter-menu-item");
@@ -66,15 +65,10 @@ public class TagSelector extends BorderPane {
 
         contextMenu = new ContextMenu(customMenuItem);
         contextMenu.getStyleClass().add("tag-filter-context-menu");
-
-        // Sarebbe meglio avere tutto in tag-filter-context-menu
-        // quindi tag-filter-context-menu.menu-item ecc...
-        // Ma per ora funziona in caso lo cambierò in futuro
-        // è più una mia preferenza che altro
     }
 
     public void initialize() {
-        add_tag.setOnAction(_ -> show_tag_filter());
+        add_tag.setOnAction(_ -> showTagFilter());
         tags.addListener((_, _, newValue) -> {
             tag_list.getChildren().clear();
             tag_list.getChildren().addAll(newValue);
@@ -96,21 +90,53 @@ public class TagSelector extends BorderPane {
             }
         });
 
-        add_new_tag.setOnAction(event -> {
-            try {
-                if (AddNewtag == null) {
-                    AddNewtag = new AddNewTagController(loaded.getScene().getWindow());
-                }
-                AddNewtag.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        add_new_tag.setOnAction(_ -> showAddNewTag());
     }
 
-    private void show_tag_filter() {
-        double screenX = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinX()-400;
-        double screenY = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinY()+50;
+
+    private void showTagFilter() {
+        // Crea un nuovo CustomMenuItem con il contenuto del tag filter
+        CustomMenuItem newCustomMenuItem = new CustomMenuItem(tagFilter);
+        newCustomMenuItem.getStyleClass().add("tag-filter-menu-item");
+        newCustomMenuItem.hideOnClickProperty().set(false);
+
+        // Aggiorna il ContextMenu con il nuovo CustomMenuItem
+        contextMenu.getItems().clear(); // Rimuovi il contenuto precedente
+        contextMenu.getItems().add(newCustomMenuItem);
+
+      
+        double screenX = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinX() - 380;
+        double screenY = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinY() + 30;
         contextMenu.show(this, screenX, screenY);
+
+        this.layout();
     }
+
+    private void showAddNewTag() {
+        try {
+            if (addNewTagController == null) {
+                addNewTagController = new AddNewTagController(loaded.getScene().getWindow());
+            }
+
+            // Crea un nuovo CustomMenuItem con il contenuto di AddNewTagController
+            CustomMenuItem newCustomMenuItem = new CustomMenuItem(addNewTagController);
+            newCustomMenuItem.getStyleClass().add("tag-filter-menu-item");
+            newCustomMenuItem.hideOnClickProperty().set(false);
+
+            // Aggiorna il ContextMenu con il nuovo CustomMenuItem
+            contextMenu.getItems().clear(); // Rimuovi il contenuto precedente
+            contextMenu.getItems().add(newCustomMenuItem);
+
+            // Mostra il ContextMenu
+            double screenX = add_new_tag.localToScreen(add_new_tag.getBoundsInLocal()).getMinX() - 380;
+            double screenY = add_new_tag.localToScreen(add_new_tag.getBoundsInLocal()).getMinY() + 30;
+            contextMenu.show(this, screenX, screenY);
+
+            // Forza il ricalcolo del layout per aggiornare il contenuto
+            this.layout();  // Esegui il layout sulla scena o sul nodo
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

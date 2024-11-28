@@ -7,11 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Popup;
@@ -66,31 +62,27 @@ public class AddNewTagController extends BorderPane {
 
     private double xOffset = 0;
     private double yOffset = 0;
-    private Accounts accountsPage;
-    private final Popup popup = new Popup();
-    private final Window ownerWindow;
+    private Accounts accountsPage;;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 
     public AddNewTagController(Window window) throws IOException {
         Data.esm.register(executorService);
         this.accountsPage = accountsPage;
-        this.ownerWindow = window;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewTag.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        Parent loadPopup = fxmlLoader.load();
-
-        Scene popupScene = new Scene(loadPopup );
-        popupScene.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
-
-        popup.getContent().add(loadPopup);
-        window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void initialize() {
+        previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
         ErrorLabel.setOpacity(0);
         ErrorLabel.setOpacity(0);
         addButton.setText(Data.lsp.lsb("addNewTag.addButtonLabel").get());
@@ -102,7 +94,13 @@ public class AddNewTagController extends BorderPane {
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addNewTag.error"));
 
 
-        colorChoiceBox.getItems().addAll("Rosso", "Blu", "Verde", "Giallo", "Arancione");
+        colorChoiceBox.getItems().addAll(
+                Data.lsp.lsb("color.red").get(),
+                Data.lsp.lsb("color.blue").get(),
+                Data.lsp.lsb("color.green").get(),
+                Data.lsp.lsb("color.yellow").get(),
+                Data.lsp.lsb("color.orange").get()
+        );
 
         tagNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             updatePreview();
@@ -115,24 +113,20 @@ public class AddNewTagController extends BorderPane {
             FieldAnimationUtils.removeErrorStyles(colorChoiceBox);
             ErrorLabel.setOpacity(0);
         });
-        popUpAddTags.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        popUpAddTags.setOnMouseDragged(event -> {
-            popup.setX(event.getScreenX() - xOffset);
-            popup.setY(event.getScreenY() - yOffset);
-        });
+
 
         cancelButton.setOnAction(event -> {
             clearFields();
-            hide();
         });
 
         addButton.setOnAction(event -> {
             if (validateFields()) {
                 addTag();
             }
+        });
+
+        tagNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updatePreview();
         });
     }
 
@@ -149,7 +143,6 @@ public class AddNewTagController extends BorderPane {
             });
 
             clearFields();
-            hide();
         } else {
             showError("addNewTag.error");
         }
@@ -158,12 +151,12 @@ public class AddNewTagController extends BorderPane {
 
     private String getColorHex(String colorName) {
         return switch (colorName) {
-            case "Rosso" -> "#FF0000";
-            case "Blu" -> "#0000FF";
-            case "Verde" -> "#008000";
-            case "Giallo" -> "#cfb721";
-            case "Arancione" -> "#FFA500";
-            default -> "#FFFFFF"; // Default a bianco
+            case "Rosso", "Red" -> "#FF0000";
+            case "Blu", "Blue" -> "#0000FF";
+            case "Verde", "Green" -> "#008000";
+            case "Giallo", "Yellow" -> "#cfb721";
+            case "Arancione", "Orange" -> "#FFA500";
+            default -> "-fu-accent"; // Default a bianco
         };
     }
 
@@ -203,26 +196,16 @@ public class AddNewTagController extends BorderPane {
     private void updatePreview() {
         String tagName = tagNameField.getText();
         String selectedColor = colorChoiceBox.getValue();
+        String colorHex = (selectedColor != null) ? getColorHex(selectedColor) : "-fu-accent";
 
-        if (selectedColor != null) {
-            String colorHex = getColorHex(selectedColor);
-            previewToggleButton.setText(tagName.isEmpty() ? "Anteprima" : tagName);
-            previewToggleButton.setStyle("-fx-background-color: " + colorHex + ";");
-        }
+        previewToggleButton.setText((tagName == null || tagName.isEmpty()) ? "Anteprima" : tagName);
+        previewToggleButton.setStyle("-fx-background-color: " + colorHex + ";");
     }
 
     private void clearFields() {
         tagNameField.clear();
         colorChoiceBox.getSelectionModel().selectFirst();
         updatePreview();
-    }
-
-    public void show() {
-        popup.show(ownerWindow);
-    }
-
-    public void hide() {
-        popup.hide();
     }
 
 }

@@ -9,9 +9,9 @@
 
 <fx:root maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="300.0" styleClass="tag-selector" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <ScrollPane hbarPolicy="ALWAYS" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="50.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
-            <HBox fx:id="tag_list" spacing="2.0" styleClass="tag-selector-hb" />
+            <HBox fx:id="tag_list" maxWidth="1.7976931348623157E308" spacing="2.0" styleClass="tag-selector-hb" />
          </content>
          <BorderPane.margin>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -26,7 +26,7 @@
                   <SVGPath content="M10 2.5a7.5 7.5 0 0 1 5.964 12.048l4.743 4.745a1 1 0 0 1-1.32 1.497l-.094-.083-4.745-4.743A7.5 7.5 0 1 1 10 2.5Zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z" focusTraversable="true" mouseTransparent="true" styleClass="icon_general" />
                </graphic>
             </Button>
-            <Button fx:id="add_new_tag"  mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="transparent-button">
+            <Button fx:id="add_new_tag" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="transparent-button">
                <graphic>
                   <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" styleClass="icon_general" />
                </graphic>
