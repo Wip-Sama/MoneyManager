@@ -17,7 +17,7 @@
 
 <fx:root type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <BorderPane fx:id="popUpPanell" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" styleClass="background-pop-up">
+      <BorderPane fx:id="popUpPanell" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0">
          <top>
             <Label fx:id="labelTitlePop" styleClass="text-title" text="Add New Account" BorderPane.alignment="TOP_LEFT" />
          </top>
@@ -76,7 +76,7 @@
          <bottom>
             <HBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="transparent-button" style="-fx-text-fill: red" text="Annulla" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-text-fill: red" styleClass="transparent-button" text="Annulla" HBox.hgrow="ALWAYS" />
                   <Button fx:id="saveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="full-button" text="Salva" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>

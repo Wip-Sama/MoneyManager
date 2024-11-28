@@ -22,6 +22,7 @@
     -fx-background-insets: 3;
 }
 
+
 .tag-filter-menu-item:focused {
     -fx-background-color: transparent;
 }

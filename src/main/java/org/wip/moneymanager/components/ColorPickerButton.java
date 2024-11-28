@@ -78,16 +78,17 @@ public class ColorPickerButton extends AnchorPane {
                     colorPickerPopup.changesSaved.set(false);
                 });
 
-                // Potremmo far in modo che i colori cambiano solo se l'utente conferma la selezione
                 colorPickerPopup.red_channel.bindBidirectional(red);
                 colorPickerPopup.green_channel.bindBidirectional(green);
                 colorPickerPopup.blue_channel.bindBidirectional(blue);
             } catch (IOException e) {
-                // TODO: Dire che qualcosa è andato storto con l'avvio del color picker
-                // TODO: Loggare l'errore
+                e.printStackTrace();
             }
         }
-        colorPickerPopup.show();
+        double x = color_picker_button.localToScene(0, 0).getX() + color_picker_button.getScene().getWindow().getX() + color_picker_button.getScene().getX();
+        double y = color_picker_button.localToScene(0, 0).getY() + color_picker_button.getScene().getWindow().getY() + color_picker_button.getScene().getY();
+
+        colorPickerPopup.toggle(x, y + color_picker_button.getHeight());
     }
 
     public void setRed(Number red) {

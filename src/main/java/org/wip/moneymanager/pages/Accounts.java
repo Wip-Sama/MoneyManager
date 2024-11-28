@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -102,6 +99,7 @@ public class Accounts extends BorderPane implements AutoCloseable {
     public void initialize() throws ExecutionException, InterruptedException {
         initialize_accounts();
 
+
         scroll_miservesoloperingrandireilvbox.viewportBoundsProperty().addListener((_, _, _) -> {
             double availableSpace = getAvailableSpace(scroll_miservesoloperingrandireilvbox);
             accounts_container.setPrefWidth(availableSpace);
@@ -121,18 +119,26 @@ public class Accounts extends BorderPane implements AutoCloseable {
             }
         });
 
+        new_account.onActionProperty().set(_ ->open_popup());
+    }
 
-        new_account.setOnAction(event -> {
+    private void open_popup() {
+        if (AddNewAccount == null) {
             try {
-                // Verifica se AddNewAccount è già inizializzato
-                if (AddNewAccount == null) {
-                    AddNewAccount = new AddNewAccountController(loaded.getScene().getWindow(), this);
-                }
-                AddNewAccount.show(); // Mostra il popup
+                AddNewAccount = new AddNewAccountController(new_account.getScene().getWindow(), this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
+        }
+
+        Bounds bounds = new_account.localToScreen(new_account.getBoundsInLocal());
+
+
+        double x = bounds.getMaxX() - 463;
+        double y = bounds.getMaxY();
+
+
+        AddNewAccount.toggle(x, y);
     }
 
     public void refreshAccounts() throws ExecutionException, InterruptedException {

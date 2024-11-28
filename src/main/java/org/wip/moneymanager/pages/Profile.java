@@ -189,97 +189,94 @@ public class Profile extends BorderPane implements AutoCloseable {
         Alert alertE = new Alert(Alert.AlertType.ERROR);
         Alert alertI = new Alert(Alert.AlertType.INFORMATION);
 
-        if (old_password_field.password.get() == null || old_password_field.password.get().isEmpty()) {
-            alertE.setContentText(AlertMessages.getOldPasswordEmptyMessage().get());
-            alertE.showAndWait();
-            return;
-        }
 
-        Task<Boolean> checkPasswordTask = Data.mmDatabase.checkPassword(Data.dbUser.username().get(), old_password_field.password.get());
-        checkPasswordTask.setOnSucceeded(event -> {
-            Boolean isOldPasswordCorrect = checkPasswordTask.getValue();
-            if (!isOldPasswordCorrect) {
-                alertE.setContentText(AlertMessages.getOldPasswordIncorrectMessage().get());
-                alertE.showAndWait();
-                return;
-            }
+        if (old_password_field.password.get() == null || old_password_field.password.get().isEmpty() &&
+                new_password_field.password.get() == null || new_password_field.password.get().isEmpty()) {
 
-            Task<dbUser> dbUser = Data.mmDatabase.getUser(username_field.getText());
-            executorService.submit(dbUser);
-
-            if (use_password_field.getState() && (new_password_field.password.get() == null || new_password_field.password.get().isEmpty())) {
-                alertE.setContentText(AlertMessages.getPasswordEmptyMessage().get());
-                alertE.showAndWait();
-                return;
-            }
-
-            if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty() && new_password_field.password.get().matches("[a-zA-Z0-9_]")) {
-                alertE.setContentText(AlertMessages.getPasswordSpecialMessage().get());
-                alertE.showAndWait();
-                return;
-            }
-
-            Task<Boolean> existTask = Data.mmDatabase.userExists(username_field.getText());
-            existTask.setOnSucceeded(eventexist -> {
-                boolean usernameExists = existTask.getValue();
-
-                if (!Objects.equals(username_field.getText(), Data.dbUser.username().get()) && usernameExists) {
-                    alertE.setContentText(AlertMessages.getUsernameExistsMessage().get());
-                    alertE.showAndWait();
-                    return;  // Interrompe l'esecuzione se il nome utente esiste
-                }
-
+            if (!Objects.equals(username_field.getText(), Data.dbUser.username().get())) {
                 try {
                     Data.dbUser.setUsername(username_field.getText());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+                Task<Boolean> checkPasswordTask = Data.mmDatabase.checkPassword(Data.dbUser.username().get(), old_password_field.password.get());
+                checkPasswordTask.setOnSucceeded(event -> {
+                    Boolean isOldPasswordCorrect = checkPasswordTask.getValue();
 
-                try {
-                    Data.dbUser.setSafe_login(use_password_field.getState());
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-
-                Task<Void> savePasswordTask = new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty()) {
-                            Data.dbUser.setPassword_hash(Encrypter.encrypt_string_bcrypt(new_password_field.password.get()));
+                    // Se la password è richiesta, controlla che sia corretta
+                    if ((new_password_field.password.get() != null && !new_password_field.password.get().isEmpty()) ||
+                            !Objects.equals(username_field.getText(), Data.dbUser.username().get())) {
+                        if (!isOldPasswordCorrect) {
+                            alertE.setContentText(AlertMessages.getOldPasswordIncorrectMessage().get());
+                            alertE.showAndWait();
+                            return;
                         }
-                        return null;
                     }
-                };
 
-                savePasswordTask.setOnSucceeded(event2 -> {
-                    alertI.setContentText(AlertMessages.getSuccessMessage().get());
-                    alertI.showAndWait();
+                    Task<dbUser> dbUser = Data.mmDatabase.getUser(username_field.getText());
+                    executorService.submit(dbUser);
 
-                    username_field.setText(Data.dbUser.username().get());
-                    old_password_field.clear();
-                    new_password_field.clear();
+                    if (use_password_field.getState() &&
+                            (new_password_field.password.get() == null || new_password_field.password.get().isEmpty())) {
+                        alertE.setContentText(AlertMessages.getPasswordEmptyMessage().get());
+                        alertE.showAndWait();
+                        return;
+                    }
+
+                    if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty() && !new_password_field.password.get().matches("[a-zA-Z0-9_]+")) {
+                        alertE.setContentText(AlertMessages.getPasswordSpecialMessage().get());
+                        alertE.showAndWait();
+                        return;
+                    }
+
+                    Task<Boolean> existTask = Data.mmDatabase.userExists(username_field.getText());
+                    existTask.setOnSucceeded(eventexist -> {
+                        boolean usernameExists = existTask.getValue();
+
+                        if (!Objects.equals(username_field.getText(), Data.dbUser.username().get()) && usernameExists) {
+                            alertE.setContentText(AlertMessages.getUsernameExistsMessage().get());
+                            alertE.showAndWait();
+                            return;
+                        }
+
+                        // Aggiorna solo i campi modificati
+                        try {
+                            if (!Objects.equals(username_field.getText(), Data.dbUser.username().get())) {
+                                Data.dbUser.setUsername(username_field.getText());
+                            }
+                            Data.dbUser.setSafe_login(use_password_field.getState());
+                            if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty()) {
+                                Data.dbUser.setPassword_hash(Encrypter.encrypt_string_bcrypt(new_password_field.password.get()));
+                            }
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        alertI.setContentText(AlertMessages.getSuccessMessage().get());
+                        alertI.showAndWait();
+
+                        username_field.setText(Data.dbUser.username().get());
+                        old_password_field.clear();
+                        new_password_field.clear();
+                    });
+
+                    executorService.submit(existTask);
+
                 });
 
-                savePasswordTask.setOnFailed(event2 -> {
-                    username_field.setText(Data.dbUser.username().get());
-                    alertE.setContentText(AlertMessages.getErrorSavePasswordMessage().get());
+                checkPasswordTask.setOnFailed(e -> {
+                    alertE.setContentText(AlertMessages.getErrorCheckPasswordMessage().get());
                     alertE.showAndWait();
                 });
 
-                executorService.submit(savePasswordTask);
+                executorService.submit(checkPasswordTask);
 
-            });
 
-            executorService.submit(existTask);
+            }
 
-        });
 
-        checkPasswordTask.setOnFailed(e -> {
-            alertE.setContentText(AlertMessages.getErrorCheckPasswordMessage().get());
-            alertE.showAndWait();
-        });
-
-        executorService.submit(checkPasswordTask);
+        }
     }
 
 

@@ -5,12 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b5bd8aa-b98a-4b06-bca5-65598cb7ab52" name="Changes" comment="better enum and small stuff">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/money_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/money_manager.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/user_dbs/1.db" beforeDir="false" afterPath="$PROJECT_DIR$/Data/user_dbs/1.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/TagSelector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Transactions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/components/ColorPickerPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/model/UserDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Accounts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/pages/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/AddNewAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/AddNewAccountController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/popUpFilterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/wip/moneymanager/popUp/popUpFilterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/components/colorpickerpopup.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/color-picker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/date-picker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag-filter.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/tag-filter.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/text.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/css/text.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/pages/profile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/popUp/addNewAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/wip/moneymanager/popUp/addNewAccount.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,57 +88,58 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.LineChartTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MM.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MoneyManager (1).executor&quot;: &quot;Run&quot;,
-    &quot;Application.MoneyManager (2).executor&quot;: &quot;Run&quot;,
-    &quot;Application.MoneyManager (3).executor&quot;: &quot;Run&quot;,
-    &quot;Application.MoneyManager.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SunburstChartTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Application.linechartdemo.executor&quot;: &quot;Run&quot;,
-    &quot;Application.maintmp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.org.wip.moneymanager.View.MoneyManager.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Maven.MoneyManager [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.MoneyManager [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Login&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/sebas/Desktop/MoneyManager/Data&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.31465092&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LineChartTest.executor": "Run",
+    "Application.MM.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MoneyManager (1).executor": "Run",
+    "Application.MoneyManager (2).executor": "Run",
+    "Application.MoneyManager (3).executor": "Run",
+    "Application.MoneyManager.executor": "Run",
+    "Application.SunburstChartTest.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "Application.linechartdemo.executor": "Run",
+    "Application.maintmp.executor": "Run",
+    "Application.org.wip.moneymanager.View.MoneyManager.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Maven.MoneyManager [clean,install].executor": "Run",
+    "Maven.MoneyManager [clean].executor": "Run",
+    "Maven.MoneyManager [compile].executor": "Run",
+    "Maven.MoneyManager [install].executor": "Run",
+    "Maven.MoneyManager [package].executor": "Run",
+    "Maven.MoneyManager [validate].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Login",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sebas/Desktop/MoneyManager/Data",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.31465092",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sebas\Desktop\MoneyManager\Data" />
@@ -178,8 +193,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -322,6 +337,8 @@
       <workItem from="1732731140000" duration="136000" />
       <workItem from="1732731346341" duration="4256000" />
       <workItem from="1732736782004" duration="550000" />
+      <workItem from="1732739933247" duration="3882000" />
+      <workItem from="1732781008373" duration="20862000" />
     </task>
     <task id="LOCAL-00001" summary="DATABASE!&#10;- currency exchange updater&#10;- Changes to encrypter&#10;- Settinga pane beta">
       <option name="closed" value="true" />

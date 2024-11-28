@@ -17,6 +17,8 @@ import org.wip.moneymanager.model.UserDatabase;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class popUpFilterController extends AnchorPane {
     @FXML
@@ -56,8 +58,11 @@ public class popUpFilterController extends AnchorPane {
     private double yOffset = 0;
     private final Popup popup = new Popup();
     private final Window ownerWindow;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
 
     public popUpFilterController(Window window) throws IOException {
+        Data.esm.register(executorService);
         this.ownerWindow = window;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/popUpFilter.fxml"));
