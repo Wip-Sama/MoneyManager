@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
@@ -52,7 +53,9 @@ public class transactionPopupController extends BorderPane {
     @FXML
     private TagSelector tagSelector;
     @FXML
-    private TextField notes;
+    private TextArea notes;
+    @FXML
+    private CategorySelector categorySelector;
     @FXML
     private Label errorLabel;
     @FXML

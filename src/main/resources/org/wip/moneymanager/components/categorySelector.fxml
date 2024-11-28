@@ -3,16 +3,16 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="category_selector" stylesheets="@../style-dark.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-   <left>
-      <ChoiceBox fx:id="category_box" prefWidth="150.0" styleClass="category_choice_box" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <ChoiceBox fx:id="sub_category_box" prefWidth="150.0" styleClass="sub_category_choice_box" BorderPane.alignment="CENTER" />
-   </right>
+<fx:root maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" styleClass="category_selector" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <Label text="/" BorderPane.alignment="CENTER" />
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" BorderPane.alignment="CENTER">
+         <children>
+            <ChoiceBox fx:id="category_box" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0" styleClass="category_choice_box" HBox.hgrow="ALWAYS" />
+            <Label fx:id="separator" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="/" />
+            <ChoiceBox fx:id="sub_category_box" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0" styleClass="sub_category_choice_box" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
    </center>
-</BorderPane>
+</fx:root>

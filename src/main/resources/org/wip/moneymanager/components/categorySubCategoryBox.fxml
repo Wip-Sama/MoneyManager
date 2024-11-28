@@ -5,18 +5,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="javafx.scene.layout.HBox" alignment="CENTER" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox spacing="5.0">
          <children>
             <Label fx:id="category" text="Label" />
-            <ChoiceBox fx:id="categoryBox" prefWidth="150.0" />
+            <ChoiceBox fx:id="categoryBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
          </children>
       </VBox>
       <VBox spacing="5.0">
          <children>
             <Label fx:id="subCategory" text="Label" />
-            <ChoiceBox prefWidth="150.0" />
+            <ChoiceBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
          </children>
       </VBox>
    </children>

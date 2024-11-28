@@ -5,64 +5,116 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import org.wip.moneymanager.components.BalanceEditor?>
+<?import org.wip.moneymanager.components.CategorySelector?>
 <?import org.wip.moneymanager.components.TagSelector?>
 
-<fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" styleClass="background-pop-up" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-    <center>
-        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" spacing="15.0">
-            <padding>
-                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-            </padding>
-         <Label fx:id="labelTitle" styleClass="text-title" text="Add New Transaction">
-            <VBox.margin>
-               <Insets bottom="10.0" />
-            </VBox.margin>
-         </Label>
-
-                     <!-- Navigation Buttons -->
-            <HBox alignment="CENTER" prefWidth="Infinity" spacing="10.0" stylesheets="@../css/transaction-popup.css">
-                <ToggleButton fx:id="incomeButton" maxWidth="120" style="-fx-background-color: transparent;" styleClass="nav-button" stylesheets="@../css/transaction-popup.css" text="In" HBox.hgrow="ALWAYS" />
-                <ToggleButton fx:id="expenseButton" maxWidth="120" style="-fx-background-color: transparent;" styleClass="nav-button" text="Spese" HBox.hgrow="ALWAYS" />
-                <ToggleButton fx:id="transferButton" maxWidth="120" style="-fx-background-color: transparent;" styleClass="nav-button" text="Trasferimenti" HBox.hgrow="ALWAYS" />
-            </HBox>
-
-                     <!-- Form Fields -->
-            <VBox spacing="10.0">
-                <Label fx:id="date" text="Data " />
-            <DatePicker fx:id="datePicker" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
-
-                         <Label fx:id="amount" text="Importo" />
-            <BalanceEditor fx:id="balanceEditor" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
-
-                <Label fx:id="account" text="Conto" />
-                <ChoiceBox fx:id="accountChoiceBox" layoutX="10.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
-
-                         <Label fx:id="category" text="Categoria" />
-            <ChoiceBox fx:id="categoryChoiceBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
-
-
-                         <Label fx:id="tags" text="Tags" />
-            <TagSelector fx:id="tagSelector" />
-            <Label text="Note Aggiuntive" />
-            <TextField fx:id="notes" minHeight="-Infinity" prefHeight="50.0" />
+<fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="background-pop-up" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <VBox spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="labelTitle" styleClass="text-title" text="Add New Transaction">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+   
+                        <!-- Navigation Buttons -->
+               <HBox alignment="CENTER" prefWidth="Infinity" spacing="10.0" stylesheets="@../css/transaction-popup.css">
+                   <ToggleButton fx:id="incomeButton" maxWidth="120" style="-fx-background-color: transparent;" styleClass="nav-button" stylesheets="@../css/transaction-popup.css" text="In" HBox.hgrow="ALWAYS" />
+                   <ToggleButton fx:id="expenseButton" maxWidth="120" style="-fx-background-color: transparent;" styleClass="nav-button" text="Spese" HBox.hgrow="ALWAYS" />
+                   <ToggleButton fx:id="transferButton" maxWidth="120" style="-fx-background-color: transparent;" styleClass="nav-button" text="Trasferimenti" HBox.hgrow="ALWAYS" />
+               </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </top>
+   <center>
+      <GridPane hgap="30.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" vgap="20.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox spacing="5.0">
+               <children>
+                      <Label fx:id="date" text="Data " />
+                  <DatePicker fx:id="datePicker" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+               </children>
             </VBox>
-
-                     <!-- Action Buttons -->
-            <VBox alignment="CENTER" spacing="10.0">
-            <Label fx:id="errorLabel" text="Error" />
-                <Button fx:id="saveButton" maxWidth="Infinity" styleClass="full-button" text="Salva" />
-
-                         <Button fx:id="cancelButton" maxWidth="Infinity" styleClass="transparent-button" stylesheets="@../css/button.css" text="Annulla" />
-            <VBox.margin>
-               <Insets top="20.0" />
-            </VBox.margin>
+            <VBox spacing="5.0" GridPane.columnIndex="1">
+               <children>
+      
+                               <Label fx:id="amount" text="Importo" />
+                  <BalanceEditor fx:id="balanceEditor" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+               </children>
             </VBox>
-        </VBox>
-    </center>
+            <VBox spacing="5.0" GridPane.rowIndex="1">
+               <children>
+      
+                      <Label fx:id="account" text="Conto" />
+                      <ChoiceBox fx:id="accountChoiceBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+            
+                                     <Label fx:id="category" text="Conto 2" />
+                        <ChoiceBox fx:id="categoryChoiceBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+                     </children>
+                  </VBox>
+                  <CategorySelector fx:id="categorySelector" maxWidth="1.7976931348623157E308" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.rowIndex="2">
+               <children>
+      
+      
+                               <Label fx:id="tags" text="Tags" />
+                  <TagSelector fx:id="tagSelector" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="120.0" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Note Aggiuntive" />
+                  <TextArea fx:id="notes" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </center>
+   <bottom>
+
+                  <!-- Action Buttons -->
+         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
+         <Label fx:id="errorLabel" text="Error" />
+         <HBox>
+            <children>
+      
+                            <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" styleClass="transparent-button" text="Annulla" HBox.hgrow="ALWAYS" />
+                   <Button fx:id="saveButton" maxWidth="1.7976931348623157E308" styleClass="full-button" text="Salva" HBox.hgrow="ALWAYS" />
+            </children>
+         </HBox>
+         </VBox>
+   </bottom>
+   <padding>
+      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+   </padding>
 </fx:root>

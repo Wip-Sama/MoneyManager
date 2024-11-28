@@ -12,6 +12,7 @@
     -fx-padding: .5333333em .783em .844444em .783em;
 }
 
+
 .category_selector:hover {
     -fx-background-color:  -fu-accent, -fu-stroke-hover, -fu-foreground-hover;
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
@@ -28,6 +29,30 @@
     -fx-background-color: transparent;
 }
 
+.category_choice_box:selected {
+    -fx-background-color: transparent;
+}
+
+.category_choice_box:focused {
+    -fx-background-color: transparent;
+}
+
+.category_choice_box:hover {
+    -fx-background-color: transparent;
+}
+
 .sub_category_choice_box {
+    -fx-background-color: transparent;
+}
+
+.sub_category_choice_box:selected {
+    -fx-background-color: transparent;
+}
+
+.sub_category_choice_box:focused {
+    -fx-background-color: transparent;
+}
+
+.sub_category_choice_box:hover {
     -fx-background-color: transparent;
 }
