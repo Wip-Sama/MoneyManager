@@ -4,9 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Popup;
@@ -14,12 +12,8 @@ import javafx.stage.Window;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ChoiceBox;
 import org.wip.moneymanager.components.BalanceEditor;
-import javafx.scene.control.Label;
 import org.wip.moneymanager.model.UserDatabase;
-
 
 import java.io.IOException;
 import java.util.List;
@@ -58,6 +52,8 @@ public class transactionPopupController extends BorderPane {
     @FXML
     private TagSelector tagSelector;
     @FXML
+    private TextField notes;
+    @FXML
     private Label errorLabel;
     @FXML
     private Button saveButton;
@@ -70,6 +66,11 @@ public class transactionPopupController extends BorderPane {
     private final Popup popup = new Popup();
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    //variabili per memorizzare i dati presi dalle query;
+    private List<String> accountNames;
+    private List<String> categoryNames;
+
+    private String lastTransactionType = "income"; // Valore iniziale
 
     public transactionPopupController(Window window) throws IOException {
         Data.esm.register(executorService);
@@ -87,8 +88,11 @@ public class transactionPopupController extends BorderPane {
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
+    //cancelButton.setOnAction(e -> hide());
+
     @FXML
     private void initialize() {
+
         cancelButton.setOnAction(e -> hide());
 
         BoderPanePopup.setOnMousePressed(event -> {
@@ -100,67 +104,142 @@ public class transactionPopupController extends BorderPane {
             popup.setY(event.getScreenY() - yOffset);
         });
 
-
         ToggleGroup toggleGroup = new ToggleGroup();
         incomeButton.setToggleGroup(toggleGroup);
         expenseButton.setToggleGroup(toggleGroup);
         transferButton.setToggleGroup(toggleGroup);
 
         incomeButton.setOnAction(e -> {
-            //faccio in modo che quando clicco su income, il conto ritorna "Conto" e la categoria ritorna "Categoria"
-            account.setText("Conto");
-            category.setText("Categoria");
             System.out.println("Income button clicked");
+            onToggleButtonChange(false);
 
         });
 
         expenseButton.setOnAction(e -> {
-            account.setText("Conto");
-            category.setText("Categoria");
             System.out.println("Expense button clicked");
+            onToggleButtonChange(false);
+
         });
 
         transferButton.setOnAction(e -> {
-            // quando clicco su trasferimento, il conto diventa "Mittente" e la categoria diventa "Destinatario"
-            account.setText("Mittente");
-            category.setText("Destinatario");
             System.out.println("Transfer button clicked");
+            onToggleButtonChange(true);
         });
 
-        populateChoiceBoxes();
-
+        // configurazione iniziale per conto e categoria
+        onToggleButtonChange(false);
     }
 
-    @FXML
-    private void populateChoiceBoxes() {
+    private void populateChoiceBoxes(boolean isTransfer) {
         UserDatabase userDatabase = UserDatabase.getInstance();
 
-        userDatabase.getAllAccountNames().run();
-        try {
-            List<String> accountNames = userDatabase.getAllAccountNames().get();
+        // Esegui le query solo se i risultati non sono già stati memorizzati
+        if (accountNames == null || categoryNames == null) {
+            System.out.println("Esecuzione delle query per ottenere i nomi degli account e delle categorie.");
+            userDatabase.getAllAccountNames().run();
+            userDatabase.getAllCategoryNames().run();
 
-            if (accountNames.isEmpty()) {
-                System.err.println("La lista dei nomi degli account è vuota!");
-            } else {
-                System.out.println("Account trovati: " + accountNames);
+            try {
+                accountNames = userDatabase.getAllAccountNames().get();
+                categoryNames = userDatabase.getAllCategoryNames().get();
+
+                // Log per verificare che i dati siano stati recuperati
+                System.out.println("Nomi degli account recuperati: " + accountNames);
+                System.out.println("Nomi delle categorie recuperati: " + categoryNames);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
 
-            // Popola le ChoiceBox
-            categoryChoiceBox.getItems().setAll(accountNames);
+        if (isTransfer) {
+            // pulisce gli elementi attuali e i listener
+            accountChoiceBox.getItems().clear();
+            categoryChoiceBox.getItems().clear();
+            accountChoiceBox.setOnAction(null);
+            categoryChoiceBox.setOnAction(null);
+
+            // imposto i nuovi elementi
             accountChoiceBox.getItems().setAll(accountNames);
+            categoryChoiceBox.getItems().setAll(accountNames);
+            account.setText("Mittente");
+            category.setText("Destinatario");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Errore durante il popolamento delle ChoiceBox: " + e.getMessage());
+            // Log per verificare il popolamento delle ChoiceBox
+            System.out.println("ChoiceBox popolati per il trasferimento.");
+
+            // qui gestisco la logica per gli account, se cambio uno devo aggiornare l'altro e viceversa
+            accountChoiceBox.setOnAction(e -> {
+                String selectedAccount = accountChoiceBox.getValue();
+                if (selectedAccount != null) {
+                    List<String> availableAccounts = accountNames.stream()
+                            .filter(acc -> !acc.equals(selectedAccount))
+                            .toList();
+                    String currentDestination = categoryChoiceBox.getValue();
+                    categoryChoiceBox.getItems().setAll(availableAccounts);
+                    if (currentDestination != null && availableAccounts.contains(currentDestination)) {
+                        categoryChoiceBox.setValue(currentDestination);
+                    }
+                }
+            });
+
+            categoryChoiceBox.setOnAction(e -> {
+                String selectedDestination = categoryChoiceBox.getValue();
+                if (selectedDestination != null) {
+                    List<String> availableAccounts = accountNames.stream()
+                            .filter(acc -> !acc.equals(selectedDestination))
+                            .toList();
+                    String currentSource = accountChoiceBox.getValue();
+                    accountChoiceBox.getItems().setAll(availableAccounts);
+                    if (currentSource != null && availableAccounts.contains(currentSource)) {
+                        accountChoiceBox.setValue(currentSource);
+                    }
+                }
+            });
+        } else {
+            accountChoiceBox.getItems().setAll(accountNames);
+            categoryChoiceBox.getItems().setAll(categoryNames);
+            account.setText("Conto");
+            category.setText("Categoria");
+
+            // Log per verificare il popolamento delle ChoiceBox
+            System.out.println("ChoiceBox popolati per conto e categoria.");
         }
     }
 
+    private void resetScreen() {
+        accountChoiceBox.getItems().clear();
+        categoryChoiceBox.getItems().clear();
+        accountChoiceBox.setOnAction(null);
+        categoryChoiceBox.setOnAction(null);
+        account.setText("");
+        category.setText("");
+        datePicker.setValue(null);
+        balanceEditor.reset();
+        notes.setText("");
+        //aggiungere tag
 
+        System.out.println("Schermata resettata.");
+    }
+
+    private boolean isAnyFieldFilled() {
+        return datePicker.getValue() != null ||
+                !balanceEditor.getText().isEmpty() ||
+                !categoryChoiceBox.getSelectionModel().isEmpty() ||
+                !accountChoiceBox.getSelectionModel().isEmpty();
+                //aggiungere controllo tag
+    }
+
+    private void onToggleButtonChange(boolean isTransfer) {
+
+        if(isAnyFieldFilled()){
+            resetScreen();
+        }
+        populateChoiceBoxes(isTransfer);
+    }
 
     private void hide() {
         popup.hide();
     }
-
 
     public void show() {
         popup.show(ownerWindow);

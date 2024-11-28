@@ -50,7 +50,7 @@
                          <Label fx:id="tags" text="Tags" />
             <TagSelector fx:id="tagSelector" />
             <Label text="Note Aggiuntive" />
-            <TextField minHeight="-Infinity" prefHeight="50.0" />
+            <TextField fx:id="notes" minHeight="-Infinity" prefHeight="50.0" />
             </VBox>
 
                      <!-- Action Buttons -->
