@@ -79,24 +79,26 @@ public class AddNewAccountController extends BorderPane {
     private double xOffset = 0;
     private double yOffset = 0;
     private Accounts accountsPage;
-    private final Popup popup = new Popup();
-    private final Window ownerWindow;
+    private final CustomMenuItem customMenuItem;
+    private final ContextMenu contextMenu = new ContextMenu();
+    private final Window node;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public AddNewAccountController(Window window, Accounts accountsPage) throws IOException {
         Data.esm.register(executorService);
         this.accountsPage = accountsPage;
-        this.ownerWindow = window;
+        node = window;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewAccount.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         Parent loaded = fxmlLoader.load();
 
-        Scene popupScene = new Scene(loaded);
-        popupScene.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
+        customMenuItem = new CustomMenuItem(loaded);
+        customMenuItem.getStyleClass().add("tag-filter-menu-item");
+        customMenuItem.hideOnClickProperty().set(false);
+        contextMenu.getItems().add(customMenuItem);
 
-        popup.getContent().add(loaded);
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
@@ -116,15 +118,6 @@ public class AddNewAccountController extends BorderPane {
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addnewaccount.error"));
 
         update_type_field();
-        popUpPanell.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        popUpPanell.setOnMouseDragged(event -> {
-            popup.setX(event.getScreenX() - xOffset);
-            popup.setY(event.getScreenY() - yOffset);
-        });
-
         cancelButton.setOnAction(event -> {
             clearFields();
             hide();
@@ -177,12 +170,13 @@ public class AddNewAccountController extends BorderPane {
 
     }
 
-    public void show() {
-        popup.show(ownerWindow);
+    public void show(double x, double y) {
+        contextMenu.show(node, x, y);
     }
 
+
     public void hide() {
-        popup.hide();
+        contextMenu.hide();
     }
 
     private void clearFields() {
@@ -276,14 +270,14 @@ public class AddNewAccountController extends BorderPane {
         int accountType = typeAccountField.getSelectionModel().getSelectedIndex();
         String currency = bilanceField.getCurrency();
 
+
+
+
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 try {
-                    // Aggiungiamo un controllo sulla connessione prima di tentare l'inserimento
-                    if (Data.userDatabase.isConnected()) {
                         Data.userDatabase.addAccount(name, accountType, balance, creationDate, includeIntoTotals, currency);
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -295,6 +289,14 @@ public class AddNewAccountController extends BorderPane {
         clearFields();
         hide();
         accountsPage.refreshAccounts();
+    }
+
+    public void toggle(double x, double y) {
+        if (contextMenu.isShowing()) {
+            hide();
+        } else {
+            show(x, y);
+        }
     }
 
 }

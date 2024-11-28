@@ -1,5 +1,18 @@
 .colorpicker {
-    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-opacity: 0;
+    -fx-background-color: transparent;
+    -fx-background-radius: 15, 13;
+    -fx-background-insets: 0, 2;
+}
+.colorpicker:hover {
+    -fx-opacity: 0;
+    -fx-background-color: transparent;
+    -fx-background-radius: 15, 13;
+    -fx-background-insets: 0, 2;
+}
+.colorpicker:focused {
+    -fx-opacity: 0;
+    -fx-background-color: transparent;
     -fx-background-radius: 15, 13;
     -fx-background-insets: 0, 2;
 }

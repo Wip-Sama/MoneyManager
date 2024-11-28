@@ -93,7 +93,7 @@ Voglio lasciare questo commento per commemorare la mia sofferenza
 .date-picker-popup > * > .spinner > .button > .right-arrow,
 .date-picker-popup > .month-year-pane > .button > .left-arrow,
 .date-picker-popup > .month-year-pane > .button > .right-arrow {
-    -fx-background-color: -fu-foreground-rest;
+    -fx-background-color: green;
     -fx-effect: null;
 }
 .date-picker-popup > * > .spinner > .button > .left-arrow,
