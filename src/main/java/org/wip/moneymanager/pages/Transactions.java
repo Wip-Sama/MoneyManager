@@ -14,6 +14,7 @@ import org.wip.moneymanager.popUp.popUpFilterController;
 import org.wip.moneymanager.popUp.transactionPopupController;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -58,6 +59,8 @@ public class Transactions extends BorderPane implements AutoCloseable {
     protected Parent loaded;
     private transactionPopupController AddNewController;
     private popUpFilterController AddNewFilterController;
+    private String date;
+
 
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -99,7 +102,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
             if (calendar.isSelected()) {
                 monthly.setSelected(false);
                 daily.setSelected(false);
-                datePickerTransactions.setDateFormat(DateTransactions.DateFormatType.CALENDAR); // Imposta formato calendar
+                datePickerTransactions.setDateFormat(DateTransactions.DateFormatType.DAILY); // Imposta formato calendar
             }
         });
 
@@ -117,8 +120,14 @@ public class Transactions extends BorderPane implements AutoCloseable {
         });
 */
         newTransaction.setOnAction(event -> open_popup());
+        filter.setOnAction(event -> openPopUpFilter());
 
     }
+
+
+
+
+
 
 //nuovo metodo per aprire il popup, dopo il cambio a contest menu
     private void open_popup() {
@@ -137,6 +146,30 @@ public class Transactions extends BorderPane implements AutoCloseable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void openPopUpFilter() {
+        try {
+            if (AddNewFilterController == null) {
+                AddNewFilterController = new popUpFilterController(filter.getScene().getWindow());
+            }
+
+            Bounds bounds = filter.localToScreen(filter.getBoundsInLocal());
+
+            double popupWidth = 410;
+            double x = bounds.getMaxX() - popupWidth;
+            double y = bounds.getMaxY();
+
+            AddNewFilterController.toggle(x, y);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setDate(String newDate) {
+        date = newDate;
+
+
     }
 
 

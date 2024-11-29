@@ -49,7 +49,7 @@ public class TagFilter extends BorderPane {
     }
 
     public TagFilter() {
-        Data.esm.register(executorService);
+        //Data.esm.register(executorService); //
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/tagfilter.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

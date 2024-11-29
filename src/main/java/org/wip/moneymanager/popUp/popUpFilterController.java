@@ -4,13 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.UserDatabase;
@@ -34,7 +33,7 @@ public class popUpFilterController extends AnchorPane {
     private Button cancelPopUp;
 
     @FXML
-    private ChoiceBox<String> categoryChoice;
+    private CategorySelector categoryChoice;
 
     @FXML
     private Label categoryFilter;
@@ -46,17 +45,18 @@ public class popUpFilterController extends AnchorPane {
     private AnchorPane popUpFilter;
 
     @FXML
-    private Label tagFilter;
+    private TagSelector tagChoice;
 
     @FXML
-    private TagSelector tagFilterResearch;
+    private Label tagFilter;
 
     @FXML
     private Label title;
 
-    private double xOffset = 0;
-    private double yOffset = 0;
-    private final Popup popup = new Popup();
+    private final CustomMenuItem customMenuItem;
+    private final ContextMenu contextMenu = new ContextMenu();
+
+
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -69,27 +69,31 @@ public class popUpFilterController extends AnchorPane {
         fxmlLoader.setController(this);
         Parent loaded = fxmlLoader.load();
 
-        Scene popupScene = new Scene(loaded);
-        popupScene.getRoot().setStyle("-fu-accent: " + Data.dbUser.accentProperty().get().getHex() + ";");
+        customMenuItem = new CustomMenuItem(loaded);
+        customMenuItem.getStyleClass().add("tag-filter-menu-item");
+        customMenuItem.hideOnClickProperty().set(false);
+        contextMenu.getItems().add(customMenuItem);
 
-        popup.getContent().add(loaded);
+
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
     @FXML
     private void initialize() {
+
+        title.textProperty().bind(Data.lsp.lsb("popUpFilterController.title"));
+        accountFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.accountFilter"));
+        categoryFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.categoryFilter"));
+        tagFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.tagFilter"));
+        buttonFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.buttonFilter"));
+        cancelPopUp.textProperty().bind(Data.lsp.lsb("popUpFilterController.cancelPopUp"));
+        notifyError.textProperty().bind(Data.lsp.lsb("popUpFilterController.notifyError"));
+
+        populateChoiceBoxes();
         // Pulsante per chiudere il popup
         cancelPopUp.setOnAction(e -> hide());
 
-        // Drag del popup
-        this.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        this.setOnMouseDragged(event -> {
-            popup.setX(event.getScreenX() - xOffset);
-            popup.setY(event.getScreenY() - yOffset);
-        });
+
 
         notifyError.setOpacity(0); // Nascondi il messaggio di errore all'inizio
     }
@@ -120,8 +124,7 @@ public class popUpFilterController extends AnchorPane {
                 System.out.println("Account trovati: " + accountNames);
             }
 
-            // Popola le ChoiceBox
-            categoryChoice.getItems().setAll(categoryNames);
+
             accountChoice.getItems().setAll(accountNames);
 
         } catch (Exception e) {
@@ -131,11 +134,18 @@ public class popUpFilterController extends AnchorPane {
     }
 
     private void hide() {
-        popup.hide();
+        contextMenu.hide();
     }
 
-    public void show() {
-        populateChoiceBoxes();
-        popup.show(ownerWindow);
+    public void toggle(double x, double y) {
+        if (contextMenu.isShowing()) {
+            hide();
+        } else {
+            show(x, y);
+        }
+    }
+
+    public void show(double x, double y) {
+        contextMenu.show(ownerWindow, x, y);
     }
 }

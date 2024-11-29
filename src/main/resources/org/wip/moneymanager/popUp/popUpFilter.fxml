@@ -6,10 +6,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import org.wip.moneymanager.components.CategorySelector?>
 <?import org.wip.moneymanager.components.TagSelector?>
 
-
-<AnchorPane fx:id="popUpFilter" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" styleClass="background-pop-up" stylesheets="@../style-dark.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="popUpFilter" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,7 +21,7 @@
             <VBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="100.0" spacing="5.0">
                <children>
                   <Label fx:id="categoryFilter" text="Categoria" />
-                  <ChoiceBox fx:id="categoryChoice" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" prefWidth="150.0" />
+                  <CategorySelector fx:id="categoryChoice" />
                </children>
             </VBox>
             <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="100.0" spacing="5.0">
@@ -33,7 +33,7 @@
             <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="100.0" spacing="5.0">
                <children>
                   <Label fx:id="tagFilter" text="Tag" />
-                  <TagSelector fx:id="tagFilterResearch" />
+                  <TagSelector fx:id="tagChoice" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0">

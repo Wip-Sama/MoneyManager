@@ -5,9 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.SVGPath;
+
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class DateTransactions extends HBox {
@@ -23,9 +24,11 @@ public class DateTransactions extends HBox {
 
     private LocalDate currentDate;
     private DateFormatType currentFormat;
+    private DateTimeFormatter formatterMonth = DateTimeFormatter.ofPattern("MMM yyyy");
+    private DateTimeFormatter formatterYear = DateTimeFormatter.ofPattern("yyyy");
 
     public enum DateFormatType {
-        DAILY, MONTHLY, CALENDAR
+        DAILY, MONTHLY
     }
 
     public DateTransactions() {
@@ -40,7 +43,7 @@ public class DateTransactions extends HBox {
 
         // Imposta la data corrente
         currentDate = LocalDate.now();
-        currentFormat = DateFormatType.DAILY;  // Inizialmente settiamo il formato come giornaliero
+        currentFormat = DateFormatType.DAILY; // Formato predefinito
         updateLabelDate();
 
         // Listener per cambiare data/mese
@@ -56,33 +59,32 @@ public class DateTransactions extends HBox {
     public String getSelectedDate() {
         switch (currentFormat) {
             case DAILY:
-                return currentDate.format(DateTimeFormatter.ofPattern("MMM yyyy")); // Solo mese e anno
+                return currentDate.format(formatterMonth); // Giorno, mese, anno
             case MONTHLY:
-                return currentDate.format(DateTimeFormatter.ofPattern("yyyy")); // Solo anno
-            case CALENDAR:
-                return currentDate.format(DateTimeFormatter.ofPattern("MMM yyyy")); // Solo mese e anno
+                return currentDate.format(formatterYear); // Mese, anno
             default:
                 return "";
         }
     }
 
     private void updateDate(int increment) {
-        // Controlla il formato attivo e aggiorna la data in base a quello
+        // Modifica la data in base al formato attivo
         switch (currentFormat) {
             case DAILY:
-            case CALENDAR:
-
-
+                currentDate = currentDate.plusMonths(increment);
+                break;
             case MONTHLY:
-
                 currentDate = currentDate.plusYears(increment);
                 break;
+
         }
         updateLabelDate();
     }
 
-
     private void updateLabelDate() {
         labelDate.setText(getSelectedDate());
+
     }
+
+
 }
