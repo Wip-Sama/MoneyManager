@@ -36,7 +36,7 @@ public class CardConto extends AnchorPane {
     @FXML
     private Label type_label;
     @FXML
-    private ChoiceBox<String> type_field;
+    private ComboBox<String> type_field;
     @FXML
     private Label creation_date_label;
     @FXML
@@ -118,7 +118,7 @@ public class CardConto extends AnchorPane {
         type_field.getSelectionModel().select(selectedIndex);
     }
 
-    private void initializeChoiceBox() {
+    private void initializeComboBox() {
         update_type_field();
         type_field.getSelectionModel().select(account.typeProperty().get().ordinal());
         balance_field.setCurrency(account.currencyProperty().get());
@@ -229,7 +229,7 @@ public class CardConto extends AnchorPane {
         account_creation_date.textProperty().bind(Data.lsp.lsb("cardconto.creation_date", creation_date));
 
         Data.localizationService.selectedLanguageProperty().addListener((observable, oldValue, newValue) -> {
-            // Aggiorna il tipo di account (ChoiceBox)
+            // Aggiorna il tipo di account (ComboBox)
             update_type_field();
 
             // Assicurati di aggiornare anche tutte le etichette
@@ -298,7 +298,7 @@ public class CardConto extends AnchorPane {
                     });
                     account.currencyProperty().addListener((_, _, newCurrency) -> currency.set(newCurrency));
 
-                    initializeChoiceBox();
+                    initializeComboBox();
                 }
             }
         });

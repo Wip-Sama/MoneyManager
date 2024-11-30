@@ -16,6 +16,12 @@
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
     -fx-background-radius: 4, 3 3 0 0, 4;
 }
+
+
+.combo-box-balance .list-view {
+    -fx-pref-width: 80px;
+}
+
 .combo-box-transparent{
     -fx-background-color: transparent, transparent, transparent;
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
