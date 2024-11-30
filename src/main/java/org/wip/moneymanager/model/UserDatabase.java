@@ -425,21 +425,72 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<List<String>> getAllCategoryNames() {
+    public Task<Integer> getCategoryIdByName(String name) {
         return asyncCall(() -> {
-            List<String> categoryNames = new ArrayList<>();
             if (isConnected()) {
-                String query = "SELECT name FROM Categories;";
+                String query = "SELECT id FROM Categories WHERE name = ?;";
                 PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setString(1, name);
                 ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    categoryNames.add(rs.getString("name"));
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    stmt.close();
+                    return id;
                 }
                 stmt.close();
             }
-            return categoryNames;
+            throw new IllegalArgumentException("Category not found");
         });
     }
+
+    public Task<List<String>> getMainCategoryNames() {
+        return asyncCall(() -> {
+            List<String> mainCategoryNames = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT name FROM Categories WHERE parent_category IS NULL;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    mainCategoryNames.add(rs.getString("name"));
+                }
+                stmt.close();
+            }
+            return mainCategoryNames;
+        });
+    }
+
+    public Task<List<String>> getSubCategoriesByMainCategory(String mainCategoryName) {
+        return asyncCall(() -> {
+            List<String> subCategoryNames = new ArrayList<>();
+            if (isConnected()) {
+                // Trova l'ID della categoria principale
+                String mainCategoryQuery = "SELECT id FROM Categories WHERE name = ? AND parent_category IS NULL;";
+                PreparedStatement mainStmt = con.prepareStatement(mainCategoryQuery);
+                mainStmt.setString(1, mainCategoryName);
+                ResultSet mainRs = mainStmt.executeQuery();
+                if (mainRs.next()) {
+                    int mainCategoryId = mainRs.getInt("id");
+                    mainStmt.close();
+
+                    // Trova le sottocategorie
+                    String subCategoryQuery = "SELECT name FROM Categories WHERE parent_category = ?;";
+                    PreparedStatement subStmt = con.prepareStatement(subCategoryQuery);
+                    subStmt.setInt(1, mainCategoryId);
+                    ResultSet subRs = subStmt.executeQuery();
+                    while (subRs.next()) {
+                        subCategoryNames.add(subRs.getString("name"));
+                    }
+                    subStmt.close();
+                } else {
+                    mainStmt.close();
+                    throw new IllegalArgumentException("Main category not found or not a root category");
+                }
+            }
+            return subCategoryNames;
+        });
+    }
+
+
 
     public Task<Boolean> removeAccount(int id) {
         return asyncCall(() -> {
@@ -454,27 +505,7 @@ public class UserDatabase extends Database {
             return false;
         });
     }
-
-    public Task<Boolean> forceRemoveAccount(int id) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String remove_from_transactions = "DELETE FROM Transactions WHERE account = ? OR second_account = ?;";
-                PreparedStatement stmt1 = con.prepareStatement(remove_from_transactions);
-                stmt1.setInt(1, id);
-                stmt1.setInt(2, id);
-                stmt1.executeUpdate();
-                stmt1.close();
-
-                String remove_account = "DELETE FROM Accounts WHERE id = ?;";
-                PreparedStatement stmt2 = con.prepareStatement(remove_account);
-                stmt2.setInt(1, id);
-                stmt2.executeUpdate();
-                stmt2.close();
-                return true;
-            }
-            return false;
-        });
-    }
+    
 
     public Task<Boolean> addAccount(String name, int type, double balance, int creationDate, int includeIntoTotals, String currency) {
         return asyncCall(() -> {

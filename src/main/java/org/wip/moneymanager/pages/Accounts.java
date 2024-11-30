@@ -86,7 +86,7 @@ public class Accounts extends BorderPane implements AutoCloseable {
             accountComponent.destructProperty().addListener((_, _, newValue) -> {
                 if (newValue) {
                     accounts_container.getChildren().remove(accountComponent);
-                    Task<Boolean> delete = Data.userDatabase.forceRemoveAccount(account.id());
+                    Task<Boolean> delete = Data.userDatabase.removeAccount(account.id());
                     delete.run();
                 }
             });

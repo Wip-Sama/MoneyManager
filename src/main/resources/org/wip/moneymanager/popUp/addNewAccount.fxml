@@ -24,7 +24,7 @@
          <center>
             <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox>
+                  <VBox spacing="5.0">
                      <children>
                         <Label fx:id="LabelNewAccount" text="Nome Conto" />
                         <TextField fx:id="newAccountField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" />

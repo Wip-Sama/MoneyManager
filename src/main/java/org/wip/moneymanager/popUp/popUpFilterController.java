@@ -104,17 +104,9 @@ public class popUpFilterController extends AnchorPane {
         UserDatabase userDatabase = UserDatabase.getInstance();
 
         // Carica i nomi delle categorie
-        userDatabase.getAllCategoryNames().run();
         userDatabase.getAllAccountNames().run();
 
         try {
-            // Recupera i nomi delle categorie
-            List<String> categoryNames = userDatabase.getAllCategoryNames().get();
-            if (categoryNames.isEmpty()) {
-                System.err.println("La lista dei nomi delle categorie è vuota!");
-            } else {
-                System.out.println("Categorie trovate: " + categoryNames);
-            }
 
             // Recupera i nomi dei conti
             List<String> accountNames = userDatabase.getAllAccountNames().get();

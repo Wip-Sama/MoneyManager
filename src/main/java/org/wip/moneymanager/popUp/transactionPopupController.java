@@ -12,7 +12,6 @@ import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.components.BalanceEditor;
-import org.wip.moneymanager.model.UserDatabase;
 
 import java.io.IOException;
 import java.util.List;
@@ -72,6 +71,7 @@ public class transactionPopupController extends BorderPane {
     private List<String> accountNames;
     private List<String> categoryNames;
     private String lastTransactionType = "income"; // Valore iniziale
+    private boolean isTransfer;
 
     public transactionPopupController(Window window) throws IOException {
         this.node = window;
@@ -91,6 +91,16 @@ public class transactionPopupController extends BorderPane {
 
     @FXML
     private void initialize() {
+        SecondoAccountComboBox.setVisible(false); // Nasconde il secondo account
+        SecondoAccountComboBox.setManaged(false); // Rimuove lo spazio occupato
+
+        categorySelector.setVisible(true); // Mostra il selettore di categoria
+        categorySelector.setManaged(true); // Garantisce la gestione dello spazio
+
+        // Configura le etichette
+        account.setText("Conto");
+        category.setText("Categoria");
+
         Data.esm.register(executorService);
         cancelButton.setOnAction(e -> hide());
 
@@ -124,24 +134,19 @@ public class transactionPopupController extends BorderPane {
             onToggleButtonChange(true);
         });
 
-        // Configurazione iniziale: Income attivo
-        onToggleButtonChange(false);
     }
 
 
 
     private void populateComboBoxes(boolean isTransfer) {
-        UserDatabase userDatabase = UserDatabase.getInstance();
 
         // Esegui le query solo se i risultati non sono già stati memorizzati
         if (accountNames == null || categoryNames == null) {
             System.out.println("Esecuzione delle query per ottenere i nomi degli account e delle categorie.");
-            userDatabase.getAllAccountNames().run();
-            userDatabase.getAllCategoryNames().run();
+            Data.userDatabase.getAllAccountNames().run();
 
             try {
-                accountNames = userDatabase.getAllAccountNames().get();
-                categoryNames = userDatabase.getAllCategoryNames().get();
+                accountNames = Data.userDatabase.getAllAccountNames().get();
 
                 // Log per verificare che i dati siano stati recuperati
                 System.out.println("Nomi degli account recuperati: " + accountNames);
@@ -151,7 +156,7 @@ public class transactionPopupController extends BorderPane {
             }
         }
 
-        if (isTransfer) {
+        if (this.isTransfer) {
             // pulisce gli elementi attuali e i listener
             accountComboBox.getItems().clear();
             SecondoAccountComboBox.getItems().clear();
@@ -197,7 +202,6 @@ public class transactionPopupController extends BorderPane {
             });
         } else {
             accountComboBox.getItems().setAll(accountNames);
-            SecondoAccountComboBox.getItems().setAll(categoryNames);
             account.setText("Conto");
             category.setText("Categoria");
 
@@ -216,23 +220,16 @@ public class transactionPopupController extends BorderPane {
         datePicker.setValue(null);
         balanceEditor.reset();
         notes.setText("");
+        categorySelector.clear();
         //aggiungere tag
 
         System.out.println("Schermata resettata.");
     }
 
-    private boolean isAnyFieldFilled() {
-        return datePicker.getValue() != null ||
-                !balanceEditor.getText().isEmpty() ||
-                !SecondoAccountComboBox.getSelectionModel().isEmpty() ||
-                !accountComboBox.getSelectionModel().isEmpty();
-        //aggiungere controllo tag
-    }
+
 
     private void onToggleButtonChange(boolean isTransfer) {
-        if (isAnyFieldFilled()) {
             resetScreen();
-        }
 
         if (isTransfer) {
             // Modalità Trasferimento
