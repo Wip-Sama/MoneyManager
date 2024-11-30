@@ -32,7 +32,7 @@ public class TagSelector extends BorderPane {
     private AddNewTagController addNewTagController;
     private final TagFilter tagFilter = new TagFilter();
     private final CustomMenuItem customMenuItem;
-    private final ContextMenu contextMenu;
+    private static ContextMenu contextMenu = null;
 
     //Grazie JavaFX per farmi mettere tutta sta roba, spero che almeno ne valga la pena
     private final ArrayList<Tag> tagsList = new ArrayList<>();
@@ -104,7 +104,7 @@ public class TagSelector extends BorderPane {
         contextMenu.getItems().add(newCustomMenuItem);
 
       
-        double screenX = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinX() - 380;
+        double screenX = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinX() - 280;
         double screenY = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinY() + 30;
         contextMenu.show(this, screenX, screenY);
 
@@ -127,7 +127,7 @@ public class TagSelector extends BorderPane {
             contextMenu.getItems().add(newCustomMenuItem);
 
             // Mostra il ContextMenu
-            double screenX = add_new_tag.localToScreen(add_new_tag.getBoundsInLocal()).getMinX() - 380;
+            double screenX = add_new_tag.localToScreen(add_new_tag.getBoundsInLocal()).getMinX() - 280;
             double screenY = add_new_tag.localToScreen(add_new_tag.getBoundsInLocal()).getMinY() + 30;
             contextMenu.show(this, screenX, screenY);
 
@@ -136,6 +136,9 @@ public class TagSelector extends BorderPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static void closeAddNewTag(){
+        contextMenu.hide();
     }
 
 }

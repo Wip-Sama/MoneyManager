@@ -2,43 +2,51 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ComboBox?>
 
-<fx:root fx:id="popUpAddTags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="popUpAddTags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" prefWidth="200.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label fx:id="labelPreview" text="Tag Preview:" />
-                  <ToggleButton fx:id="previewToggleButton" mnemonicParsing="false" styleClass="tag" text="Tag Name" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="labelPreview" text="Tag Preview:" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ToggleButton fx:id="previewToggleButton" mnemonicParsing="false" styleClass="tag" text="Tag Name" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" spacing="20.0">
+            <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <VBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="labelName" text="Tag Name" />
-                        <TextField fx:id="tagNameField" prefHeight="35.0" prefWidth="300.0" />
+                        <TextField fx:id="tagNameField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="180.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="labelColor" text="Color" />
-                        <ComboBox fx:id="colorComboBox" prefHeight="35.0" prefWidth="150.0" />
+                        <ComboBox fx:id="colorComboBox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="150.0" />
                      </children>
                   </VBox>
                </children>
             </HBox>
             <Label fx:id="ErrorLabel" text="ErrorLabel" textFill="RED">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets />
                </VBox.margin>
             </Label>
             <HBox spacing="10.0">
@@ -51,12 +59,6 @@
       </VBox>
    </center>
    <padding>
-      <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
-   <top>
-      <Label fx:id="labelTitleAddNewTag" styleClass="text-title" text="Add New Tag" BorderPane.alignment="TOP_LEFT">
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin></Label>
-   </top>
 </fx:root>

@@ -13,7 +13,6 @@
     -fx-border-color: -fu-text-1;
     -fx-border-radius: 3;
     -fx-border-width: 2;
-
 }
 
 .tag:pressed {
@@ -21,7 +20,7 @@
 }
 
 .tag:selected {
-    -fx-border-color: -fu-;
+    -fx-border-color: -fu-stroke-rest;
     -fx-border-radius: 5;
 }
 

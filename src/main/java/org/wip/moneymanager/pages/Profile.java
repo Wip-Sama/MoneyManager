@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.ComboPasswordField;
 import org.wip.moneymanager.components.Switch;
@@ -34,18 +35,25 @@ public class Profile extends BorderPane implements AutoCloseable {
 
     @FXML
     private ImageView pic;
+
     @FXML
     private Label username_show;
+
     @FXML
     private Label username_label;
+
     @FXML
     private TextField username_field;
+
     @FXML
     private Label new_password_label;
+
     @FXML
     private ComboPasswordField new_password_field;
+
     @FXML
     private Label use_password_label;
+
     @FXML
     private Switch use_password_field;
 
@@ -57,10 +65,13 @@ public class Profile extends BorderPane implements AutoCloseable {
 
     @FXML
     private Button save;
+
     @FXML
     private Button discard;
+
     @FXML
     private Label profile_label;
+
     @FXML
     private Pane profile_pane;
 
@@ -133,6 +144,7 @@ public class Profile extends BorderPane implements AutoCloseable {
                 e.printStackTrace();
             }
         });
+
 
         save.setOnAction(_ -> {
             update_stuff();

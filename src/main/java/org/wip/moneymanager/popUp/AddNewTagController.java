@@ -14,6 +14,7 @@ import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import org.wip.moneymanager.components.TagFilter;
+import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.pages.Accounts;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
@@ -29,9 +30,6 @@ import static javafx.scene.paint.Color.rgb;
 public class AddNewTagController extends BorderPane {
     @FXML
     private Label ErrorLabel;
-
-    @FXML
-    private Label labelTitleAddNewTag;
 
     @FXML
     private Button addButton;
@@ -73,7 +71,7 @@ public class AddNewTagController extends BorderPane {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
-            fxmlLoader.load();
+            Parent addTag = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,14 +82,13 @@ public class AddNewTagController extends BorderPane {
         Data.esm.register(executorService);
         previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
         ErrorLabel.setOpacity(0);
-        ErrorLabel.setOpacity(0);
         addButton.setText(Data.lsp.lsb("addNewTag.addButtonLabel").get());
         cancelButton.setText(Data.lsp.lsb("addNewTag.cancelButtonLabel").get());
-        labelTitleAddNewTag.setText(Data.lsp.lsb("addNewTag.titleLabel").get());
         labelColor.setText(Data.lsp.lsb("addNewTag.colorLabel").get());
         labelName.setText(Data.lsp.lsb("addNewTag.nameLabel").get());
         labelPreview.setText(Data.lsp.lsb("addNewTag.previewLabel").get());
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addNewTag.error"));
+        previewToggleButton.textProperty().bind(Data.lsp.lsb("addNewTag.previewButton"));
 
 
         colorComboBox.getItems().addAll(
@@ -117,6 +114,7 @@ public class AddNewTagController extends BorderPane {
 
         cancelButton.setOnAction(event -> {
             clearFields();
+            TagSelector.closeAddNewTag();
         });
 
         addButton.setOnAction(event -> {
@@ -198,7 +196,7 @@ public class AddNewTagController extends BorderPane {
         String selectedColor = colorComboBox.getValue();
         String colorHex = (selectedColor != null) ? getColorHex(selectedColor) : "-fu-accent";
 
-        previewToggleButton.setText((tagName == null || tagName.isEmpty()) ? "Anteprima" : tagName);
+        previewToggleButton.setText((tagName == null || tagName.isEmpty()) ? "Tag" : tagName);
         previewToggleButton.setStyle("-fx-background-color: " + colorHex + ";");
     }
 
