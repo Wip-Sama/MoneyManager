@@ -4,6 +4,13 @@
     -fx-background-radius: 4, 3 3 0 0, 4;
 }
 
+.combo-box:showing {
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 2 2 0 2;
+    -fx-background-radius: 4, 3 3 0 0, 4 4 0 0;
+}
+
+
 .combo-box-balance {
     -fx-background-color: transparent, transparent, transparent;
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
@@ -38,10 +45,15 @@
     -fx-padding: 3 0 2 7;
 }
 
+.combo-box .list-view .list-cell:selected  {
+    -fx-background-color:  -fu-accent;
+    -fx-padding: 3 0 2 7;
+}
+
 .combo-box .list-view{
     -fx-background-color: -fu-foreground-rest;
     -fx-border-color: -fu-stroke-rest;
-    -fx-border-width: 2;
-    -fx-border-radius: 3;
+    -fx-border-width: 0 2 2 2;
+    -fx-border-radius: 0 0 3 3;
     -fx-background-radius: 3;
 }
