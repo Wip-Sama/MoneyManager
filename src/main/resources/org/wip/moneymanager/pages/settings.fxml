@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleButton?>
@@ -14,15 +14,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.wip.moneymanager.components.BalanceEditor?>
 <?import org.wip.moneymanager.components.ColorPickerButton?>
 <?import org.wip.moneymanager.components.ColorPickerPreset?>
-<?import org.wip.moneymanager.components.BalanceEditor?>
 
 <fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
 
-            <GridPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="750.0">
+            <GridPane hgap="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="750.0" vgap="10.0">
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,24 +33,24 @@
                     <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
                 </rowConstraints>
 
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
 
                     <Label fx:id="theme_label" text="Tema">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
                     </Label>
-                    <ChoiceBox fx:id="theme" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                    <ComboBox fx:id="theme" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
 
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
 
                     <Label fx:id="accent_label" text="Accento">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
                     </Label>
-                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
 
                         <ColorPickerPreset fx:id="preset_blue" blue="255" green="151" prefHeight="30.0" prefWidth="30.0" red="71" />
                         <ColorPickerPreset fx:id="preset_green" blue="58" green="222" prefHeight="30.0" prefWidth="30.0" red="74" />
@@ -61,46 +61,46 @@
                     </HBox>
 
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
 
                     <Label fx:id="language_label" text="Lingua">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
                     </Label>
-                    <ChoiceBox fx:id="language" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+               <ComboBox fx:id="language" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" styleClass="combo-box-custom" />
 
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <Label fx:id="primary_curency_label" text="Valuta primaria">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
                     </Label>
-                    <BalanceEditor fx:id="primary_currency" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" minWidth="170.0"  maxWidth="170.0" />
+                    <BalanceEditor fx:id="primary_currency" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="2">
                     <Label fx:id="first_day_of_week_label" text="Primo giorno settimana">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
                     </Label>
-                    <ChoiceBox fx:id="first_day_of_week" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                    <ComboBox fx:id="first_day_of_week" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                     <Label fx:id="start_page_label" text="Schermata iniziale">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
                     </Label>
-                    <ChoiceBox fx:id="start_page" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                    <ComboBox fx:id="start_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
                 </VBox>
 
                 <padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
             </GridPane>
-            <HBox fx:id="category_editor" style="-fx-background-radius: 6; -fx-padding: 0 5 5 5" spacing="5" styleClass="background-3" VBox.vgrow="ALWAYS">
+            <HBox fx:id="category_editor" spacing="5" style="-fx-background-radius: 6; -fx-padding: 0 5 5 5" styleClass="background-3" VBox.vgrow="ALWAYS">
                 <BorderPane fx:id="category_bp" HBox.hgrow="ALWAYS">
                     <top>
                         <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" BorderPane.alignment="CENTER">
@@ -134,8 +134,8 @@
                         </BorderPane>
                     </top>
                     <center>
-                        <ScrollPane fx:id="category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="e"  vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
-                            <VBox fx:id="category_list" prefWidth="181.0"  style="-fx-background-radius: 0 0 0 6;" styleClass="background-1">
+                        <ScrollPane fx:id="category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="e" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+                            <VBox fx:id="category_list" prefWidth="181.0" style="-fx-background-radius: 0 0 0 6;" styleClass="background-1">
                             </VBox>
                         </ScrollPane>
                     </center>
@@ -164,7 +164,7 @@
                         </BorderPane>
                     </top>
                     <center>
-                        <ScrollPane fx:id="sub_category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="category-background" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER" >
+                        <ScrollPane fx:id="sub_category_container" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="category-background" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
                             <VBox fx:id="subcategory_list" prefWidth="227.0" style="-fx-background-radius: 6 0 0 6;" styleClass="background-1" />
                         </ScrollPane>
                     </center>

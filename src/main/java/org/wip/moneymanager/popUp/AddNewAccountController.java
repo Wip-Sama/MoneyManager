@@ -19,6 +19,7 @@ import org.wip.moneymanager.pages.Accounts;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -73,7 +74,7 @@ public class AddNewAccountController extends BorderPane {
     private Label ErrorLabel;
 
     @FXML
-    private ChoiceBox<String> typeAccountField;
+    private ComboBox<String>  typeAccountField;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -84,7 +85,6 @@ public class AddNewAccountController extends BorderPane {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public AddNewAccountController(Window window, Accounts accountsPage) throws IOException {
-        Data.esm.register(executorService);
         this.accountsPage = accountsPage;
         node = window;
 
@@ -98,14 +98,20 @@ public class AddNewAccountController extends BorderPane {
         customMenuItem.hideOnClickProperty().set(false);
         contextMenu.getItems().add(customMenuItem);
 
+
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
 
+
     @FXML
     public void initialize() {
-
+        Data.esm.register(executorService);
+        typeAccountField.setEditable(false);
+        bilanceField.setBalance(0);
         ErrorLabel.setOpacity(0);
-        // Traduzioni tramite lsp
+        dateField.setValue(LocalDate.now());
+        includeSwitch.setState(true);
+
         cancelButton.setText(Data.lsp.lsb("newAddAccount.cancelButtonLabel").get());
         saveButton.setText(Data.lsp.lsb("newAddAccount.saveButtonLabel").get());
         LabelNewAccount.setText(Data.lsp.lsb("newAddAccount.newAccountLabel").get());
@@ -117,6 +123,7 @@ public class AddNewAccountController extends BorderPane {
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addnewaccount.error"));
 
         update_type_field();
+
         cancelButton.setOnAction(event -> {
             clearFields();
             hide();
@@ -127,43 +134,36 @@ public class AddNewAccountController extends BorderPane {
                 if (validateFields()) {
                     saveNewAccount();
                 }
-            } catch (ExecutionException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        }
         });
 
-        // Listener per il campo username
         newAccountField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                FieldAnimationUtils.removeErrorStyles(newAccountField);  // Rimuove gli stili di errore
-                ErrorLabel.setOpacity(0);  // Nasconde il messaggio di errore
+                FieldAnimationUtils.removeErrorStyles(newAccountField);
+                ErrorLabel.setOpacity(0);
             }
         });
 
-        // Listener per il campo password
         bilanceField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                FieldAnimationUtils.removeErrorStyles(bilanceField); // Remove error styles
-                ErrorLabel.setOpacity(0);  // Hide the alert when the user starts typing
+                FieldAnimationUtils.removeErrorStyles(bilanceField);
+                ErrorLabel.setOpacity(0);
             }
         });
 
-        // Listener per il campo password
         dateField.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 FieldAnimationUtils.removeErrorStyles(dateField);
-                ErrorLabel.setOpacity(0);  // Nascondi l'alert quando l'utente inizia a scrivere
+                ErrorLabel.setOpacity(0);
             }
         });
 
         typeAccountField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Verifica se è stato selezionato un valore (non deve essere null o vuoto)
             if (newValue != null && !newValue.isEmpty()) {
-                // Rimuove gli stili di errore se l'utente seleziona un valore
                 FieldAnimationUtils.removeErrorStyles(typeAccountField);
-                ErrorLabel.setOpacity(0);  // Nasconde l'alert
+                ErrorLabel.setOpacity(0);
             }
         });
 
@@ -175,6 +175,7 @@ public class AddNewAccountController extends BorderPane {
 
 
     public void hide() {
+        clearErrore();
         contextMenu.hide();
     }
 
@@ -184,13 +185,14 @@ public class AddNewAccountController extends BorderPane {
         dateField.setValue(null);
         includeSwitch.reset();
         typeAccountField.getSelectionModel().clearSelection();
+    }
 
+    public void clearErrore(){
         FieldAnimationUtils.removeErrorStyles(newAccountField);
         FieldAnimationUtils.removeErrorStyles(bilanceField);
         FieldAnimationUtils.removeErrorStyles(dateField);
         FieldAnimationUtils.removeErrorStyles(dateField);
         FieldAnimationUtils.removeErrorStyles(typeAccountField);
-
     }
 
     private void update_type_field() {
@@ -207,43 +209,33 @@ public class AddNewAccountController extends BorderPane {
         typeAccountField.getSelectionModel().select(selectedIndex);
     }
 
-    // Funzione di validazione dei campi
     private boolean validateFields() {
         String name = newAccountField.getText();
-        String balanceText = bilanceField.getText(); // Accediamo al campo testuale direttamente
+        String balanceText = bilanceField.getText();
         int accountType = typeAccountField.getSelectionModel().getSelectedIndex();
-
-
-
-
 
         AtomicBoolean hasError = new AtomicBoolean(false);
 
-        // Controlla se il nome è vuoto
         if (name == null || name.trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(newAccountField);
             hasError.set(true);
         }
-
 
         if (dateField.getValue() == null) {
             FieldAnimationUtils.animateFieldError(dateField);
             hasError.set(true);
         }
 
-        // Controlla se il balance è vuoto
         if (balanceText == null || balanceText.trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(bilanceField);
             hasError.set(true);
         }
 
-        // Controlla se il tipo di account è selezionato
         if (accountType == -1) {
             FieldAnimationUtils.animateFieldError(typeAccountField);
             hasError.set(true);
         }
 
-        // Mostra un unico messaggio di errore se c'è un errore
         if (hasError.get()) {
             showError("addnewaccount.error");
         }
@@ -259,11 +251,8 @@ public class AddNewAccountController extends BorderPane {
         });
         executorService.submit(namesAccountsTask);
 
-
-        return !hasError.get(); // Valido se non ci sono errori
+        return !hasError.get();
     }
-
-
 
 
     private void showError(String message) {
@@ -277,6 +266,7 @@ public class AddNewAccountController extends BorderPane {
         fadeInTimeline.play();
     }
 
+
     private void saveNewAccount() throws ExecutionException, InterruptedException {
         String name = newAccountField.getText();
         double balance = bilanceField.getBalance();
@@ -284,9 +274,6 @@ public class AddNewAccountController extends BorderPane {
         int includeIntoTotals = includeSwitch.getState() ? 0 : 1;
         int accountType = typeAccountField.getSelectionModel().getSelectedIndex();
         String currency = bilanceField.getCurrency();
-
-
-
 
         Task<Void> task = new Task<Void>() {
             @Override
@@ -299,12 +286,11 @@ public class AddNewAccountController extends BorderPane {
                 return null;
             }
         };
-
         executorService.submit(task);
-        clearFields();
         hide();
         accountsPage.refreshAccounts();
     }
+
 
     public void toggle(double x, double y) {
         if (contextMenu.isShowing()) {

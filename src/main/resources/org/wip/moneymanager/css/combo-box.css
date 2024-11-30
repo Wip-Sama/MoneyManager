@@ -1,0 +1,47 @@
+.combo-box {
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 0 0, 4;
+}
+
+.combo-box-balance {
+    -fx-background-color: transparent, transparent, transparent;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 0 0, 4;
+}
+.combo-box-transparent{
+    -fx-background-color: transparent, transparent, transparent;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 0 0, 4;
+}
+
+.combo-box .list-cell{
+    -fx-text-fill: -fu-text-1;
+    -fx-padding: 3 0 2 7;
+}
+
+.combo-box-base.combo-box > .arrow-button > .arrow{
+    -fx-background-color: -fu-text-1;
+    -fx-background-insets: 0 0 0 0;
+    -fx-padding: 3 6;
+    -fx-shape: "M 0 0 H 7 L 3.5 4 z";
+}
+.combo-box-base.combo-box > .arrow-button {
+    -fx-padding: 0 8 0 4;
+}
+.combo-box .list-view .list-cell{
+    -fx-background-color:  -fu-foreground-rest;
+    -fx-padding: 3 0 2 7;
+}
+.combo-box .list-view .list-cell:hover  {
+    -fx-background-color:  -fu-accent;
+    -fx-padding: 3 0 2 7;
+}
+
+.combo-box .list-view{
+    -fx-background-color: -fu-foreground-rest;
+    -fx-border-color: -fu-stroke-rest;
+    -fx-border-width: 2;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}

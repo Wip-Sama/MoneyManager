@@ -38,7 +38,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     @FXML
     private Label theme_label;
     @FXML
-    private ChoiceBox<String> theme;
+    private ComboBox<String> theme;
     @FXML
     private Label accent_label;
     @FXML
@@ -54,21 +54,21 @@ public class Settings extends BorderPane implements AutoCloseable {
     @FXML
     private Label language_label;
     @FXML
-    private ChoiceBox<String> language;
+    private ComboBox<String> language;
     @FXML
     private Label primary_curency_label;
     //    @FXML
-//    private ChoiceBox<String> primary_currency;
+//    private ComboBox<String> primary_currency;
     @FXML
     private BalanceEditor primary_currency;
     @FXML
     private Label first_day_of_week_label;
     @FXML
-    private ChoiceBox<String> first_day_of_week;
+    private ComboBox<String> first_day_of_week;
     @FXML
     private Label start_page_label;
     @FXML
-    private ChoiceBox<String> start_page;
+    private ComboBox<String> start_page;
     @FXML
     private Label category_label;
     @FXML
@@ -105,7 +105,6 @@ public class Settings extends BorderPane implements AutoCloseable {
     private final ObservableList<Category> subcategories = FXCollections.observableList(new ArrayList<>());
 
     public Settings() {
-        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/settings.fxml"));
             loader.setRoot(this);
@@ -118,9 +117,10 @@ public class Settings extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
+        Data.esm.register(executorService);
         initialize_category_list();
         initialize_accent_selector();
-        initialize_choice_box();
+        initialize_combo_box();
 
         /* Localizzazione */
         theme_label.textProperty().bind(Data.lsp.lsb("settings.theme"));
@@ -436,8 +436,8 @@ public class Settings extends BorderPane implements AutoCloseable {
         });
     }
 
-    //Choice Box
-    private void initialize_choice_box() {
+
+    private void initialize_combo_box() {
         Data.lsp.getAvailableLocales().forEach(locale -> language.getItems().add(locale.substring(0, 1).toUpperCase() + locale.substring(1).toLowerCase()));
         String selected_locale = Data.dbUser.languageProperty().get();
         language.setValue(selected_locale.substring(0, 1).toUpperCase() + selected_locale.substring(1).toLowerCase());
@@ -480,7 +480,7 @@ public class Settings extends BorderPane implements AutoCloseable {
             }
         });
 
-        primary_currency.only_choice_box();
+        primary_currency.only_combo_box();
         primary_currency.currencyProperty().addListener((_, _, _) -> {
             try {
                 Data.dbUser.setMain_currency(primary_currency.getCurrency());

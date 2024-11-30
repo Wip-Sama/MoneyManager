@@ -7,10 +7,7 @@ import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import org.wip.moneymanager.model.Data;
@@ -29,7 +26,7 @@ public class BalanceEditor extends HBox {
     private Separator sep;
 
     @FXML
-    private ChoiceBox<String> currency_field;
+    private ComboBox<String> currency_field;
 
     private final PseudoClass FOCUSED_PSEUDO_CLASS = PseudoClass.getPseudoClass("focused");
    private final DoubleProperty balance = new SimpleDoubleProperty(0);
@@ -74,7 +71,7 @@ public class BalanceEditor extends HBox {
         currency_field.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
     }
 
-    public void only_choice_box() {
+    public void only_combo_box() {
         balance_field.setVisible(false);
         balance_field.setManaged(false);
         sep.setVisible(false);

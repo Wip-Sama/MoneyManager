@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 
 public class popUpFilterController extends AnchorPane {
     @FXML
-    private ChoiceBox<String> accountChoice;
+    private ComboBox<String> accountChoice;
 
     @FXML
     private Label accountFilter;
@@ -62,7 +62,6 @@ public class popUpFilterController extends AnchorPane {
 
 
     public popUpFilterController(Window window) throws IOException {
-        Data.esm.register(executorService);
         this.ownerWindow = window;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/popUpFilter.fxml"));
@@ -80,6 +79,7 @@ public class popUpFilterController extends AnchorPane {
 
     @FXML
     private void initialize() {
+        Data.esm.register(executorService);
 
         title.textProperty().bind(Data.lsp.lsb("popUpFilterController.title"));
         accountFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.accountFilter"));
@@ -89,7 +89,7 @@ public class popUpFilterController extends AnchorPane {
         cancelPopUp.textProperty().bind(Data.lsp.lsb("popUpFilterController.cancelPopUp"));
         notifyError.textProperty().bind(Data.lsp.lsb("popUpFilterController.notifyError"));
 
-        populateChoiceBoxes();
+        populateComboBoxes();
         // Pulsante per chiudere il popup
         cancelPopUp.setOnAction(e -> hide());
 
@@ -98,9 +98,9 @@ public class popUpFilterController extends AnchorPane {
         notifyError.setOpacity(0); // Nascondi il messaggio di errore all'inizio
     }
 
-    // Metodo che popola le ChoiceBox con i dati degli account e delle categorie
+    // Metodo che popola le ComboBox con i dati degli account e delle categorie
     @FXML
-    private void populateChoiceBoxes() {
+    private void populateComboBoxes() {
         UserDatabase userDatabase = UserDatabase.getInstance();
 
         // Carica i nomi delle categorie
@@ -129,7 +129,7 @@ public class popUpFilterController extends AnchorPane {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Errore durante il popolamento delle ChoiceBox: " + e.getMessage());
+            System.err.println("Errore durante il popolamento delle ComboBox: " + e.getMessage());
         }
     }
 

@@ -69,7 +69,6 @@ public class Profile extends BorderPane implements AutoCloseable {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Profile() {
-        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/profile.fxml"));
             loader.setRoot(this);
@@ -85,6 +84,7 @@ public class Profile extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
+        Data.esm.register(executorService);
         old_password_label.textProperty().bind(Data.lsp.lsb("profile.old_password"));
         save.textProperty().bind(Data.lsp.lsb("profile.save"));
         discard.textProperty().bind(Data.lsp.lsb("profile.discard"));

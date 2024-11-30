@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -43,7 +43,7 @@
                         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                            <children>
                               <Label fx:id="labelType" text="Tipo Conto" />
-                              <ChoiceBox fx:id="typeAccountField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" />
+                              <ComboBox fx:id="typeAccountField" maxWidth="1.7976931348623157E308" prefHeight="35.0" styleClass="combo-box-custom" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="78.0" prefWidth="49.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">

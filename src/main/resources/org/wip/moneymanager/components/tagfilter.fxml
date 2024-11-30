@@ -13,7 +13,7 @@
    <center>
       <ScrollPane fx:id="scroll_pane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="139.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
-            <FlowPane fx:id="tag_pane" hgap="2.0" maxHeight="-Infinity" minHeight="-Infinity" vgap="2.0">
+            <FlowPane fx:id="tag_pane" hgap="5.0" maxHeight="-Infinity" minHeight="-Infinity" vgap="5.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>

@@ -55,7 +55,6 @@ public class Accounts extends BorderPane implements AutoCloseable {
     }
 
     public Accounts() {
-        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/accounts.fxml"));
             loader.setRoot(this);
@@ -97,9 +96,8 @@ public class Accounts extends BorderPane implements AutoCloseable {
     }
 
     public void initialize() throws ExecutionException, InterruptedException {
+        Data.esm.register(executorService);
         initialize_accounts();
-
-
         scroll_miservesoloperingrandireilvbox.viewportBoundsProperty().addListener((_, _, _) -> {
             double availableSpace = getAvailableSpace(scroll_miservesoloperingrandireilvbox);
             accounts_container.setPrefWidth(availableSpace);
@@ -108,7 +106,6 @@ public class Accounts extends BorderPane implements AutoCloseable {
         your_accounts.textProperty().bind(Data.lsp.lsb("accounts.your_accounts"));
         new_account.textProperty().bind(Data.lsp.lsb("accounts.new_account"));
         hide_balance.textProperty().bind(Data.lsp.lsb("accounts.hide_balance"));
-
         hide_balance.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
                 eye_svg.setContent(show_eye);
@@ -118,7 +115,6 @@ public class Accounts extends BorderPane implements AutoCloseable {
                 hide_balance.textProperty().bind(Data.lsp.lsb("accounts.hide_balance"));
             }
         });
-
         new_account.onActionProperty().set(_ ->open_popup());
     }
 
@@ -130,14 +126,9 @@ public class Accounts extends BorderPane implements AutoCloseable {
                 e.printStackTrace();
             }
         }
-
         Bounds bounds = new_account.localToScreen(new_account.getBoundsInLocal());
-
-
         double x = bounds.getMaxX() - 463;
         double y = bounds.getMaxY();
-
-
         AddNewAccount.toggle(x, y);
     }
 

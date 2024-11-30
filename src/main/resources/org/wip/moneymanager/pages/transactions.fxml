@@ -17,12 +17,12 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" styleClass="background-3" BorderPane.alignment="CENTER">
          <center>
-            <ScrollPane fx:id="scrollpaneTransaction" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+            <ScrollPane fx:id="scrollpaneTransaction" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-box" BorderPane.alignment="CENTER">
                <padding>
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
                <content>
-                  <VBox styleClass="category-background" />
+                  <VBox styleClass="background-3" />
                </content>
             </ScrollPane>
          </center>

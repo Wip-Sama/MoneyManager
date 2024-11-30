@@ -40,7 +40,7 @@ public class AddNewTagController extends BorderPane {
     private Button cancelButton;
 
     @FXML
-    private ChoiceBox<String> colorChoiceBox;
+    private ComboBox<String> colorComboBox;
 
     @FXML
     private Label labelColor;
@@ -67,7 +67,6 @@ public class AddNewTagController extends BorderPane {
 
 
     public AddNewTagController(Window window) throws IOException {
-        Data.esm.register(executorService);
         this.accountsPage = accountsPage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewTag.fxml"));
@@ -82,6 +81,7 @@ public class AddNewTagController extends BorderPane {
 
     @FXML
     public void initialize() {
+        Data.esm.register(executorService);
         previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
         ErrorLabel.setOpacity(0);
         ErrorLabel.setOpacity(0);
@@ -94,7 +94,7 @@ public class AddNewTagController extends BorderPane {
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addNewTag.error"));
 
 
-        colorChoiceBox.getItems().addAll(
+        colorComboBox.getItems().addAll(
                 Data.lsp.lsb("color.red").get(),
                 Data.lsp.lsb("color.blue").get(),
                 Data.lsp.lsb("color.green").get(),
@@ -108,9 +108,9 @@ public class AddNewTagController extends BorderPane {
             ErrorLabel.setOpacity(0);
         });
 
-        colorChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        colorComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             updatePreview();
-            FieldAnimationUtils.removeErrorStyles(colorChoiceBox);
+            FieldAnimationUtils.removeErrorStyles(colorComboBox);
             ErrorLabel.setOpacity(0);
         });
 
@@ -132,7 +132,7 @@ public class AddNewTagController extends BorderPane {
 
     private void addTag() {
         String tagName = tagNameField.getText().trim();
-        String selectedColor = colorChoiceBox.getValue();
+        String selectedColor = colorComboBox.getValue();
         if (selectedColor != null && !tagName.isEmpty()) {
             String colorHex = getColorHex(selectedColor);
             Task<Boolean> taskAddTag =  Data.userDatabase.createTag(tagName, colorHex);
@@ -162,7 +162,7 @@ public class AddNewTagController extends BorderPane {
 
     private boolean validateFields() {
         String tagName = tagNameField.getText();
-        String selectedColor = colorChoiceBox.getValue();
+        String selectedColor = colorComboBox.getValue();
         boolean hasError = false;
 
         if (tagName == null || tagName.trim().isEmpty()) {
@@ -171,7 +171,7 @@ public class AddNewTagController extends BorderPane {
         }
 
         if (selectedColor == null || selectedColor.isEmpty()) {
-            FieldAnimationUtils.animateFieldError(colorChoiceBox);
+            FieldAnimationUtils.animateFieldError(colorComboBox);
             hasError = true;
         }
 
@@ -195,7 +195,7 @@ public class AddNewTagController extends BorderPane {
 
     private void updatePreview() {
         String tagName = tagNameField.getText();
-        String selectedColor = colorChoiceBox.getValue();
+        String selectedColor = colorComboBox.getValue();
         String colorHex = (selectedColor != null) ? getColorHex(selectedColor) : "-fu-accent";
 
         previewToggleButton.setText((tagName == null || tagName.isEmpty()) ? "Anteprima" : tagName);
@@ -204,7 +204,7 @@ public class AddNewTagController extends BorderPane {
 
     private void clearFields() {
         tagNameField.clear();
-        colorChoiceBox.getSelectionModel().selectFirst();
+        colorComboBox.getSelectionModel().selectFirst();
         updatePreview();
     }
 

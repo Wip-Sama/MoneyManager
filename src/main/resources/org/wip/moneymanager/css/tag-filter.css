@@ -24,9 +24,9 @@
 
 
 .tag-filter-menu-item:focused {
-    -fx-background-color: transparent;
+    -fx-background-color: -fu-foreground-rest;
 }
 
 .tag-filter-menu-item:hover {
-    -fx-background-color: transparent;
+    -fx-background-color: -fu-foreground-rest;
 }

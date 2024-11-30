@@ -61,21 +61,17 @@ public class FieldAnimationUtils {
         }
     }
 
-    // Aggiunge l'errore alla ChoiceBox
-    public static void animateFieldError(ChoiceBox<?> choiceBox) {
-        if (choiceBox.getSelectionModel().getSelectedItem() == null) {
-            if (!choiceBox.getStyleClass().contains("errore")) {
-                choiceBox.getStyleClass().add("errore");
-            }
-            Timeline shakeTimeline = createShakeTimeline(choiceBox);
+    // Aggiunge l'errore alla ComboBox
+    public static void animateFieldError(ComboBox<?> ComboBox) {
+                ComboBox.setStyle("-fx-background-color: red, red, -fu-foreground-rest;");
+            Timeline shakeTimeline = createShakeTimeline(ComboBox);
             shakeTimeline.setCycleCount(1);
             shakeTimeline.play();
         }
-    }
 
-    // Rimuove l'errore dalla ChoiceBox
-    public static void removeErrorStyles(ChoiceBox<?> choiceBox) {
-        choiceBox.getStyleClass().remove("errore");
+    // Rimuove l'errore dalla ComboBox
+    public static void removeErrorStyles(ComboBox<?> ComboBox) {
+        ComboBox.setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;");
     }
 
     // Aggiunge l'errore al DatePicker

@@ -2,6 +2,10 @@
     -fx-font-family: "Segoe UI Variable";
 }
 
+* {
+    -fx-font-size: 14px;
+}
+
 .text-title * {
     -fx-font-size: 16px;
     -fx-text-fill: -fu-text-1;

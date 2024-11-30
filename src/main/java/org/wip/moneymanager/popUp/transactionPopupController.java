@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.TagSelector;
@@ -19,6 +20,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class transactionPopupController extends BorderPane {
+
+    @FXML
+    private VBox ContainerAccountCategory;
+
     @FXML
     private BorderPane BoderPanePopup;
     @FXML
@@ -40,11 +45,11 @@ public class transactionPopupController extends BorderPane {
     @FXML
     private Label category;
     @FXML
-    private ChoiceBox<String> categoryChoiceBox;
+    private ComboBox<String> SecondoAccountComboBox;
     @FXML
     private Label account;
     @FXML
-    private ChoiceBox<String> accountChoiceBox;
+    private ComboBox<String> accountComboBox;
     @FXML
     private Label tags;
     @FXML
@@ -69,7 +74,6 @@ public class transactionPopupController extends BorderPane {
     private String lastTransactionType = "income"; // Valore iniziale
 
     public transactionPopupController(Window window) throws IOException {
-        Data.esm.register(executorService);
         this.node = window;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/transactionPopUp.fxml"));
@@ -87,6 +91,7 @@ public class transactionPopupController extends BorderPane {
 
     @FXML
     private void initialize() {
+        Data.esm.register(executorService);
         cancelButton.setOnAction(e -> hide());
 
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -94,10 +99,10 @@ public class transactionPopupController extends BorderPane {
         expenseButton.setToggleGroup(toggleGroup);
         transferButton.setToggleGroup(toggleGroup);
 
-        //imposta l'incomeButton come default
+        // Imposta l'incomeButton come default
         incomeButton.setSelected(true);
 
-        //impedisce che il toggle venga deselezionato
+        // Impedisce che il toggle venga deselezionato
         toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 toggleGroup.selectToggle(oldValue);
@@ -119,11 +124,13 @@ public class transactionPopupController extends BorderPane {
             onToggleButtonChange(true);
         });
 
-        // configurazione iniziale per conto e categoria
+        // Configurazione iniziale: Income attivo
         onToggleButtonChange(false);
     }
 
-    private void populateChoiceBoxes(boolean isTransfer) {
+
+
+    private void populateComboBoxes(boolean isTransfer) {
         UserDatabase userDatabase = UserDatabase.getInstance();
 
         // Esegui le query solo se i risultati non sono già stati memorizzati
@@ -146,64 +153,64 @@ public class transactionPopupController extends BorderPane {
 
         if (isTransfer) {
             // pulisce gli elementi attuali e i listener
-            accountChoiceBox.getItems().clear();
-            categoryChoiceBox.getItems().clear();
-            accountChoiceBox.setOnAction(null);
-            categoryChoiceBox.setOnAction(null);
+            accountComboBox.getItems().clear();
+            SecondoAccountComboBox.getItems().clear();
+            accountComboBox.setOnAction(null);
+            SecondoAccountComboBox.setOnAction(null);
 
             // imposto i nuovi elementi
-            accountChoiceBox.getItems().setAll(accountNames);
-            categoryChoiceBox.getItems().setAll(accountNames);
+            accountComboBox.getItems().setAll(accountNames);
+            SecondoAccountComboBox.getItems().setAll(accountNames);
             account.setText("Mittente");
             category.setText("Destinatario");
 
-            // Log per verificare il popolamento delle ChoiceBox
-            System.out.println("ChoiceBox popolati per il trasferimento.");
+            // Log per verificare il popolamento delle ComboBox
+            System.out.println("ComboeBox popolati per il trasferimento.");
 
             // qui gestisco la logica per gli account, se cambio uno devo aggiornare l'altro e viceversa
-            accountChoiceBox.setOnAction(e -> {
-                String selectedAccount = accountChoiceBox.getValue();
+            accountComboBox.setOnAction(e -> {
+                String selectedAccount = accountComboBox.getValue();
                 if (selectedAccount != null) {
                     List<String> availableAccounts = accountNames.stream()
                             .filter(acc -> !acc.equals(selectedAccount))
                             .toList();
-                    String currentDestination = categoryChoiceBox.getValue();
-                    categoryChoiceBox.getItems().setAll(availableAccounts);
+                    String currentDestination = SecondoAccountComboBox.getValue();
+                    SecondoAccountComboBox.getItems().setAll(availableAccounts);
                     if (currentDestination != null && availableAccounts.contains(currentDestination)) {
-                        categoryChoiceBox.setValue(currentDestination);
+                        SecondoAccountComboBox.setValue(currentDestination);
                     }
                 }
             });
 
-            categoryChoiceBox.setOnAction(e -> {
-                String selectedDestination = categoryChoiceBox.getValue();
+            SecondoAccountComboBox.setOnAction(e -> {
+                String selectedDestination = SecondoAccountComboBox.getValue();
                 if (selectedDestination != null) {
                     List<String> availableAccounts = accountNames.stream()
                             .filter(acc -> !acc.equals(selectedDestination))
                             .toList();
-                    String currentSource = accountChoiceBox.getValue();
-                    accountChoiceBox.getItems().setAll(availableAccounts);
+                    String currentSource = accountComboBox.getValue();
+                    accountComboBox.getItems().setAll(availableAccounts);
                     if (currentSource != null && availableAccounts.contains(currentSource)) {
-                        accountChoiceBox.setValue(currentSource);
+                        accountComboBox.setValue(currentSource);
                     }
                 }
             });
         } else {
-            accountChoiceBox.getItems().setAll(accountNames);
-            categoryChoiceBox.getItems().setAll(categoryNames);
+            accountComboBox.getItems().setAll(accountNames);
+            SecondoAccountComboBox.getItems().setAll(categoryNames);
             account.setText("Conto");
             category.setText("Categoria");
 
-            // Log per verificare il popolamento delle ChoiceBox
-            System.out.println("ChoiceBox popolati per conto e categoria.");
+            // Log per verificare il popolamento delle ComboBox
+            System.out.println("ComboBox popolati per conto e categoria.");
         }
     }
 
     private void resetScreen() {
-        accountChoiceBox.getItems().clear();
-        categoryChoiceBox.getItems().clear();
-        accountChoiceBox.setOnAction(null);
-        categoryChoiceBox.setOnAction(null);
+        accountComboBox.getItems().clear();
+        SecondoAccountComboBox.getItems().clear();
+        accountComboBox.setOnAction(null);
+        SecondoAccountComboBox.setOnAction(null);
         account.setText("");
         category.setText("");
         datePicker.setValue(null);
@@ -217,19 +224,46 @@ public class transactionPopupController extends BorderPane {
     private boolean isAnyFieldFilled() {
         return datePicker.getValue() != null ||
                 !balanceEditor.getText().isEmpty() ||
-                !categoryChoiceBox.getSelectionModel().isEmpty() ||
-                !accountChoiceBox.getSelectionModel().isEmpty();
+                !SecondoAccountComboBox.getSelectionModel().isEmpty() ||
+                !accountComboBox.getSelectionModel().isEmpty();
         //aggiungere controllo tag
     }
 
     private void onToggleButtonChange(boolean isTransfer) {
-        if(isAnyFieldFilled()){
+        if (isAnyFieldFilled()) {
             resetScreen();
         }
-        populateChoiceBoxes(isTransfer);
+
+        if (isTransfer) {
+            // Modalità Trasferimento
+            categorySelector.setVisible(false); // Nasconde il selettore di categoria
+            categorySelector.setManaged(false); // Rimuove lo spazio occupato
+
+            SecondoAccountComboBox.setVisible(true); // Mostra il secondo account
+            SecondoAccountComboBox.setManaged(true); // Garantisce la gestione dello spazio
+
+            // Configura le etichette
+            account.setText("Mittente");
+            category.setText("Destinatario");
+        } else {
+            // Modalità Income/Expense
+            SecondoAccountComboBox.setVisible(false); // Nasconde il secondo account
+            SecondoAccountComboBox.setManaged(false); // Rimuove lo spazio occupato
+
+            categorySelector.setVisible(true); // Mostra il selettore di categoria
+            categorySelector.setManaged(true); // Garantisce la gestione dello spazio
+
+            // Configura le etichette
+            account.setText("Conto");
+            category.setText("Categoria");
+        }
+
+        // Popola le combo box in base alla modalità corrente
+        populateComboBoxes(isTransfer);
     }
 
-    private void hide() {
+
+        private void hide() {
         contextMenu.hide();
     }
 
@@ -244,4 +278,7 @@ public class transactionPopupController extends BorderPane {
             show(x, y);
         }
     }
+
+
+
 }

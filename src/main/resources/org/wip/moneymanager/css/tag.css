@@ -1,14 +1,19 @@
 .tag {
     -fx-background-color: -fu-foreground-rest;
     -fx-background-radius: 5;
+    -fx-opacity: 1;
 }
 
 .tag .label {
-    -fx-text-fill: -fu-text-1;
+    -fx-text-fill: -fu-text-3;
 }
 
 .tag:hover {
-    -fx-opacity: 0.7;
+    -fx-opacity: 0.8;
+    -fx-border-color: -fu-text-1;
+    -fx-border-radius: 3;
+    -fx-border-width: 2;
+
 }
 
 .tag:pressed {
@@ -16,12 +21,12 @@
 }
 
 .tag:selected {
-    -fx-border-color: green;
+    -fx-border-color: -fu-;
     -fx-border-radius: 5;
 }
 
 .tag:selected .label {
-    -fx-text-fill: green;
+    -fx-text-fill: -fu-text-3;
 }
 
 .tag:discarded {

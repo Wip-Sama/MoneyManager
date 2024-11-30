@@ -20,7 +20,6 @@ public class Credits extends BorderPane implements AutoCloseable {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Credits() {
-        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/credits.fxml"));
             loader.setRoot(this);
@@ -43,6 +42,7 @@ public class Credits extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
+        Data.esm.register(executorService);
         scroller.widthProperty().addListener((_, _, _) -> update_available_with_without_scrollbars());
     }
 }

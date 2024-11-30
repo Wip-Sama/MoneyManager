@@ -18,7 +18,6 @@ public class Statistics extends BorderPane implements AutoCloseable {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     public Statistics() {
-        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/statistics.fxml"));
             loader.setRoot(this);
@@ -31,6 +30,7 @@ public class Statistics extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
+        Data.esm.register(executorService);
         page_title.textProperty().bind(Data.lsp.lsb("statistics"));
 
 //        setCenter(new );

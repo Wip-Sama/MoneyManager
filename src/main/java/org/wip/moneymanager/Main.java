@@ -37,10 +37,10 @@ public class Main extends Application {
             SceneHandler sceneHandler = SceneHandler.getInstance(primaryStage);
             //sceneHandler.showLoginScreen(); // Chiama il metodo per mostrare la schermata di login
 
-
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            Data.esm.register(executorService);
             //per accendere direttamente con utente1
             Task<dbUser> userTask = Data.mmDatabase.getUser("utente1");
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.submit(userTask);
 
             userTask.setOnSucceeded(e -> {

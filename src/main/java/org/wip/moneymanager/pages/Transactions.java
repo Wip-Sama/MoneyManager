@@ -66,7 +66,6 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Transactions() {
-        Data.esm.register(executorService);
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/pages/transactions.fxml"));
             loader.setRoot(this);
@@ -79,6 +78,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
+        Data.esm.register(executorService);
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions"));
 
         // Listener per forzare la selezione singola
@@ -138,7 +138,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
             Bounds bounds = newTransaction.localToScreen(newTransaction.getBoundsInLocal());
 
-            double popupWidth = 910.0;
+            double popupWidth = 712.0;
             double x = bounds.getMaxX() - popupWidth;
             double y = bounds.getMaxY();
 

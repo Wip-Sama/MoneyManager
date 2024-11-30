@@ -60,7 +60,6 @@ public class TagSelector extends BorderPane {
         }
 
         customMenuItem = new CustomMenuItem(tagFilter);
-        customMenuItem.getStyleClass().add("tag-filter-menu-item");
         customMenuItem.hideOnClickProperty().set(false);
 
         contextMenu = new ContextMenu(customMenuItem);

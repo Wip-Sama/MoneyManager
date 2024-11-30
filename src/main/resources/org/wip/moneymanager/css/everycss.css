@@ -17,7 +17,6 @@
 @import "tag-filter.css";
 @import "tag-selector.css";
 @import "card-conto.css";
-@import "choice-box.css";
 @import "full-button.css";
 @import "switch.css";
 @import "balanceeditor.css";
@@ -29,7 +28,6 @@
 @import "profile.css";
 @import "text.css";
 @import "category_selector.css";
+@import "category_selector.css";
+@import "combo-box.css";
 
-* {
-    -fx-font-size: 14px;
-}
