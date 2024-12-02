@@ -80,6 +80,7 @@ public class AddNewTagController extends BorderPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+        resetPreviewButton();
         previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
         ErrorLabel.setOpacity(0);
         addButton.setText(Data.lsp.lsb("addNewTag.addButtonLabel").get());
@@ -196,14 +197,20 @@ public class AddNewTagController extends BorderPane {
         String selectedColor = colorComboBox.getValue();
         String colorHex = (selectedColor != null) ? getColorHex(selectedColor) : "-fu-accent";
 
-        previewToggleButton.setText((tagName == null || tagName.isEmpty()) ? "Tag" : tagName);
+        previewToggleButton.textProperty().unbind(); // Unbind before setting
+        previewToggleButton.setText((tagName == null || tagName.isEmpty()) ? "TAG" : tagName);
         previewToggleButton.setStyle("-fx-background-color: " + colorHex + ";");
     }
 
     private void clearFields() {
         tagNameField.clear();
-        colorComboBox.getSelectionModel().selectFirst();
-        updatePreview();
+        colorComboBox.getSelectionModel().clearSelection();
+        resetPreviewButton();
+    }
+
+    private void resetPreviewButton() {
+        previewToggleButton.setText("Preview");
+        previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
     }
 
 }
