@@ -21,6 +21,10 @@
 .combo-box-balance .list-view {
     -fx-pref-width: 80px;
 }
+.combo-box-balance2 .list-view {
+    -fx-pref-width: 200px;
+}
+
 
 .combo-box-transparent{
     -fx-background-color: transparent, transparent, transparent;

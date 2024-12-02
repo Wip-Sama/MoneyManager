@@ -76,6 +76,7 @@ public class BalanceEditor extends HBox {
         balance_field.setManaged(false);
         sep.setVisible(false);
         sep.setManaged(false);
+
         HBox.setHgrow(currency_field, Priority.ALWAYS);
         currency_field.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
