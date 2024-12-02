@@ -41,12 +41,11 @@ public class CategorySelector extends HBox {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
-        populateMainCategories();
         category_box.setOnAction(event -> populateSubCategories());
     }
 
-    private void populateMainCategories() {
-        Task<List<String>> taskCategory = Data.userDatabase.getMainCategoryNames();
+    private void populateMainCategoriesByType(int type) {
+        Task<List<String>> taskCategory = Data.userDatabase.getMainCategoryNamesByType(type);
 
         taskCategory.setOnSucceeded(event -> {
             List<String> mainCategories = taskCategory.getValue();
@@ -63,6 +62,14 @@ public class CategorySelector extends HBox {
         });
 
         executorService.submit(taskCategory);
+    }
+
+    public void populateMainCategoriesForIncome() {
+        populateMainCategoriesByType(0); // Type 0: Entrate
+    }
+
+    public void populateMainCategoriesForExpense() {
+        populateMainCategoriesByType(1); // Type 1: Spese
     }
 
     private void populateSubCategories() {
@@ -84,7 +91,7 @@ public class CategorySelector extends HBox {
             });
 
             executorService.submit(taskSubCategory);
-            }
+        }
     }
 
     public String getSelectedCategory() {
@@ -100,7 +107,7 @@ public class CategorySelector extends HBox {
     }
 
     public void clear() {
-         category_box.getItems().clear();
-         sub_category_box.getItems().clear();
+        category_box.getItems().clear();
+        sub_category_box.getItems().clear();
     }
 }

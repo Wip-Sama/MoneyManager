@@ -443,12 +443,13 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<List<String>> getMainCategoryNames() {
+    public Task<List<String>> getMainCategoryNamesByType(int type) {
         return asyncCall(() -> {
             List<String> mainCategoryNames = new ArrayList<>();
             if (isConnected()) {
-                String query = "SELECT name FROM Categories WHERE parent_category IS NULL;";
+                String query = "SELECT name FROM Categories WHERE parent_category IS NULL AND type = ?;";
                 PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, type); // Imposta il parametro del tipo
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     mainCategoryNames.add(rs.getString("name"));
@@ -458,6 +459,7 @@ public class UserDatabase extends Database {
             return mainCategoryNames;
         });
     }
+
 
     public Task<List<String>> getSubCategoriesByMainCategory(String mainCategoryName) {
         return asyncCall(() -> {
