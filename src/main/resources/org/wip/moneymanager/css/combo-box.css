@@ -3,6 +3,11 @@
     -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
     -fx-background-radius: 4, 3 3 3 3, 3;
 }
+.combo-box:hover {
+    -fx-background-color: -fu-accent, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 2;
+    -fx-background-radius: 4, 3 3 3 3, 3;
+}
 
 .combo-box:showing {
     -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
