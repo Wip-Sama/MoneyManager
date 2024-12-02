@@ -121,9 +121,6 @@ public class RegisterController {
         registrationTask.setOnSucceeded(e -> {
             Boolean isRegistered = registrationTask.getValue();
             if (isRegistered != null && isRegistered) {
-                errorLabel.setText(Data.lsp.lsb("register.success").get());
-                errorLabel.setTextFill(Color.GREEN);
-                errorLabel.setOpacity(1);
                 SceneHandler.getInstance((Stage) registerButton.getScene().getWindow()).showLoginScreen();
             } else {
                 showError("register.error.generic");
