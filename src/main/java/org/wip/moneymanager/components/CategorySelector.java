@@ -8,6 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,11 +47,11 @@ public class CategorySelector extends HBox {
 
     private void populateMainCategoriesByType(int type) {
         Task<List<String>> taskCategory = Data.userDatabase.getMainCategoryNamesByType(type);
+        clear();
 
         taskCategory.setOnSucceeded(event -> {
             List<String> mainCategories = taskCategory.getValue();
             Platform.runLater(() -> {
-                category_box.getItems().clear();
                 category_box.getItems().addAll(mainCategories);
             });
         });
@@ -110,4 +111,13 @@ public class CategorySelector extends HBox {
         category_box.getItems().clear();
         sub_category_box.getItems().clear();
     }
+
+    public void animateError() {
+        FieldAnimationUtils.animateFieldError(category_box);
+    }
+    public void removeError() {
+        FieldAnimationUtils.removeErrorStyles(category_box);
+    }
+
+
 }
