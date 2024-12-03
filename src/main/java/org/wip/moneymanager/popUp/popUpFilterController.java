@@ -14,14 +14,16 @@ import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.UserDatabase;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class popUpFilterController extends AnchorPane {
     @FXML
-    private ComboBox<String> accountChoice;
+    private ComboBox<?> accountCombo;
 
     @FXML
     private Label accountFilter;
@@ -33,7 +35,7 @@ public class popUpFilterController extends AnchorPane {
     private Button cancelPopUp;
 
     @FXML
-    private CategorySelector categoryChoice;
+    private CategorySelector categoryCombo;
 
     @FXML
     private Label categoryFilter;
@@ -45,7 +47,7 @@ public class popUpFilterController extends AnchorPane {
     private AnchorPane popUpFilter;
 
     @FXML
-    private TagSelector tagChoice;
+    private TagSelector tagCombo;
 
     @FXML
     private Label tagFilter;
@@ -53,9 +55,18 @@ public class popUpFilterController extends AnchorPane {
     @FXML
     private Label title;
 
+    @FXML
+    void handleFilterAction(ActionEvent event) {
+
+    }
+
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
 
+
+
+    private String selectedCategory;
+    private String selectedSubCategory;
 
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -89,7 +100,12 @@ public class popUpFilterController extends AnchorPane {
         cancelPopUp.textProperty().bind(Data.lsp.lsb("popUpFilterController.cancelPopUp"));
         notifyError.textProperty().bind(Data.lsp.lsb("popUpFilterController.notifyError"));
 
-        populateComboBoxes();
+        categoryCombo.populateMainCategoriesType();
+        buttonFilter.setOnAction(event -> {handleFilterAction();});
+
+
+
+
         // Pulsante per chiudere il popup
         cancelPopUp.setOnAction(e -> hide());
 
@@ -98,32 +114,7 @@ public class popUpFilterController extends AnchorPane {
         notifyError.setOpacity(0); // Nascondi il messaggio di errore all'inizio
     }
 
-    // Metodo che popola le ComboBox con i dati degli account e delle categorie
-    @FXML
-    private void populateComboBoxes() {
-        UserDatabase userDatabase = UserDatabase.getInstance();
 
-        // Carica i nomi delle categorie
-        userDatabase.getAllAccountNames().run();
-
-        try {
-
-            // Recupera i nomi dei conti
-            List<String> accountNames = userDatabase.getAllAccountNames().get();
-            if (accountNames.isEmpty()) {
-                System.err.println("La lista dei nomi degli account è vuota!");
-            } else {
-                System.out.println("Account trovati: " + accountNames);
-            }
-
-
-            accountChoice.getItems().setAll(accountNames);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Errore durante il popolamento delle ComboBox: " + e.getMessage());
-        }
-    }
 
     private void hide() {
         contextMenu.hide();
@@ -140,4 +131,39 @@ public class popUpFilterController extends AnchorPane {
     public void show(double x, double y) {
         contextMenu.show(ownerWindow, x, y);
     }
+
+
+
+
+
+
+    @FXML
+    private void handleFilterAction() {
+        // Recupera i valori selezionati
+
+        selectedCategory = categoryCombo.getSelectedCategory();
+        //selectedSubCategory = categoryCombo.getSelectedSubCategory();
+
+
+        System.out.println("Categoria selezionata: " + selectedCategory);
+        //System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
+
+        // Logica successiva: Puoi gestire cosa fare con i valori salvati
+        if (selectedCategory != null || selectedSubCategory != null) {
+            hide(); // Chiudi il popup
+        } else {
+            notifyError.setOpacity(1); // Mostra il messaggio di errore
+        }
+    }
+
+    public List<String> getSelectedFilters() {
+        List<String> filters = new ArrayList<>();
+        if (selectedCategory != null) filters.add(selectedCategory);
+        if (selectedSubCategory != null) filters.add(selectedSubCategory);
+        return filters;
+    }
+
+
+
+
 }

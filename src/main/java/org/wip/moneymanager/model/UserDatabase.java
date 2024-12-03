@@ -459,6 +459,22 @@ public class UserDatabase extends Database {
         });
     }
 
+    public Task<List<String>> getMainCategoryNames() {
+        return asyncCall(() -> {
+            List<String> mainCategoryNames = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT name FROM Categories WHERE parent_category IS NULL;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    mainCategoryNames.add(rs.getString("name"));
+                }
+                stmt.close();
+            }
+            return mainCategoryNames;
+        });
+    }
+
 
     public Task<List<String>> getSubCategoriesByMainCategory(String mainCategoryName) {
         return asyncCall(() -> {

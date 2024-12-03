@@ -65,6 +65,27 @@ public class CategorySelector extends HBox {
         executorService.submit(taskCategory);
     }
 
+    public void populateMainCategoriesAllType() {
+        Task<List<String>> taskCategory = Data.userDatabase.getMainCategoryNames();
+        clear();
+
+        taskCategory.setOnSucceeded(event -> {
+            List<String> mainCategories = taskCategory.getValue();
+            Platform.runLater(() -> {
+                category_box.getItems().addAll(mainCategories);
+            });
+        });
+
+        taskCategory.setOnFailed(event -> {
+            Throwable ex = taskCategory.getException();
+            System.err.println("Errore durante il caricamento delle categorie principali: " + ex.getMessage());
+            ex.printStackTrace();
+        });
+
+        executorService.submit(taskCategory);
+    }
+
+    public void populateMainCategoriesType(){ populateMainCategoriesAllType();}
     public void populateMainCategoriesForIncome() {
         populateMainCategoriesByType(0); // Type 0: Entrate
     }

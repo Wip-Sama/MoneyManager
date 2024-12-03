@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.wip.moneymanager.View.SceneHandler;
+import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.DateTransactions;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.AddNewAccountController;
@@ -55,6 +56,10 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     private ScrollPane scrollpaneTransaction;
+
+    @FXML
+    private CategorySelector categorySelector;
+
 
     protected Parent loaded;
     private transactionPopupController AddNewController;
@@ -161,6 +166,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
             double y = bounds.getMaxY();
 
             AddNewFilterController.toggle(x, y);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -168,7 +174,6 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     private void setDate(String newDate) {
         date = newDate;
-
 
     }
 
