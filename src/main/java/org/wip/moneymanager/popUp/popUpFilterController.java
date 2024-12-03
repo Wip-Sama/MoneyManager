@@ -142,11 +142,11 @@ public class popUpFilterController extends AnchorPane {
         // Recupera i valori selezionati
 
         selectedCategory = categoryCombo.getSelectedCategory();
-        //selectedSubCategory = categoryCombo.getSelectedSubCategory();
+        selectedSubCategory = categoryCombo.getSelectedSubCategory();
 
 
         System.out.println("Categoria selezionata: " + selectedCategory);
-        //System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
+        System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
 
         // Logica successiva: Puoi gestire cosa fare con i valori salvati
         if (selectedCategory != null || selectedSubCategory != null) {
