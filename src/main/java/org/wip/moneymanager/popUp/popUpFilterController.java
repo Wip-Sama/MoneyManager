@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 
 public class popUpFilterController extends AnchorPane {
     @FXML
-    private ComboBox<?> accountCombo;
+    private ComboBox<String> accountCombo;
 
     @FXML
     private Label accountFilter;
@@ -67,6 +67,7 @@ public class popUpFilterController extends AnchorPane {
 
     private String selectedCategory;
     private String selectedSubCategory;
+    private String selectedAccount;
 
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -100,6 +101,7 @@ public class popUpFilterController extends AnchorPane {
         cancelPopUp.textProperty().bind(Data.lsp.lsb("popUpFilterController.cancelPopUp"));
         notifyError.textProperty().bind(Data.lsp.lsb("popUpFilterController.notifyError"));
 
+        populateAccountComboSync();
         categoryCombo.populateMainCategoriesType();
         buttonFilter.setOnAction(event -> {handleFilterAction();});
 
@@ -133,6 +135,23 @@ public class popUpFilterController extends AnchorPane {
     }
 
 
+    public void populateAccountComboSync() {
+        try {
+            // Esegui il Task per recuperare i nomi degli account
+            Data.userDatabase.getAllAccountNames().run();
+            List<String> accountNames = Data.userDatabase.getAllAccountNames().get();
+
+            // Popola la ComboBox
+            accountCombo.getItems().setAll(accountNames);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getSelectedAccount() {
+        return accountCombo.getSelectionModel().getSelectedItem();
+    }
 
 
 
@@ -140,21 +159,22 @@ public class popUpFilterController extends AnchorPane {
     @FXML
     private void handleFilterAction() {
         // Recupera i valori selezionati
-
         selectedCategory = categoryCombo.getSelectedCategory();
         selectedSubCategory = categoryCombo.getSelectedSubCategory();
-
+        selectedAccount = getSelectedAccount(); // Recupera l'account selezionato
 
         System.out.println("Categoria selezionata: " + selectedCategory);
         System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
+        System.out.println("Account selezionato: " + selectedAccount);
 
         // Logica successiva: Puoi gestire cosa fare con i valori salvati
-        if (selectedCategory != null || selectedSubCategory != null) {
+        if (selectedCategory != null || selectedSubCategory != null || selectedAccount != null) {
             hide(); // Chiudi il popup
         } else {
             notifyError.setOpacity(1); // Mostra il messaggio di errore
         }
     }
+
 
     public List<String> getSelectedFilters() {
         List<String> filters = new ArrayList<>();
