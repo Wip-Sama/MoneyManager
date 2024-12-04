@@ -97,7 +97,6 @@ public class TagSelector extends BorderPane {
 
 
     private void showTagFilter() {
-        clearTags();
         // Crea un nuovo CustomMenuItem con il contenuto del tag filter
         CustomMenuItem newCustomMenuItem = new CustomMenuItem(tagFilter);
         newCustomMenuItem.getStyleClass().add("tag-filter-menu-item");
@@ -116,7 +115,6 @@ public class TagSelector extends BorderPane {
     }
 
     private void showAddNewTag() {
-        clearTags();
         try {
             if (addNewTagController == null) {
                 addNewTagController = new AddNewTagController(loaded.getScene().getWindow());
