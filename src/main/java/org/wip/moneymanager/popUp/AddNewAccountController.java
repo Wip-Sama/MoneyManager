@@ -112,6 +112,19 @@ public class AddNewAccountController extends BorderPane {
         dateField.setValue(LocalDate.now());
         includeSwitch.setState(true);
 
+        // fa in modo che il datepicker non possa essere modificato manualmente
+        dateField.setEditable(false);
+        dateField.getEditor().setEditable(false);
+        dateField.getEditor().setOnMouseClicked(e -> {
+            if (!dateField.isShowing()) {
+                dateField.show();
+            }
+        });
+
+        dateField.setValue(LocalDate.now());
+        includeSwitch.setState(true);
+
+
         cancelButton.setText(Data.lsp.lsb("newAddAccount.cancelButtonLabel").get());
         saveButton.setText(Data.lsp.lsb("newAddAccount.saveButtonLabel").get());
         LabelNewAccount.setText(Data.lsp.lsb("newAddAccount.newAccountLabel").get());
@@ -122,7 +135,9 @@ public class AddNewAccountController extends BorderPane {
         labelType.setText(Data.lsp.lsb("newAddAccount.typeLabel").get());
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addnewaccount.error"));
 
+
         update_type_field();
+
 
         cancelButton.setOnAction(event -> {
             clearFields();
