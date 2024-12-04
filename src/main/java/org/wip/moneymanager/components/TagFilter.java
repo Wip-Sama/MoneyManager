@@ -40,8 +40,8 @@ public class TagFilter extends BorderPane {
     private static final ListProperty<Tag> tags = new SimpleListProperty<>(observableTagList);
 
     public static void refreshTags() {
-        tags.clear();
-        initializeTags();
+        tags.clear();  // Azzera i tag attuali
+        initializeTags();  // Ricarica i tag
     }
 
     public ReadOnlyListProperty<Tag> tagsProperty() {
@@ -84,20 +84,25 @@ public class TagFilter extends BorderPane {
         loadTagsTask.setOnSucceeded(event -> {
             List<dbTag> dbTags = loadTagsTask.getValue();
             if (dbTags != null) {
-                // Converti dbTag in Tag e aggiungili alla lista
+                // Aggiungi solo tag non duplicati
                 for (dbTag dbTagItem : dbTags) {
-                    Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color()); // Adatta i parametri secondo dbTag
-                    tags.add(tag);
+                    boolean exists = tags.stream()
+                            .anyMatch(tag -> tag.getTag().equals(dbTagItem.name()));
+                    if (!exists) {
+                        Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color());
+                        tags.add(tag);
+                    }
                 }
             }
         });
         loadTagsTask.setOnFailed(event -> {
-            // Log dell'errore o altra gestione
             Throwable exception = loadTagsTask.getException();
             exception.printStackTrace();
         });
 
         executorService.submit(loadTagsTask);
     }
+
+
 }
 

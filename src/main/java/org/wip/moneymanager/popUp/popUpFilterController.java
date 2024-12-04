@@ -91,7 +91,6 @@ public class popUpFilterController extends AnchorPane {
     @FXML
     private void initialize() {
         Data.esm.register(executorService);
-
         title.textProperty().bind(Data.lsp.lsb("popUpFilterController.title"));
         accountFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.accountFilter"));
         categoryFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.categoryFilter"));
@@ -129,8 +128,10 @@ public class popUpFilterController extends AnchorPane {
     }
 
     public void show(double x, double y) {
-        contextMenu.show(ownerWindow, x, y);
+        tagCombo.clearTags();  // Pulisce i tag quando il menu viene mostrato
+        contextMenu.show(ownerWindow, x, y); // Mostra il menu
     }
+
 
 
 
@@ -162,6 +163,8 @@ public class popUpFilterController extends AnchorPane {
         if (selectedSubCategory != null) filters.add(selectedSubCategory);
         return filters;
     }
+
+
 
 
 

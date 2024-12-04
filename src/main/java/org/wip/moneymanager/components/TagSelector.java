@@ -30,7 +30,7 @@ public class TagSelector extends BorderPane {
 
     protected Parent loaded;
     private AddNewTagController addNewTagController;
-    private final TagFilter tagFilter = new TagFilter();
+    private static final TagFilter tagFilter = new TagFilter();
     private final CustomMenuItem customMenuItem;
     private static ContextMenu contextMenu = null;
 
@@ -68,24 +68,25 @@ public class TagSelector extends BorderPane {
 
     public void initialize() {
         add_tag.setOnAction(_ -> showTagFilter());
+
         tags.addListener((_, _, newValue) -> {
             tag_list.getChildren().clear();
             tag_list.getChildren().addAll(newValue);
         });
+
         tagFilter.tagsProperty().addListener((_, _, newValue) -> {
-            loops:
             for (Tag tag : tagFilter.tagsProperty()) {
-                for (Tag tag1 : tags) {
-                    if (tag1.getTag().equals(tag.getTag())) {
-                        continue loops;
-                    }
+                // Aggiungi tag solo se non è già presente
+                boolean exists = tags.stream()
+                        .anyMatch(existingTag -> existingTag.getTag().equals(tag.getTag()));
+                if (!exists) {
+                    Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita(), tag.getColor());
+                    tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
+                    tmp.tagStatusProperty().addListener((_, _, newValue1) -> tmp.setVisible(newValue1.intValue() != 0));
+                    tmp.managedProperty().bindBidirectional(tmp.visibleProperty());
+                    tmp.setVisible(false);
+                    tags.add(tmp);
                 }
-                Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita(), tag.getColor());
-                tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
-                tmp.tagStatusProperty().addListener((_, _, newValue1) -> tmp.setVisible(newValue1.intValue() != 0));
-                tmp.managedProperty().bindBidirectional(tmp.visibleProperty());
-                tmp.setVisible(false);
-                tags.add(tmp);
             }
         });
 
@@ -93,7 +94,10 @@ public class TagSelector extends BorderPane {
     }
 
 
+
+
     private void showTagFilter() {
+        clearTags();
         // Crea un nuovo CustomMenuItem con il contenuto del tag filter
         CustomMenuItem newCustomMenuItem = new CustomMenuItem(tagFilter);
         newCustomMenuItem.getStyleClass().add("tag-filter-menu-item");
@@ -112,6 +116,7 @@ public class TagSelector extends BorderPane {
     }
 
     private void showAddNewTag() {
+        clearTags();
         try {
             if (addNewTagController == null) {
                 addNewTagController = new AddNewTagController(loaded.getScene().getWindow());
@@ -137,8 +142,22 @@ public class TagSelector extends BorderPane {
             e.printStackTrace();
         }
     }
-    public static void closeAddNewTag(){
-        contextMenu.hide();
+    public static void closeAddNewTag() {
+        contextMenu.hide(); // Chiudi il menu
+        tagFilter.refreshTags(); // Pulisci i tag nel filtro
+    }
+
+    public void clearTags() {
+        // Resetta completamente i tag nel TagSelector
+        tags.clear();
+        tag_list.getChildren().clear();
+        tagFilter.refreshTags();
+    }
+
+    public void reset() {
+        // Resetta tutti i tag e aggiorna il filtro
+        clearTags();
+        tagFilter.refreshTags();
     }
 
 }
