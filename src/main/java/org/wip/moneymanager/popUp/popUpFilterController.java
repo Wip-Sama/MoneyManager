@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import org.wip.moneymanager.components.CategorySelector;
+import org.wip.moneymanager.components.Tag;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.UserDatabase;
@@ -62,16 +63,14 @@ public class popUpFilterController extends AnchorPane {
 
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
-
+    private final Window ownerWindow;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 
     private String selectedCategory;
     private String selectedSubCategory;
     private String selectedAccount;
-
-    private final Window ownerWindow;
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-
+    
 
     public popUpFilterController(Window window) throws IOException {
         this.ownerWindow = window;
@@ -104,7 +103,6 @@ public class popUpFilterController extends AnchorPane {
         populateAccountComboSync();
         categoryCombo.populateMainCategoriesType();
         buttonFilter.setOnAction(event -> {handleFilterAction();});
-
 
 
 
@@ -155,17 +153,18 @@ public class popUpFilterController extends AnchorPane {
 
 
 
-
     @FXML
     private void handleFilterAction() {
         // Recupera i valori selezionati
+
         selectedCategory = categoryCombo.getSelectedCategory();
         selectedSubCategory = categoryCombo.getSelectedSubCategory();
-        selectedAccount = getSelectedAccount(); // Recupera l'account selezionato
+        selectedAccount = getSelectedAccount();
+        List<String> selectedFilters = new ArrayList<>();
 
-        System.out.println("Categoria selezionata: " + selectedCategory);
-        System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
-        System.out.println("Account selezionato: " + selectedAccount);
+        //System.out.println("Categoria selezionata: " + selectedCategory);
+        //System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
+        //System.out.println("Account selezionato: " + selectedAccount);
 
         // Logica successiva: Puoi gestire cosa fare con i valori salvati
         if (selectedCategory != null || selectedSubCategory != null || selectedAccount != null) {
@@ -173,17 +172,13 @@ public class popUpFilterController extends AnchorPane {
         } else {
             notifyError.setOpacity(1); // Mostra il messaggio di errore
         }
+
+        List<Tag> selectedTags = tagCombo.get_selected_tags();
+        for (Tag tag : selectedTags) {
+            selectedFilters.add(tag.getTag());
+
+        }
+
     }
-
-
-    public List<String> getSelectedFilters() {
-        List<String> filters = new ArrayList<>();
-        if (selectedCategory != null) filters.add(selectedCategory);
-        if (selectedSubCategory != null) filters.add(selectedSubCategory);
-        return filters;
-    }
-
-
-
 
 }
