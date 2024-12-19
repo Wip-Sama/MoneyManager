@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Popup;
 import javafx.stage.Window;
 import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.TagSelector;
@@ -23,7 +22,7 @@ import java.util.concurrent.Executors;
 
 public class popUpFilterController extends AnchorPane {
     @FXML
-    private ComboBox<?> accountCombo;
+    private ComboBox<String> accountCombo;
 
     @FXML
     private Label accountFilter;
@@ -57,20 +56,19 @@ public class popUpFilterController extends AnchorPane {
 
     @FXML
     void handleFilterAction(ActionEvent event) {
-
+        // Implementazione della logica di filtraggio
     }
 
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
 
-
-
     private String selectedCategory;
     private String selectedSubCategory;
+    private String selectedAccount;
+    private List<String> accountNames;
 
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-
 
     public popUpFilterController(Window window) throws IOException {
         this.ownerWindow = window;
@@ -84,8 +82,14 @@ public class popUpFilterController extends AnchorPane {
         customMenuItem.hideOnClickProperty().set(false);
         contextMenu.getItems().add(customMenuItem);
 
-
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
+
+        // Listener per il reset quando il popup viene chiuso
+        contextMenu.showingProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) { // Quando il popup si chiude
+                resetFilters(); // Resetta i filtri
+            }
+        });
     }
 
     @FXML
@@ -100,20 +104,14 @@ public class popUpFilterController extends AnchorPane {
         notifyError.textProperty().bind(Data.lsp.lsb("popUpFilterController.notifyError"));
 
         categoryCombo.populateMainCategoriesType();
-        buttonFilter.setOnAction(event -> {handleFilterAction();});
-
-
-
-
+        initializeAccountNames();
+        populateAccountCombo();
+        handleFilterAction();
         // Pulsante per chiudere il popup
         cancelPopUp.setOnAction(e -> hide());
 
-
-
         notifyError.setOpacity(0); // Nascondi il messaggio di errore all'inizio
     }
-
-
 
     private void hide() {
         contextMenu.hide();
@@ -128,45 +126,92 @@ public class popUpFilterController extends AnchorPane {
     }
 
     public void show(double x, double y) {
-        tagCombo.clearTags();  // Pulisce i tag quando il menu viene mostrato
-        contextMenu.show(ownerWindow, x, y); // Mostra il menu
+        resetFilters();
+        tagCombo.clearTags(); // Pulisce i tag quando il menu viene mostrato
+        contextMenu.show(ownerWindow, x, y);
     }
 
+    private void initializeAccountNames() {
+        try {
+            UserDatabase userDatabase = UserDatabase.getInstance();
+            accountNames = userDatabase.getAllAccountNames().get();
+            if (accountNames == null || accountNames.isEmpty()) {
+                accountNames = List.of(); // Lista vuota
+                System.err.println("Nessun account trovato nel DB");
+            }
+        } catch (Exception e) {
+            accountNames = List.of(); // Lista vuota in caso di errore
+            System.err.println("Errore di caricamento dei nomi: " + e.getMessage());
+        }
+    }
 
+    private void populateAccountCombo() {
+        if (accountNames == null || accountCombo == null) {
+            System.err.println("Impossibile popolare accountCombo: accountNames o accountCombo è null");
+            return;
+        }
 
-
-
-
+        accountCombo.getItems().setAll(accountNames);
+        accountCombo.setValue(null); // Non selezionare alcun valore di default
+    }
 
     @FXML
     private void handleFilterAction() {
         // Recupera i valori selezionati
-
         selectedCategory = categoryCombo.getSelectedCategory();
         selectedSubCategory = categoryCombo.getSelectedSubCategory();
+        selectedAccount = accountCombo.getValue(); // Recupera il valore selezionato
 
-
-        System.out.println("Categoria selezionata: " + selectedCategory);
-        System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
-
-        // Logica successiva: Puoi gestire cosa fare con i valori salvati
-        if (selectedCategory != null || selectedSubCategory != null) {
-            hide(); // Chiudi il popup
-        } else {
+        // Logica per visualizzare l'errore se nessun filtro è selezionato
+        if (selectedCategory == null && selectedSubCategory == null && selectedAccount == null) {
+            // Nessun filtro selezionato, mostra l'errore
             notifyError.setOpacity(1); // Mostra il messaggio di errore
+            notifyError.setVisible(true); // Assicurati che la label sia visibile
+        } else {
+            // Almeno un filtro è selezionato, continua con la logica
+            System.out.println("Categoria selezionata: " + selectedCategory);
+            System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
+            System.out.println("Account selezionato: " + selectedAccount);
+
+            // Nascondi l'errore, se visibile
+            notifyError.setOpacity(0); // Nasconde il messaggio di errore
+            notifyError.setVisible(false); // Nasconde la label
+            hide(); // Chiudi il popup se i filtri sono validi
         }
     }
+
+
+
 
     public List<String> getSelectedFilters() {
         List<String> filters = new ArrayList<>();
         if (selectedCategory != null) filters.add(selectedCategory);
         if (selectedSubCategory != null) filters.add(selectedSubCategory);
+        if (selectedAccount != null) filters.add(selectedAccount);
         return filters;
     }
 
+    public void resetFilters() {
+        // Reset delle categorie
+        if (categoryCombo != null) {
+            System.out.println("Resetting categoryCombo");
+            categoryCombo.clear();
+            categoryCombo.populateMainCategoriesType();
+        }
 
 
+        if (accountCombo != null) {
+            System.out.println("Resetting accountCombo");
+            accountCombo.setValue(null);
+            selectedAccount = null;
+        }
 
+        // Reset degli errori
+        notifyError.setOpacity(0);
 
+        // Aggiornamento della selezione effettiva
+        selectedCategory = categoryCombo.getSelectedCategory();
+        selectedSubCategory = categoryCombo.getSelectedSubCategory();
+    }
 
 }

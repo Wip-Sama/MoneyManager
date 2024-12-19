@@ -172,11 +172,6 @@ public class Transactions extends BorderPane implements AutoCloseable {
         }
     }
 
-    private void setDate(String newDate) {
-        date = newDate;
-
-    }
-
 
     @Override
     public void close() {
