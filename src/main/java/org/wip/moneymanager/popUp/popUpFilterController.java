@@ -106,11 +106,9 @@ public class popUpFilterController extends AnchorPane {
         categoryCombo.populateMainCategoriesType();
         initializeAccountNames();
         populateAccountCombo();
-        handleFilterAction();
-        // Pulsante per chiudere il popup
+        buttonFilter.setOnAction(event -> {handleFilterAction();});
         cancelPopUp.setOnAction(e -> hide());
-
-        notifyError.setOpacity(0); // Nascondi il messaggio di errore all'inizio
+        notifyError.setOpacity(0);
     }
 
     private void hide() {
@@ -136,7 +134,7 @@ public class popUpFilterController extends AnchorPane {
             UserDatabase userDatabase = UserDatabase.getInstance();
             accountNames = userDatabase.getAllAccountNames().get();
             if (accountNames == null || accountNames.isEmpty()) {
-                accountNames = List.of(); // Lista vuota
+                accountNames = List.of();
                 System.err.println("Nessun account trovato nel DB");
             }
         } catch (Exception e) {
@@ -157,10 +155,9 @@ public class popUpFilterController extends AnchorPane {
 
     @FXML
     private void handleFilterAction() {
-        // Recupera i valori selezionati
         selectedCategory = categoryCombo.getSelectedCategory();
         selectedSubCategory = categoryCombo.getSelectedSubCategory();
-        selectedAccount = accountCombo.getValue(); // Recupera il valore selezionato
+        selectedAccount = accountCombo.getValue();
 
         // Logica per visualizzare l'errore se nessun filtro è selezionato
         if (selectedCategory == null && selectedSubCategory == null && selectedAccount == null) {
@@ -179,8 +176,6 @@ public class popUpFilterController extends AnchorPane {
             hide(); // Chiudi il popup se i filtri sono validi
         }
     }
-
-
 
 
     public List<String> getSelectedFilters() {

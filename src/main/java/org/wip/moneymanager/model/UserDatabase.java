@@ -722,8 +722,24 @@ public class UserDatabase extends Database {
     }
 
 
+    public Task<List<Integer>> getAllDaysOfTransaction() {
+        return asyncCall(() -> {
+            List<Integer> transactionDates = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT date FROM Transactions;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    transactionDates.add(rs.getInt("date")); // Legge la colonna 'date'
 
+                }
+                stmt.close();
+            }
 
+            return transactionDates;
+        });
+
+    }
 }
 
 

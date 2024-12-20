@@ -16,6 +16,7 @@ module org.wip.moneymanager {
 
     requires org.json;
     requires jdk.jfr;
+    requires java.smartcardio;
 
     opens org.wip.moneymanager.model to javafx.fxml;
     exports org.wip.moneymanager.model;
