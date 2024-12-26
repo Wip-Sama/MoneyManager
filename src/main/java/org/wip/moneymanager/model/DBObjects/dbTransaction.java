@@ -17,8 +17,9 @@ public final class dbTransaction {
     private int second_account;
     private String note;
     private int fauvorite;
+    private int category;
 
-    public dbTransaction(int id, int date, int type, double amount, int account, int second_account, String note, int fauvorite, UserDatabase db) {
+    public dbTransaction(int id, int date, int type, double amount, int account, int second_account, String note, int fauvorite, int category, UserDatabase db) {
         this.id = id;
         this.date = date;
         this.type = type;
@@ -27,7 +28,9 @@ public final class dbTransaction {
         this.second_account = second_account;
         this.note = note;
         this.fauvorite = fauvorite;
+        this.category = category;
         this.db = db;
+
     }
 
     public dbTransaction(ResultSet rs, UserDatabase db) throws SQLException {
@@ -40,9 +43,12 @@ public final class dbTransaction {
                 rs.getInt("second_account"),
                 rs.getString("note"),
                 rs.getInt("fauvorite"),
+                rs.getInt("category"),
                 db
         );
     }
+
+
 
     public int id() {
         return id;
@@ -75,6 +81,8 @@ public final class dbTransaction {
     public int fauvorite() {
         return fauvorite;
     }
+
+    public int category() {return category;}
 
     public void setDate(int date) throws SQLException {
         this.date = date;
@@ -110,6 +118,7 @@ public final class dbTransaction {
         this.fauvorite = fauvorite;
         updateField("fauvorite", fauvorite);
     }
+
 
     private void updateField(String fieldName, Object value) throws SQLException {
         String query = "UPDATE Accounts SET " + fieldName + " = ? WHERE id = ?";

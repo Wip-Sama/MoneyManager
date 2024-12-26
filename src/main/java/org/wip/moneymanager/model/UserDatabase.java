@@ -740,8 +740,69 @@ public class UserDatabase extends Database {
         });
 
     }
-}
 
+    public Task<List<dbTransaction>> fillCard(Integer unix) {
+        return asyncCall(() -> {
+            List<dbTransaction> transactionDates = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT * FROM Transactions WHERE date = ?;";
+                try (PreparedStatement stmt = con.prepareStatement(query)) {
+                    stmt.setInt(1, unix);
+                    System.out.println("Executing query with Unix timestamp: " + unix);
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        while (rs.next()) {
+                            transactionDates.add(new dbTransaction(rs, this));
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Database not connected.");
+            }
+            return transactionDates;
+        });
+
+    }
+
+    public Task<String> getNameAccountFromId(Integer id) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "SELECT name FROM Accounts WHERE id = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    String name = rs.getString("name");
+                    stmt.close();
+                    return name;
+                }
+                stmt.close();
+            }
+            throw new IllegalArgumentException("Account not found");
+        });
+    }
+
+    public Task<String> getCategoryFromId(Integer category) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "SELECT name FROM Categories WHERE id = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, category);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    String name = rs.getString("name");
+                    stmt.close();
+                    return name;
+                }
+                stmt.close();
+            }
+            throw new IllegalArgumentException("Category not found");
+        });
+    }
+
+
+}
 
 
 

@@ -19,9 +19,11 @@ import org.wip.moneymanager.popUp.transactionPopupController;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -73,12 +75,10 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private VBox vboxCard;
 
 
-
     protected Parent loaded;
     private transactionPopupController AddNewController;
     private popUpFilterController AddNewFilterController;
     private String date;
-
 
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -105,7 +105,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     }
 
 
-//nuovo metodo per aprire il popup, dopo il cambio a contest menu
+    //nuovo metodo per aprire il popup, dopo il cambio a contest menu
     private void open_popup() {
         try {
             if (AddNewController == null) {
@@ -146,53 +146,28 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     private void generateDailyCard() {
         Task<List<Integer>> generaCard = Data.userDatabase.getAllDaysOfTransaction();
-
-        generaCard.setOnSucceeded(event->{
+        generaCard.setOnSucceeded(event -> {
             if (generaCard.getValue() != null) {
-
                 List<Integer> daySelected = generaCard.getValue();
 
-                Set<String> uniqueDates = new HashSet<>();
+                // Remove duplicates using a Set
+                Set<Integer> uniqueTimestamps = new HashSet<>(daySelected);
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                // Create a list of unique timestamps
+                List<Integer> uniqueTimestampsList = new ArrayList<>(uniqueTimestamps);
 
-                for (Integer timestamp : daySelected) {
-
-                    LocalDateTime dateTime = Instant.ofEpochSecond(timestamp)
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDateTime();
-
-                    String formattedDate = dateTime.format(formatter);
-
-
-                    uniqueDates.add(formattedDate);
-                }
-
-                List<String> uniqueDateList = uniqueDates.stream().collect(Collectors.toList());
-
-                uniqueDateList.forEach(System.out::println);
-
-                for (String date : uniqueDateList) {
-                    CardTransactions cardNode = new CardTransactions(date);
-
+                // Iterate through unique timestamps and create CardTransactions
+                for (Integer timestamp : uniqueTimestampsList) {
+                    CardTransactions cardNode = new CardTransactions(timestamp);
                     vboxCard.getChildren().add(cardNode);
-
                 }
-
-                executorService.submit(generaCard);
-
             }
-
         });
-
     }
+
+
+
 
     @Override
-    public void close() {
-        executorService.shutdown();
-    }
-
-
-
-
+    public void close() {executorService.shutdown();}
 }
