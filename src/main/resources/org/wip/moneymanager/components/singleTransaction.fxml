@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<fx:root maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="600.0" stylesheets="@../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="12.0" HBox.hgrow="ALWAYS">
                <children>
-                  <SVGPath fx:id="starTransaction" content="M7.1939 2.10167C7.52403 1.43275 8.47789 1.43274 8.80802 2.10167L10.3291 5.18372L13.7304 5.67795C14.4685 5.78522 14.7633 6.69239 14.2291 7.21307L11.768 9.61212L12.349 12.9996C12.4751 13.7348 11.7034 14.2955 11.0431 13.9484L8.00096 12.349L4.95879 13.9484C4.29853 14.2955 3.52684 13.7348 3.65294 12.9996L4.23394 9.61212L1.77277 7.21307C1.23861 6.69239 1.53336 5.78522 2.27156 5.67795L5.67281 5.18372L7.1939 2.10167ZM8.00096 2.72593L6.54628 5.67343C6.41519 5.93906 6.16178 6.12317 5.86864 6.16577L2.61588 6.63842L4.9696 8.93273C5.18171 9.13949 5.27851 9.43739 5.22843 9.72935L4.6728 12.969L7.58215 11.4394C7.84434 11.3016 8.15758 11.3016 8.41977 11.4394L11.3291 12.969L10.7735 9.72935C10.7234 9.43739 10.8202 9.13949 11.0323 8.93273L13.386 6.63842L10.1333 6.16577C9.84014 6.12317 9.58673 5.93906 9.45564 5.67343L8.00096 2.72593Z" scaleX="1.3" scaleY="1.3">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </SVGPath>
+                  <Button fx:id="buttonFavourite" mnemonicParsing="false">
+                     <graphic>
+                        <SVGPath fx:id="starTransaction" content="M7.1939 2.10167C7.52403 1.43275 8.47789 1.43274 8.80802 2.10167L10.3291 5.18372L13.7304 5.67795C14.4685 5.78522 14.7633 6.69239 14.2291 7.21307L11.768 9.61212L12.349 12.9996C12.4751 13.7348 11.7034 14.2955 11.0431 13.9484L8.00096 12.349L4.95879 13.9484C4.29853 14.2955 3.52684 13.7348 3.65294 12.9996L4.23394 9.61212L1.77277 7.21307C1.23861 6.69239 1.53336 5.78522 2.27156 5.67795L5.67281 5.18372L7.1939 2.10167ZM8.00096 2.72593L6.54628 5.67343C6.41519 5.93906 6.16178 6.12317 5.86864 6.16577L2.61588 6.63842L4.9696 8.93273C5.18171 9.13949 5.27851 9.43739 5.22843 9.72935L4.6728 12.969L7.58215 11.4394C7.84434 11.3016 8.15758 11.3016 8.41977 11.4394L11.3291 12.969L10.7735 9.72935C10.7234 9.43739 10.8202 9.13949 11.0323 8.93273L13.386 6.63842L10.1333 6.16577C9.84014 6.12317 9.58673 5.93906 9.45564 5.67343L8.00096 2.72593Z" styleClass="icon_general" />
+                     </graphic>
+                  </Button>
                   <Label fx:id="categTransactions" text="Label">
                      <HBox.margin>
                         <Insets />
@@ -28,7 +29,7 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <SVGPath fx:id="arrowTransaction" content="M27.3536 4.35355C27.5488 4.15829 27.5488 3.84171 27.3536 3.64645L24.1716 0.464466C23.9763 0.269204 23.6597 0.269204 23.4645 0.464466C23.2692 0.659728 23.2692 0.976311 23.4645 1.17157L26.2929 4L23.4645 6.82843C23.2692 7.02369 23.2692 7.34027 23.4645 7.53553C23.6597 7.7308 23.9763 7.7308 24.1716 7.53553L27.3536 4.35355ZM0 4.5L27 4.5V3.5L0 3.5L0 4.5Z" layoutX="-15.0" layoutY="-15.0" visible="false" />
+                  <SVGPath fx:id="arrowTransaction" content="M27.3536 4.35355C27.5488 4.15829 27.5488 3.84171 27.3536 3.64645L24.1716 0.464466C23.9763 0.269204 23.6597 0.269204 23.4645 0.464466C23.2692 0.659728 23.2692 0.976311 23.4645 1.17157L26.2929 4L23.4645 6.82843C23.2692 7.02369 23.2692 7.34027 23.4645 7.53553C23.6597 7.7308 23.9763 7.7308 24.1716 7.53553L27.3536 4.35355ZM0 4.5L27 4.5V3.5L0 3.5L0 4.5Z" layoutX="-15.0" layoutY="-15.0" styleClass="icon_general" visible="false" />
                   <Label fx:id="recipient" layoutX="55.0" layoutY="28.0" text="Label" visible="false" />
                </children>
             </HBox>

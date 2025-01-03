@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UserDatabase extends Database {
@@ -798,6 +799,45 @@ public class UserDatabase extends Database {
                 stmt.close();
             }
             throw new IllegalArgumentException("Category not found");
+        });
+    }
+
+
+    public Task<List<dbTag>> getTagFromTransaction(Integer transactionId) {
+        return asyncCall(() -> {
+            List<dbTag> tagList = new ArrayList<>();
+            if (isConnected()) {
+                try {
+                    String queryTags = "SELECT tag FROM Transaction_tags WHERE transaction = ?;";
+                    PreparedStatement stmtTags = con.prepareStatement(queryTags);
+                    stmtTags.setInt(1, transactionId);
+                    ResultSet rsTags = stmtTags.executeQuery();
+                    List<Integer> tagIds = new ArrayList<>();
+                    while (rsTags.next()) {
+                        tagIds.add(rsTags.getInt("tag_id"));
+                    }
+                    if (!tagIds.isEmpty()) {
+                        String queryDetails = "SELECT id, name, color FROM Tag WHERE id IN (" +
+                                String.join(",", Collections.nCopies(tagIds.size(), "?")) + ");";
+                        PreparedStatement stmtDetails = con.prepareStatement(queryDetails);
+                        for (int i = 0; i < tagIds.size(); i++) {
+                            stmtDetails.setInt(i + 1, tagIds.get(i));
+                        }
+                        ResultSet rsDetails = stmtDetails.executeQuery();
+                        while (rsDetails.next()) {
+                            dbTag tag = new dbTag(rsDetails, this);
+                            tagList.add(tag);
+                        }
+                        rsDetails.close();
+                        stmtDetails.close();
+                    }
+                    rsTags.close();
+                    stmtTags.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            return tagList;
         });
     }
 

@@ -114,14 +114,14 @@ public final class dbTransaction {
         updateField("note", note);
     }
 
-    public void setFauvorite(int fauvorite) throws SQLException {
+    public void setFavourite(int fauvorite) throws SQLException {
         this.fauvorite = fauvorite;
         updateField("fauvorite", fauvorite);
     }
 
 
     private void updateField(String fieldName, Object value) throws SQLException {
-        String query = "UPDATE Accounts SET " + fieldName + " = ? WHERE id = ?";
+        String query = "UPDATE Transactions SET " + fieldName + " = ? WHERE id = ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
             stmt.setObject(1, value);
             stmt.setInt(2, id);
