@@ -1,5 +1,7 @@
 package org.wip.moneymanager.popUp;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,12 +10,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.TagFilter;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.components.BalanceEditor;
 import org.wip.moneymanager.model.UserDatabase;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static javafx.scene.paint.Color.rgb;
 
 public class transactionPopupController extends BorderPane {
 
@@ -104,6 +112,7 @@ public class transactionPopupController extends BorderPane {
             if (accountNames == null || accountNames.isEmpty()) {
                 accountNames = List.of(); // Create empty immutable list
                 System.err.println("Warning: No accounts found in database");
+
             }
         } catch (Exception e) {
             accountNames = List.of(); // Create empty immutable list
@@ -179,9 +188,55 @@ public class transactionPopupController extends BorderPane {
             categorySelector.populateMainCategoriesForExpense();
         });
 
+        accountComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.trim().isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(accountComboBox);
+                errorLabel.setOpacity(0);
+            }
+        });
+
+        // Listener per il secondo account
+        SecondoAccountComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.trim().isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(SecondoAccountComboBox);
+                errorLabel.setOpacity(0);
+            }
+        });
+
+        // Listener per il balance
+        balanceEditor.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.trim().isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(balanceEditor);
+                errorLabel.setOpacity(0);
+            }
+        });
+
+        // Listener per la data
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                FieldAnimationUtils.removeErrorStyles(datePicker);
+                errorLabel.setOpacity(0);
+            }
+        });
+
         transferButton.setOnAction(e -> {
             System.out.println("Transfer button clicked");
             onToggleButtonChange(true);
+        });
+
+        saveButton.setOnAction(event -> {
+            // Reset degli errori precedenti
+            clearError();
+
+            // Verifica campi obbligatori e mostra animazioni
+            if (validateFields()) {
+                System.out.println("Tutti i campi sono validi, procedo con il salvataggio");
+                // TODO: Implementare logica di salvataggio
+                hide();
+                resetScreen();
+            } else {
+                System.out.println("Validazione fallita - verifica i campi evidenziati");
+            }
         });
 
         cancelButton.setOnAction(event -> {
@@ -231,6 +286,69 @@ public class transactionPopupController extends BorderPane {
         }
     }
 
+    private boolean validateFields() {
+        AtomicBoolean hasError = new AtomicBoolean(false);
+
+        // Validazione account principale quando richiesto
+        if (accountComboBox.getValue() == null || accountComboBox.getValue().trim().isEmpty()) {
+            FieldAnimationUtils.animateFieldError(accountComboBox);
+            hasError.set(true);
+        }
+
+        // Validazione balance
+        if (balanceEditor.getText() == null || balanceEditor.getText().trim().isEmpty()) {
+            FieldAnimationUtils.animateFieldError(balanceEditor);
+            hasError.set(true);
+        }
+
+        // Validazione data
+        if (datePicker.getValue() == null) {
+            FieldAnimationUtils.animateFieldError(datePicker);
+            hasError.set(true);
+        }
+
+        // Validazione in base al tipo di transazione
+        if (isTransfer) {
+            // Per i trasferimenti valida il secondo account
+            if (SecondoAccountComboBox.getValue() == null || SecondoAccountComboBox.getValue().trim().isEmpty()) {
+                FieldAnimationUtils.animateFieldError(SecondoAccountComboBox);
+                hasError.set(true);
+            }
+        } else {
+            // Per income/expense valida le categorie
+            if (categorySelector.getSelectedCategory() == null || categorySelector.getSelectedSubCategory() == null) {
+                categorySelector.animateError();
+                hasError.set(true);
+            }
+        }
+
+        if (hasError.get()) {
+            showError("Inserisci tutti i campi!");
+        }
+
+        return !hasError.get();
+    }
+
+    private void showError(String message) {
+        errorLabel.textProperty().bind(Data.lsp.lsb(message));
+        errorLabel.setTextFill(rgb(255,0,0));
+        Timeline fadeInTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> errorLabel.setOpacity(0)),
+                new KeyFrame(Duration.seconds(0.2), e -> errorLabel.setOpacity(1))
+        );
+        fadeInTimeline.setCycleCount(1);
+        fadeInTimeline.play();
+    }
+
+    private void clearError() {
+        FieldAnimationUtils.removeErrorStyles(accountComboBox);
+        FieldAnimationUtils.removeErrorStyles(SecondoAccountComboBox);
+        FieldAnimationUtils.removeErrorStyles(balanceEditor);
+        FieldAnimationUtils.removeErrorStyles(datePicker);
+        categorySelector.removeError();
+        errorLabel.setOpacity(0);
+    }
+
 
     private void resetScreen() {
         //crea una variabile per la data attuale
@@ -249,6 +367,7 @@ public class transactionPopupController extends BorderPane {
         categorySelector.clear();
         tagSelector.clearTags();
         TagFilter.refreshTags();
+
 
         /*
         // pulisce il date picker
@@ -309,6 +428,7 @@ public class transactionPopupController extends BorderPane {
 
 
     private void hide() {
+        clearError();
         contextMenu.hide();
     }
 
@@ -329,6 +449,8 @@ public class transactionPopupController extends BorderPane {
             show(x, y);
         }
     }
+
+
 
 
 
