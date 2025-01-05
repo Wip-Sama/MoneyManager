@@ -22,3 +22,14 @@
     -fx-border-color: -fu-stroke-colors;
     -fx-border-width: 2;
 }
+
+
+.card-transaction-singletran {
+    -fx-background-color: -fu-background-2;
+    -fx-background-radius: 0 6 6 6;
+}
+
+.card-transaction-date {
+    -fx-background-color: -fu-background-2;
+    -fx-background-radius: 6 6 0 0;
+}

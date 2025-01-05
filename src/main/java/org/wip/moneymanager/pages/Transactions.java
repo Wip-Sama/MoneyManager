@@ -32,11 +32,6 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class Transactions extends BorderPane implements AutoCloseable {
-    @FXML
-    private ToggleButton calendar;
-
-    @FXML
-    private ToggleButton daily;
 
     @FXML
     private DateTransactions datePickerTransactions;
@@ -48,18 +43,6 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private Button filter;
 
     @FXML
-    private Label labelExpense;
-
-    @FXML
-    private Label labelIncome;
-
-    @FXML
-    private Label labelTransfer;
-
-    @FXML
-    private ToggleButton monthly;
-
-    @FXML
     private Button newTransaction;
 
     @FXML
@@ -69,11 +52,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private ScrollPane scrollpaneTransaction;
 
     @FXML
-    private CategorySelector categorySelector;
-
-    @FXML
     private VBox vboxCard;
-
 
     protected Parent loaded;
     private transactionPopupController AddNewController;

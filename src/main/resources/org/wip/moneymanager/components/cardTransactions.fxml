@@ -3,30 +3,69 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" stylesheets="@../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="30.0" prefWidth="200.0">
+            <HBox minWidth="-Infinity" prefWidth="50.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" styleClass="card-transaction-date">
                      <children>
-                        <Label fx:id="transactionDay" text="Label" />
+                        <Label fx:id="transactionDay" text="Label">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" />
+                  <Insets right="5.0" />
                </VBox.margin>
                <padding>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets right="5.0" />
                </padding>
             </HBox>
-            <VBox fx:id="cardTransaction" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 6;" styleClass="background-2">
+            <BorderPane maxWidth="1.7976931348623157E308" prefHeight="20.0" styleClass="background-2">
+               <left>
+                  <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
+                     <children>
+                        <Label fx:id="categTransactions" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Category">
+                           <HBox.margin>
+                              <Insets left="46.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="sender" layoutX="27.0" layoutY="28.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Accounts">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </Label>
+                        <SVGPath fx:id="arrowTransaction" content="M27.3536 4.35355C27.5488 4.15829 27.5488 3.84171 27.3536 3.64645L24.1716 0.464466C23.9763 0.269204 23.6597 0.269204 23.4645 0.464466C23.2692 0.659728 23.2692 0.976311 23.4645 1.17157L26.2929 4L23.4645 6.82843C23.2692 7.02369 23.2692 7.34027 23.4645 7.53553C23.6597 7.7308 23.9763 7.7308 24.1716 7.53553L27.3536 4.35355ZM0 4.5L27 4.5V3.5L0 3.5L0 4.5Z" layoutX="-15.0" layoutY="-15.0" styleClass="icon_general" visible="false" />
+                        <Label fx:id="recipient" layoutX="55.0" layoutY="28.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Label" visible="false" />
+                     </children>
+                  </HBox>
+               </left>
+               <right>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Amount" textAlignment="RIGHT">
+                           <HBox.margin>
+                              <Insets right="80.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </right>
+               <center>
+                  <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Tags" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+            <VBox fx:id="cardTransaction" prefHeight="100.0" prefWidth="100.0" styleClass="card-transaction-singletran">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
