@@ -34,7 +34,7 @@
             </VBox>
             <VBox alignment="CENTER" prefWidth="100.0" spacing="10.0">
                <children>
-                  <Label fx:id="notifyError" alignment="CENTER" text="Nessun filtro selezionato." textAlignment="CENTER" textFill="RED" />
+                  <Label fx:id="notifyError" alignment="CENTER" style="-fx-text-fill: red;" text="Nessun filtro selezionato." textAlignment="CENTER" />
                   <Button fx:id="buttonFilter" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="full-button" text="Filtra" />
                   <Button fx:id="cancelPopUp" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="transparent-button" text="Annulla" />
                </children>

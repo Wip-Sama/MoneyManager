@@ -1,5 +1,6 @@
 package org.wip.moneymanager.popUp;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Window;
 import org.wip.moneymanager.components.CategorySelector;
+import org.wip.moneymanager.components.Tag;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.UserDatabase;
@@ -105,7 +107,6 @@ public class popUpFilterController extends AnchorPane {
 
         categoryCombo.populateMainCategoriesType();
         initializeAccountNames();
-        populateAccountCombo();
         buttonFilter.setOnAction(event -> {handleFilterAction();});
         cancelPopUp.setOnAction(e -> hide());
         notifyError.setOpacity(0);
@@ -130,73 +131,66 @@ public class popUpFilterController extends AnchorPane {
     }
 
     private void initializeAccountNames() {
-        try {
-            UserDatabase userDatabase = UserDatabase.getInstance();
-            accountNames = userDatabase.getAllAccountNames().get();
-            if (accountNames == null || accountNames.isEmpty()) {
-                accountNames = List.of();
-                System.err.println("Nessun account trovato nel DB");
+        Task<List<String>> takeAccountsTask = Data.userDatabase.getAllAccountNames();
+        takeAccountsTask.setOnSucceeded(e -> {
+            List<String> accountNames = takeAccountsTask.getValue();
+            if (accountNames.size() > 0) {
+                accountCombo.getItems().setAll(accountNames);
+                accountCombo.setValue(null); //
             }
-        } catch (Exception e) {
-            accountNames = List.of(); // Lista vuota in caso di errore
-            System.err.println("Errore di caricamento dei nomi: " + e.getMessage());
-        }
-    }
-
-    private void populateAccountCombo() {
-        if (accountNames == null || accountCombo == null) {
-            System.err.println("Impossibile popolare accountCombo: accountNames o accountCombo è null");
-            return;
-        }
-
-        accountCombo.getItems().setAll(accountNames);
-        accountCombo.setValue(null); // Non selezionare alcun valore di default
+        });
     }
 
     @FXML
     private void handleFilterAction() {
-        selectedCategory = categoryCombo.getSelectedCategory();
-        selectedSubCategory = categoryCombo.getSelectedSubCategory();
+        if (categoryCombo.getSelectedSubCategory() != null) {
+            selectedCategory = categoryCombo.getSelectedSubCategory();
+        }
+        else{
+            selectedCategory = categoryCombo.getSelectedCategory();
+        }
+
         selectedAccount = accountCombo.getValue();
+        List<Tag> selectedTags = tagCombo.get_selected_tags();
 
-        // Logica per visualizzare l'errore se nessun filtro è selezionato
-        if (selectedCategory == null && selectedSubCategory == null && selectedAccount == null) {
-            // Nessun filtro selezionato, mostra l'errore
+        //visualizzare l'errore se nessun filtro è selezionato
+        if (selectedCategory == null && selectedAccount == null && selectedTags.isEmpty()) {
             notifyError.setOpacity(1); // Mostra il messaggio di errore
-            notifyError.setVisible(true); // Assicurati che la label sia visibile
         } else {
-            // Almeno un filtro è selezionato, continua con la logica
-            System.out.println("Categoria selezionata: " + selectedCategory);
-            System.out.println("Sottocategoria selezionata: " + selectedSubCategory);
-            System.out.println("Account selezionato: " + selectedAccount);
+            if (!selectedTags.isEmpty()) {
+                List<String> filters = new ArrayList<>();
+                for (Tag t : selectedTags){
+                    filters.add(t.getTag());
+                }
+            }
+            if (selectedAccount == null){
 
-            // Nascondi l'errore, se visibile
+            }
+            if (selectedCategory == null){
+
+            }
+
             notifyError.setOpacity(0); // Nasconde il messaggio di errore
-            notifyError.setVisible(false); // Nasconde la label
             hide(); // Chiudi il popup se i filtri sono validi
         }
     }
 
 
-    public List<String> getSelectedFilters() {
-        List<String> filters = new ArrayList<>();
-        if (selectedCategory != null) filters.add(selectedCategory);
-        if (selectedSubCategory != null) filters.add(selectedSubCategory);
-        if (selectedAccount != null) filters.add(selectedAccount);
-        return filters;
+    public void sendFilters(){
+
+
+
     }
+
 
     public void resetFilters() {
         // Reset delle categorie
         if (categoryCombo != null) {
-            System.out.println("Resetting categoryCombo");
             categoryCombo.clear();
             categoryCombo.populateMainCategoriesType();
         }
 
-
         if (accountCombo != null) {
-            System.out.println("Resetting accountCombo");
             accountCombo.setValue(null);
             selectedAccount = null;
         }
