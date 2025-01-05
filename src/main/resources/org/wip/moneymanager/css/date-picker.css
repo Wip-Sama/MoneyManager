@@ -1,7 +1,7 @@
 
 .combo-box-base.date-picker .text-input {
     -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
-    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 0 2 2;
+    -fx-background-insets: 32 0 0 0, 0 0 2 0, 2 0 2 2;
     -fx-background-radius: 4 0 0 4, 3 0 0 0, 3 0 0 3;
     -fx-padding: .333333em .583em .444444em .583em;
     -fx-content-display: LEFT;
@@ -9,10 +9,11 @@
 }
 .combo-box-base.date-picker .arrow-button {
     -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
-    -fx-background-insets: 0 0 0 0, 0 0 2 0, 2 2 2 0;
+    -fx-background-insets: 32 0 0 0, 0 0 2 0, 2 2 2 0;
     -fx-background-radius: 0 4 4 0, 0 3 0 0, 0 4 4 0;
     -fx-padding: .333333em .583em .444444em .583em;
 }
+
 .combo-box-base.date-picker:hover .text-input,
 .combo-box-base.date-picker:hover .arrow-button {
     -fx-background-color: -fu-stroke-hover, -fu-stroke-hover, -fu-foreground-hover;
@@ -118,7 +119,8 @@ Voglio lasciare questo commento per commemorare la mia sofferenza
 }
 
 .date-picker-popup > .calendar-grid {
-    -fx-padding: 1em;
+    -fx-background-insets: 0 2 2 2;
+    -fx-padding: 4;
 }
 .date-picker-popup > * > .date-cell {
     -fx-alignment: BASELINE_CENTER;
