@@ -14,17 +14,31 @@
     -fx-background-insets: 0.3 0.3 0 0.3, 0 0 3 0, 2 2 3 2;
 }
 
-.balance_editor > .choice-box {
+.balance_editor > .combo-box {
     -fx-background-color: transparent;
 }
 
-.balance_editor > .choice-box .open-button {
+.balance_editor > .combo-box:showing {
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-insets: 33 0 0 0, 26 2 0 2;
+    -fx-background-radius: 0, 0;
+}
+
+
+.balance_editor > .combo-box:showing:hover {
+    -fx-background-color: -fu-stroke-rest, -fu-foreground-hover;
+    -fx-background-insets: 33 0 0 0, 26 2 0 2;
+    -fx-background-radius: 0, 0;
+}
+
+
+.balance_editor > .combo-box .open-button {
     -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 1 1 0;
     -fx-padding: 0;
     -fx-translate-x: 1;
 }
 
-.balance_editor > .choice-box > .open-button > .arrow {
+.balance_editor > .combo-box > .open-button > .arrow {
     -fx-shape: "M5.264 10.961C5.62 11.584 6.282 11.969 7 11.969 7.718 11.969 8.38 11.584 8.736 10.961 10.086 8.6 11.948 5.342 13.29 2.992 13.644 2.373 13.641 1.613 13.283.996 12.926.38 12.267 0 11.554 0 8.862 0 5.138 0 2.446 0 1.733 0 1.074.38.717.996.359 1.613.356 2.373.71 2.992 2.052 5.342 3.914 8.6 5.264 10.961Z";
     -fx-background-color: transparent /*-fu-text-1*/, -fu-stroke-rest;
     -fx-translate-y: 1;
