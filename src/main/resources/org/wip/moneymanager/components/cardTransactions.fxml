@@ -17,26 +17,27 @@
                         <Label fx:id="transactionDay" text="Label" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="transactionIn" text="Label" />
-                        <Label fx:id="transactionOut" text="Label" />
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
                </VBox.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </HBox>
-            <VBox fx:id="cardTransaction" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 6;" styleClass="background-2">
+            <VBox fx:id="cardTransaction" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 6;" styleClass="background-2">
                <VBox.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets />
                </VBox.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </VBox>
          </children>
       </VBox>
    </children>
    <padding>
-      <Insets bottom="20.0" />
+      <Insets bottom="12.0" />
    </padding>
 </fx:root>

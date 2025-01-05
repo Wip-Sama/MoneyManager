@@ -31,12 +31,6 @@ public class CardTransactions extends AnchorPane {
     private Label transactionDay;
 
     @FXML
-    private Label transactionIn;
-
-    @FXML
-    private Label transactionOut;
-
-    @FXML
     private Label account1;
 
     @FXML

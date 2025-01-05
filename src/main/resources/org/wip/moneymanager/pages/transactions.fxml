@@ -22,7 +22,7 @@
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
                <content>
-                  <VBox fx:id="vboxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" styleClass="background-3" />
+                  <VBox fx:id="vboxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="background-3" />
                </content>
             </ScrollPane>
          </center>

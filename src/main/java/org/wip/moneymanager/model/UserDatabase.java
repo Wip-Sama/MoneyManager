@@ -749,7 +749,6 @@ public class UserDatabase extends Database {
                 String query = "SELECT * FROM Transactions WHERE date = ?;";
                 try (PreparedStatement stmt = con.prepareStatement(query)) {
                     stmt.setInt(1, unix);
-                    System.out.println("Executing query with Unix timestamp: " + unix);
                     try (ResultSet rs = stmt.executeQuery()) {
                         while (rs.next()) {
                             transactionDates.add(new dbTransaction(rs, this));
@@ -808,7 +807,7 @@ public class UserDatabase extends Database {
             List<dbTag> tagList = new ArrayList<>();
             if (isConnected()) {
                 try {
-                    String queryTags = "SELECT tag FROM Transaction_tags WHERE transaction = ?;";
+                    String queryTags = "SELECT Tag_id FROM Transactions_tags WHERE Transaction_id = ?;";
                     PreparedStatement stmtTags = con.prepareStatement(queryTags);
                     stmtTags.setInt(1, transactionId);
                     ResultSet rsTags = stmtTags.executeQuery();
