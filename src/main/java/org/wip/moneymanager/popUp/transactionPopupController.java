@@ -2,6 +2,7 @@ package org.wip.moneymanager.popUp;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -105,25 +106,30 @@ public class transactionPopupController extends BorderPane {
     private void initialize() {
         Data.esm.register(executorService);
 
-        // Initialize accountNames list
-        try {
-            UserDatabase userDatabase = UserDatabase.getInstance();
-            accountNames = userDatabase.getAllAccountNames().get();
-            if (accountNames == null || accountNames.isEmpty()) {
-                accountNames = List.of(); // Create empty immutable list
-                System.err.println("Warning: No accounts found in database");
+        errorLabel.setOpacity(0);
 
+        // Inizializza accountNames list tramite Task
+        Task<List<String>> namesAccountsTask = Data.userDatabase.getAllAccountNames();
+        namesAccountsTask.setOnSucceeded(event -> {
+            accountNames = namesAccountsTask.getValue(); // Salva i risultati nella variabile membro
+            if (accountNames != null) {
+                accountComboBox.getItems().setAll(accountNames); // Popola accountComboBox
+                SecondoAccountComboBox.getItems().setAll(accountNames); // Popola SecondoAccountComboBox se necessario
             }
-        } catch (Exception e) {
-            accountNames = List.of(); // Create empty immutable list
-            System.err.println("Error loading account names: " + e.getMessage());
-        }
+        });
+        namesAccountsTask.setOnFailed(event -> {
+            System.err.println("Errore nel caricamento degli account: " + namesAccountsTask.getException().getMessage());
+        });
 
-        SecondoAccountComboBox.setVisible(false); // Nasconde il secondo account
-        SecondoAccountComboBox.setManaged(false); // Rimuove lo spazio occupato
+        executorService.submit(namesAccountsTask);
 
-        categorySelector.setVisible(true); // Mostra il selettore di categoria
-        categorySelector.setManaged(true); // Garantisce la gestione dello spazio
+        // Imposta visibilità iniziale dei componenti
+        SecondoAccountComboBox.setVisible(false);
+        SecondoAccountComboBox.setManaged(false);
+
+        categorySelector.setVisible(true);
+        categorySelector.setManaged(true);
+
 
         cancelButton.setOnAction(e -> hide());
 
@@ -132,110 +138,42 @@ public class transactionPopupController extends BorderPane {
         expenseButton.setToggleGroup(toggleGroup);
         transferButton.setToggleGroup(toggleGroup);
 
-        // Imposta l'incomeButton come default
         incomeButton.setSelected(true);
-
         categorySelector.populateMainCategoriesForIncome();
 
-
-        // Impedisce che il toggle venga deselezionato
         toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 toggleGroup.selectToggle(oldValue);
             }
         });
 
-        // fa in modo che il datepicker non sia editabile
         datePicker.getEditor().setEditable(false);
         datePicker.setEditable(false);
-
-        //quando clicco sul textfield del datepicker apre direttamente il calendario
         datePicker.getEditor().setOnMouseClicked(e -> {
             if (!datePicker.isShowing()) {
                 datePicker.show();
             }
         });
 
-        /*
-
-        // Imposta il listener per il cambio di valore del DatePicker
-        datePicker.getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) { // When focus is lost
-                try {
-                    datePicker.getValue(); // Try to get the value
-                } catch (Exception e) {
-                    // If there's an error, clear the field
-                    datePicker.getEditor().clear();
-                    datePicker.setValue(null);
-                }
-            }
-        });
-
-         */
-
-
         incomeButton.setOnAction(e -> {
-            System.out.println("Income button clicked");
             onToggleButtonChange(false);
-            //Popola le category per l'income
             categorySelector.populateMainCategoriesForIncome();
         });
 
         expenseButton.setOnAction(e -> {
-            System.out.println("Expense button clicked");
             onToggleButtonChange(false);
-            //Popola le category per l'expense
             categorySelector.populateMainCategoriesForExpense();
         });
 
-        accountComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && !newValue.trim().isEmpty()) {
-                FieldAnimationUtils.removeErrorStyles(accountComboBox);
-                errorLabel.setOpacity(0);
-            }
-        });
-
-        // Listener per il secondo account
-        SecondoAccountComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && !newValue.trim().isEmpty()) {
-                FieldAnimationUtils.removeErrorStyles(SecondoAccountComboBox);
-                errorLabel.setOpacity(0);
-            }
-        });
-
-        // Listener per il balance
-        balanceEditor.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && !newValue.trim().isEmpty()) {
-                FieldAnimationUtils.removeErrorStyles(balanceEditor);
-                errorLabel.setOpacity(0);
-            }
-        });
-
-        // Listener per la data
-        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                FieldAnimationUtils.removeErrorStyles(datePicker);
-                errorLabel.setOpacity(0);
-            }
-        });
-
         transferButton.setOnAction(e -> {
-            System.out.println("Transfer button clicked");
             onToggleButtonChange(true);
         });
 
         saveButton.setOnAction(event -> {
-            // Reset degli errori precedenti
             clearError();
-
-            // Verifica campi obbligatori e mostra animazioni
             if (validateFields()) {
-                System.out.println("Tutti i campi sono validi, procedo con il salvataggio");
-                // TODO: Implementare logica di salvataggio
                 hide();
                 resetScreen();
-            } else {
-                System.out.println("Validazione fallita - verifica i campi evidenziati");
             }
         });
 
@@ -243,14 +181,13 @@ public class transactionPopupController extends BorderPane {
             resetScreen();
             hide();
         });
-
     }
+
 
 
 
     private void populateComboBoxes(boolean isTransfer) {
         if (accountNames == null) {
-            System.err.println("Warning: accountNames is null in populateComboBoxes");
             return;
         }
 
@@ -330,6 +267,7 @@ public class transactionPopupController extends BorderPane {
     }
 
     private void showError(String message) {
+        errorLabel.setOpacity(1);
         errorLabel.textProperty().bind(Data.lsp.lsb(message));
         errorLabel.setTextFill(rgb(255,0,0));
         Timeline fadeInTimeline = new Timeline(

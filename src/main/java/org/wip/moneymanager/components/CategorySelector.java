@@ -42,17 +42,27 @@ public class CategorySelector extends HBox {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
-        category_box.setOnAction(event -> populateSubCategories());
+        if (category_box.getOnAction() == null) { // Evita registrazioni multiple
+            category_box.setOnAction(event -> populateSubCategories());
+        }
     }
 
+
+    // POPOLAMENTO CATEGORIE PRINCIPALI
+
     private void populateMainCategoriesByType(int type) {
+        Platform.runLater(() -> {
+            clear(); // Svuota le ComboBox prima di aggiungere nuovi elementi
+            category_box.setDisable(true); // Disabilita durante il caricamento
+        });
+
         Task<List<String>> taskCategory = Data.userDatabase.getMainCategoryNamesByType(type);
-        clear();
 
         taskCategory.setOnSucceeded(event -> {
             List<String> mainCategories = taskCategory.getValue();
             Platform.runLater(() -> {
                 category_box.getItems().addAll(mainCategories);
+                category_box.setDisable(false); // Riabilita dopo il caricamento
             });
         });
 
@@ -60,19 +70,25 @@ public class CategorySelector extends HBox {
             Throwable ex = taskCategory.getException();
             System.err.println("Errore durante il caricamento delle categorie principali: " + ex.getMessage());
             ex.printStackTrace();
+            Platform.runLater(() -> category_box.setDisable(false)); // Riabilita anche in caso di errore
         });
 
         executorService.submit(taskCategory);
     }
 
     public void populateMainCategoriesAllType() {
+        Platform.runLater(() -> {
+            clear();
+            category_box.setDisable(true);
+        });
+
         Task<List<String>> taskCategory = Data.userDatabase.getMainCategoryNames();
-        clear();
 
         taskCategory.setOnSucceeded(event -> {
             List<String> mainCategories = taskCategory.getValue();
             Platform.runLater(() -> {
                 category_box.getItems().addAll(mainCategories);
+                category_box.setDisable(false);
             });
         });
 
@@ -80,12 +96,16 @@ public class CategorySelector extends HBox {
             Throwable ex = taskCategory.getException();
             System.err.println("Errore durante il caricamento delle categorie principali: " + ex.getMessage());
             ex.printStackTrace();
+            Platform.runLater(() -> category_box.setDisable(false));
         });
 
         executorService.submit(taskCategory);
     }
 
-    public void populateMainCategoriesType(){ populateMainCategoriesAllType();}
+    public void populateMainCategoriesType() {
+        populateMainCategoriesAllType();
+    }
+
     public void populateMainCategoriesForIncome() {
         populateMainCategoriesByType(0); // Type 0: Entrate
     }
@@ -94,14 +114,18 @@ public class CategorySelector extends HBox {
         populateMainCategoriesByType(1); // Type 1: Spese
     }
 
+
+    // POPOLAMENTO SOTTOCATEGORIE
     private void populateSubCategories() {
         String selectedMainCategory = category_box.getSelectionModel().getSelectedItem();
         if (selectedMainCategory != null) {
+            Platform.runLater(() -> sub_category_box.getItems().clear()); // Svuota prima le sottocategorie
+
             Task<List<String>> taskSubCategory = Data.userDatabase.getSubCategoriesByMainCategory(selectedMainCategory);
+
             taskSubCategory.setOnSucceeded(event -> {
                 List<String> subCategories = taskSubCategory.getValue();
                 Platform.runLater(() -> {
-                    sub_category_box.getItems().clear();
                     sub_category_box.getItems().addAll(subCategories);
                 });
             });
@@ -116,6 +140,9 @@ public class CategorySelector extends HBox {
         }
     }
 
+
+    // METODI DI UTILITÀ
+
     public String getSelectedCategory() {
         return category_box.getSelectionModel().getSelectedItem();
     }
@@ -129,16 +156,17 @@ public class CategorySelector extends HBox {
     }
 
     public void clear() {
-        category_box.getItems().clear();
-        sub_category_box.getItems().clear();
+        Platform.runLater(() -> {
+            category_box.getItems().clear();
+            sub_category_box.getItems().clear();
+        });
     }
 
     public void animateError() {
         FieldAnimationUtils.animateFieldError(category_box);
     }
+
     public void removeError() {
         FieldAnimationUtils.removeErrorStyles(category_box);
     }
-
-
 }
