@@ -14,6 +14,7 @@ import org.wip.moneymanager.components.Tag;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.UserDatabase;
+import org.wip.moneymanager.pages.Transactions;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -71,10 +72,10 @@ public class popUpFilterController extends AnchorPane {
 
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-    public popUpFilterController(Window window) throws IOException {
+    private final Transactions transactions;
+    public popUpFilterController(Window window, Transactions transactions) throws IOException {
         this.ownerWindow = window;
-
+        this.transactions = transactions;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/popUpFilter.fxml"));
         fxmlLoader.setController(this);
         Parent loaded = fxmlLoader.load();
@@ -153,6 +154,7 @@ public class popUpFilterController extends AnchorPane {
         selectedAccount = accountCombo.getValue();
         List<Tag> selectedTags = tagCombo.get_selected_tags();
 
+
         //visualizzare l'errore se nessun filtro è selezionato
         if (selectedCategory == null && selectedAccount == null && selectedTags.isEmpty()) {
             notifyError.setOpacity(1); // Mostra il messaggio di errore
@@ -161,27 +163,16 @@ public class popUpFilterController extends AnchorPane {
                 List<String> filters = new ArrayList<>();
                 for (Tag t : selectedTags){
                     filters.add(t.getTag());
+                    System.out.println(t.getTag());
                 }
+            transactions.applyFilters(selectedCategory, selectedAccount, filters);
+            } else {
+                transactions.applyFilters(selectedCategory, selectedAccount, null);
             }
-            if (selectedAccount == null){
-
-            }
-            if (selectedCategory == null){
-
-            }
-
             notifyError.setOpacity(0); // Nasconde il messaggio di errore
             hide(); // Chiudi il popup se i filtri sono validi
         }
     }
-
-
-    public void sendFilters(){
-
-
-
-    }
-
 
     public void resetFilters() {
         // Reset delle categorie

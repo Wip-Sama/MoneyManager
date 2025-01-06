@@ -12,6 +12,7 @@ import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.CardTransactions;
 import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.DateTransactions;
+import org.wip.moneymanager.model.DBObjects.TransactionByDate;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.popUpFilterController;
 import org.wip.moneymanager.popUp.transactionPopupController;
@@ -106,7 +107,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private void openPopUpFilter() {
         try {
             if (AddNewFilterController == null) {
-                AddNewFilterController = new popUpFilterController(filter.getScene().getWindow());
+                AddNewFilterController = new popUpFilterController(filter.getScene().getWindow(), this);
             }
 
             Bounds bounds = filter.localToScreen(filter.getBoundsInLocal());
@@ -143,6 +144,27 @@ public class Transactions extends BorderPane implements AutoCloseable {
             }
         });
     }
+
+    public void applyFilters(String category, String account, List<String> tags) {
+        // Ottieni i giorni e le transazioni filtrate dal database
+        Task<List<TransactionByDate>> generaCard = Data.userDatabase.getAllDaysOfTransaction(category, account, tags);
+
+        generaCard.setOnSucceeded(event -> {
+            if (generaCard.getValue() != null) {
+                List<TransactionByDate> transactionByDateList = generaCard.getValue();
+
+                // Rimuovi le card esistenti
+                vboxCard.getChildren().clear();
+
+                // Crea le card per ogni TransactionByDate
+                for (TransactionByDate tbd : transactionByDateList) {
+                    CardTransactions cardNode = new CardTransactions(tbd);  // Passa l'oggetto TransactionByDate
+                    vboxCard.getChildren().add(cardNode);
+                }
+            }
+        });
+    }
+
 
 
 

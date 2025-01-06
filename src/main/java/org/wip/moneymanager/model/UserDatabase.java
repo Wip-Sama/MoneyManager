@@ -425,23 +425,6 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<Integer> getCategoryIdByName(String name) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "SELECT id FROM Categories WHERE name = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setString(1, name);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    int id = rs.getInt("id");
-                    stmt.close();
-                    return id;
-                }
-                stmt.close();
-            }
-            throw new IllegalArgumentException("Category not found");
-        });
-    }
 
     public Task<List<String>> getMainCategoryNamesByType(int type) {
         return asyncCall(() -> {
@@ -742,6 +725,153 @@ public class UserDatabase extends Database {
 
     }
 
+    public Task<List<TransactionByDate>> getAllDaysOfTransaction(String selectedCategory, String selectedAccount, List<String> selectedTags) {
+        return asyncCall(() -> {
+            List<TransactionByDate> transactionByDateList = new ArrayList<>();
+
+            // Recupera gli ID della categoria, account e tag
+            Integer categoryId = getCategoryIdByName(selectedCategory);
+            Integer accountId = getAccountIdByName(selectedAccount);
+            List<Integer> tagIds = getTagIdsByNames(selectedTags);
+
+            // Inizializza la parte base della query
+            StringBuilder queryBuilder = new StringBuilder("SELECT t.id, t.date FROM Transactions t WHERE 1=1");
+
+            // Lista per i parametri di filtro da passare alla PreparedStatement
+            List<Object> params = new ArrayList<>();
+
+            // Aggiungi il filtro per la categoria se l'ID è valido
+            if (categoryId != null) {
+                queryBuilder.append(" AND t.category = ?");
+                params.add(categoryId);
+            }
+
+            // Aggiungi il filtro per l'account se l'ID è valido
+            if (accountId != null) {
+                queryBuilder.append(" AND (t.account = ? OR t.second_account = ?)");
+                params.add(accountId);
+                params.add(accountId);  // Per second_account
+            }
+
+            // Aggiungi il filtro per i tag se ci sono tag selezionati
+            if (!tagIds.isEmpty()) {
+                queryBuilder.append(" AND EXISTS (SELECT 1 FROM Transactions_Tags tt WHERE t.id = tt.transaction_id AND tt.tag_id IN (");
+                for (int i = 0; i < tagIds.size(); i++) {
+                    queryBuilder.append("?");
+                    if (i < tagIds.size() - 1) {
+                        queryBuilder.append(",");
+                    }
+                    params.add(tagIds.get(i));
+                }
+                queryBuilder.append("))");
+            }
+
+            // Aggiungi la parte finale della query per eseguire la selezione
+            String query = queryBuilder.toString();
+
+            if (isConnected()) {
+                // Esegui la query preparata
+                PreparedStatement stmt = con.prepareStatement(query);
+
+                // Imposta i parametri della query
+                for (int i = 0; i < params.size(); i++) {
+                    stmt.setObject(i + 1, params.get(i));
+                }
+
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    Integer transactionId = rs.getInt("id");
+                    Integer date = rs.getInt("date");
+
+                    // Trova o crea una entry per quella data
+                    TransactionByDate transactionByDate = findTransactionByDate(transactionByDateList, date);
+                    if (transactionByDate == null) {
+                        transactionByDate = new TransactionByDate(date);
+                        transactionByDateList.add(transactionByDate);
+                    }
+
+                    // Aggiungi l'ID della transazione alla lista della data corrispondente
+                    transactionByDate.addTransactionId(transactionId);
+                }
+                stmt.close();
+            }
+
+            return transactionByDateList;
+        });
+    }
+
+    // Metodo per trovare una data esistente o crearne una nuova
+    private TransactionByDate findTransactionByDate(List<TransactionByDate> transactionByDateList, Integer date) {
+        for (TransactionByDate tbd : transactionByDateList) {
+            if (tbd.getDate().equals(date)) {
+                return tbd;
+            }
+        }
+        return null; // Se non esiste, ritorna null
+    }
+
+
+
+
+    private Integer getCategoryIdByName(String categoryName) throws SQLException {
+        if (categoryName == null) {
+            return null;
+        }
+
+        String query = "SELECT id FROM Categories WHERE name = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, categoryName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        }
+        return null;
+    }
+
+    private Integer getAccountIdByName(String accountName) throws SQLException {
+        if (accountName == null) {
+            return null;
+        }
+
+        String query = "SELECT id FROM Accounts WHERE name = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, accountName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        }
+        return null;
+    }
+
+    private List<Integer> getTagIdsByNames(List<String> tagNames) throws SQLException {
+        List<Integer> tagIds = new ArrayList<>();
+        if (tagNames == null || tagNames.isEmpty()) {
+            return tagIds;
+        }
+
+        // Crea una query con il numero corretto di "?" come segnaposto per i parametri
+        String query = "SELECT id FROM Tag WHERE name IN (" + String.join(",", Collections.nCopies(tagNames.size(), "?")) + ")";
+
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            // Imposta i parametri per la query preparata
+            for (int i = 0; i < tagNames.size(); i++) {
+                stmt.setString(i + 1, tagNames.get(i)); // Imposta ogni nome del tag come parametro
+            }
+
+            // Esegui la query
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                tagIds.add(rs.getInt("id"));
+            }
+        }
+
+        return tagIds;
+    }
+
+
+
     public Task<List<dbTransaction>> fillCard(Integer unix) {
         return asyncCall(() -> {
             List<dbTransaction> transactionDates = new ArrayList<>();
@@ -840,6 +970,49 @@ public class UserDatabase extends Database {
         });
     }
 
+
+    public Task<List<dbTransaction>> getAllTransactions(List<Integer> transactionIds) {
+        return asyncCall(() -> {
+            List<dbTransaction> transactions = new ArrayList<>();
+
+            if (isConnected()) {
+                // Creiamo la query con un IN per gli ID delle transazioni
+                StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Transactions WHERE id IN (");
+
+                // Aggiungiamo i placeholder per ogni ID (?)
+                for (int i = 0; i < transactionIds.size(); i++) {
+                    queryBuilder.append("?");
+                    if (i < transactionIds.size() - 1) {
+                        queryBuilder.append(",");
+                    }
+                }
+                queryBuilder.append(");");
+
+                String query = queryBuilder.toString();
+
+                try (PreparedStatement stmt = con.prepareStatement(query)) {
+                    // Impostiamo i parametri della query
+                    for (int i = 0; i < transactionIds.size(); i++) {
+                        stmt.setInt(i + 1, transactionIds.get(i)); // Imposta gli ID delle transazioni
+                    }
+
+                    // Eseguiamo la query
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        while (rs.next()) {
+                            // Creiamo l'oggetto dbTransaction per ogni riga del ResultSet
+                            transactions.add(new dbTransaction(rs, this));
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Database not connected.");
+            }
+
+            return transactions;
+        });
+    }
 
 }
 
