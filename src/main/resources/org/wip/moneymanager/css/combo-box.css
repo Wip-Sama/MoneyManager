@@ -51,21 +51,38 @@
 .combo-box-base.combo-box > .arrow-button {
     -fx-padding: 0 8 0 4;
 }
-.combo-box .list-view .list-cell{
+
+.combo-box .list-view .list-cell {
     -fx-background-color:  -fu-foreground-rest;
     -fx-padding: 3 0 2 7;
+    -fx-background-insets: 0 1.5 0 1.5;
+    -fx-background-radius: 1.5;
 }
+
+/* vecchia selezione */
+/*.combo-box .list-view .list-cell {*/
+/*    -fx-background-color:  -fu-foreground-rest;*/
+/*    -fx-padding: 3 0 2 7;*/
+/*    -fx-background-insets: 1 0 1 0;*/
+/*    -fx-background-radius: 1;*/
+/*}*/
+
 .combo-box .list-view .list-cell:hover  {
-    -fx-background-color:  -fu-accent;
+    -fx-background-color: -fu-accent;
+    /*-fx-opacity: .8; non so bene la grafica mi sembrava carino, forse invertito è meglio ma lo ho commentato*/
     -fx-padding: 3 0 2 7;
+}
+
+.combo-box .list-view .list-cell:empty:hover  {
+    -fx-background-color:  transparent;
 }
 
 .combo-box .list-view .list-cell:selected  {
-    -fx-background-color:  -fu-accent;
+    -fx-background-color: -fu-accent;
     -fx-padding: 3 0 2 7;
 }
 
-.combo-box .list-view{
+.combo-box .list-view {
     -fx-background-color: -fu-foreground-rest;
     -fx-border-color: -fu-stroke-rest;
     -fx-border-width: 0 2 2 2;
