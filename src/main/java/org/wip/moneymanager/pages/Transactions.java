@@ -1,5 +1,6 @@
 package org.wip.moneymanager.pages;
 
+import javafx.animation.RotateTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
+import javafx.util.Duration;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.CardTransactions;
 import org.wip.moneymanager.components.CategorySelector;
@@ -39,10 +42,16 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private HBox HboxmultiDatePicker;
 
     @FXML
+    private Button TransactionsRefreshButton;
+
+    @FXML
     private ToggleButton favouriteToggle;
 
     @FXML
     private Button filter;
+
+    @FXML
+    private SVGPath iconRefresh;
 
     @FXML
     private Button newTransaction;
@@ -60,6 +69,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private transactionPopupController AddNewController;
     private popUpFilterController AddNewFilterController;
     private String date;
+    private List<CardTransactions> transactions = new ArrayList<>();
 
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -92,11 +102,26 @@ public class Transactions extends BorderPane implements AutoCloseable {
             }
         });
 
+
+
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions"));
         newTransaction.setOnAction(event -> open_popup());
         filter.setOnAction(event -> openPopUpFilter());
         generateDailyCard();
 
+
+        TransactionsRefreshButton.setOnAction(event -> {
+            RotateTransition rotateTransition = new RotateTransition();
+            rotateTransition.setNode(iconRefresh);            // Nodo da animare
+            rotateTransition.setDuration(Duration.seconds(2)); // Durata di un ciclo
+            rotateTransition.setByAngle(360);            // Ruota di 360 gradi
+            rotateTransition.setAutoReverse(false);      // Non invertire direzione
+            rotateTransition.play();
+
+            generateDailyCard();
+
+
+        });
     }
 
 
@@ -140,6 +165,10 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
 
     private void generateDailyCard() {
+        if (transactions != null) {
+            transactions.clear();
+        }
+
         Task<List<Integer>> generaCard = Data.userDatabase.getAllDaysOfTransaction();
         generaCard.setOnSucceeded(event -> {
             if (generaCard.getValue() != null) {
@@ -151,9 +180,11 @@ public class Transactions extends BorderPane implements AutoCloseable {
                 // Create a list of unique timestamps
                 List<Integer> uniqueTimestampsList = new ArrayList<>(uniqueTimestamps);
 
+                vboxCard.getChildren().clear();
                 // Iterate through unique timestamps and create CardTransactions
                 for (Integer timestamp : uniqueTimestampsList) {
                     CardTransactions cardNode = new CardTransactions(timestamp);
+                    transactions.add(cardNode);
                     vboxCard.getChildren().add(cardNode);
                 }
             }
@@ -162,6 +193,9 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     public void applyFilters(String category, String account, List<String> tags) {
         // Ottieni i giorni e le transazioni filtrate dal database
+        if (transactions != null) {
+            transactions.clear();
+        }
         Task<List<TransactionByDate>> generaCard = Data.userDatabase.getAllDaysOfTransaction(category, account, tags);
 
         generaCard.setOnSucceeded(event -> {
@@ -173,7 +207,8 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
                 // Crea le card per ogni TransactionByDate
                 for (TransactionByDate tbd : transactionByDateList) {
-                    CardTransactions cardNode = new CardTransactions(tbd);  // Passa l'oggetto TransactionByDate
+                    CardTransactions cardNode = new CardTransactions(tbd); // Passa l'oggetto TransactionByDate
+                    transactions.add(cardNode);
                     vboxCard.getChildren().add(cardNode);
                 }
             }
