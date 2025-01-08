@@ -7,11 +7,12 @@ import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.CardTransactions;
 import org.wip.moneymanager.components.CategorySelector;
-import org.wip.moneymanager.components.DateTransactions;
+import org.wip.moneymanager.components.MultiDatePicker;
 import org.wip.moneymanager.model.DBObjects.TransactionByDate;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.popUpFilterController;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
 public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
-    private DateTransactions datePickerTransactions;
+    private HBox HboxmultiDatePicker;
 
     @FXML
     private ToggleButton favouriteToggle;
@@ -77,6 +78,20 @@ public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+        MultiDatePicker multiDatePicker = new MultiDatePicker(); // Crea una nuova istanza
+        multiDatePicker.withRangeSelectionMode();  // Abilita la selezione di intervallo
+        DatePicker rangePicker = multiDatePicker.getDatePicker();
+        // Aggiungi il MultiDatePicker all'HBox
+        HboxmultiDatePicker.getChildren().add(rangePicker);  // Aggiungi il componente all'HBox
+
+        // Aggiungi un listener se vuoi reagire ai cambiamenti di data
+        rangePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Gestisci la selezione della data (per esempio, stampa la data)
+                System.out.println("Data selezionata: " + newValue);
+            }
+        });
+
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions"));
         newTransaction.setOnAction(event -> open_popup());
         filter.setOnAction(event -> openPopUpFilter());

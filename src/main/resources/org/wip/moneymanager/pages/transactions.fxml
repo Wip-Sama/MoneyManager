@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
-<?import org.wip.moneymanager.components.DateTransactions?>
 
 <fx:root prefHeight="526.0" prefWidth="750.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
@@ -43,9 +42,8 @@
                </Label>
             <BorderPane VBox.vgrow="ALWAYS">
                <left>
-                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER_LEFT"  fx:id="HboxmultiDatePicker" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                      <children>
-                        <DateTransactions fx:id="datePickerTransactions" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" />
                      </children>
                   </HBox>
                </left>
