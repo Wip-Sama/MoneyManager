@@ -65,7 +65,7 @@
                   <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Tags" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
-            <VBox fx:id="cardTransaction" prefHeight="100.0" prefWidth="100.0" styleClass="card-transaction-singletran">
+            <VBox fx:id="cardTransaction" styleClass="card-transaction-singletran">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

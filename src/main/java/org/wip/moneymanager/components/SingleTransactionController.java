@@ -62,10 +62,11 @@ public class SingleTransactionController extends AnchorPane {
 
     private final String originalBackgroundColor = "-fx-background-color: transparent;"; // Colore di sfondo originale
     private final String hoverBackgroundColor = "-fx-background-color: -fu-background-3;" + "-fx-background-radius: 6;"; // Colore di sfondo al passaggio del mouse (puoi cambiarlo)
+    private CardTransactions parentCardTransactions;
 
-
-    public SingleTransactionController(dbTransaction timestamp) {
+    public SingleTransactionController(dbTransaction timestamp , CardTransactions parentCardTransactions) {
         myTransaction = timestamp;
+        this.parentCardTransactions = parentCardTransactions;
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/components/singleTransaction.fxml"));
             loader.setRoot(this);
@@ -117,6 +118,7 @@ public class SingleTransactionController extends AnchorPane {
             else {
                 try {
                     myTransaction.setFavourite(0);
+                    parentCardTransactions.removeVbox(myTransaction);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -176,6 +178,10 @@ public class SingleTransactionController extends AnchorPane {
         } else {
             return false;
         }
+    }
+
+    public Object getTransaction() {
+        return myTransaction;
     }
 }
 

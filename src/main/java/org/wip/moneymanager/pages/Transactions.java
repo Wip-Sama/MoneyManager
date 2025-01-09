@@ -111,9 +111,11 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
         favouriteToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
+                favouriteToggle.setSelected(true);
                 favoriteSvg.setContent(on_fav);
                 filterFavoriteTransactions();
             } else {
+                favouriteToggle.setSelected(false);
                 favoriteSvg.setContent(off_fav);
                 restoreAllTransactions();
             }
@@ -179,20 +181,19 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
                     displayedTransactions.add(cardNode);
                     vboxCard.getChildren().add(cardNode);
-                }
 
+                }
                 if (favouriteToggle.isSelected()) {
-                    filterFavoriteTransactions(); // Applica i filtri preferiti
+                    filterFavoriteTransactions();
                 }
             }
         });
-
         executorService.submit(task);
     }
 
 
 
-    private void filterFavoriteTransactions() {
+    public void filterFavoriteTransactions() {
         vboxCard.getChildren().removeIf(card -> {
             if (card instanceof CardTransactions) {
                 CardTransactions cardTransaction = (CardTransactions) card;

@@ -3,6 +3,7 @@ package org.wip.moneymanager.components;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -10,6 +11,7 @@ import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.DBObjects.TransactionByDate;
 import org.wip.moneymanager.model.DBObjects.dbTransaction;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.pages.Transactions;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -44,6 +46,26 @@ public class CardTransactions extends AnchorPane {
         initialize();
         generaTransactionsByIds(transactionByDate.getTransactionIds());
     }
+    public void removeVbox(dbTransaction myTransaction) {
+        // Rimuovi la transazione dalla card
+        cardTransaction.getChildren().removeIf(card -> {
+            if (card instanceof SingleTransactionController) {
+                SingleTransactionController cardTransaction = (SingleTransactionController) card;
+                return cardTransaction.getTransaction().equals(myTransaction);
+            }
+            return false;
+        });
+
+        // Controlla se la cardTransaction è vuota
+        if (cardTransaction.getChildren().isEmpty()) {
+            VBox vboxParent = (VBox) cardTransaction.getParent();
+            if (vboxParent != null) {
+                vboxParent.getChildren().remove(cardTransaction); // Rimuovi la CardTransactions specifica
+            }
+        }
+    }
+
+
 
     private String formatUnixDate(Integer unixDate) {
         LocalDate localDate = Instant.ofEpochSecond(unixDate)
@@ -70,7 +92,7 @@ public class CardTransactions extends AnchorPane {
             List<dbTransaction> transactions = task.getValue();
             if (transactions != null) {
                 transactions.forEach(transaction -> {
-                    SingleTransactionController cardNode = new SingleTransactionController(transaction);
+                    SingleTransactionController cardNode = new SingleTransactionController(transaction, this);
                     cardTransaction.getChildren().add(cardNode);
                     this.transactions.add(transaction);
                 });
@@ -85,7 +107,7 @@ public class CardTransactions extends AnchorPane {
             List<dbTransaction> transactions = task.getValue();
             if (transactions != null) {
                 transactions.forEach(transaction -> {
-                    SingleTransactionController cardNode = new SingleTransactionController(transaction);
+                    SingleTransactionController cardNode = new SingleTransactionController(transaction, this);
                     cardTransaction.getChildren().add(cardNode);
                     this.transactions.add(transaction);
                 });
@@ -127,7 +149,7 @@ public class CardTransactions extends AnchorPane {
     public void restoreAllTransactions() {
         cardTransaction.getChildren().clear();
         transactions.forEach(transaction -> {
-            SingleTransactionController cardNode = new SingleTransactionController(transaction);
+            SingleTransactionController cardNode = new SingleTransactionController(transaction, this);
             cardTransaction.getChildren().add(cardNode);
         });
     }
