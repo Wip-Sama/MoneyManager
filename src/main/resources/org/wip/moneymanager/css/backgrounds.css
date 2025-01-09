@@ -26,7 +26,12 @@
 
 .card-transaction-singletran {
     -fx-background-color: -fu-background-2;
-    -fx-background-radius: 0 6 6 6;
+    -fx-background-radius: 0 0 6 6;
+}
+
+.card-transaction-singletran-up{
+    -fx-background-color: -fu-background-2;
+    -fx-background-radius: 0 6 0 0;
 }
 
 .card-transaction-date {
