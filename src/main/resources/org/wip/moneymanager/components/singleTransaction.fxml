@@ -48,7 +48,7 @@
                <children>
                   <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Label" textAlignment="RIGHT" />
                   <Separator maxHeight="-Infinity" minHeight="-Infinity" orientation="VERTICAL" prefHeight="30.0" />
-                  <Button mnemonicParsing="false" style="-fx-text-fill: red;" styleClass="transparent-button" text="Delete" textFill="RED" />
+                  <Button fx:id="deleteCard" mnemonicParsing="false" style="-fx-text-fill: red;" styleClass="transparent-button" text="Elimina" textFill="RED" />
                </children>
             </HBox>
          </right>

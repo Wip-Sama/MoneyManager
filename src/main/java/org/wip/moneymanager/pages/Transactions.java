@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -83,6 +84,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+
         MultiDatePicker multiDatePicker = new MultiDatePicker();
         multiDatePicker.withRangeSelectionMode();
         DatePicker rangePicker = multiDatePicker.getDatePicker();
@@ -94,14 +96,19 @@ public class Transactions extends BorderPane implements AutoCloseable {
             }
         });
 
-        pageTitle.textProperty().bind(Data.lsp.lsb("transactions"));
-        newTransaction.setOnAction(event -> open_popup());
-        filter.setOnAction(event -> openPopUpFilter());
+        // Bind label "pageTitle" with a resource from properties files
+        pageTitle.textProperty().bind(Data.lsp.lsb("transactions.pageTitle"));
+        favouriteToggle.textProperty().bind(Data.lsp.lsb("transactions.favouriteToggle"));
+
+        // Bind button texts to properties
+        newTransaction.textProperty().bind(Data.lsp.lsb("transactions.newTransaction"));
+        filter.textProperty().bind(Data.lsp.lsb("transactions.filter"));
+        TransactionsRefreshButton.textProperty().bind(Data.lsp.lsb("transactions.refreshButton"));
 
         TransactionsRefreshButton.setOnAction(event -> {
             RotateTransition rotateTransition = new RotateTransition();
             rotateTransition.setNode(iconRefresh);
-            rotateTransition.setDuration(Duration.seconds(2));
+            rotateTransition.setDuration(Duration.seconds(0.5));
             rotateTransition.setByAngle(360);
             rotateTransition.setAutoReverse(false);
             rotateTransition.play();
@@ -164,15 +171,14 @@ public class Transactions extends BorderPane implements AutoCloseable {
         task.setOnSucceeded(event -> {
             List<TransactionByDate> transactionByDateList = task.getValue();
             if (transactionByDateList != null) {
-                // Aggiungi le nuove transazioni solo se non sono già presenti
                 vboxCard.getChildren().clear();
-                cardCache.clear(); // Rimuovi tutte le vecchie carte se necessario
+                cardCache.clear();
                 displayedTransactions.clear();
 
                 for (TransactionByDate tbd : transactionByDateList) {
                     int date = tbd.getDate();
 
-                    CardTransactions cardNode = cardCache.getOrDefault(date, new CardTransactions(tbd));
+                    CardTransactions cardNode = cardCache.getOrDefault(date, new CardTransactions(tbd,this));
                     if (!cardCache.containsKey(date)) {
                         cardCache.put(date, cardNode);
                     }
@@ -182,15 +188,13 @@ public class Transactions extends BorderPane implements AutoCloseable {
                 }
 
                 if (favouriteToggle.isSelected()) {
-                    filterFavoriteTransactions(); // Applica i filtri preferiti
+                    filterFavoriteTransactions();
                 }
             }
         });
 
         executorService.submit(task);
     }
-
-
 
     private void filterFavoriteTransactions() {
         vboxCard.getChildren().removeIf(card -> {
@@ -202,14 +206,28 @@ public class Transactions extends BorderPane implements AutoCloseable {
         });
     }
 
-
     private void restoreAllTransactions() {
         vboxCard.getChildren().clear();
         for(CardTransactions card : displayedTransactions) {
-           card.restoreAllTransactions();
+            card.restoreAllTransactions();
         }
         displayedTransactions.forEach(vboxCard.getChildren()::add);
+    }
 
+    public void applyBlur() {
+        Parent root = this.getScene().getRoot();
+        GaussianBlur blur = new GaussianBlur();
+        blur.setRadius(5);
+        vboxCard.setEffect(blur);
+    }
+
+    public void removeBlur() {
+        Parent root = this.getScene().getRoot();
+        vboxCard.setEffect(null);
+    }
+
+    public Transactions getInstance(){
+        return this;
     }
 
     @Override
