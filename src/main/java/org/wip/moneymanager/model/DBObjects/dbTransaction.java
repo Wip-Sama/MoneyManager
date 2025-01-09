@@ -78,7 +78,7 @@ public final class dbTransaction {
         return note;
     }
 
-    public int fauvorite() {
+    public int favorite() {
         return fauvorite;
     }
 

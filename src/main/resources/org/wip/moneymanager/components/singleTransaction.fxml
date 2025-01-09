@@ -12,7 +12,7 @@
 
 <fx:root maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="800.0" stylesheets="@../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane maxWidth="1.7976931348623157E308" prefHeight="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <BorderPane fx:id="backGroundT" maxWidth="1.7976931348623157E308" prefHeight="30.0" style="-fx-background-radius: 6;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <left>
             <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
                <children>
@@ -52,6 +52,9 @@
                </children>
             </HBox>
          </right>
+         <padding>
+            <Insets left="2.0" right="2.0" />
+         </padding>
       </BorderPane>
    </children>
 </fx:root>

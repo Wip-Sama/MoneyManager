@@ -14,27 +14,17 @@ import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.CardTransactions;
-import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.MultiDatePicker;
 import org.wip.moneymanager.model.DBObjects.TransactionByDate;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.popUpFilterController;
 import org.wip.moneymanager.popUp.transactionPopupController;
-
+import org.wip.moneymanager.utility.SVGLoader;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 public class Transactions extends BorderPane implements AutoCloseable {
 
@@ -63,16 +53,21 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private ScrollPane scrollpaneTransaction;
 
     @FXML
+    private SVGPath favoriteSvg;
+
+    @FXML
     private VBox vboxCard;
 
     protected Parent loaded;
     private transactionPopupController AddNewController;
     private popUpFilterController AddNewFilterController;
-    private String date;
-    private List<CardTransactions> transactions = new ArrayList<>();
-
+    private final static String on_fav = new SVGLoader("favorite_on_icon").getPath();
+    private final static String off_fav = new SVGLoader("favorite_off_icon").getPath();
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+    private Map<Integer, CardTransactions> cardCache = new HashMap<>();
+    private List<CardTransactions> displayedTransactions = new ArrayList<>();
 
     public Transactions() {
         try {
@@ -88,44 +83,45 @@ public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
-        MultiDatePicker multiDatePicker = new MultiDatePicker(); // Crea una nuova istanza
-        multiDatePicker.withRangeSelectionMode();  // Abilita la selezione di intervallo
+        MultiDatePicker multiDatePicker = new MultiDatePicker();
+        multiDatePicker.withRangeSelectionMode();
         DatePicker rangePicker = multiDatePicker.getDatePicker();
-        // Aggiungi il MultiDatePicker all'HBox
-        HboxmultiDatePicker.getChildren().add(rangePicker);  // Aggiungi il componente all'HBox
+        HboxmultiDatePicker.getChildren().add(rangePicker);
 
-        // Aggiungi un listener se vuoi reagire ai cambiamenti di data
         rangePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                // Gestisci la selezione della data (per esempio, stampa la data)
                 System.out.println("Data selezionata: " + newValue);
             }
         });
 
-
-
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions"));
         newTransaction.setOnAction(event -> open_popup());
         filter.setOnAction(event -> openPopUpFilter());
-        generateDailyCard();
-
 
         TransactionsRefreshButton.setOnAction(event -> {
             RotateTransition rotateTransition = new RotateTransition();
-            rotateTransition.setNode(iconRefresh);            // Nodo da animare
-            rotateTransition.setDuration(Duration.seconds(2)); // Durata di un ciclo
-            rotateTransition.setByAngle(360);            // Ruota di 360 gradi
-            rotateTransition.setAutoReverse(false);      // Non invertire direzione
+            rotateTransition.setNode(iconRefresh);
+            rotateTransition.setDuration(Duration.seconds(2));
+            rotateTransition.setByAngle(360);
+            rotateTransition.setAutoReverse(false);
             rotateTransition.play();
 
-            generateDailyCard();
-
-
+            generaCard(null, null, null);
         });
+
+        favouriteToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                favoriteSvg.setContent(on_fav);
+                filterFavoriteTransactions();
+            } else {
+                favoriteSvg.setContent(off_fav);
+                restoreAllTransactions();
+            }
+        });
+
+        generaCard(null, null, null);
     }
 
-
-    //nuovo metodo per aprire il popup, dopo il cambio a contest menu
     private void open_popup() {
         try {
             if (AddNewController == null) {
@@ -157,68 +153,67 @@ public class Transactions extends BorderPane implements AutoCloseable {
             double y = bounds.getMaxY();
 
             AddNewFilterController.toggle(x, y);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void generaCard(String category, String account, List<String> tags) {
+        Task<List<TransactionByDate>> task = Data.userDatabase.getAllDaysOfTransaction(category, account, tags);
 
-    private void generateDailyCard() {
-        if (transactions != null) {
-            transactions.clear();
-        }
-
-        Task<List<Integer>> generaCard = Data.userDatabase.getAllDaysOfTransaction();
-        generaCard.setOnSucceeded(event -> {
-            if (generaCard.getValue() != null) {
-                List<Integer> daySelected = generaCard.getValue();
-
-                // Remove duplicates using a Set
-                Set<Integer> uniqueTimestamps = new HashSet<>(daySelected);
-
-                // Create a list of unique timestamps
-                List<Integer> uniqueTimestampsList = new ArrayList<>(uniqueTimestamps);
-
+        task.setOnSucceeded(event -> {
+            List<TransactionByDate> transactionByDateList = task.getValue();
+            if (transactionByDateList != null) {
+                // Aggiungi le nuove transazioni solo se non sono già presenti
                 vboxCard.getChildren().clear();
-                // Iterate through unique timestamps and create CardTransactions
-                for (Integer timestamp : uniqueTimestampsList) {
-                    CardTransactions cardNode = new CardTransactions(timestamp);
-                    transactions.add(cardNode);
-                    vboxCard.getChildren().add(cardNode);
-                }
-            }
-        });
-    }
+                cardCache.clear(); // Rimuovi tutte le vecchie carte se necessario
+                displayedTransactions.clear();
 
-    public void applyFilters(String category, String account, List<String> tags) {
-        // Ottieni i giorni e le transazioni filtrate dal database
-        if (transactions != null) {
-            transactions.clear();
-        }
-        Task<List<TransactionByDate>> generaCard = Data.userDatabase.getAllDaysOfTransaction(category, account, tags);
-
-        generaCard.setOnSucceeded(event -> {
-            if (generaCard.getValue() != null) {
-                List<TransactionByDate> transactionByDateList = generaCard.getValue();
-
-                // Rimuovi le card esistenti
-                vboxCard.getChildren().clear();
-
-                // Crea le card per ogni TransactionByDate
                 for (TransactionByDate tbd : transactionByDateList) {
-                    CardTransactions cardNode = new CardTransactions(tbd); // Passa l'oggetto TransactionByDate
-                    transactions.add(cardNode);
+                    int date = tbd.getDate();
+
+                    CardTransactions cardNode = cardCache.getOrDefault(date, new CardTransactions(tbd));
+                    if (!cardCache.containsKey(date)) {
+                        cardCache.put(date, cardNode);
+                    }
+
+                    displayedTransactions.add(cardNode);
                     vboxCard.getChildren().add(cardNode);
+                }
+
+                if (favouriteToggle.isSelected()) {
+                    filterFavoriteTransactions(); // Applica i filtri preferiti
                 }
             }
         });
+
+        executorService.submit(task);
     }
 
 
 
+    private void filterFavoriteTransactions() {
+        vboxCard.getChildren().removeIf(card -> {
+            if (card instanceof CardTransactions) {
+                CardTransactions cardTransaction = (CardTransactions) card;
+                return !cardTransaction.areFavorite();
+            }
+            return true;
+        });
+    }
 
+
+    private void restoreAllTransactions() {
+        vboxCard.getChildren().clear();
+        for(CardTransactions card : displayedTransactions) {
+           card.restoreAllTransactions();
+        }
+        displayedTransactions.forEach(vboxCard.getChildren()::add);
+
+    }
 
     @Override
-    public void close() {executorService.shutdown();}
+    public void close() {
+        executorService.shutdown();
+    }
 }

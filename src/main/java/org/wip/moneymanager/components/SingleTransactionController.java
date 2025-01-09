@@ -7,22 +7,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.SVGPath;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.DBObjects.dbTransaction;
 import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.model.Database;
 import org.wip.moneymanager.utility.SVGLoader;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SingleTransactionController extends AnchorPane {
+
+    @FXML
+    private BorderPane backGroundT;
 
     @FXML
     private HBox GridtagPane;
@@ -58,6 +60,10 @@ public class SingleTransactionController extends AnchorPane {
     private final static String off_fav = new SVGLoader("Star_empty").getPath();
 
 
+    private final String originalBackgroundColor = "-fx-background-color: transparent;"; // Colore di sfondo originale
+    private final String hoverBackgroundColor = "-fx-background-color: -fu-background-3;" + "-fx-background-radius: 6;"; // Colore di sfondo al passaggio del mouse (puoi cambiarlo)
+
+
     public SingleTransactionController(dbTransaction timestamp) {
         myTransaction = timestamp;
         try {
@@ -78,6 +84,14 @@ public class SingleTransactionController extends AnchorPane {
         Data.esm.register(executorService);
         generaTags();
 
+        // Aggiungi gli eventi per il cambio di colore al passaggio del mouse
+        backGroundT.setOnMouseEntered(event -> {
+            backGroundT.setStyle(hoverBackgroundColor); // Cambia colore quando il mouse entra
+        });
+
+        backGroundT.setOnMouseExited(event -> {
+            backGroundT.setStyle(originalBackgroundColor); // Ripristina il colore originale quando il mouse esce
+        });
 
         Task<String> TaskNomeAccount = Data.userDatabase.getNameAccountFromId(myTransaction.account());
         TaskNomeAccount.setOnSucceeded(event -> {
@@ -87,12 +101,12 @@ public class SingleTransactionController extends AnchorPane {
 
         amount.setText(String.valueOf(myTransaction.amount()));
 
-        if (myTransaction.fauvorite() != 0){
+        if (myTransaction.favorite() != 0){
             starTransaction.setContent( on_fav);
         }
 
         buttonFavourite.setOnAction(event -> {
-            if (myTransaction.fauvorite() == 0) {
+            if (myTransaction.favorite() == 0) {
                 try {
                     myTransaction.setFavourite(1);
                 } catch (SQLException e) {
@@ -156,7 +170,14 @@ public class SingleTransactionController extends AnchorPane {
         executorService.submit(loadTagsTask);
     }
 
+    public boolean isFavorite() {
+        if(myTransaction.favorite() == 1){
+            return true;
+        } else {
+            return false;
+        }
     }
+}
 
 
 

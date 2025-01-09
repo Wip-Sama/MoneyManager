@@ -165,9 +165,9 @@ public class popUpFilterController extends AnchorPane {
                     filters.add(t.getTag());
                     System.out.println(t.getTag());
                 }
-            transactions.applyFilters(selectedCategory, selectedAccount, filters);
+            transactions.generaCard(selectedCategory, selectedAccount, filters);
             } else {
-                transactions.applyFilters(selectedCategory, selectedAccount, null);
+                transactions.generaCard(selectedCategory, selectedAccount, null);
             }
             notifyError.setOpacity(0); // Nasconde il messaggio di errore
             hide(); // Chiudi il popup se i filtri sono validi
