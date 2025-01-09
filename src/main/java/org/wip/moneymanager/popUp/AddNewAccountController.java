@@ -272,7 +272,7 @@ public class AddNewAccountController extends BorderPane {
 
     private void showError(String message) {
         ErrorLabel.textProperty().bind(Data.lsp.lsb(message));
-        ErrorLabel.setTextFill(rgb(255,0,0));
+        //ErrorLabel.setTextFill(rgb(255,0,0));
         Timeline fadeInTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> ErrorLabel.setOpacity(0)),
                 new KeyFrame(Duration.seconds(0.2), e -> ErrorLabel.setOpacity(1))

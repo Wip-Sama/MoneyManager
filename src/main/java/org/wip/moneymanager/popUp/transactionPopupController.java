@@ -69,6 +69,8 @@ public class transactionPopupController extends BorderPane {
     @FXML
     private TextArea notes;
     @FXML
+    private Label notesLabel;
+    @FXML
     private CategorySelector categorySelector;
     @FXML
     private Label errorLabel;
@@ -105,6 +107,22 @@ public class transactionPopupController extends BorderPane {
     @FXML
     private void initialize() {
         Data.esm.register(executorService);
+
+
+        labelTitle.setText(Data.lsp.lsb("transactionPopUpController.title").get());
+        incomeButton.setText(Data.lsp.lsb("transactionPopUpController.income").get());
+        expenseButton.setText(Data.lsp.lsb("transactionPopUpController.expense").get());
+        transferButton.setText(Data.lsp.lsb("transactionPopUpController.transfer").get());
+
+        date.setText(Data.lsp.lsb("transactionPopUpController.date").get());
+        amount.setText(Data.lsp.lsb("transactionPopUpController.amount").get());
+        account.setText(Data.lsp.lsb("transactionPopUpController.account").get());
+        category.setText(Data.lsp.lsb("transactionPopUpController.category").get());
+        tags.setText(Data.lsp.lsb("transactionPopUpController.tags").get());
+        saveButton.setText(Data.lsp.lsb("transactionPopUpController.save").get());
+        cancelButton.setText(Data.lsp.lsb("transactionPopUpController.cancel").get());
+        errorLabel.setText(Data.lsp.lsb("transactionPopUpController.error.fields").get());
+        notesLabel.setText(Data.lsp.lsb("transactionPopUpController.notesLabel").get());
 
         errorLabel.setOpacity(0);
 
@@ -192,8 +210,8 @@ public class transactionPopupController extends BorderPane {
         }
 
         if (this.isTransfer) {
-            account.setText("Mittente");
-            category.setText("Destinatario");
+            account.setText(Data.lsp.lsb("transactionPopUpController.sender").get());
+            category.setText(Data.lsp.lsb("transactionPopUpController.recipient").get());
 
             // Setup source account listener
             accountComboBox.setOnAction(e -> {
@@ -218,58 +236,91 @@ public class transactionPopupController extends BorderPane {
             }
         } else {
             accountComboBox.getItems().setAll(accountNames);
-            account.setText("Conto");
-            category.setText("Categoria");
+            account.setText(Data.lsp.lsb("transactionPopUpController.account").get());
+            category.setText(Data.lsp.lsb("transactionPopUpController.category").get());
         }
     }
 
     private boolean validateFields() {
         AtomicBoolean hasError = new AtomicBoolean(false);
+        int errorCount = 0;
 
         // Validazione account principale quando richiesto
         if (accountComboBox.getValue() == null || accountComboBox.getValue().trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(accountComboBox);
-            hasError.set(true);
+            if (errorCount == 0) {
+                showError("transactionPopUpController.error.account");
+            }
+            errorCount++;
         }
 
         // Validazione balance
         if (balanceEditor.getText() == null || balanceEditor.getText().trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(balanceEditor);
-            hasError.set(true);
+            if (errorCount == 0) {
+                showError("transactionPopUpController.error.amount");
+            }
+            errorCount++;
+        } else {
+            try {
+                double amount = Double.parseDouble(balanceEditor.getText().replace(',','.'));
+                if (amount <= 0) {
+                    FieldAnimationUtils.animateFieldError(balanceEditor);
+                    if (errorCount == 0) {
+                        showError("transactionPopUpController.error.amount.zero");
+                    }
+                    errorCount++;
+                }
+            } catch (NumberFormatException e) {
+                FieldAnimationUtils.animateFieldError(balanceEditor);
+                if (errorCount == 0) {
+                    showError("transactionPopUpController.error.amount.invalid");
+                }
+                errorCount++;
+            }
         }
 
         // Validazione data
         if (datePicker.getValue() == null) {
             FieldAnimationUtils.animateFieldError(datePicker);
-            hasError.set(true);
+            if (errorCount == 0) {
+                showError("transactionPopUpController.error.date");
+            }
+            errorCount++;
         }
 
         // Validazione in base al tipo di transazione
         if (isTransfer) {
-            // Per i trasferimenti valida il secondo account
             if (SecondoAccountComboBox.getValue() == null || SecondoAccountComboBox.getValue().trim().isEmpty()) {
                 FieldAnimationUtils.animateFieldError(SecondoAccountComboBox);
-                hasError.set(true);
+                if (errorCount == 0) {
+                    showError("transactionPopUpController.error.recipient");
+                }
+                errorCount++;
             }
         } else {
-            // Per income/expense valida le categorie
-            if (categorySelector.getSelectedCategory() == null || categorySelector.getSelectedSubCategory() == null) {
+            String mainCategory = categorySelector.getSelectedCategory();
+            // in questo modo e' obbligatorio l'inserimento soltanto della categoria principale
+            if (mainCategory == null || mainCategory.trim().isEmpty()) {
                 categorySelector.animateError();
-                hasError.set(true);
+                if (errorCount == 0) {
+                    showError("transactionPopUpController.error.category");
+                }
+                errorCount++;
             }
         }
 
-        if (hasError.get()) {
-            showError("Inserisci tutti i campi!");
+        if (errorCount > 1) {
+            showError("transactionPopUpController.error.all_fields");
         }
 
-        return !hasError.get();
+        return errorCount == 0;
     }
 
     private void showError(String message) {
         errorLabel.setOpacity(1);
         errorLabel.textProperty().bind(Data.lsp.lsb(message));
-        errorLabel.setTextFill(rgb(255,0,0));
+        //errorLabel.setTextFill(rgb(255,0,0));
         Timeline fadeInTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> errorLabel.setOpacity(0)),
                 new KeyFrame(Duration.seconds(0.2), e -> errorLabel.setOpacity(1))
@@ -337,6 +388,8 @@ public class transactionPopupController extends BorderPane {
         }
 
         if (isTransfer) {
+            //account.setText(Data.lsp.lsb("transactionPopUpController.sender").get());
+            //category.setText(Data.lsp.lsb("transactionPopUpController.recipient").get());
             // Modalità Trasferimento
             categorySelector.setVisible(false); // Nasconde il selettore di categoria
             categorySelector.setManaged(false); // Rimuove lo spazio occupato
@@ -345,9 +398,10 @@ public class transactionPopupController extends BorderPane {
             SecondoAccountComboBox.setManaged(true); // Garantisce la gestione dello spazio
 
             // Configura le etichette
-            account.setText("Mittente");
-            category.setText("Destinatario");
+            account.setText(Data.lsp.lsb("transactionPopUpController.sender").get());
+            category.setText(Data.lsp.lsb("transactionPopUpController.recipient").get());
         } else {
+
             // Modalità Income/Expense
             SecondoAccountComboBox.setVisible(false); // Nasconde il secondo account
             SecondoAccountComboBox.setManaged(false); // Rimuove lo spazio occupato
@@ -356,8 +410,8 @@ public class transactionPopupController extends BorderPane {
             categorySelector.setManaged(true); // Garantisce la gestione dello spazio
 
             // Configura le etichette
-            account.setText("Conto");
-            category.setText("Categoria");
+            //account.setText(Data.lsp.lsb("transactionPopUpController.account").get());
+            //category.setText(Data.lsp.lsb("transactionPopUpController.category").get());
         }
 
         // Popola le combo box in base alla modalità corrente

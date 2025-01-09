@@ -89,7 +89,7 @@
             </VBox>
             <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Label text="Note Aggiuntive" />
+                  <Label fx:id="notesLabel" text="Note Aggiuntive" />
                   <TextArea fx:id="notes" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" />
                </children>
             </VBox>
@@ -100,7 +100,7 @@
 
                   <!-- Action Buttons -->
          <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
-         <Label fx:id="errorLabel" text="Error" />
+         <Label fx:id="errorLabel" text="Error" style="-fx-text-fill: #ff0000" />
          <HBox>
             <children>
       
