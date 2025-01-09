@@ -52,7 +52,7 @@
                      <children>
                         <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Amount" textAlignment="RIGHT">
                            <HBox.margin>
-                              <Insets right="80.0" />
+                              <Insets right="60.0" />
                            </HBox.margin>
                         </Label>
                      </children>
