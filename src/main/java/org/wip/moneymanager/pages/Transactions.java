@@ -104,6 +104,13 @@ public class Transactions extends BorderPane implements AutoCloseable {
         newTransaction.textProperty().bind(Data.lsp.lsb("transactions.newTransaction"));
         filter.textProperty().bind(Data.lsp.lsb("transactions.filter"));
         TransactionsRefreshButton.textProperty().bind(Data.lsp.lsb("transactions.refreshButton"));
+        filter.setOnAction(event ->{
+            openPopUpFilter();
+        });
+        newTransaction.setOnAction(event -> {
+            open_popup();
+        });
+
 
         TransactionsRefreshButton.setOnAction(event -> {
             RotateTransition rotateTransition = new RotateTransition();
