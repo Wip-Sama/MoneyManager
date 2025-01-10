@@ -125,11 +125,26 @@ public class TransactionInfoPopUp extends BorderPane {
         if (myTransaction.type() == 0) {
             expenseButton.setDisable(true);
             transferButton.setDisable(true);
-            incomeButton.setStyle("-fx-background-color: green;");
+            incomeButton.setStyle("-fx-border-color: green;" + "-fx-border-radius: 6");
             secondAccountComboBox.setVisible(false);
             secondAccountComboBox.setManaged(false);
             category.setText("Category");
         } else if (myTransaction.type() == 1) {
+            incomeButton.setDisable(true);
+            transferButton.setDisable(true);
+            expenseButton.setStyle("-fx-border-color: red;" + "-fx-border-radius: 6");
+            secondAccountComboBox.setVisible(false);
+            secondAccountComboBox.setManaged(false);
+            category.setText("Category");
+        }
+        else{
+            expenseButton.setDisable(true);
+            incomeButton.setDisable(true);
+            transferButton.setStyle("-fx-border-color: blue;" + "-fx-border-radius: 6");
+            categorySelectorTwo.setVisible(false);
+            categorySelectorTwo.setManaged(false);
+            category.setText("Second Account");
+
         }
     }
 
@@ -137,8 +152,6 @@ public class TransactionInfoPopUp extends BorderPane {
     private void hide() {
         controller.removeBlurChild();
         contextMenu.hide();
-
-
     }
 
     public void toggle(double x, double y) {
@@ -158,10 +171,6 @@ public class TransactionInfoPopUp extends BorderPane {
             onCloseCallback.run();
         }
         hide();
-    }
-
-    public void setOnClose(Runnable callback) {
-        this.onCloseCallback = callback;
     }
 
 }
