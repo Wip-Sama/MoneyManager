@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.DBObjects.TransactionByDate;
 import org.wip.moneymanager.model.DBObjects.dbTransaction;
@@ -26,7 +27,16 @@ import java.util.concurrent.Executors;
 public class CardTransactions extends AnchorPane {
 
     @FXML
+    private Label account;
+
+    @FXML
+    private Label amount;
+
+    @FXML
     private VBox cardTransaction;
+
+    @FXML
+    private Label categTransactions;
 
     @FXML
     private Label transactionDay;
@@ -36,11 +46,13 @@ public class CardTransactions extends AnchorPane {
     private final String dateFormatted;
     private final TransactionByDate transactionByDate;
     private List<dbTransaction> transactions = new ArrayList<>();
+    private final Transactions transactionsPage;
 
-    public CardTransactions(TransactionByDate transactionByDate) {
+    public CardTransactions(TransactionByDate transactionByDate, Transactions transactionsPage) {
         this.transactionByDate = transactionByDate;
         this.dateUnix = transactionByDate.getDate();
         this.dateFormatted = formatUnixDate(dateUnix);
+        this.transactionsPage = transactionsPage;
 
         loadFXML();
         initialize();
@@ -92,7 +104,7 @@ public class CardTransactions extends AnchorPane {
             List<dbTransaction> transactions = task.getValue();
             if (transactions != null) {
                 transactions.forEach(transaction -> {
-                    SingleTransactionController cardNode = new SingleTransactionController(transaction, this);
+                    SingleTransactionController cardNode = new SingleTransactionController(transaction, transactionsPage, this);
                     cardTransaction.getChildren().add(cardNode);
                     this.transactions.add(transaction);
                 });
@@ -107,7 +119,7 @@ public class CardTransactions extends AnchorPane {
             List<dbTransaction> transactions = task.getValue();
             if (transactions != null) {
                 transactions.forEach(transaction -> {
-                    SingleTransactionController cardNode = new SingleTransactionController(transaction, this);
+                    SingleTransactionController cardNode = new SingleTransactionController(transaction, transactionsPage, this));
                     cardTransaction.getChildren().add(cardNode);
                     this.transactions.add(transaction);
                 });
@@ -119,6 +131,11 @@ public class CardTransactions extends AnchorPane {
     @FXML
     private void initialize() {
         Data.esm.register(executorService);
+        amount.textProperty().bind(Data.lsp.lsb("cardTransactions.amount"));
+        account.textProperty().bind(Data.lsp.lsb("cardTransactions.account"));
+        categTransactions.textProperty().bind(Data.lsp.lsb("cardTransactions.categTransactions"));
+
+
         transactionDay.setText(dateFormatted);
 
         if (transactionByDate == null) {
@@ -149,7 +166,7 @@ public class CardTransactions extends AnchorPane {
     public void restoreAllTransactions() {
         cardTransaction.getChildren().clear();
         transactions.forEach(transaction -> {
-            SingleTransactionController cardNode = new SingleTransactionController(transaction, this);
+            SingleTransactionController cardNode = new SingleTransactionController(transaction, transactionsPage, this));
             cardTransaction.getChildren().add(cardNode);
         });
     }
