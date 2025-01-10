@@ -1013,6 +1013,31 @@ public class UserDatabase extends Database {
         });
     }
 
+    public String getCategoryNameById(int categoryId) throws SQLException {
+        String query = "SELECT name FROM Categories WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, categoryId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        }
+        return null;
+    }
+
+    public String getAccountNameById(int accountName) throws SQLException {
+
+        String query = "SELECT name FROM Accounts WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, accountName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        }
+        return null;
+    }
+
     public String getMainCategoryName(String subcategoryName) throws SQLException {
         String mainCategoryName = null;
 
