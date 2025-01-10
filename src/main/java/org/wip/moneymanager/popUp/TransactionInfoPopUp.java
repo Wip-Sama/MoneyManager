@@ -15,6 +15,8 @@ import org.wip.moneymanager.components.BalanceEditor;
 import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.SingleTransactionController;
 import org.wip.moneymanager.components.TagSelector;
+import org.wip.moneymanager.model.DBObjects.dbTransaction;
+import org.wip.moneymanager.model.Data;
 
 
 import java.awt.*;
@@ -95,6 +97,7 @@ public class TransactionInfoPopUp extends BorderPane {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private Runnable onCloseCallback;
     private final SingleTransactionController controller;
+    private dbTransaction myTransaction;
 
     public TransactionInfoPopUp(Window window, SingleTransactionController fatherTransactions) throws IOException {
         this.node = window;
@@ -115,8 +118,9 @@ public class TransactionInfoPopUp extends BorderPane {
 
     @FXML
     private void initialize() {
-
+        Data.esm.register(executorService);
         buttonExit.setOnAction(event -> close());
+        myTransaction = controller.getTransaction();
 
     }
 

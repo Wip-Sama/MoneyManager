@@ -99,17 +99,11 @@ public class SingleTransactionController extends AnchorPane {
 
     @FXML
     public void initialize() {
-
+        Data.esm.register(executorService);
         Tooltip tooltip = new Tooltip("Doppio clic per dettagli");
         tooltip.setShowDelay(new Duration(1));
         tooltip.setHideDelay(new Duration(0));
         Tooltip.install(backGroundT, tooltip);
-
-
-
-
-
-        Data.esm.register(executorService);
         deleteCard.textProperty().bind(Data.lsp.lsb("singleTransaction.deleteCard"));
 
         backGroundT.setOnMouseClicked(event -> {
@@ -249,7 +243,7 @@ public class SingleTransactionController extends AnchorPane {
 
 
 
-    public Object getTransaction() {
+    public dbTransaction getTransaction() {
         return myTransaction;
     }
 }
