@@ -619,6 +619,59 @@ public class UserDatabase extends Database {
         });
     }
 
+
+    //metodo per i tags commento tutto per farti capire qualcosa
+    public Task<Boolean> linkTagToTransaction(String transactionName, String tagName) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                try {
+                    // Recupera l'ID della transazione in base al nome
+                    String transactionIdQuery = "SELECT id FROM Transactions WHERE note = ?;";
+                    PreparedStatement transactionStmt = con.prepareStatement(transactionIdQuery);
+                    transactionStmt.setString(1, transactionName);
+                    ResultSet transactionRs = transactionStmt.executeQuery();
+
+                    if (!transactionRs.next()) {
+                        transactionStmt.close();
+                        System.err.println("Transaction not found for name: " + transactionName);
+                        return false;
+                    }
+                    int transactionId = transactionRs.getInt("id");
+                    transactionStmt.close();
+
+                    // Recupera l'ID del tag in base al nome
+                    String tagIdQuery = "SELECT id FROM Tag WHERE name = ?;";
+                    PreparedStatement tagStmt = con.prepareStatement(tagIdQuery);
+                    tagStmt.setString(1, tagName);
+                    ResultSet tagRs = tagStmt.executeQuery();
+
+                    if (!tagRs.next()) {
+                        tagStmt.close();
+                        System.err.println("Tag not found for name: " + tagName);
+                        return false;
+                    }
+                    int tagId = tagRs.getInt("id");
+                    tagStmt.close();
+
+                    // Collega l'ID della transazione con l'ID del tag
+                    String linkQuery = "INSERT INTO Transaction_tags (transaction, tag) VALUES (?, ?);";
+                    PreparedStatement linkStmt = con.prepareStatement(linkQuery);
+                    linkStmt.setInt(1, transactionId);
+                    linkStmt.setInt(2, tagId);
+                    int rowsInserted = linkStmt.executeUpdate();
+                    linkStmt.close();
+
+                    return rowsInserted > 0;
+                } catch (SQLException e) {
+                    System.err.println("SQL Error during linking tag to transaction: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            return false;
+        });
+    }
+
     public Task<String> getIDAccountFromName(String name) {
         return asyncCall(() -> {
             if (isConnected()) {
@@ -958,6 +1011,28 @@ public class UserDatabase extends Database {
 
             return transactions;
         });
+    }
+
+    public String getMainCategoryName(String subcategoryName) throws SQLException {
+        String mainCategoryName = null;
+
+        if (isConnected()) {
+            String query = "SELECT c.name FROM Categories c " +
+                    "INNER JOIN Categories sub ON c.id = sub.parent_category " +
+                    "WHERE sub.name = ?";
+
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, subcategoryName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                mainCategoryName = rs.getString("name");
+            }
+
+            stmt.close();
+        }
+
+        return mainCategoryName;
     }
 
     public Task<Boolean> addNewTransaction(int date, int type, double amount, String account, String secondAccount, String note, String category, List<Tag> listTags) {

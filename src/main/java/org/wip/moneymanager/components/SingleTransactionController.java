@@ -1,27 +1,39 @@
 package org.wip.moneymanager.components;
 
+import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.SVGPath;
+import javafx.util.Duration;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.DBObjects.dbTransaction;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.pages.Transactions;
+import org.wip.moneymanager.popUp.TransactionInfoPopUp;
+import org.wip.moneymanager.popUp.transactionPopupController;
 import org.wip.moneymanager.utility.SVGLoader;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Currency;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SingleTransactionController extends AnchorPane {
+
 
     @FXML
     private BorderPane backGroundT;
@@ -51,6 +63,9 @@ public class SingleTransactionController extends AnchorPane {
     private ScrollPane tagPane;
 
     @FXML
+    private Button deleteCard;
+
+    @FXML
     private Button buttonFavourite;
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -59,13 +74,16 @@ public class SingleTransactionController extends AnchorPane {
     private final static String on_fav = new SVGLoader("star").getPath();
     private final static String off_fav = new SVGLoader("Star_empty").getPath();
 
-
+    private final Transactions Transactions;
     private final String originalBackgroundColor = "-fx-background-color: transparent;"; // Colore di sfondo originale
     private final String hoverBackgroundColor = "-fx-background-color: -fu-background-3;" + "-fx-background-radius: 6;"; // Colore di sfondo al passaggio del mouse (puoi cambiarlo)
+    private TransactionInfoPopUp AddNewController;
     private CardTransactions parentCardTransactions;
 
-    public SingleTransactionController(dbTransaction timestamp , CardTransactions parentCardTransactions) {
+
+    public SingleTransactionController(dbTransaction timestamp, Transactions transaction, CardTransactions parentCardTransactions) {
         myTransaction = timestamp;
+        Transactions = transaction;
         this.parentCardTransactions = parentCardTransactions;
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/components/singleTransaction.fxml"));
@@ -80,9 +98,21 @@ public class SingleTransactionController extends AnchorPane {
 
 
     @FXML
-    public void initialize() {
-
+    public void initialize() throws SQLException {
         Data.esm.register(executorService);
+        Tooltip tooltip = new Tooltip("Doppio clic per dettagli");
+        tooltip.setShowDelay(new Duration(1));
+        tooltip.setHideDelay(new Duration(0));
+        Tooltip.install(backGroundT, tooltip);
+        deleteCard.textProperty().bind(Data.lsp.lsb("singleTransaction.deleteCard"));
+
+        backGroundT.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Verifica se si tratta di un doppio clic
+                open_popup(); // Richiama il metodo per aprire il pop-up
+            }
+        });
+
+
         generaTags();
 
         // Aggiungi gli eventi per il cambio di colore al passaggio del mouse
@@ -144,11 +174,7 @@ public class SingleTransactionController extends AnchorPane {
             });
 
         } else {
-            Task<String> TaskNomeCategoria = Data.userDatabase.getCategoryFromId(myTransaction.category());
-            TaskNomeCategoria.setOnSucceeded(event -> {
-                String categoria = TaskNomeCategoria.getValue();
-                categTransactions.setText(categoria);
-            });
+            categTransactions.setText(Data.userDatabase.getCategoryNameById(myTransaction.category()));
         }
 
     }
@@ -180,7 +206,39 @@ public class SingleTransactionController extends AnchorPane {
         }
     }
 
-    public Object getTransaction() {
+    private void open_popup() {
+        try {
+            if (AddNewController == null) {
+                AddNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(),this);
+            }
+
+
+            double popupWidth = 712.0; // Larghezza del popup
+            double popupHeight = 400.0; // Altezza del popup (stimata o specifica)
+
+            Bounds bounds = backGroundT.localToScreen(backGroundT.getBoundsInLocal());
+
+            // Calcola le coordinate per il centro della scena
+            double x = bounds.getMinX() + (bounds.getWidth() - popupWidth) / 2;
+            double y = bounds.getMinY();
+
+            Transactions.applyBlur();
+            AddNewController.toggle(x, y);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeBlurChild(){
+        Transactions.removeBlur();
+    }
+
+
+
+    public dbTransaction getTransaction() {
         return myTransaction;
     }
 }
