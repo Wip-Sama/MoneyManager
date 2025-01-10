@@ -136,9 +136,12 @@ public class TransactionInfoPopUp extends BorderPane {
         myTransaction = controller.getTransaction();
         initializeNoEditable();
 
+
+
     }
 
     private void initializeNoEditable() throws SQLException {
+
         datesPicker.setValue(LocalDateTime.ofInstant(Instant.ofEpochSecond(myTransaction.date()), ZoneId.systemDefault()).toLocalDate());
         balanceCounter.setBalance(myTransaction.amount());
         notesAgg.setText(myTransaction.note());
@@ -169,7 +172,13 @@ public class TransactionInfoPopUp extends BorderPane {
             category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForIncome();
             categorySelectorTwo.setCategory_box(myTransaction.category());
+            setupEditButton();
+
+
+
+
         } else if (myTransaction.type() == 1) {
+
             incomeButton.setDisable(true);
             transferButton.setDisable(true);
             expenseButton.setStyle("-fx-border-color: red;" + "-fx-border-radius: 6");
@@ -178,6 +187,11 @@ public class TransactionInfoPopUp extends BorderPane {
             category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForExpense();
             categorySelectorTwo.setCategory_box(myTransaction.category());
+            setupEditButton();
+
+
+
+
         } else {
             expenseButton.setDisable(true);
             incomeButton.setDisable(true);
@@ -259,5 +273,36 @@ public class TransactionInfoPopUp extends BorderPane {
         }
         hide();
     }
+
+    private void setupEditButton() {
+        editButton.setOnAction(event -> {
+            setFieldsEditable(true);
+            editButton.setVisible(false);
+            saveEditButton.setVisible(true);
+            discardButton.setVisible(true);
+        });
+
+        saveEditButton.setOnAction(event -> {
+            saveChanges();
+        });
+
+        discardButton.setOnAction(event -> {
+            // Annulla le modifiche e ripristina i valori originali
+            discardChanges();
+        });
+    }
+
+    private void discardChanges() {
+    }
+
+    private void saveChanges() {
+        balanceCounter.getBalance();
+        accountsComboBox.getItems().setAll(accountNames);
+        secondAccountComboBox.getItems().setAll(accountNames);
+        categorySelectorTwo.getSelectedCategory();
+
+    }
+
+
 
 }
