@@ -35,7 +35,7 @@ public class TransactionInfoPopUp extends BorderPane {
     private Button buttonExit;
 
     @FXML
-    private ComboBox<?> accountsComboBox;
+    private ComboBox<String> accountsComboBox;
 
     @FXML
     private Label amountLabel;
@@ -65,10 +65,10 @@ public class TransactionInfoPopUp extends BorderPane {
     private Button editButton;
 
     @FXML
-    private ToggleButton expenseButton;
+    private Button expenseButton;
 
     @FXML
-    private ToggleButton incomeButton;
+    private Button incomeButton;
 
     @FXML
     private Label labelTransaction;
@@ -80,7 +80,7 @@ public class TransactionInfoPopUp extends BorderPane {
     private Button saveEditButton;
 
     @FXML
-    private ComboBox<?> secondAccountComboBox;
+    private ComboBox<String> secondAccountComboBox;
 
     @FXML
     private TagSelector tagPane;
@@ -89,7 +89,7 @@ public class TransactionInfoPopUp extends BorderPane {
     private Label tagsLabel;
 
     @FXML
-    private ToggleButton transferButton;
+    private Button transferButton;
 
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
@@ -122,6 +122,15 @@ public class TransactionInfoPopUp extends BorderPane {
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
 
+        if (myTransaction.type() == 0) {
+            expenseButton.setDisable(true);
+            transferButton.setDisable(true);
+            incomeButton.setStyle("-fx-background-color: green;");
+            secondAccountComboBox.setVisible(false);
+            secondAccountComboBox.setManaged(false);
+            category.setText("Category");
+        } else if (myTransaction.type() == 1) {
+        }
     }
 
 
