@@ -185,7 +185,7 @@ public class SingleTransactionController extends AnchorPane {
             List<dbTag> dbTags = loadTagsTask.getValue();
             if (dbTags != null) {
                 for (dbTag dbTagItem : dbTags) {
-                    Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color());
+                    Tag tag = new Tag(dbTagItem.name(), 0, 0, dbTagItem.color());
                     GridtagPane.getChildren().add(tag);
                     }
                 }
