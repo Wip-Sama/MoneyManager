@@ -93,8 +93,17 @@ public class TagSelector extends BorderPane {
         add_new_tag.setOnAction(_ -> showAddNewTag());
     }
 
+    private void addTag(Tag tag) {
+        tags.add(tag);
+    }
 
+    private void removeTag(Tag tag) {
+        tags.remove(tag);
+    }
 
+    private void addTags(List<Tag> tags) {
+        this.tags.addAll(tags);
+    }
 
     private void showTagFilter() {
         // Crea un nuovo CustomMenuItem con il contenuto del tag filter
@@ -106,7 +115,6 @@ public class TagSelector extends BorderPane {
         contextMenu.getItems().clear(); // Rimuovi il contenuto precedente
         contextMenu.getItems().add(newCustomMenuItem);
 
-      
         double screenX = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinX() - 280;
         double screenY = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinY() + 30;
         contextMenu.show(this, screenX, screenY);
