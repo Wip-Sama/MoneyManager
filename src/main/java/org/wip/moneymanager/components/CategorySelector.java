@@ -154,9 +154,7 @@ public class CategorySelector extends HBox {
     public void setCategory_box(int category) {
 
     }
-    public void setSub_category_box(String subCategory) {
-        sub_category_box.setValue(subCategory);
-    }
+
     public void shutdownExecutor() {
         executorService.shutdown();
     }

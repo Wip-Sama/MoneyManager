@@ -6,7 +6,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -20,7 +19,7 @@
 
 <fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <VBox spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <BorderPane prefHeight="35.0">
                <left>
@@ -36,10 +35,13 @@
             </BorderPane>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button fx:id="incomeButton" maxWidth="1.7976931348623157E308" style=" fx-background-radius: 6;"  prefWidth="220.0"  styleClass="info-type-button"  text="In" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="expenseButton" maxWidth="1.7976931348623157E308"  style=" fx-background-radius: 6;" prefWidth="220.0"  styleClass="info-type-button" text="Spese" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="transferButton" maxWidth="1.7976931348623157E308" style=" fx-background-radius: 6;" prefWidth="200.0"  styleClass="info-type-button" text="Trasferimenti" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="incomeButton" maxWidth="1.7976931348623157E308" prefWidth="220.0" style=" fx-background-radius: 6;" styleClass="info-type-button" text="In" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="expenseButton" maxWidth="1.7976931348623157E308" prefWidth="220.0" style=" fx-background-radius: 6;" styleClass="info-type-button" text="Spese" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="transferButton" maxWidth="1.7976931348623157E308" prefWidth="200.0" style=" fx-background-radius: 6;" styleClass="info-type-button" text="Trasferimenti" HBox.hgrow="ALWAYS" />
                </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
             </HBox>
          </children>
          <BorderPane.margin>
@@ -110,10 +112,10 @@
                         <Button fx:id="deleteButton" maxWidth="1.7976931348623157E308" style="-fx-text-fill: red;" styleClass="transparent-button" text="Elimina" />
                      </children>
                   </VBox>
-                  <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                  <VBox fx:id="BoxButtonRight" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                      <children>
                         <Button fx:id="saveEditButton" maxWidth="1.7976931348623157E308" styleClass="full-button" text="Salva" visible="false" />
-                        <Button fx:id="editButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Modifica" />
+                        <Button fx:id="editButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="full-button" text="Modifica" />
                      </children>
                   </VBox>
                </children>

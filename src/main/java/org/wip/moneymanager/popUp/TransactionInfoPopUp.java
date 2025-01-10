@@ -10,7 +10,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import org.wip.moneymanager.components.BalanceEditor;
 import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.SingleTransactionController;
@@ -21,6 +23,9 @@ import org.wip.moneymanager.model.Data;
 
 import java.awt.*;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,6 +35,9 @@ public class TransactionInfoPopUp extends BorderPane {
 
     @FXML
     private Label account;
+
+    @FXML
+    private VBox BoxButtonRight;
 
     @FXML
     private Button buttonExit;
@@ -122,6 +130,12 @@ public class TransactionInfoPopUp extends BorderPane {
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
 
+        datesPicker.setValue(LocalDateTime.ofInstant(Instant.ofEpochSecond(myTransaction.date()), ZoneId.systemDefault()).toLocalDate());
+        balanceCounter.setBalance(myTransaction.amount());
+        notesAgg.setText(myTransaction.note());
+        setFieldsEditable(false);
+
+
         if (myTransaction.type() == 0) {
             expenseButton.setDisable(true);
             transferButton.setDisable(true);
@@ -129,6 +143,8 @@ public class TransactionInfoPopUp extends BorderPane {
             secondAccountComboBox.setVisible(false);
             secondAccountComboBox.setManaged(false);
             category.setText("Category");
+            categorySelectorTwo.populateMainCategoriesForIncome();
+            categorySelectorTwo.setCategory_box(myTransaction.category());
         } else if (myTransaction.type() == 1) {
             incomeButton.setDisable(true);
             transferButton.setDisable(true);
@@ -136,14 +152,23 @@ public class TransactionInfoPopUp extends BorderPane {
             secondAccountComboBox.setVisible(false);
             secondAccountComboBox.setManaged(false);
             category.setText("Category");
+            categorySelectorTwo.populateMainCategoriesForExpense();
+            categorySelectorTwo.setCategory_box(myTransaction.category());
         }
         else{
             expenseButton.setDisable(true);
             incomeButton.setDisable(true);
-            transferButton.setStyle("-fx-border-color: blue;" + "-fx-border-radius: 6");
+            transferButton.setStyle("-fx-border-color: white;" + "-fx-border-radius: 6");
             categorySelectorTwo.setVisible(false);
             categorySelectorTwo.setManaged(false);
             category.setText("Second Account");
+            editButton.setDisable(true);
+            editButton.setOpacity(0.2);
+
+            Tooltip tooltip = new Tooltip("Non puoi modificare un trasferimento");
+            tooltip.setShowDelay(new Duration(1));
+            tooltip.setHideDelay(new Duration(0));
+            Tooltip.install(BoxButtonRight, tooltip);
 
         }
     }
@@ -160,6 +185,22 @@ public class TransactionInfoPopUp extends BorderPane {
         } else {
             show(x, y);
         }
+    }
+
+    private void setFieldsEditable(boolean editable) {
+        // Disabilita o abilita i campi per la modifica
+        accountsComboBox.setDisable(!editable);
+        datesPicker.setDisable(!editable);
+        notesAgg.setEditable(editable);
+        categorySelectorTwo.setDisable(!editable);
+        balanceCounter.setDisable(!editable);
+        secondAccountComboBox.setDisable(!editable);
+
+        // Mostra i pulsanti corretti
+        saveEditButton.setVisible(editable);
+        discardButton.setVisible(editable);
+        editButton.setVisible(!editable);
+        deleteButton.setVisible(!editable);
     }
 
     public void show(double x, double y) {

@@ -220,12 +220,11 @@ public class SingleTransactionController extends AnchorPane {
             double popupWidth = 712.0; // Larghezza del popup
             double popupHeight = 400.0; // Altezza del popup (stimata o specifica)
 
-            double sceneWidth = backGroundT.getScene().getWidth();
-            double sceneHeight = backGroundT.getScene().getHeight();
+            Bounds bounds = backGroundT.localToScreen(backGroundT.getBoundsInLocal());
 
             // Calcola le coordinate per il centro della scena
-            double x = (sceneWidth - popupWidth) / 2;
-            double y = (sceneHeight - popupHeight) / 2;
+            double x = bounds.getMinX() + (bounds.getWidth() - popupWidth) / 2;
+            double y = bounds.getMinY();
 
             Transactions.applyBlur();
             AddNewController.toggle(x, y);
