@@ -108,7 +108,11 @@ public class SingleTransactionController extends AnchorPane {
 
         backGroundT.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) { // Verifica se si tratta di un doppio clic
-                open_popup(); // Richiama il metodo per aprire il pop-up
+                try {
+                    open_popup(); // Richiama il metodo per aprire il pop-up
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -206,14 +210,16 @@ public class SingleTransactionController extends AnchorPane {
         }
     }
 
-    private void open_popup() {
+    private void open_popup() throws IOException {
         try {
             if (AddNewController == null) {
-                AddNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(),this);
+                AddNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this);
+                AddNewController.getContextMenu().setOnHidden(event -> Transactions.removeBlur());
             }
 
 
-            double popupWidth = 712.0; // Larghezza del popup
+
+        double popupWidth = 712.0; // Larghezza del popup
             double popupHeight = 400.0; // Altezza del popup (stimata o specifica)
 
             Bounds bounds = backGroundT.localToScreen(backGroundT.getBoundsInLocal());
@@ -231,12 +237,6 @@ public class SingleTransactionController extends AnchorPane {
             e.printStackTrace();
         }
     }
-
-    public void removeBlurChild(){
-        Transactions.removeBlur();
-    }
-
-
 
     public dbTransaction getTransaction() {
         return myTransaction;

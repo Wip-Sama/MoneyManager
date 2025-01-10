@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -22,7 +21,6 @@ import org.wip.moneymanager.model.DBObjects.dbTransaction;
 import org.wip.moneymanager.model.Data;
 
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -128,6 +126,7 @@ public class TransactionInfoPopUp extends BorderPane {
 
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
     }
+
 
     @FXML
     private void initialize() throws SQLException {
@@ -235,7 +234,6 @@ public class TransactionInfoPopUp extends BorderPane {
     }
 
     private void hide() {
-        controller.removeBlurChild();
         contextMenu.hide();
     }
 
@@ -304,5 +302,7 @@ public class TransactionInfoPopUp extends BorderPane {
     }
 
 
-
+    public ContextMenu getContextMenu() {
+        return contextMenu;
+    }
 }
