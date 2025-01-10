@@ -1,11 +1,9 @@
 package org.wip.moneymanager.model;
 
 import javafx.concurrent.Task;
+import org.wip.moneymanager.components.Tag;
 import org.wip.moneymanager.model.DBObjects.*;
-import org.wip.moneymanager.model.types.AccountType;
-import org.wip.moneymanager.utility.Encrypter;
 
-import javax.swing.plaf.PanelUI;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +11,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.sql.Statement;
 
 public class UserDatabase extends Database {
     private static UserDatabase instance = null;
@@ -620,59 +619,6 @@ public class UserDatabase extends Database {
         });
     }
 
-
-    //metodo per i tags commento tutto per farti capire qualcosa
-    public Task<Boolean> linkTagToTransaction(String transactionName, String tagName) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                try {
-                    // Recupera l'ID della transazione in base al nome
-                    String transactionIdQuery = "SELECT id FROM Transactions WHERE note = ?;";
-                    PreparedStatement transactionStmt = con.prepareStatement(transactionIdQuery);
-                    transactionStmt.setString(1, transactionName);
-                    ResultSet transactionRs = transactionStmt.executeQuery();
-
-                    if (!transactionRs.next()) {
-                        transactionStmt.close();
-                        System.err.println("Transaction not found for name: " + transactionName);
-                        return false;
-                    }
-                    int transactionId = transactionRs.getInt("id");
-                    transactionStmt.close();
-
-                    // Recupera l'ID del tag in base al nome
-                    String tagIdQuery = "SELECT id FROM Tag WHERE name = ?;";
-                    PreparedStatement tagStmt = con.prepareStatement(tagIdQuery);
-                    tagStmt.setString(1, tagName);
-                    ResultSet tagRs = tagStmt.executeQuery();
-
-                    if (!tagRs.next()) {
-                        tagStmt.close();
-                        System.err.println("Tag not found for name: " + tagName);
-                        return false;
-                    }
-                    int tagId = tagRs.getInt("id");
-                    tagStmt.close();
-
-                    // Collega l'ID della transazione con l'ID del tag
-                    String linkQuery = "INSERT INTO Transaction_tags (transaction, tag) VALUES (?, ?);";
-                    PreparedStatement linkStmt = con.prepareStatement(linkQuery);
-                    linkStmt.setInt(1, transactionId);
-                    linkStmt.setInt(2, tagId);
-                    int rowsInserted = linkStmt.executeUpdate();
-                    linkStmt.close();
-
-                    return rowsInserted > 0;
-                } catch (SQLException e) {
-                    System.err.println("SQL Error during linking tag to transaction: " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-            return false;
-        });
-    }
-
     public Task<String> getIDAccountFromName(String name) {
         return asyncCall(() -> {
             if (isConnected()) {
@@ -1012,6 +958,100 @@ public class UserDatabase extends Database {
 
             return transactions;
         });
+    }
+
+    public Task<Boolean> addNewTransaction(int date, int type, double amount, String account, String secondAccount, String note, String category, List<Tag> listTags) {
+        return asyncCall(() -> {
+            List<String> tags = new ArrayList<>();
+            for (Tag t : listTags) {
+                tags.add(t.getTag());
+                System.out.println(t.getTag());
+            }
+
+            // recupera gli ID della categoria, account e tag
+            Integer accountId = getAccountIdByName(account);
+            List<Integer> tagIds = getTagIdsByNames(tags);
+
+            // Gestione delle transazioni di tipo 0 e 1
+            if (type == 0 || type == 1) {
+                Integer secondAccountId = null;
+                Integer categoryId = getCategoryIdByName(category);
+
+                String query = "INSERT INTO Transactions (date, type, amount, account, second_account, note, category) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                stmt.setInt(1, date);
+                stmt.setInt(2, type);
+                stmt.setDouble(3, amount);
+                stmt.setInt(4, accountId);
+                stmt.setNull(5, java.sql.Types.INTEGER); // second_account è null
+                stmt.setString(6, note != null ? note : null); // Nota opzionale
+                stmt.setInt(7, categoryId);
+
+                int rowsAffected = stmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // ottieni l'ID della transazione appena inserita
+                    ResultSet generatedKeys = stmt.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        int transactionId = generatedKeys.getInt(1);
+
+                        // collega i tag alla transazione
+                        linkTagsToTransaction(transactionId, tagIds);
+                    }
+                    generatedKeys.close();
+                }
+                stmt.close();
+
+                return rowsAffected > 0;
+            }
+            // gestione delle transazioni di tipo 2 (trasferimenti)
+            else if (type == 2) {
+                Integer secondAccountId = getAccountIdByName(secondAccount);
+                Integer categoryId = null;
+
+                String query = "INSERT INTO Transactions (date, type, amount, account, second_account, note, category) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                stmt.setInt(1, date);
+                stmt.setInt(2, type);
+                stmt.setDouble(3, amount);
+                stmt.setInt(4, accountId);
+                stmt.setInt(5, secondAccountId);
+                stmt.setString(6, note != null ? note : null); // Nota opzionale
+                stmt.setNull(7, java.sql.Types.INTEGER); // categoria è null
+
+                int rowsAffected = stmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // ottiene l'ID della transazione appena inserita
+                    ResultSet generatedKeys = stmt.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        int transactionId = generatedKeys.getInt(1);
+
+                        linkTagsToTransaction(transactionId, tagIds);
+                    }
+                    generatedKeys.close();
+                }
+                stmt.close();
+
+                return rowsAffected > 0;
+            }
+            return false;
+        });
+    }
+
+    public void linkTagsToTransaction(int transactionId, List<Integer> tagIds) throws SQLException {
+
+        String query = "INSERT INTO Transactions_Tags (Transaction_id, Tag_id) VALUES (?, ?);";
+        PreparedStatement stmt = con.prepareStatement(query);
+
+        for (Integer tagId : tagIds) {
+            stmt.setInt(1, transactionId);
+            stmt.setInt(2, tagId);
+            stmt.addBatch();
+        }
+
+        stmt.executeBatch();
+        stmt.close();
     }
 
 }

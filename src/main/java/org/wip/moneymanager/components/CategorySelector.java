@@ -39,6 +39,16 @@ public class CategorySelector extends HBox {
         }
     }
 
+    public ComboBox<String> getCategoryBox() {
+        return category_box;
+    }
+
+    public ComboBox<String> getSubCategoryBox() {
+        return sub_category_box;
+    }
+
+
+
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
