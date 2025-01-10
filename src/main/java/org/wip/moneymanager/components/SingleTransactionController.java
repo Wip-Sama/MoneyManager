@@ -98,7 +98,7 @@ public class SingleTransactionController extends AnchorPane {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         Data.esm.register(executorService);
         Tooltip tooltip = new Tooltip("Doppio clic per dettagli");
         tooltip.setShowDelay(new Duration(1));
@@ -174,11 +174,7 @@ public class SingleTransactionController extends AnchorPane {
             });
 
         } else {
-            Task<String> TaskNomeCategoria = Data.userDatabase.getCategoryFromId(myTransaction.category());
-            TaskNomeCategoria.setOnSucceeded(event -> {
-                String categoria = TaskNomeCategoria.getValue();
-                categTransactions.setText(categoria);
-            });
+            categTransactions.setText(Data.userDatabase.getCategoryNameById(myTransaction.category()));
         }
 
     }

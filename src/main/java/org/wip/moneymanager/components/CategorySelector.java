@@ -11,6 +11,7 @@ import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -151,9 +152,39 @@ public class CategorySelector extends HBox {
         return sub_category_box.getSelectionModel().getSelectedItem();
     }
 
-    public void setCategory_box(int category) {
+    public void setCategory_box(int category) throws SQLException {
+        String categoryName = Data.userDatabase.getCategoryNameById(category);
+        Task<Void> waitForData = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                while (category_box.getItems().isEmpty()) {
+                    Thread.sleep(100); // Aspetta che gli elementi siano caricati
+                }
+                return null;
+            }
+        };
 
+        waitForData.setOnSucceeded(event -> {
+            Platform.runLater(() -> {
+                if (category_box.getItems().contains(categoryName)) {
+                    category_box.getSelectionModel().select(categoryName);
+                } else {
+                    String mainCategoryName = null;
+                    try {
+                        mainCategoryName = Data.userDatabase.getMainCategoryName(categoryName);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    category_box.getSelectionModel().select(mainCategoryName);
+                    populateSubCategories();
+                    sub_category_box.getSelectionModel().select(categoryName);
+                }
+            });
+        });
+
+        executorService.submit(waitForData);
     }
+
 
     public void shutdownExecutor() {
         executorService.shutdown();

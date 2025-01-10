@@ -1,5 +1,6 @@
 package org.wip.moneymanager.popUp;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,9 +24,12 @@ import org.wip.moneymanager.model.Data;
 
 import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -99,6 +103,7 @@ public class TransactionInfoPopUp extends BorderPane {
     @FXML
     private Button transferButton;
 
+    private List<String> accountNames;
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
     private final Window node;
@@ -125,17 +130,36 @@ public class TransactionInfoPopUp extends BorderPane {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException {
         Data.esm.register(executorService);
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
+        initializeNoEditable();
 
+    }
+
+    private void initializeNoEditable() throws SQLException {
         datesPicker.setValue(LocalDateTime.ofInstant(Instant.ofEpochSecond(myTransaction.date()), ZoneId.systemDefault()).toLocalDate());
         balanceCounter.setBalance(myTransaction.amount());
         notesAgg.setText(myTransaction.note());
         setFieldsEditable(false);
 
+        // Inizializza accountNames se è null
+        if (accountNames == null) {
+            accountNames = new ArrayList<>(); // Imposta una lista vuota se ancora non inizializzata
+        }
 
+        // Assicurati che il task venga avviato per caricare i dati degli account
+        Task<List<String>> namesAccountsTask = Data.userDatabase.getAllAccountNames();
+        namesAccountsTask.setOnSucceeded(event -> {
+            accountNames = namesAccountsTask.getValue(); // Salva i risultati nella variabile membro
+            if (accountNames != null) {
+                accountsComboBox.getItems().setAll(accountNames); // Popola accountComboBox
+            }
+        });
+
+        accountsComboBox.getSelectionModel().select(Data.userDatabase.getAccountNameById(myTransaction.account()));
+        // Gestione per il tipo di transazione (spesa, entrata, trasferimento)
         if (myTransaction.type() == 0) {
             expenseButton.setDisable(true);
             transferButton.setDisable(true);
@@ -154,8 +178,7 @@ public class TransactionInfoPopUp extends BorderPane {
             category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForExpense();
             categorySelectorTwo.setCategory_box(myTransaction.category());
-        }
-        else{
+        } else {
             expenseButton.setDisable(true);
             incomeButton.setDisable(true);
             transferButton.setStyle("-fx-border-color: white;" + "-fx-border-radius: 6");
@@ -165,14 +188,37 @@ public class TransactionInfoPopUp extends BorderPane {
             editButton.setDisable(true);
             editButton.setOpacity(0.2);
 
+            secondAccountComboBox.getSelectionModel().select(Data.userDatabase.getAccountNameById(myTransaction.second_account()));
+
+            // Popola inizialmente le comboBox degli account
+            accountsComboBox.getItems().setAll(accountNames);
+            accountsComboBox.setOnAction(e -> {
+                String selected = accountsComboBox.getValue();
+                if (selected != null) {
+                    secondAccountComboBox.getItems().setAll(
+                            accountNames.stream()
+                                    .filter(acc -> !acc.equals(selected))
+                                    .toList()
+                    );
+                }
+            });
+
+            // Prevenire l'uso di account selezionato più di una volta
+            if (accountsComboBox.getValue() != null) {
+                secondAccountComboBox.getItems().setAll(
+                        accountNames.stream()
+                                .filter(acc -> !acc.equals(accountsComboBox.getValue()))
+                                .toList()
+                );
+            }
+
+            // Aggiungi un tooltip
             Tooltip tooltip = new Tooltip("Non puoi modificare un trasferimento");
             tooltip.setShowDelay(new Duration(1));
             tooltip.setHideDelay(new Duration(0));
             Tooltip.install(BoxButtonRight, tooltip);
-
         }
     }
-
 
     private void hide() {
         controller.removeBlurChild();
