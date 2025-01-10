@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import org.wip.moneymanager.components.BalanceEditor?>
+<?import org.wip.moneymanager.components.CategorySelector?>
+<?import org.wip.moneymanager.components.TagSelector?>
+
+<fx:root fx:id="BoderPanePopup" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <VBox spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane prefHeight="35.0">
+               <left>
+                  <Label fx:id="labelTransaction" styleClass="text-title" text="Info Transaction" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Button fx:id="buttonExit" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: transparent;" textAlignment="RIGHT" BorderPane.alignment="CENTER">
+                     <graphic>
+                        <SVGPath content="m4.21 4.387.083-.094a1 1 0 0 1 1.32-.083l.094.083L12 10.585l6.293-6.292a1 1 0 1 1 1.414 1.414L13.415 12l6.292 6.293a1 1 0 0 1 .083 1.32l-.083.094a1 1 0 0 1-1.32.083l-.094-.083L12 13.415l-6.293 6.292a1 1 0 0 1-1.414-1.414L10.585 12 4.293 5.707a1 1 0 0 1-.083-1.32l.083-.094-.083.094Z" styleClass="icon_general" />
+                     </graphic>
+                  </Button>
+               </right>
+            </BorderPane>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Button fx:id="incomeButton" maxWidth="1.7976931348623157E308" prefWidth="220.0" style=" fx-background-radius: 6;" styleClass="info-type-button" text="In" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="expenseButton" maxWidth="1.7976931348623157E308" prefWidth="220.0" style=" fx-background-radius: 6;" styleClass="info-type-button" text="Spese" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="transferButton" maxWidth="1.7976931348623157E308" prefWidth="200.0" style=" fx-background-radius: 6;" styleClass="info-type-button" text="Trasferimenti" HBox.hgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </top>
+   <center>
+      <GridPane hgap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" vgap="15.0" BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox spacing="5.0">
+               <children>
+                  <Label fx:id="date" text="Data " />
+                  <DatePicker fx:id="datesPicker" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="1">
+               <children>
+                  <Label fx:id="amountLabel" text="Importo" />
+                  <BalanceEditor fx:id="balanceCounter" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="account" text="Conto" />
+                  <ComboBox fx:id="accountsComboBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="category" text="Conto 2" />
+                  <CategorySelector fx:id="categorySelectorTwo" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+                  <ComboBox fx:id="secondAccountComboBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.rowIndex="2">
+               <children>
+                  <Label fx:id="tagsLabel" text="Tags" />
+                  <TagSelector fx:id="tagPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="120.0" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Note Aggiuntive" />
+                  <TextArea fx:id="notesAgg" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="discardButton" maxWidth="1.7976931348623157E308" style="-fx-text-fill: red;" styleClass="transparent-button" text="Cancella" visible="false" />
+                        <Button fx:id="deleteButton" maxWidth="1.7976931348623157E308" style="-fx-text-fill: red;" styleClass="transparent-button" text="Elimina" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="BoxButtonRight" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="saveEditButton" maxWidth="1.7976931348623157E308" styleClass="full-button" text="Salva" visible="false" />
+                        <Button fx:id="editButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="full-button" text="Modifica" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</fx:root>

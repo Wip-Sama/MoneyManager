@@ -811,7 +811,17 @@ public class UserDatabase extends Database {
     }
 
 
-
+    public String getCategoryNameById(int categoryId) throws SQLException {
+        String query = "SELECT name FROM Categories WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, categoryId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        }
+        return null;
+    }
 
     private Integer getCategoryIdByName(String categoryName) throws SQLException {
         if (categoryName == null) {
@@ -840,6 +850,19 @@ public class UserDatabase extends Database {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("id");
+            }
+        }
+        return null;
+    }
+
+    public String getAccountNameById(int accountName) throws SQLException {
+
+        String query = "SELECT name FROM Accounts WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, accountName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("name");
             }
         }
         return null;
@@ -912,25 +935,6 @@ public class UserDatabase extends Database {
             throw new IllegalArgumentException("Account not found");
         });
     }
-
-    public Task<String> getCategoryFromId(Integer category) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "SELECT name FROM Categories WHERE id = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, category);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    String name = rs.getString("name");
-                    stmt.close();
-                    return name;
-                }
-                stmt.close();
-            }
-            throw new IllegalArgumentException("Category not found");
-        });
-    }
-
 
     public Task<List<dbTag>> getTagFromTransaction(Integer transactionId) {
         return asyncCall(() -> {
@@ -1012,6 +1016,28 @@ public class UserDatabase extends Database {
 
             return transactions;
         });
+    }
+
+    public String getMainCategoryName(String subcategoryName) throws SQLException {
+        String mainCategoryName = null;
+
+        if (isConnected()) {
+            String query = "SELECT c.name FROM Categories c " +
+                    "INNER JOIN Categories sub ON c.id = sub.parent_category " +
+                    "WHERE sub.name = ?";
+
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, subcategoryName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                mainCategoryName = rs.getString("name");
+            }
+
+            stmt.close();
+        }
+
+        return mainCategoryName;
     }
 
 }
