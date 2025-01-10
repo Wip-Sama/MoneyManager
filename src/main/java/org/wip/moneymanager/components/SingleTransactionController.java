@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.model.DBObjects.dbTag;
@@ -70,7 +71,6 @@ public class SingleTransactionController extends AnchorPane {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private dbTransaction myTransaction;
-    private dbTransaction favourite;
     private final static String on_fav = new SVGLoader("star").getPath();
     private final static String off_fav = new SVGLoader("Star_empty").getPath();
 
@@ -189,10 +189,10 @@ public class SingleTransactionController extends AnchorPane {
             List<dbTag> dbTags = loadTagsTask.getValue();
             if (dbTags != null) {
                 for (dbTag dbTagItem : dbTags) {
-                    Tag tag = new Tag(dbTagItem.name(), 0, 0, dbTagItem.color());
+                    Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color());
                     GridtagPane.getChildren().add(tag);
-                    }
                 }
+            }
         });
         loadTagsTask.setOnFailed(event -> {
             Throwable exception = loadTagsTask.getException();
@@ -218,25 +218,38 @@ public class SingleTransactionController extends AnchorPane {
             }
 
 
+            double popupWidth = 712.0; // Larghezza del popup
+            double popupHeight = 400.0; // Altezza del popup
 
-        double popupWidth = 712.0; // Larghezza del popup
-            double popupHeight = 400.0; // Altezza del popup (stimata o specifica)
+            // Ottieni le coordinate della finestra principale
+            Window mainWindow = Transactions.getScene().getWindow();
+            double windowX = mainWindow.getX();
+            double windowY = mainWindow.getY();
+            double windowWidth = mainWindow.getWidth();
+            double windowHeight = mainWindow.getHeight();
 
-            Bounds bounds = backGroundT.localToScreen(backGroundT.getBoundsInLocal());
+            // Calcola le coordinate per il centro del popup rispetto alla finestra principale
+            double x = windowX + (windowWidth - popupWidth) / 2;
+            double y = windowY + (windowHeight - popupHeight) / 2;
 
-            // Calcola le coordinate per il centro della scena
-            double x = bounds.getMinX() + (bounds.getWidth() - popupWidth) / 2;
-            double y = bounds.getMinY();
+            // Garantisci che il popup non esca dai bordi dello schermo
+            x = Math.max(x, 0);
+            y = Math.max(y, 0);
 
             Transactions.applyBlur();
             AddNewController.toggle(x, y);
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+    public void removeBlurChild(){
+        Transactions.removeBlur();
+    }
+
+
 
     public dbTransaction getTransaction() {
         return myTransaction;
