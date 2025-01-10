@@ -114,7 +114,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
         TransactionsRefreshButton.setOnAction(event -> {
             RotateTransition rotateTransition = new RotateTransition();
             rotateTransition.setNode(iconRefresh);
-            rotateTransition.setDuration(Duration.seconds(2));
+            rotateTransition.setDuration(Duration.seconds(0.5));
             rotateTransition.setByAngle(360);
             rotateTransition.setAutoReverse(false);
             rotateTransition.play();
@@ -221,14 +221,12 @@ public class Transactions extends BorderPane implements AutoCloseable {
     }
 
     public void applyBlur() {
-        Parent root = this.getScene().getRoot();
         GaussianBlur blur = new GaussianBlur();
         blur.setRadius(5);
         vboxCard.setEffect(blur);
     }
 
     public void removeBlur() {
-        Parent root = this.getScene().getRoot();
         vboxCard.setEffect(null);
     }
 

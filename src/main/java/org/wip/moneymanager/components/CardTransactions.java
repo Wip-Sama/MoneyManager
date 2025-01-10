@@ -119,7 +119,7 @@ public class CardTransactions extends AnchorPane {
             List<dbTransaction> transactions = task.getValue();
             if (transactions != null) {
                 transactions.forEach(transaction -> {
-                    SingleTransactionController cardNode = new SingleTransactionController(transaction, transactionsPage, this));
+                    SingleTransactionController cardNode = new SingleTransactionController(transaction, transactionsPage, this);
                     cardTransaction.getChildren().add(cardNode);
                     this.transactions.add(transaction);
                 });
@@ -166,7 +166,7 @@ public class CardTransactions extends AnchorPane {
     public void restoreAllTransactions() {
         cardTransaction.getChildren().clear();
         transactions.forEach(transaction -> {
-            SingleTransactionController cardNode = new SingleTransactionController(transaction, transactionsPage, this));
+            SingleTransactionController cardNode = new SingleTransactionController(transaction, transactionsPage, this);
             cardTransaction.getChildren().add(cardNode);
         });
     }
