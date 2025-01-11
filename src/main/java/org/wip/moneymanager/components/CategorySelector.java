@@ -211,6 +211,13 @@ public class CategorySelector extends HBox {
         });
     }
 
+    public void discard() {
+        Platform.runLater(() -> {
+            category_box.getSelectionModel().clearSelection();
+            sub_category_box.getSelectionModel().clearSelection();
+        });
+    }
+
     public void animateError() {
         FieldAnimationUtils.animateFieldError(category_box);
     }

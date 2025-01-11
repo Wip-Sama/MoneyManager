@@ -83,6 +83,7 @@ public class transactionPopupController extends BorderPane {
 
         Data.esm.register(executorService);
 
+
         // imposta i testi di label e dei pulsanti
         labelTitle.setText(Data.lsp.lsb("transactionPopUpController.title").get());
         incomeButton.setText(Data.lsp.lsb("transactionPopUpController.income").get());
@@ -125,6 +126,12 @@ public class transactionPopupController extends BorderPane {
 
         categorySelector.setVisible(true);
         categorySelector.setManaged(true);
+
+        tagSelector.clearTags();
+        categorySelector.populateMainCategoriesForIncome();
+        datePicker.setValue(LocalDate.now());
+        incomeButton.setSelected(true);
+        onToggleButtonChange(false);
 
         // azione per il pulsante cancel
         cancelButton.setOnAction(e -> hide());
@@ -291,18 +298,24 @@ public class transactionPopupController extends BorderPane {
                 }
             });
 
-            accountComboBox.getItems().setAll(accountNames);
-            if (accountComboBox.getValue() != null) {
-                SecondoAccountComboBox.getItems().setAll(
-                        accountNames.stream()
-                                .filter(acc -> !acc.equals(accountComboBox.getValue()))
-                                .toList()
-                );
-            }
+            secondAccountDefault();
+
         } else {
             accountComboBox.getItems().setAll(accountNames);
             account.setText(Data.lsp.lsb("transactionPopUpController.account").get());
             category.setText(Data.lsp.lsb("transactionPopUpController.category").get());
+        }
+
+    }
+
+    private void secondAccountDefault(){
+        accountComboBox.getItems().setAll(accountNames);
+        if (accountComboBox.getValue() == null) {
+            SecondoAccountComboBox.getItems().setAll(
+                    accountNames.stream()
+                            .filter(acc -> !acc.equals(accountComboBox.getValue()))
+                            .toList()
+            );
         }
     }
 
@@ -372,6 +385,13 @@ public class transactionPopupController extends BorderPane {
             }
             hasError = true;
             errorCount++;
+        }else if (datePicker.getValue().isAfter(LocalDate.now())) {
+            FieldAnimationUtils.animateFieldError(datePicker);
+            if (!hasError) {
+                showError("transactionPopUpController.error.future.date");
+            }
+            hasError = true;
+            errorCount++;
         }
 
         // Validazione categoria/secondo account in base al tipo di transazione
@@ -403,6 +423,8 @@ public class transactionPopupController extends BorderPane {
 
         return !hasError;
     }
+
+
 
     // metodo che ottiene il tipo di transazione
     private int getTransactionType() {
@@ -437,20 +459,23 @@ public class transactionPopupController extends BorderPane {
 
     // metodo per resettare la schermata
     private void resetScreen() {
-        LocalDate currentDate = datePicker.getValue();
-        datePicker.setValue(currentDate != null ? currentDate : LocalDate.now());
+            LocalDate currentDate = datePicker.getValue();
+            datePicker.setValue(currentDate != null ? currentDate : LocalDate.now());
 
-        accountComboBox.getItems().clear();
-        SecondoAccountComboBox.getItems().clear();
-        accountComboBox.setOnAction(null);
-        SecondoAccountComboBox.setOnAction(null);
-        account.setText("");
-        category.setText("");
-        balanceEditor.reset();
-        notes.setText("");
-        categorySelector.clear();
-        tagSelector.clearTags();
-        TagFilter.refreshTags();
+            accountComboBox.getSelectionModel().clearSelection();
+            secondAccountDefault();
+            //accountComboBox.setOnAction(null);
+            //SecondoAccountComboBox.setOnAction(null);
+            //account.setText("");
+            //category.setText("");
+            balanceEditor.reset();
+            notes.setText("");
+            categorySelector.discard();
+            tagSelector.clearTags();
+            TagFilter.refreshTags();
+            incomeButton.setSelected(true);
+            expenseButton.setSelected(false);
+            transferButton.setSelected(false);
     }
 
     // metodo che gestisce il cambio del tipo di transazione
@@ -492,11 +517,8 @@ public class transactionPopupController extends BorderPane {
 
     // metodo per mostrare il popup
     public void show(double x, double y) {
-        incomeButton.setSelected(true);
-        onToggleButtonChange(false);
-        tagSelector.clearTags();
-        categorySelector.populateMainCategoriesForIncome();
-        datePicker.setValue(LocalDate.now());
+
+
 
         contextMenu.show(node, x, y);
     }

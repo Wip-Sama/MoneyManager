@@ -230,6 +230,7 @@ public class AddNewAccountController extends BorderPane {
         int accountType = typeAccountField.getSelectionModel().getSelectedIndex();
 
         AtomicBoolean hasError = new AtomicBoolean(false);
+        AtomicBoolean calendarError = new AtomicBoolean(false);
 
         if (name == null || name.trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(newAccountField);
@@ -239,7 +240,11 @@ public class AddNewAccountController extends BorderPane {
         if (dateField.getValue() == null) {
             FieldAnimationUtils.animateFieldError(dateField);
             hasError.set(true);
+        }else if (dateField.getValue().isAfter(LocalDate.now())) {
+            FieldAnimationUtils.animateFieldError(dateField);
+            calendarError.set(true);
         }
+
 
         if (balanceText == null || balanceText.trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(bilanceField);
@@ -253,6 +258,8 @@ public class AddNewAccountController extends BorderPane {
 
         if (hasError.get()) {
             showError("addnewaccount.error");
+        } else if (calendarError.get()) {
+            showError("transactionPopUpController.error.future.date");
         }
 
         Task<List<String>> namesAccountsTask = Data.userDatabase.getAllAccountNames();
@@ -266,7 +273,7 @@ public class AddNewAccountController extends BorderPane {
         });
         executorService.submit(namesAccountsTask);
 
-        return !hasError.get();
+        return !hasError.get() && !calendarError.get();
     }
 
 
