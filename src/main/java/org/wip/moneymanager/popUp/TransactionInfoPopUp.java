@@ -134,20 +134,22 @@ public class TransactionInfoPopUp extends BorderPane {
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
 
-        saveEditButton.setManaged(false);
-        discardButton.setManaged(false);
-        initializeNoEditable();
+
         setupEditButton();
 
 
     }
 
-    private void initializeNoEditable() throws SQLException {
+    private void initializeNoEditable()  {
 
         datesPicker.setValue(LocalDateTime.ofInstant(Instant.ofEpochSecond(myTransaction.date()), ZoneId.systemDefault()).toLocalDate());
         balanceCounter.setBalance(myTransaction.amount());
         notesAgg.setText(myTransaction.note());
         setFieldsEditable(false);
+        saveEditButton.setManaged(false);
+        discardButton.setManaged(false);
+        deleteButton.setManaged(true);
+        editButton.setManaged(true);
 
         // Inizializza accountNames se è null
         if (accountNames == null) {
@@ -163,7 +165,11 @@ public class TransactionInfoPopUp extends BorderPane {
             }
         });
 
-        accountsComboBox.getSelectionModel().select(Data.userDatabase.getAccountNameById(myTransaction.account()));
+        try {
+            accountsComboBox.getSelectionModel().select(Data.userDatabase.getAccountNameById(myTransaction.account()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         // Gestione per il tipo di transazione (spesa, entrata, trasferimento)
         if (myTransaction.type() == 0) {
             expenseButton.setDisable(true);
@@ -173,10 +179,11 @@ public class TransactionInfoPopUp extends BorderPane {
             secondAccountComboBox.setManaged(false);
             category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForIncome();
-            categorySelectorTwo.setCategory_box(myTransaction.category());
-
-
-
+            try {
+                categorySelectorTwo.setCategory_box(myTransaction.category());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
 
         } else if (myTransaction.type() == 1) {
@@ -188,9 +195,11 @@ public class TransactionInfoPopUp extends BorderPane {
             secondAccountComboBox.setManaged(false);
             category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForExpense();
-            categorySelectorTwo.setCategory_box(myTransaction.category());
-
-
+            try {
+                categorySelectorTwo.setCategory_box(myTransaction.category());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
 
         } else {
@@ -203,7 +212,11 @@ public class TransactionInfoPopUp extends BorderPane {
             editButton.setDisable(true);
             editButton.setOpacity(0.2);
 
-            secondAccountComboBox.getSelectionModel().select(Data.userDatabase.getAccountNameById(myTransaction.second_account()));
+            try {
+                secondAccountComboBox.getSelectionModel().select(Data.userDatabase.getAccountNameById(myTransaction.second_account()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             // Popola inizialmente le comboBox degli account
             accountsComboBox.getItems().setAll(accountNames);
@@ -265,8 +278,10 @@ public class TransactionInfoPopUp extends BorderPane {
         deleteButton.setVisible(!editable);
     }
 
-    public void show(double x, double y) {
+    public void show(double x, double y)  {
         contextMenu.show(node, x, y);
+        initializeNoEditable();
+
     }
 
     public void close() {
@@ -292,6 +307,9 @@ public class TransactionInfoPopUp extends BorderPane {
 
         saveEditButton.setOnAction(event -> {
             saveChanges();
+            controller.refreshSingleTransaction();
+            hide();
+
         });
 
         discardButton.setOnAction(event -> {
@@ -301,13 +319,61 @@ public class TransactionInfoPopUp extends BorderPane {
     }
 
     private void discardChanges() {
+        initializeNoEditable();
     }
 
     private void saveChanges() {
-        balanceCounter.getBalance();
-        accountsComboBox.getItems().setAll(accountNames);
-        secondAccountComboBox.getItems().setAll(accountNames);
-        categorySelectorTwo.getSelectedCategory();
+
+        int creationDate = (int) datesPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+        try {
+            myTransaction.setDate(creationDate);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            int accountId = Data.userDatabase.getAccountIdByName(accountsComboBox.getValue());
+            myTransaction.setAccount(accountId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        double balance = balanceCounter.getBalance();
+        try {
+            myTransaction.setAmount(balance);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        if (myTransaction.type() != 2) {
+            if (categorySelectorTwo.getSelectedSubCategory() == null) {
+                try {
+                    int categoryId = Data.userDatabase.getCategoryIdByName(categorySelectorTwo.getSelectedCategory());
+                    myTransaction.setCategory(categoryId);
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                try {
+                    int categoryId = Data.userDatabase.getCategoryIdByName(categorySelectorTwo.getSelectedSubCategory());
+                    myTransaction.setCategory(categoryId);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        else {
+            try {
+                int accountSecond = Data.userDatabase.getAccountIdByName(secondAccountComboBox.getValue());
+                myTransaction.setSecondAccount(accountSecond);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
     }
 

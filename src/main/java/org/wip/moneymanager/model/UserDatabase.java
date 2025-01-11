@@ -812,7 +812,7 @@ public class UserDatabase extends Database {
 
 
 
-    private Integer getCategoryIdByName(String categoryName) throws SQLException {
+    public Integer getCategoryIdByName(String categoryName) throws SQLException {
         if (categoryName == null) {
             return null;
         }
@@ -828,7 +828,7 @@ public class UserDatabase extends Database {
         return null;
     }
 
-    private Integer getAccountIdByName(String accountName) throws SQLException {
+    public Integer getAccountIdByName(String accountName) throws SQLException {
         if (accountName == null) {
             return null;
         }

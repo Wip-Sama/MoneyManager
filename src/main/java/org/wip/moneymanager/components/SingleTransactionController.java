@@ -98,7 +98,7 @@ public class SingleTransactionController extends AnchorPane {
 
 
     @FXML
-    public void initialize() throws SQLException {
+    public void initialize() {
         Data.esm.register(executorService);
         Tooltip tooltip = new Tooltip("Doppio clic per dettagli");
         tooltip.setShowDelay(new Duration(1));
@@ -178,7 +178,11 @@ public class SingleTransactionController extends AnchorPane {
             });
 
         } else {
-            categTransactions.setText(Data.userDatabase.getCategoryNameById(myTransaction.category()));
+            try {
+                categTransactions.setText(Data.userDatabase.getCategoryNameById(myTransaction.category()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -211,37 +215,34 @@ public class SingleTransactionController extends AnchorPane {
     }
 
     private void open_popup() throws IOException {
-        try {
-            if (AddNewController == null) {
-                AddNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this);
-                AddNewController.getContextMenu().setOnHidden(event -> Transactions.removeBlur());
-            }
 
-
-            double popupWidth = 712.0; // Larghezza del popup
-            double popupHeight = 400.0; // Altezza del popup
-
-            // Ottieni le coordinate della finestra principale
-            Window mainWindow = Transactions.getScene().getWindow();
-            double windowX = mainWindow.getX();
-            double windowY = mainWindow.getY();
-            double windowWidth = mainWindow.getWidth();
-            double windowHeight = mainWindow.getHeight();
-
-            // Calcola le coordinate per il centro del popup rispetto alla finestra principale
-            double x = windowX + (windowWidth - popupWidth) / 2;
-            double y = windowY + (windowHeight - popupHeight) / 2;
-
-            // Garantisci che il popup non esca dai bordi dello schermo
-            x = Math.max(x, 0);
-            y = Math.max(y, 0);
-
-            Transactions.applyBlur();
-            AddNewController.toggle(x, y);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (AddNewController == null) {
+            AddNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this);
+            AddNewController.getContextMenu().setOnHidden(event -> Transactions.removeBlur());
         }
+
+
+        double popupWidth = 712.0; // Larghezza del popup
+        double popupHeight = 400.0; // Altezza del popup
+
+        // Ottieni le coordinate della finestra principale
+        Window mainWindow = Transactions.getScene().getWindow();
+        double windowX = mainWindow.getX();
+        double windowY = mainWindow.getY();
+        double windowWidth = mainWindow.getWidth();
+        double windowHeight = mainWindow.getHeight();
+
+        // Calcola le coordinate per il centro del popup rispetto alla finestra principale
+        double x = windowX + (windowWidth - popupWidth) / 2;
+        double y = windowY + (windowHeight - popupHeight) / 2;
+
+        // Garantisci che il popup non esca dai bordi dello schermo
+        x = Math.max(x, 0);
+        y = Math.max(y, 0);
+
+        Transactions.applyBlur();
+        AddNewController.toggle(x, y);
+
     }
 
 
@@ -253,6 +254,10 @@ public class SingleTransactionController extends AnchorPane {
 
     public dbTransaction getTransaction() {
         return myTransaction;
+    }
+
+    public void refreshSingleTransaction(){
+        Transactions.refresh();
     }
 }
 

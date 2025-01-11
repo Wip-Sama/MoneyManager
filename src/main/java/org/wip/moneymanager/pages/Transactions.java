@@ -112,14 +112,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
 
         TransactionsRefreshButton.setOnAction(event -> {
-            RotateTransition rotateTransition = new RotateTransition();
-            rotateTransition.setNode(iconRefresh);
-            rotateTransition.setDuration(Duration.seconds(0.5));
-            rotateTransition.setByAngle(360);
-            rotateTransition.setAutoReverse(false);
-            rotateTransition.play();
-
-            generaCard(null, null, null);
+            refresh();
         });
 
         favouriteToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -232,6 +225,17 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     public Transactions getInstance(){
         return this;
+    }
+
+    public void refresh(){
+        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition.setNode(iconRefresh);
+        rotateTransition.setDuration(Duration.seconds(0.5));
+        rotateTransition.setByAngle(360);
+        rotateTransition.setAutoReverse(false);
+        rotateTransition.play();
+
+        generaCard(null, null, null);
     }
 
     @Override

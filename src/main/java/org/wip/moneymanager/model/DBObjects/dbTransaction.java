@@ -119,6 +119,11 @@ public final class dbTransaction {
         updateField("fauvorite", fauvorite);
     }
 
+    public void setCategory(int category) throws SQLException{
+        this.category = category;
+        updateField("category", category);
+    }
+
 
     private void updateField(String fieldName, Object value) throws SQLException {
         String query = "UPDATE Transactions SET " + fieldName + " = ? WHERE id = ?";
