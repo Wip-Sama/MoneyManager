@@ -120,6 +120,9 @@ public class transactionPopupController extends BorderPane {
         SecondoAccountComboBox.setVisible(false);
         SecondoAccountComboBox.setManaged(false);
 
+        accountComboBox.getStyleClass().add("transaction-combo-box");
+        SecondoAccountComboBox.getStyleClass().add("transaction-combo-box");
+
         categorySelector.setVisible(true);
         categorySelector.setManaged(true);
 
@@ -305,85 +308,100 @@ public class transactionPopupController extends BorderPane {
 
     // metodo che valida i campi del popup
     private boolean validateFields() {
-        AtomicBoolean hasError = new AtomicBoolean(false);
+        boolean hasError = false;
         int errorCount = 0;
+
+        // Verifica se tutti i campi richiesti sono vuoti
+        boolean allFieldsEmpty = (accountComboBox.getValue() == null || accountComboBox.getValue().trim().isEmpty()) &&
+                (balanceEditor.getText() == null || balanceEditor.getText().trim().isEmpty()) &&
+                datePicker.getValue() == null &&
+                (!isTransfer && (categorySelector.getSelectedCategory() == null ||
+                        categorySelector.getSelectedCategory().trim().isEmpty()));
+
+        if (allFieldsEmpty) {
+
+            FieldAnimationUtils.animateFieldError(accountComboBox);
+            FieldAnimationUtils.animateFieldError(balanceEditor);
+            FieldAnimationUtils.animateFieldError(datePicker);
+            if (!isTransfer) {
+                categorySelector.animateError();
+            }
+            showError("transactionPopUpController.error.all_fields");
+            return false;
+        }
 
         if (accountComboBox.getValue() == null || accountComboBox.getValue().trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(accountComboBox);
-            if (errorCount == 0) {
-                showError("transactionPopUpController.error.account");
-            }
+            showError("transactionPopUpController.error.account");
+            hasError = true;
             errorCount++;
         }
 
         if (balanceEditor.getText() == null || balanceEditor.getText().trim().isEmpty()) {
             FieldAnimationUtils.animateFieldError(balanceEditor);
-            if (errorCount == 0) {
+            if (!hasError) {
                 showError("transactionPopUpController.error.amount");
             }
+            hasError = true;
             errorCount++;
         } else {
             try {
                 double amount = Double.parseDouble(balanceEditor.getText().replace(',','.'));
                 if (amount <= 0) {
                     FieldAnimationUtils.animateFieldError(balanceEditor);
-                    if (errorCount == 0) {
+                    if (!hasError) {
                         showError("transactionPopUpController.error.amount.zero");
                     }
+                    hasError = true;
                     errorCount++;
                 }
             } catch (NumberFormatException e) {
                 FieldAnimationUtils.animateFieldError(balanceEditor);
-                if (errorCount == 0) {
+                if (!hasError) {
                     showError("transactionPopUpController.error.amount.invalid");
                 }
+                hasError = true;
                 errorCount++;
             }
         }
 
         if (datePicker.getValue() == null) {
             FieldAnimationUtils.animateFieldError(datePicker);
-            showError("transactionPopUpController.error.date");
-            return false;
-        }
-
-        try {
-            double amount = Double.parseDouble(balanceEditor.getText().replace(',','.'));
-            if (amount <= 0) {
-                FieldAnimationUtils.animateFieldError(balanceEditor);
-                showError("transactionPopUpController.error.amount.zero");
-                return false;
+            if (!hasError) {
+                showError("transactionPopUpController.error.date");
             }
-        } catch (NumberFormatException e) {
-            FieldAnimationUtils.animateFieldError(balanceEditor);
-            showError("transactionPopUpController.error.amount.invalid");
-            return false;
+            hasError = true;
+            errorCount++;
         }
 
+        // Validazione categoria/secondo account in base al tipo di transazione
         if (isTransfer) {
             if (SecondoAccountComboBox.getValue() == null || SecondoAccountComboBox.getValue().trim().isEmpty()) {
                 FieldAnimationUtils.animateFieldError(SecondoAccountComboBox);
-                if (errorCount == 0) {
+                if (!hasError) {
                     showError("transactionPopUpController.error.recipient");
                 }
+                hasError = true;
                 errorCount++;
             }
         } else {
             String mainCategory = categorySelector.getSelectedCategory();
             if (mainCategory == null || mainCategory.trim().isEmpty()) {
                 categorySelector.animateError();
-                if (errorCount == 0) {
+                if (!hasError) {
                     showError("transactionPopUpController.error.category");
                 }
+                hasError = true;
                 errorCount++;
             }
         }
 
+        // Mostra errore generico se ci sono più campi non validi
         if (errorCount > 1) {
             showError("transactionPopUpController.error.all_fields");
         }
 
-        return errorCount == 0;
+        return !hasError;
     }
 
     // metodo che ottiene il tipo di transazione
@@ -416,6 +434,7 @@ public class transactionPopupController extends BorderPane {
         errorLabel.setOpacity(0);
     }
 
+
     // metodo per resettare la schermata
     private void resetScreen() {
         LocalDate currentDate = datePicker.getValue();
@@ -436,6 +455,9 @@ public class transactionPopupController extends BorderPane {
 
     // metodo che gestisce il cambio del tipo di transazione
     private void onToggleButtonChange(boolean isTransfer) {
+
+        clearError();
+
         if (this.isTransfer != isTransfer) {
             resetScreen();
             this.isTransfer = isTransfer;
@@ -459,6 +481,7 @@ public class transactionPopupController extends BorderPane {
         }
 
         populateComboBoxes(isTransfer);
+
     }
 
     // metodo per nascondere il popup
