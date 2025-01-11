@@ -63,7 +63,7 @@ public class FieldAnimationUtils {
 
     // Aggiunge l'errore alla ComboBox
     public static void animateFieldError(ComboBox<?> ComboBox) {
-                ComboBox.setStyle("-fx-background-color: red, red, -fu-foreground-rest;");
+            ComboBox.getStyleClass().add("errore");
             Timeline shakeTimeline = createShakeTimeline(ComboBox);
             shakeTimeline.setCycleCount(1);
             shakeTimeline.play();
@@ -71,7 +71,7 @@ public class FieldAnimationUtils {
 
     // Rimuove l'errore dalla ComboBox
     public static void removeErrorStyles(ComboBox<?> ComboBox) {
-        ComboBox.setStyle("-fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;");
+        ComboBox.getStyleClass().remove("errore");
     }
 
     // Aggiunge l'errore al DatePicker

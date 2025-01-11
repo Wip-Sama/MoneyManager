@@ -104,7 +104,7 @@
    <bottom>
       <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox>
+            <HBox alignment="CENTER">
                <children>
                   <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                      <children>

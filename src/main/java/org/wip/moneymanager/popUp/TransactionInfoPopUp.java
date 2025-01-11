@@ -133,8 +133,11 @@ public class TransactionInfoPopUp extends BorderPane {
         Data.esm.register(executorService);
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
-        initializeNoEditable();
 
+        saveEditButton.setManaged(false);
+        discardButton.setManaged(false);
+        initializeNoEditable();
+        setupEditButton();
 
 
     }
@@ -171,7 +174,7 @@ public class TransactionInfoPopUp extends BorderPane {
             category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForIncome();
             categorySelectorTwo.setCategory_box(myTransaction.category());
-            setupEditButton();
+
 
 
 
@@ -186,7 +189,6 @@ public class TransactionInfoPopUp extends BorderPane {
             category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForExpense();
             categorySelectorTwo.setCategory_box(myTransaction.category());
-            setupEditButton();
 
 
 
@@ -231,6 +233,8 @@ public class TransactionInfoPopUp extends BorderPane {
             tooltip.setHideDelay(new Duration(0));
             Tooltip.install(BoxButtonRight, tooltip);
         }
+
+
     }
 
     private void hide() {
@@ -276,8 +280,14 @@ public class TransactionInfoPopUp extends BorderPane {
         editButton.setOnAction(event -> {
             setFieldsEditable(true);
             editButton.setVisible(false);
+            deleteButton.setVisible(false);
+            editButton.setManaged(false);
+            deleteButton.setManaged(false);
+
             saveEditButton.setVisible(true);
             discardButton.setVisible(true);
+            saveEditButton.setManaged(true);
+            discardButton.setManaged(true);
         });
 
         saveEditButton.setOnAction(event -> {

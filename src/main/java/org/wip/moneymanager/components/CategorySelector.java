@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
@@ -56,6 +57,9 @@ public class CategorySelector extends HBox {
         if (category_box.getOnAction() == null) { // Evita registrazioni multiple
             category_box.setOnAction(event -> populateSubCategories());
         }
+
+        setComboBoxCellSize(category_box, 50);
+        setComboBoxCellSize(sub_category_box, 50);
     }
 
 
@@ -213,5 +217,36 @@ public class CategorySelector extends HBox {
 
     public void removeError() {
         FieldAnimationUtils.removeErrorStyles(category_box);
+    }
+
+    private void setComboBoxCellSize(ComboBox<String> comboBox, double maxWidth) {
+        comboBox.setCellFactory(listView -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item);
+                    setPrefWidth(maxWidth);
+                    setMaxWidth(maxWidth);
+                } else {
+                    setText(null);
+                }
+            }
+        });
+
+        // Imposta anche la dimensione massima per il pulsante di visualizzazione della ComboBox
+        comboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item);
+                    setPrefWidth(maxWidth);
+                    setMaxWidth(maxWidth);
+                } else {
+                    setText(null);
+                }
+            }
+        });
     }
 }

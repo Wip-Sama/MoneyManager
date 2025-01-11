@@ -12,7 +12,11 @@
 
 
 .errore {
-    -fx-background-color: red, red, -fu-foreground-rest;
+    -fx-background-color: red, red, -fu-foreground-rest !important;
+}
+
+.combo-box .errore {
+    -fx-background-color: red, red, -fu-foreground-rest !important;
 }
 
 
