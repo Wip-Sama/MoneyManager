@@ -185,6 +185,11 @@ public class SingleTransactionController extends AnchorPane {
             }
         }
 
+        deleteCard.setOnAction(event ->{
+            int id = myTransaction.id();
+            removeCard(id);
+        });
+
     }
 
     private void generaTags() {
@@ -257,6 +262,11 @@ public class SingleTransactionController extends AnchorPane {
     }
 
     public void refreshSingleTransaction(){
+        Transactions.refresh();
+    }
+
+    public void removeCard(int id){
+        Data.userDatabase.removeTransaction(id);
         Transactions.refresh();
     }
 }
