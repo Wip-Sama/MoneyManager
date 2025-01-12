@@ -106,15 +106,58 @@ public class SingleTransactionController extends AnchorPane {
         Tooltip.install(backGroundT, tooltip);
         deleteCard.textProperty().bind(Data.lsp.lsb("singleTransaction.deleteCard"));
 
+        Tooltip backGroundTooltip = new Tooltip("Doppio clic per dettagli");
+        backGroundTooltip.setShowDelay(new Duration(1));
+        backGroundTooltip.setHideDelay(new Duration(0));
+
+
+        Tooltip deleteCardTooltip = new Tooltip("Doppio clic per eliminare");
+        deleteCardTooltip.setShowDelay(new Duration(1));
+        deleteCardTooltip.setHideDelay(new Duration(0));
+
+
+        deleteCard.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                int id = myTransaction.id();
+                removeCard(id);
+                event.consume();
+            }
+        });
+
+        deleteCard.setOnMouseEntered(event -> {
+            Tooltip.install(deleteCard, deleteCardTooltip);
+        });
+
+        deleteCard.setOnMouseExited(event -> {
+            Tooltip.uninstall(deleteCard, deleteCardTooltip);
+        });
+
+
         backGroundT.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { // Verifica se si tratta di un doppio clic
+            if (event.getClickCount() == 2 && !event.getTarget().equals(deleteCard)) {
                 try {
-                    open_popup(); // Richiama il metodo per aprire il pop-up
+                    open_popup();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
+
+
+        backGroundT.setOnMouseMoved(event -> {
+            if (!deleteCard.contains(event.getX() - deleteCard.getLayoutX(),
+                    event.getY() - deleteCard.getLayoutY())) {
+                Tooltip.install(backGroundT, backGroundTooltip);
+            } else {
+                Tooltip.uninstall(backGroundT, backGroundTooltip);
+            }
+        });
+
+        backGroundT.setOnMouseExited(event -> {
+            Tooltip.uninstall(backGroundT, backGroundTooltip);
+        });
+
+
 
 
         generaTags();
@@ -184,12 +227,6 @@ public class SingleTransactionController extends AnchorPane {
                 throw new RuntimeException(e);
             }
         }
-
-        deleteCard.setOnAction(event ->{
-            int id = myTransaction.id();
-            removeCard(id);
-        });
-
     }
 
     private void generaTags() {
