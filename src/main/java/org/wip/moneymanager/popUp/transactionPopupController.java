@@ -83,7 +83,6 @@ public class transactionPopupController extends BorderPane {
 
         Data.esm.register(executorService);
 
-
         // imposta i testi di label e dei pulsanti
         labelTitle.setText(Data.lsp.lsb("transactionPopUpController.title").get());
         incomeButton.setText(Data.lsp.lsb("transactionPopUpController.income").get());
@@ -130,8 +129,8 @@ public class transactionPopupController extends BorderPane {
         tagSelector.clearTags();
         categorySelector.populateMainCategoriesForIncome();
         datePicker.setValue(LocalDate.now());
-        incomeButton.setSelected(true);
-        onToggleButtonChange(false);
+
+
 
         // azione per il pulsante cancel
         cancelButton.setOnAction(e -> hide());
@@ -473,9 +472,6 @@ public class transactionPopupController extends BorderPane {
             categorySelector.discard();
             tagSelector.clearTags();
             TagFilter.refreshTags();
-            incomeButton.setSelected(true);
-            expenseButton.setSelected(false);
-            transferButton.setSelected(false);
     }
 
     // metodo che gestisce il cambio del tipo di transazione
@@ -517,7 +513,8 @@ public class transactionPopupController extends BorderPane {
 
     // metodo per mostrare il popup
     public void show(double x, double y) {
-
+        incomeButton.setSelected(true);
+        onToggleButtonChange(false);
 
 
         contextMenu.show(node, x, y);

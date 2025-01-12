@@ -206,7 +206,6 @@ public class AddNewAccountController extends BorderPane {
         FieldAnimationUtils.removeErrorStyles(newAccountField);
         FieldAnimationUtils.removeErrorStyles(bilanceField);
         FieldAnimationUtils.removeErrorStyles(dateField);
-        FieldAnimationUtils.removeErrorStyles(dateField);
         FieldAnimationUtils.removeErrorStyles(typeAccountField);
     }
 
