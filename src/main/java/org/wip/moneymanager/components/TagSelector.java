@@ -97,6 +97,16 @@ public class TagSelector extends BorderPane {
         tags.add(tag);
     }
 
+
+    public  void disable(){
+        add_tag.setDisable(true);
+        add_new_tag.setDisable(true);
+    }
+
+    public void enable(){
+        add_tag.setDisable(false);
+        add_new_tag.setDisable(false);
+    }
     private void removeTag(Tag tag) {
         tags.remove(tag);
     }
