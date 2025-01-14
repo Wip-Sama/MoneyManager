@@ -131,7 +131,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private void open_popup() {
         try {
             if (AddNewController == null) {
-                AddNewController = new transactionPopupController(newTransaction.getScene().getWindow());
+                AddNewController = new transactionPopupController(newTransaction.getScene().getWindow(), this);
             }
 
             Bounds bounds = newTransaction.localToScreen(newTransaction.getBoundsInLocal());

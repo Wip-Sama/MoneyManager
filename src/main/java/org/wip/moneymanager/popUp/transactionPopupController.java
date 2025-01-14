@@ -18,6 +18,7 @@ import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.components.BalanceEditor;
 import org.wip.moneymanager.model.UserDatabase;
+import org.wip.moneymanager.pages.Transactions;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.time.ZoneId;
@@ -59,9 +60,12 @@ public class transactionPopupController extends BorderPane {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private List<String> accountNames;
     private boolean isTransfer;
+    private final Transactions transaction;
 
-    public transactionPopupController(Window window) throws IOException {
+    public transactionPopupController(Window window, Transactions tr) throws IOException {
         this.node = window;
+        this.transaction = tr;
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/transactionPopUp.fxml"));
         fxmlLoader.setRoot(this);
@@ -249,6 +253,7 @@ public class transactionPopupController extends BorderPane {
                     saveTask.setOnSucceeded(e -> {
                         if (saveTask.getValue()) {
                             resetScreen();
+                            transaction.refresh();
                             hide();
                         } else {
                             showError("transactionPopUpController.error.save");
@@ -267,6 +272,8 @@ public class transactionPopupController extends BorderPane {
                     showError("transactionPopUpController.error.generic");
                 }
             }
+
+
         });
 
         // onaction del pulsante cancel
