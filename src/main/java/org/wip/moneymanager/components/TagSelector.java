@@ -93,25 +93,16 @@ public class TagSelector extends BorderPane {
         add_new_tag.setOnAction(_ -> showAddNewTag());
     }
 
-    private void addTag(Tag tag) {
-        tags.add(tag);
+    public void addTag(Tag tag) {
+        tagsList.add(tag);
     }
 
 
-    public  void disable(){
-        add_tag.setDisable(true);
-        add_new_tag.setDisable(true);
-    }
-
-    public void enable(){
-        add_tag.setDisable(false);
-        add_new_tag.setDisable(false);
-    }
     private void removeTag(Tag tag) {
         tags.remove(tag);
     }
 
-    private void addTags(List<Tag> tags) {
+    public void addTags(List<Tag> tags) {
         this.tags.addAll(tags);
     }
 

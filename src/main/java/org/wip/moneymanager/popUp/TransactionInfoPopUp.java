@@ -13,10 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import org.wip.moneymanager.components.BalanceEditor;
-import org.wip.moneymanager.components.CategorySelector;
-import org.wip.moneymanager.components.SingleTransactionController;
-import org.wip.moneymanager.components.TagSelector;
+import org.wip.moneymanager.components.*;
+import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.DBObjects.dbTransaction;
 import org.wip.moneymanager.model.Data;
 
@@ -109,10 +107,12 @@ public class TransactionInfoPopUp extends BorderPane {
     private Runnable onCloseCallback;
     private final SingleTransactionController controller;
     private dbTransaction myTransaction;
+    private final List<dbTag> listaTag;
 
-    public TransactionInfoPopUp(Window window, SingleTransactionController fatherTransactions) throws IOException {
+    public TransactionInfoPopUp(Window window, SingleTransactionController fatherTransactions, List<dbTag> listaTag) throws IOException {
         this.node = window;
         this.controller = fatherTransactions;
+        this.listaTag = listaTag;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/infoTransaction.fxml"));
         fxmlLoader.setRoot(this);
@@ -133,15 +133,10 @@ public class TransactionInfoPopUp extends BorderPane {
         Data.esm.register(executorService);
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
-
-
         setupEditButton();
-
-
     }
 
     private void initializeNoEditable()  {
-
         datesPicker.setValue(LocalDateTime.ofInstant(Instant.ofEpochSecond(myTransaction.date()), ZoneId.systemDefault()).toLocalDate());
         balanceCounter.setBalance(myTransaction.amount());
         notesAgg.setText(myTransaction.note());
@@ -150,6 +145,20 @@ public class TransactionInfoPopUp extends BorderPane {
         discardButton.setManaged(false);
         deleteButton.setManaged(true);
         editButton.setManaged(true);
+
+        Tooltip deleteCardTooltip = new Tooltip("Doppio clic per eliminare");
+        deleteCardTooltip.setShowDelay(Duration.millis(1));
+        deleteCardTooltip.setHideDelay(Duration.millis(0));
+        deleteButton.setOnMouseEntered(event -> Tooltip.install(deleteButton, deleteCardTooltip));
+        deleteButton.setOnMouseExited(event -> Tooltip.uninstall(deleteButton, deleteCardTooltip));
+
+        deleteButton.setOnAction(event ->{
+            controller.removeCard(myTransaction.id());
+        });
+
+        if(tagPane.get_selected_tags().isEmpty()){
+            popolaTags();
+        }
 
         // Inizializza accountNames se è null
         if (accountNames == null) {
@@ -250,6 +259,15 @@ public class TransactionInfoPopUp extends BorderPane {
 
     }
 
+    private void popolaTags() {
+        if (listaTag != null) {
+            listaTag.forEach(dbTagItem -> {
+                Tag tag = new Tag(dbTagItem.name(), 1, 1, dbTagItem.color());;
+                tagPane.addTag(tag);
+            });
+        }
+    }
+
     private void hide() {
         contextMenu.hide();
     }
@@ -266,10 +284,11 @@ public class TransactionInfoPopUp extends BorderPane {
         // Disabilita o abilita i campi per la modifica
         accountsComboBox.setDisable(!editable);
         datesPicker.setDisable(!editable);
-        notesAgg.setEditable(editable);
+        notesAgg.setDisable(!editable);
         categorySelectorTwo.setDisable(!editable);
         balanceCounter.setDisable(!editable);
         secondAccountComboBox.setDisable(!editable);
+        tagPane.setDisable(!editable);
 
         // Mostra i pulsanti corretti
         saveEditButton.setVisible(editable);
@@ -307,7 +326,6 @@ public class TransactionInfoPopUp extends BorderPane {
 
         saveEditButton.setOnAction(event -> {
             saveChanges();
-            controller.refreshSingleTransaction();
             hide();
 
         });
@@ -323,62 +341,102 @@ public class TransactionInfoPopUp extends BorderPane {
     }
 
     private void saveChanges() {
+            // Memorizza i valori originali
+            int originalDate = myTransaction.date();
+            int originalAccountId = myTransaction.account();
+            double originalAmount = myTransaction.amount();
+            int originalCategory = myTransaction.category();
+            int originalSecondAccount = myTransaction.second_account();
 
-        int creationDate = (int) datesPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
-        try {
-            myTransaction.setDate(creationDate);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            int accountId = Data.userDatabase.getAccountIdByName(accountsComboBox.getValue());
-            myTransaction.setAccount(accountId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        double balance = balanceCounter.getBalance();
-        try {
-            myTransaction.setAmount(balance);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        if (myTransaction.type() != 2) {
-            if (categorySelectorTwo.getSelectedSubCategory() == null) {
+            // 1. Salva solo se la data è cambiata
+            int creationDate = (int) datesPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+            if (creationDate != originalDate) {
                 try {
-                    int categoryId = Data.userDatabase.getCategoryIdByName(categorySelectorTwo.getSelectedCategory());
-                    myTransaction.setCategory(categoryId);
-
+                    myTransaction.setDate(creationDate);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
-            else {
-                try {
-                    int categoryId = Data.userDatabase.getCategoryIdByName(categorySelectorTwo.getSelectedSubCategory());
-                    myTransaction.setCategory(categoryId);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
 
-        else {
+            // 2. Salva solo se l'account è cambiato
             try {
-                int accountSecond = Data.userDatabase.getAccountIdByName(secondAccountComboBox.getValue());
-                myTransaction.setSecondAccount(accountSecond);
+                int accountId = Data.userDatabase.getAccountIdByName(accountsComboBox.getValue());
+                if (accountId != originalAccountId) {
+                    myTransaction.setAccount(accountId);
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+            // 3. Salva solo se l'importo è cambiato
+            double balance = balanceCounter.getBalance();
+            if (balance != originalAmount) {
+                try {
+                    myTransaction.setAmount(balance);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // 4. Salva solo se la categoria è cambiata
+            if (myTransaction.type() != 2) {
+                int selectedCategoryId;
+                if (categorySelectorTwo.getSelectedSubCategory() == null) {
+                    try {
+                        selectedCategoryId = Data.userDatabase.getCategoryIdByName(categorySelectorTwo.getSelectedCategory());
+                        if (selectedCategoryId != originalCategory) {
+                            myTransaction.setCategory(selectedCategoryId);
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    try {
+                        selectedCategoryId = Data.userDatabase.getCategoryIdByName(categorySelectorTwo.getSelectedSubCategory());
+                        if (selectedCategoryId != originalCategory) {
+                            myTransaction.setCategory(selectedCategoryId);
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            // 5. Salva solo se il secondo account è cambiato (per i trasferimenti)
+            if (myTransaction.type() == 2) {
+                try {
+                    int accountSecond = Data.userDatabase.getAccountIdByName(secondAccountComboBox.getValue());
+                    if (accountSecond != originalSecondAccount) {
+                        myTransaction.setSecondAccount(accountSecond);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // 6. Gestione dei tag (salva solo se i tag sono cambiati)
+            List<Tag> selectedTags = tagPane.get_selected_tags();
+            List<String> currentTagNames = new ArrayList<>();
+            for (Tag tag : selectedTags) {
+                currentTagNames.add(tag.getTag());
+            }
+
+            List<Integer> previousTagIds = new ArrayList<>();
+            for (dbTag tag : listaTag) {
+                previousTagIds.add(tag.id());
+            }
+
+            // Confronta le liste dei tag correnti con quelli precedenti
+            Task<Boolean> updateTask = Data.userDatabase.updateTransactionTags(myTransaction.id(), currentTagNames, previousTagIds);
+            updateTask.setOnSucceeded(event -> {
+                controller.refreshSingleTransaction();
+            });
+            executorService.submit(updateTask);
         }
 
-    }
 
 
-    public ContextMenu getContextMenu() {
+        public ContextMenu getContextMenu() {
         return contextMenu;
     }
 }

@@ -8,10 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.sql.Statement;
+import java.util.stream.Collectors;
 
 public class UserDatabase extends Database {
     private static UserDatabase instance = null;
@@ -128,6 +127,20 @@ public class UserDatabase extends Database {
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setInt(1, transaction);
                 stmt.setInt(2, tag);
+                stmt.executeUpdate();
+                stmt.close();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public Task<Boolean> removeTransaction_tags(int transaction) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "DELETE FROM Transactions_Tags WHERE Transaction_id = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, transaction);
                 stmt.executeUpdate();
                 stmt.close();
                 return true;
@@ -698,10 +711,12 @@ public class UserDatabase extends Database {
                 stmt.setInt(1, id);
                 stmt.executeUpdate();
                 stmt.close();
-                return true;
+                return removeTransaction_tags(id).get();
             }
             return false;
         });
+
+
     }
 
 
@@ -1153,6 +1168,67 @@ public class UserDatabase extends Database {
         stmt.executeBatch();
         stmt.close();
     }
+
+    public Task<Boolean> updateTransactionTags(int transactionId, List<String> currentTagNames, List<Integer> previousTagIds) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                try {
+                    List<Integer> currentTagIds = getTagIdsByNames(currentTagNames);
+
+                    // Determina quali tag devono essere aggiunti
+                    System.out.println("Current Tag IDs: " + currentTagIds);
+                    System.out.println("Previous Tag IDs: " + previousTagIds);
+
+                    // Determina quali tag devono essere aggiunti
+                    Set<Integer> currentTagSet = new HashSet<>(currentTagIds);
+                    Set<Integer> previousTagSet = new HashSet<>(previousTagIds);
+
+                    List<Integer> tagsToAdd = currentTagSet.stream()
+                            .filter(tagId -> !previousTagSet.contains(tagId))
+                            .collect(Collectors.toList());
+
+                    // Determina quali tag devono essere rimossi
+                    List<Integer> tagsToRemove = previousTagSet.stream()
+                            .filter(tagId -> !currentTagSet.contains(tagId))
+                            .collect(Collectors.toList());
+
+                    // Stampa per il debug
+                    System.out.println("Tags to Add: " + tagsToAdd);
+                    System.out.println("Tags to Remove: " + tagsToRemove);
+
+                    // Inserisci i nuovi tag
+                    String insertQuery = "INSERT INTO Transactions_Tags (Transaction_id, Tag_id) VALUES (?, ?);";
+                    try (PreparedStatement insertStmt = con.prepareStatement(insertQuery)) {
+                        for (Integer tagId : tagsToAdd) {
+                            insertStmt.setInt(1, transactionId);
+                            insertStmt.setInt(2, tagId);
+                            insertStmt.executeUpdate();
+                        }
+                    }
+
+                    // Rimuovi i tag eliminati
+                    String deleteQuery = "DELETE FROM Transactions_Tags WHERE Transaction_id = ? AND Tag_id = ?;";
+                    try (PreparedStatement deleteStmt = con.prepareStatement(deleteQuery)) {
+                        for (Integer tagId : tagsToRemove) {
+                            deleteStmt.setInt(1, transactionId);
+                            deleteStmt.setInt(2, tagId);
+                            deleteStmt.executeUpdate();
+                        }
+                    }
+                    return true;
+                } catch (SQLException e) {
+                    con.rollback(); // Rollback in caso di errore
+                    e.printStackTrace();
+                    return false;
+                } finally {
+                    con.setAutoCommit(true); // Ripristina l'autocommit
+                }
+            }
+            return false;
+        });
+    }
+
+
 
 
 

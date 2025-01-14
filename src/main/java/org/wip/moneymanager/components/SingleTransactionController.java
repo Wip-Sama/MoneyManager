@@ -23,18 +23,16 @@ import org.wip.moneymanager.model.DBObjects.dbTransaction;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.pages.Transactions;
 import org.wip.moneymanager.popUp.TransactionInfoPopUp;
-import org.wip.moneymanager.popUp.transactionPopupController;
 import org.wip.moneymanager.utility.SVGLoader;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Currency;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SingleTransactionController extends AnchorPane {
-
 
     @FXML
     private BorderPane backGroundT;
@@ -52,10 +50,10 @@ public class SingleTransactionController extends AnchorPane {
     private Label categTransactions;
 
     @FXML
-    private Label recipient; //destinatario
+    private Label recipient;
 
     @FXML
-    private Label sender; //mittente
+    private Label sender;
 
     @FXML
     private SVGPath starTransaction;
@@ -71,19 +69,19 @@ public class SingleTransactionController extends AnchorPane {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private dbTransaction myTransaction;
-    private final static String on_fav = new SVGLoader("star").getPath();
-    private final static String off_fav = new SVGLoader("Star_empty").getPath();
+    private static final String on_fav = new SVGLoader("star").getPath();
+    private static final String off_fav = new SVGLoader("Star_empty").getPath();
 
     private final Transactions Transactions;
-    private final String originalBackgroundColor = "-fx-background-color: transparent;"; // Colore di sfondo originale
-    private final String hoverBackgroundColor = "-fx-background-color: -fu-background-3;" + "-fx-background-radius: 6;"; // Colore di sfondo al passaggio del mouse (puoi cambiarlo)
-    private TransactionInfoPopUp AddNewController;
+    private static final String ORIGINAL_BACKGROUND_COLOR = "-fx-background-color: transparent;";
+    private static final String HOVER_BACKGROUND_COLOR = "-fx-background-color: -fu-background-3; -fx-background-radius: 6;";
+    private TransactionInfoPopUp addNewController;
+    private List<dbTag> dbTags = new ArrayList<>();
     private CardTransactions parentCardTransactions;
 
-
-    public SingleTransactionController(dbTransaction timestamp, Transactions transaction, CardTransactions parentCardTransactions) {
-        myTransaction = timestamp;
-        Transactions = transaction;
+    public SingleTransactionController(dbTransaction transaction, Transactions transactions, CardTransactions parentCardTransactions) {
+        this.myTransaction = transaction;
+        this.Transactions = transactions;
         this.parentCardTransactions = parentCardTransactions;
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/components/singleTransaction.fxml"));
@@ -93,218 +91,175 @@ public class SingleTransactionController extends AnchorPane {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
-
 
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+        setupTooltips();
+        setupDeleteCardEvents();
+        setupBackgroundEvents();
+        setupButtonFavourite();
+        setupTransactionDetails();
+        generateTags();
+    }
+
+    private void setupTooltips() {
         Tooltip tooltip = new Tooltip("Doppio clic per dettagli");
-        tooltip.setShowDelay(new Duration(1));
-        tooltip.setHideDelay(new Duration(0));
+        tooltip.setShowDelay(Duration.millis(1));
+        tooltip.setHideDelay(Duration.millis(0));
         Tooltip.install(backGroundT, tooltip);
-        deleteCard.textProperty().bind(Data.lsp.lsb("singleTransaction.deleteCard"));
-
-        Tooltip backGroundTooltip = new Tooltip("Doppio clic per dettagli");
-        backGroundTooltip.setShowDelay(new Duration(1));
-        backGroundTooltip.setHideDelay(new Duration(0));
-
 
         Tooltip deleteCardTooltip = new Tooltip("Doppio clic per eliminare");
-        deleteCardTooltip.setShowDelay(new Duration(1));
-        deleteCardTooltip.setHideDelay(new Duration(0));
+        deleteCardTooltip.setShowDelay(Duration.millis(1));
+        deleteCardTooltip.setHideDelay(Duration.millis(0));
+        deleteCard.setOnMouseEntered(event -> Tooltip.install(deleteCard, deleteCardTooltip));
+        deleteCard.setOnMouseExited(event -> Tooltip.uninstall(deleteCard, deleteCardTooltip));
+    }
 
-
+    private void setupDeleteCardEvents() {
         deleteCard.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                int id = myTransaction.id();
-                removeCard(id);
+                removeCard(myTransaction.id());
                 event.consume();
             }
         });
+    }
 
-        deleteCard.setOnMouseEntered(event -> {
-            Tooltip.install(deleteCard, deleteCardTooltip);
-        });
-
-        deleteCard.setOnMouseExited(event -> {
-            Tooltip.uninstall(deleteCard, deleteCardTooltip);
-        });
-
-
+    private void setupBackgroundEvents() {
         backGroundT.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && !event.getTarget().equals(deleteCard)) {
                 try {
-                    open_popup();
+                    openPopup();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
 
-
         backGroundT.setOnMouseMoved(event -> {
-            if (!deleteCard.contains(event.getX() - deleteCard.getLayoutX(),
-                    event.getY() - deleteCard.getLayoutY())) {
-                Tooltip.install(backGroundT, backGroundTooltip);
+            if (!deleteCard.contains(event.getX() - deleteCard.getLayoutX(), event.getY() - deleteCard.getLayoutY())) {
+                Tooltip.install(backGroundT, new Tooltip("Doppio clic per dettagli"));
             } else {
-                Tooltip.uninstall(backGroundT, backGroundTooltip);
+                Tooltip.uninstall(backGroundT, null);
             }
         });
 
-        backGroundT.setOnMouseExited(event -> {
-            Tooltip.uninstall(backGroundT, backGroundTooltip);
-        });
+        backGroundT.setOnMouseEntered(event -> backGroundT.setStyle(HOVER_BACKGROUND_COLOR));
+        backGroundT.setOnMouseExited(event -> backGroundT.setStyle(ORIGINAL_BACKGROUND_COLOR));
+    }
 
-
-
-
-        generaTags();
-
-        // Aggiungi gli eventi per il cambio di colore al passaggio del mouse
-        backGroundT.setOnMouseEntered(event -> {
-            backGroundT.setStyle(hoverBackgroundColor); // Cambia colore quando il mouse entra
-        });
-
-        backGroundT.setOnMouseExited(event -> {
-            backGroundT.setStyle(originalBackgroundColor); // Ripristina il colore originale quando il mouse esce
-        });
-
-        Task<String> TaskNomeAccount = Data.userDatabase.getNameAccountFromId(myTransaction.account());
-        TaskNomeAccount.setOnSucceeded(event -> {
-            String Nome = TaskNomeAccount.getValue();
-            sender.setText(Nome);
-        });
-
-        amount.setText(String.valueOf(myTransaction.amount()));
-
-        if (myTransaction.favorite() != 0){
-            starTransaction.setContent( on_fav);
-        }
-
+    private void setupButtonFavourite() {
         buttonFavourite.setOnAction(event -> {
-            if (myTransaction.favorite() == 0) {
-                try {
+            try {
+                if (myTransaction.favorite() == 0) {
                     myTransaction.setFavourite(1);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                starTransaction.setContent(on_fav);
-            }
-            else {
-                try {
+                    starTransaction.setContent(on_fav);
+                } else {
                     myTransaction.setFavourite(0);
                     parentCardTransactions.removeVbox(myTransaction);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    starTransaction.setContent(off_fav);
                 }
-                starTransaction.setContent( off_fav);
-
-            }
-        });
-
-        if (myTransaction.type() == 1){
-            amount.setStyle("-fx-text-fill: red;");
-        } else if (myTransaction.type() == 0) {
-            amount.setStyle("-fx-text-fill: green;");
-
-        }
-        if (myTransaction.type() == 2) {
-            arrowTransaction.setVisible(true);
-            recipient.setVisible(true);
-            Task<String> TaskNomeSecondoAccount = Data.userDatabase.getNameAccountFromId(myTransaction.second_account());
-            TaskNomeSecondoAccount.setOnSucceeded(event -> {
-                String secondoNome = TaskNomeSecondoAccount.getValue();
-                recipient.setText(secondoNome);
-                categTransactions.setText("Trasferimento");
-            });
-
-        } else {
-            try {
-                categTransactions.setText(Data.userDatabase.getCategoryNameById(myTransaction.category()));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        });
+    }
+
+    private void setupTransactionDetails() {
+        amount.setText(String.valueOf(myTransaction.amount()));
+        if (myTransaction.type() == 1) {
+            amount.setStyle("-fx-text-fill: red;");
+        } else if (myTransaction.type() == 0) {
+            amount.setStyle("-fx-text-fill: green;");
+        }
+
+        if (myTransaction.type() == 2) {
+            setupTransferDetails();
+        } else {
+            setupCategoryDetails();
+        }
+
+        Task<String> taskNameAccount = Data.userDatabase.getNameAccountFromId(myTransaction.account());
+        taskNameAccount.setOnSucceeded(event -> sender.setText(taskNameAccount.getValue()));
+    }
+
+    private void setupTransferDetails() {
+        arrowTransaction.setVisible(true);
+        recipient.setVisible(true);
+        Task<String> taskSecondAccountName = Data.userDatabase.getNameAccountFromId(myTransaction.second_account());
+        taskSecondAccountName.setOnSucceeded(event -> {
+            recipient.setText(taskSecondAccountName.getValue());
+            categTransactions.setText("Trasferimento");
+        });
+    }
+
+    private void setupCategoryDetails() {
+        try {
+            categTransactions.setText(Data.userDatabase.getCategoryNameById(myTransaction.category()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void generaTags() {
+    private void generateTags() {
         Task<List<dbTag>> loadTagsTask = Data.userDatabase.getTagFromTransaction(myTransaction.id());
         loadTagsTask.setOnSucceeded(event -> {
-            List<dbTag> dbTags = loadTagsTask.getValue();
+            dbTags = loadTagsTask.getValue();
             if (dbTags != null) {
-                for (dbTag dbTagItem : dbTags) {
-                    Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color());
+                dbTags.forEach(dbTagItem -> {
+                    Tag tag = new Tag(dbTagItem.name(), 0, 0, dbTagItem.color());;
                     GridtagPane.getChildren().add(tag);
-                }
+                });
             }
         });
-        loadTagsTask.setOnFailed(event -> {
-            Throwable exception = loadTagsTask.getException();
-            exception.printStackTrace();
-        });
 
+        loadTagsTask.setOnFailed(event -> loadTagsTask.getException().printStackTrace());
         executorService.submit(loadTagsTask);
     }
 
     public boolean isFavorite() {
-        if(myTransaction.favorite() == 1){
-            return true;
-        } else {
-            return false;
-        }
+        return myTransaction.favorite() == 1;
     }
 
-    private void open_popup() throws IOException {
-
-        if (AddNewController == null) {
-            AddNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this);
-            AddNewController.getContextMenu().setOnHidden(event -> Transactions.removeBlur());
+    private void openPopup() throws IOException {
+        if (addNewController == null) {
+            addNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this, dbTags);
+            addNewController.getContextMenu().setOnHidden(event -> Transactions.removeBlur());
         }
 
-
-        double popupWidth = 712.0; // Larghezza del popup
-        double popupHeight = 400.0; // Altezza del popup
-
-        // Ottieni le coordinate della finestra principale
         Window mainWindow = Transactions.getScene().getWindow();
-        double windowX = mainWindow.getX();
-        double windowY = mainWindow.getY();
-        double windowWidth = mainWindow.getWidth();
-        double windowHeight = mainWindow.getHeight();
+        double popupWidth = 712.0;
+        double popupHeight = 400.0;
+        double x = mainWindow.getX() + (mainWindow.getWidth() - popupWidth) / 2;
+        double y = mainWindow.getY() + (mainWindow.getHeight() - popupHeight) / 2;
 
-        // Calcola le coordinate per il centro del popup rispetto alla finestra principale
-        double x = windowX + (windowWidth - popupWidth) / 2;
-        double y = windowY + (windowHeight - popupHeight) / 2;
-
-        // Garantisci che il popup non esca dai bordi dello schermo
         x = Math.max(x, 0);
         y = Math.max(y, 0);
 
         Transactions.applyBlur();
-        AddNewController.toggle(x, y);
-
+        addNewController.toggle(x, y);
     }
 
-
-    public void removeBlurChild(){
+    public void removeBlurChild() {
         Transactions.removeBlur();
     }
-
-
 
     public dbTransaction getTransaction() {
         return myTransaction;
     }
 
-    public void refreshSingleTransaction(){
+    public void refreshSingleTransaction() {
         Transactions.refresh();
     }
-
     public void removeCard(int id){
-        Data.userDatabase.removeTransaction(id);
-        Transactions.refresh();
+        Task<Boolean> rimuoviT= Data.userDatabase.removeTransaction(id);
+        rimuoviT.setOnSucceeded(event -> {
+
+            parentCardTransactions.removeVbox(myTransaction);
+            Transactions.refresh();
+        });
+        executorService.submit(rimuoviT);
     }
 }
 
