@@ -4,7 +4,6 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -13,7 +12,6 @@ import org.wip.moneymanager.components.CategorySelector;
 import org.wip.moneymanager.components.Tag;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.model.UserDatabase;
 import org.wip.moneymanager.pages.Transactions;
 
 import java.awt.event.ActionEvent;

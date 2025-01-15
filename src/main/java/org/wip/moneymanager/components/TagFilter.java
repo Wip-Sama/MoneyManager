@@ -14,7 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.model.ExecutorsServiceManager;
 
 import java.io.IOException;
 import java.util.ArrayList;

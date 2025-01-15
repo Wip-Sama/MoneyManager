@@ -27,8 +27,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static javafx.scene.paint.Color.rgb;
-
 public class AddNewAccountController extends BorderPane {
 
     @FXML

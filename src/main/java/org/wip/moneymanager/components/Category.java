@@ -16,9 +16,6 @@ import org.wip.moneymanager.model.Data;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
-// perché java non supporta gli alias per gli import...
-// TODO: Sistemare il tooltip quando è temporaneo
-// TODO: Rinominare Elimina con Scarta quando è temporaneo
 
 public class Category extends BorderPane {
     @FXML

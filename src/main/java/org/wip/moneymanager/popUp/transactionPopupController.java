@@ -17,12 +17,10 @@ import org.wip.moneymanager.components.TagFilter;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.components.BalanceEditor;
-import org.wip.moneymanager.model.UserDatabase;
 import org.wip.moneymanager.pages.Transactions;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.time.ZoneId;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;

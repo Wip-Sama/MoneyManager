@@ -1,7 +1,5 @@
 package org.wip.moneymanager.components;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -11,7 +9,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.SVGPath;
-import javafx.util.Duration;
 import org.wip.moneymanager.utility.SVGLoader;
 
 

@@ -1,11 +1,7 @@
 module org.wip.moneymanager {
-    requires javafx.base;
     requires javafx.fxml;
-    requires javafx.controls;
-    requires javafx.graphics;
 
     requires java.sql;
-    requires java.desktop;
     requires java.net.http;
 
     requires spring.security.crypto;
@@ -18,6 +14,8 @@ module org.wip.moneymanager {
     requires jdk.jfr;
     requires java.smartcardio;
     requires spring.core;
+    requires com.dlsc.gemsfx;
+    requires java.desktop;
 
     opens org.wip.moneymanager.model to javafx.fxml;
     exports org.wip.moneymanager.model;

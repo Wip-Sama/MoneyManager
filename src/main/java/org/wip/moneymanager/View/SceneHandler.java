@@ -4,9 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
-import org.wip.moneymanager.Controller.MoneyManagerController;
-import org.wip.moneymanager.model.DBObjects.dbUser;
-import org.wip.moneymanager.model.Data;
 
 import java.io.IOException;
 import java.util.Objects;

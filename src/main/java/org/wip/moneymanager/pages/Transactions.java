@@ -1,5 +1,6 @@
 package org.wip.moneymanager.pages;
 
+import com.dlsc.gemsfx.CalendarPicker;
 import javafx.animation.RotateTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -15,7 +16,6 @@ import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.CardTransactions;
-import org.wip.moneymanager.components.MultiDatePicker;
 import org.wip.moneymanager.model.DBObjects.TransactionByDate;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.popUpFilterController;
@@ -31,6 +31,9 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     private HBox HboxmultiDatePicker;
+
+    @FXML
+    private CalendarPicker MultiDatePicker;
 
     @FXML
     private Button TransactionsRefreshButton;

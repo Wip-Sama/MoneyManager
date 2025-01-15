@@ -3,7 +3,6 @@ package org.wip.moneymanager.utility;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import org.wip.moneymanager.components.BalanceEditor;
 import org.wip.moneymanager.components.ComboPasswordField;
