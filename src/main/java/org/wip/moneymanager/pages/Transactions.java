@@ -64,7 +64,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private popUpFilterController AddNewFilterController;
     private final static String on_fav = new SVGLoader("favorite_on_icon").getPath();
     private final static String off_fav = new SVGLoader("favorite_off_icon").getPath();
-
+    private boolean isFavorite = false;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private Map<Integer, CardTransactions> cardCache = new HashMap<>();
@@ -84,32 +84,20 @@ public class Transactions extends BorderPane implements AutoCloseable {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
-        MultiDatePicker multiDatePicker = new MultiDatePicker();
-        multiDatePicker.withRangeSelectionMode();
-        DatePicker rangePicker = multiDatePicker.getDatePicker();
-        HboxmultiDatePicker.getChildren().add(rangePicker);
-
-        rangePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                System.out.println("Data selezionata: " + newValue);
-            }
-        });
-
-        // Bind label "pageTitle" with a resource from properties files
+        generaCard(null, null, null);
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions.pageTitle"));
         favouriteToggle.textProperty().bind(Data.lsp.lsb("transactions.favouriteToggle"));
-
-        // Bind button texts to properties
         newTransaction.textProperty().bind(Data.lsp.lsb("transactions.newTransaction"));
         filter.textProperty().bind(Data.lsp.lsb("transactions.filter"));
         TransactionsRefreshButton.textProperty().bind(Data.lsp.lsb("transactions.refreshButton"));
+
         filter.setOnAction(event ->{
             openPopUpFilter();
         });
+
         newTransaction.setOnAction(event -> {
             open_popup();
         });
-
 
         TransactionsRefreshButton.setOnAction(event -> {
             refresh();
@@ -118,14 +106,14 @@ public class Transactions extends BorderPane implements AutoCloseable {
         favouriteToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 favoriteSvg.setContent(on_fav);
+                isFavorite = true;
                 filterFavoriteTransactions();
             } else {
                 favoriteSvg.setContent(off_fav);
+                isFavorite = false;
                 restoreAllTransactions();
             }
         });
-
-        generaCard(null, null, null);
     }
 
     private void open_popup() {
@@ -241,5 +229,14 @@ public class Transactions extends BorderPane implements AutoCloseable {
     @Override
     public void close() {
         executorService.shutdown();
+    }
+
+    public boolean isSetOnFavorite() {
+        return isFavorite;
+    }
+
+    public void removeCard(CardTransactions cardTransactions) {
+        vboxCard.getChildren().remove(cardTransactions);
+
     }
 }

@@ -59,23 +59,21 @@ public class CardTransactions extends AnchorPane {
         generaTransactionsByIds(transactionByDate.getTransactionIds());
     }
     public void removeVbox(dbTransaction myTransaction) {
-        // Rimuovi la transazione dalla card
-        cardTransaction.getChildren().removeIf(card -> {
-            if (card instanceof SingleTransactionController) {
-                SingleTransactionController cardTransaction = (SingleTransactionController) card;
-                return cardTransaction.getTransaction().equals(myTransaction);
-            }
-            return false;
-        });
+        if (transactionsPage.isSetOnFavorite()) {
+            cardTransaction.getChildren().removeIf(card -> {
+                if (card instanceof SingleTransactionController) {
+                    SingleTransactionController cardTransaction = (SingleTransactionController) card;
+                    return cardTransaction.getTransaction().equals(myTransaction);
+                }
+                return false;
+            });
 
-        // Controlla se la cardTransaction è vuota
-        if (cardTransaction.getChildren().isEmpty()) {
-            VBox vboxParent = (VBox) cardTransaction.getParent();
-            if (vboxParent != null) {
-                vboxParent.getChildren().remove(cardTransaction); // Rimuovi la CardTransactions specifica
+            if (cardTransaction.getChildren().isEmpty()) {
+                transactionsPage.removeCard(this);
+                }
             }
         }
-    }
+
 
 
 

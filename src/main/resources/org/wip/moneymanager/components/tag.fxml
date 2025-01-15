@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="tagBackground" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" styleClass="tag" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="tagBackground" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" styleClass="tag" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <Label fx:id="tagLabel" alignment="CENTER" style="-fx-font-size: 12;" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>

@@ -101,6 +101,9 @@ public class AddNewTagController extends BorderPane {
         );
 
         tagNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String upperCaseValue = newValue.toUpperCase();  // Conversione in maiuscolo
+            tagNameField.setText(upperCaseValue);  // Imposta il valore nel campo
+            tagNameField.positionCaret(upperCaseValue.length());
             updatePreview();
             FieldAnimationUtils.removeErrorStyles(tagNameField);
             ErrorLabel.setOpacity(0);
@@ -142,6 +145,7 @@ public class AddNewTagController extends BorderPane {
             });
 
             clearFields();
+            TagSelector.closeAddNewTag();
         } else {
             showError("addNewTag.error");
         }

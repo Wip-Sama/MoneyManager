@@ -72,7 +72,7 @@ public class SingleTransactionController extends AnchorPane {
     private static final String on_fav = new SVGLoader("star").getPath();
     private static final String off_fav = new SVGLoader("Star_empty").getPath();
 
-    private final Transactions Transactions;
+    private final Transactions TransactionsPage;
     private static final String ORIGINAL_BACKGROUND_COLOR = "-fx-background-color: transparent;";
     private static final String HOVER_BACKGROUND_COLOR = "-fx-background-color: -fu-background-3; -fx-background-radius: 6;";
     private TransactionInfoPopUp addNewController;
@@ -81,8 +81,9 @@ public class SingleTransactionController extends AnchorPane {
 
     public SingleTransactionController(dbTransaction transaction, Transactions transactions, CardTransactions parentCardTransactions) {
         this.myTransaction = transaction;
-        this.Transactions = transactions;
+        this.TransactionsPage = transactions;
         this.parentCardTransactions = parentCardTransactions;
+
         try {
             FXMLLoader loader = new FXMLLoader(SceneHandler.class.getResource("/org/wip/moneymanager/components/singleTransaction.fxml"));
             loader.setRoot(this);
@@ -96,14 +97,12 @@ public class SingleTransactionController extends AnchorPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+        generateTags();
         setupTooltips();
         setupDeleteCardEvents();
         setupBackgroundEvents();
         setupButtonFavourite();
         setupTransactionDetails();
-        tagPane.setDisable(true);
-        generateTags();
-
     }
 
     private void setupTooltips() {
@@ -152,6 +151,14 @@ public class SingleTransactionController extends AnchorPane {
     }
 
     private void setupButtonFavourite() {
+        if(myTransaction.favorite() == 1) {
+            starTransaction.setContent(on_fav);
+        } else {
+            starTransaction.setContent(off_fav);
+        }
+
+
+
         buttonFavourite.setOnAction(event -> {
             try {
                 if (myTransaction.favorite() == 0) {
@@ -170,6 +177,7 @@ public class SingleTransactionController extends AnchorPane {
 
     private void setupTransactionDetails() {
         amount.setText(String.valueOf(myTransaction.amount()));
+
         if (myTransaction.type() == 1) {
             amount.setStyle("-fx-text-fill: red;");
         } else if (myTransaction.type() == 0) {
@@ -184,6 +192,7 @@ public class SingleTransactionController extends AnchorPane {
 
         Task<String> taskNameAccount = Data.userDatabase.getNameAccountFromId(myTransaction.account());
         taskNameAccount.setOnSucceeded(event -> sender.setText(taskNameAccount.getValue()));
+        executorService.submit(taskNameAccount);
     }
 
     private void setupTransferDetails() {
@@ -205,6 +214,8 @@ public class SingleTransactionController extends AnchorPane {
     }
 
     private void generateTags() {
+        tagPane.setDisable(true);
+
         Task<List<dbTag>> loadTagsTask = Data.userDatabase.getTagFromTransaction(myTransaction.id());
         loadTagsTask.setOnSucceeded(event -> {
             dbTags = loadTagsTask.getValue();
@@ -227,10 +238,10 @@ public class SingleTransactionController extends AnchorPane {
     private void openPopup() throws IOException {
         if (addNewController == null) {
             addNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this, dbTags);
-            addNewController.getContextMenu().setOnHidden(event -> Transactions.removeBlur());
+            addNewController.getContextMenu().setOnHidden(event -> TransactionsPage.removeBlur());
         }
 
-        Window mainWindow = Transactions.getScene().getWindow();
+        Window mainWindow = TransactionsPage.getScene().getWindow();
         double popupWidth = 712.0;
         double popupHeight = 400.0;
         double x = mainWindow.getX() + (mainWindow.getWidth() - popupWidth) / 2;
@@ -239,12 +250,12 @@ public class SingleTransactionController extends AnchorPane {
         x = Math.max(x, 0);
         y = Math.max(y, 0);
 
-        Transactions.applyBlur();
+        TransactionsPage.applyBlur();
         addNewController.toggle(x, y);
     }
 
     public void removeBlurChild() {
-        Transactions.removeBlur();
+        TransactionsPage.removeBlur();
     }
 
     public dbTransaction getTransaction() {
@@ -252,14 +263,15 @@ public class SingleTransactionController extends AnchorPane {
     }
 
     public void refreshSingleTransaction() {
-        Transactions.refresh();
+        TransactionsPage.refresh();
     }
+
     public void removeCard(int id){
         Task<Boolean> rimuoviT= Data.userDatabase.removeTransaction(id);
         rimuoviT.setOnSucceeded(event -> {
 
             parentCardTransactions.removeVbox(myTransaction);
-            Transactions.refresh();
+            TransactionsPage.refresh();
         });
         executorService.submit(rimuoviT);
     }
