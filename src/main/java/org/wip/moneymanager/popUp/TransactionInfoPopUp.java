@@ -138,8 +138,8 @@ public class TransactionInfoPopUp extends BorderPane {
 
     private void initializeNoEditable()  {
         datesPicker.setValue(LocalDateTime.ofInstant(Instant.ofEpochSecond(myTransaction.date()), ZoneId.systemDefault()).toLocalDate());
-        balanceCounter.setBalance(myTransaction.amount());
         balanceCounter.reset();
+        balanceCounter.setBalance(myTransaction.amount());
         notesAgg.setText(myTransaction.note());
         setFieldsEditable(false);
         saveEditButton.setManaged(false);
