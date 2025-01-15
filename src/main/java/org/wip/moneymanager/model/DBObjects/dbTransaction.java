@@ -1,5 +1,7 @@
 package org.wip.moneymanager.model.DBObjects;
 
+import javafx.concurrent.Task;
+import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.UserDatabase;
 
 import java.sql.PreparedStatement;
@@ -97,6 +99,7 @@ public final class dbTransaction {
     public void setAmount(double amount) throws SQLException {
         this.amount = amount;
         updateField("amount", amount);
+        Data.userDatabase.updateAccountBalance(account, amount, type == 0);
     }
 
     public void setAccount(int account) throws SQLException {

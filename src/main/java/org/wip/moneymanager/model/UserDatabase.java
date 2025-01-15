@@ -1075,6 +1075,21 @@ public class UserDatabase extends Database {
         return mainCategoryName;
     }
 
+
+    public Task<Boolean> updateAccountBalance(int accountId, double amount, boolean isCredit) {
+        return asyncCall(() -> {
+            String updateBalanceQuery = "UPDATE Accounts SET balance = balance + ? WHERE id = ?";
+            try (PreparedStatement updateStmt = con.prepareStatement(updateBalanceQuery)) {
+                updateStmt.setDouble(1, isCredit ? amount : -amount);
+                updateStmt.setInt(2, accountId);
+                int rowsAffected = updateStmt.executeUpdate();
+                return rowsAffected > 0;
+            }
+        });
+    }
+
+
+
     public Task<Boolean> addNewTransaction(int date, int type, double amount, String account, String secondAccount, String note, String category, List<Tag> listTags) {
         return asyncCall(() -> {
             List<String> tags = new ArrayList<>();
@@ -1087,7 +1102,6 @@ public class UserDatabase extends Database {
             Integer accountId = getAccountIdByName(account);
             List<Integer> tagIds = getTagIdsByNames(tags);
 
-            // Gestione delle transazioni di tipo 0 e 1
             if (type == 0 || type == 1) {
                 Integer secondAccountId = null;
                 Integer categoryId = getCategoryIdByName(category);
@@ -1114,13 +1128,14 @@ public class UserDatabase extends Database {
                         linkTagsToTransaction(transactionId, tagIds);
                     }
                     generatedKeys.close();
+
+                    // Aggiorna il bilancio del conto
+                    updateAccountBalance(accountId, amount, type == 0); // true per entrata, false per uscita
                 }
                 stmt.close();
 
                 return rowsAffected > 0;
-            }
-            // gestione delle transazioni di tipo 2 (trasferimenti)
-            else if (type == 2) {
+            } else if (type == 2) {
                 Integer secondAccountId = getAccountIdByName(secondAccount);
                 Integer categoryId = null;
 
@@ -1137,7 +1152,7 @@ public class UserDatabase extends Database {
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    // ottiene l'ID della transazione appena inserita
+                    // ottieni l'ID della transazione appena inserita
                     ResultSet generatedKeys = stmt.getGeneratedKeys();
                     if (generatedKeys.next()) {
                         int transactionId = generatedKeys.getInt(1);
@@ -1145,6 +1160,10 @@ public class UserDatabase extends Database {
                         linkTagsToTransaction(transactionId, tagIds);
                     }
                     generatedKeys.close();
+
+                    // Aggiorna il bilancio del conto di origine e destinazione
+                    updateAccountBalance(accountId, amount, false); // Sottrai dal conto di origine
+                    updateAccountBalance(secondAccountId, amount, true); // Aggiungi al conto di destinazione
                 }
                 stmt.close();
 
