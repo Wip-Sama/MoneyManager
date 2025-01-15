@@ -101,7 +101,9 @@ public class SingleTransactionController extends AnchorPane {
         setupBackgroundEvents();
         setupButtonFavourite();
         setupTransactionDetails();
+        tagPane.setDisable(true);
         generateTags();
+
     }
 
     private void setupTooltips() {

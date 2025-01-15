@@ -39,7 +39,7 @@
          <center>
             <ScrollPane fx:id="tagPane" fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                <content>
-                  <HBox fx:id="GridtagPane" alignment="CENTER_LEFT" fillHeight="false" />
+                  <HBox fx:id="GridtagPane" alignment="CENTER_LEFT" fillHeight="false" spacing="5.0" />
                </content>
             </ScrollPane>
          </center>
