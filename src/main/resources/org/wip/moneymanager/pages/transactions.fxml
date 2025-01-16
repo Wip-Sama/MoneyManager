@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.dlsc.gemsfx.CalendarPicker?>
+<?import com.dlsc.gemsfx.CustomComboBox?>
+<?import com.dlsc.gemsfx.daterange.DateRangePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="526.0" prefWidth="750.0" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" styleClass="background-3" BorderPane.alignment="CENTER">
          <center>
@@ -21,7 +22,10 @@
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
                <content>
-                  <VBox fx:id="vboxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="background-3" />
+                  <VBox fx:id="vboxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="background-3">
+                     <children>
+                        <CustomComboBox prefHeight="128.0" prefWidth="178.0" />
+                     </children></VBox>
                </content>
             </ScrollPane>
          </center>
@@ -43,11 +47,7 @@
                </Label>
             <BorderPane VBox.vgrow="ALWAYS">
                <left>
-                  <HBox fx:id="HboxmultiDatePicker" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <CalendarPicker fx:id="MultiDatePicker" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" />
-                     </children>
-                  </HBox>
+                  <HBox fx:id="HboxmultiDatePicker" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" BorderPane.alignment="CENTER" />
                </left>
                <right>
                   <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" spacing="10.0" BorderPane.alignment="CENTER">
@@ -78,6 +78,9 @@
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
+               <center>
+                  <DateRangePicker fx:id="MultiDatePicker" BorderPane.alignment="CENTER" />
+               </center>
             </BorderPane>
          </children>
       </VBox>

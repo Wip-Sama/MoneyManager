@@ -1,6 +1,7 @@
 package org.wip.moneymanager.pages;
 
 import com.dlsc.gemsfx.CalendarPicker;
+import com.dlsc.gemsfx.daterange.DateRangePicker;
 import javafx.animation.RotateTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private HBox HboxmultiDatePicker;
 
     @FXML
-    private CalendarPicker MultiDatePicker;
+    private DateRangePicker MultiDatePicker;
 
     @FXML
     private Button TransactionsRefreshButton;
@@ -86,6 +87,8 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
+        MultiDatePicker.getStyleClass().setAll(new String[]{""});
+        MultiDatePicker.getDateRangeView().setShowPresets(false);
         Data.esm.register(executorService);
         generaCard(null, null, null);
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions.pageTitle"));
