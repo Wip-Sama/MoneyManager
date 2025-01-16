@@ -79,7 +79,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
                <center>
-                  <DateRangePicker fx:id="MultiDatePicker" BorderPane.alignment="CENTER" />
+                  <DateRangePicker fx:id="MultiDatePicker" maxWidth="200.0" showPresetTitle="false" styleClass="date-range-view" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </children>

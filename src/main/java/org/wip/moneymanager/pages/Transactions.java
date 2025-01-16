@@ -87,8 +87,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
-        MultiDatePicker.getStyleClass().setAll(new String[]{""});
-        MultiDatePicker.getDateRangeView().setShowPresets(false);
+        MultiDatePicker.getDateRangeView().setShowPresets(true);
         Data.esm.register(executorService);
         generaCard(null, null, null);
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions.pageTitle"));
