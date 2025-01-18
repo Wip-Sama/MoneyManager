@@ -216,7 +216,7 @@ public class TagInfoPopUp extends BorderPane {
             disableEditMode();
             tagHandler.refreshTags();
         } else {
-            showError(Data.lsp.lsb("tagInfo.errorMessage").get());
+            showError("tagInfo.errorMessage");
         }
     }
 
@@ -298,7 +298,7 @@ public class TagInfoPopUp extends BorderPane {
         }
 
         if (hasError) {
-            showError(Data.lsp.lsb("tagInfo.errorMessage").get());
+            showError("tagInfo.errorMessage");
         }
 
         return !hasError;

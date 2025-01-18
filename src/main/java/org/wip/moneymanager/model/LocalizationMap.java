@@ -35,8 +35,8 @@ public class LocalizationMap implements Translation {
     }
 
     // Funziona solo se la lingua non è in resources
-    // Da la possibilità all'untete di implementtare un sistema per permettere
-    // all'utente di salvere le proprie traduzioni per lingue non implementate
+    // Da la possibilità all'utente di implementare un sistema per permettere
+    // all'utente di salvare le proprie traduzioni per lingue non implementate
     public void save() throws IOException {
         try (FileOutputStream output = new FileOutputStream(Objects.requireNonNull(getClass().getResource(base_path + language)).getFile())) {
             properties.store(output, null);
