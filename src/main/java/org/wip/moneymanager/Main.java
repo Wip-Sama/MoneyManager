@@ -32,13 +32,11 @@ public class Main extends Application {
                 .collect(Collectors.toSet());
 
         try {
-            // Crea un'istanza della classe Login e mostralo
             SceneHandler sceneHandler = SceneHandler.getInstance(primaryStage);
             //sceneHandler.showLoginScreen(); // Chiama il metodo per mostrare la schermata di login
 
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             Data.esm.register(executorService);
-            //per accendere direttamente con utente1
             Task<dbUser> userTask = Data.mmDatabase.getUser("utente1");
             executorService.submit(userTask);
 
@@ -49,7 +47,7 @@ public class Main extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //per accendere direttamente con utente1
+
 
         Task<Void> update_currency = new Task<>() {
             @Override

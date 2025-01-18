@@ -118,6 +118,7 @@ public class SingleTransactionController extends AnchorPane {
         deleteCard.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 removeCard(myTransaction.id());
+
                 event.consume();
             }
         });
@@ -126,11 +127,7 @@ public class SingleTransactionController extends AnchorPane {
     private void setupBackgroundEvents() {
         backGroundT.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && !event.getTarget().equals(deleteCard)) {
-                try {
-                    openPopup();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                openPopup();
             }
         });
 
@@ -231,9 +228,13 @@ public class SingleTransactionController extends AnchorPane {
         return myTransaction.favorite() == 1;
     }
 
-    private void openPopup() throws IOException {
+    private void openPopup() {
         if (addNewController == null) {
-            addNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this, dbTags);
+            try {
+                addNewController = new TransactionInfoPopUp(backGroundT.getScene().getWindow(), this, dbTags);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             addNewController.getContextMenu().setOnHidden(event -> TransactionsPage.removeBlur());
         }
 

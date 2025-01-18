@@ -19,88 +19,94 @@
 <?import org.wip.moneymanager.components.ColorPickerButton?>
 <?import org.wip.moneymanager.components.ColorPickerPreset?>
 
-<fx:root prefHeight="526.0" prefWidth="750.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<?import org.wip.moneymanager.components.TagHandler?>
+<fx:root prefHeight="540.0" prefWidth="960.0" stylesheets="@../style-dark.css" type="BorderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-
-            <GridPane hgap="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="750.0" vgap="10.0">
-                <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                </rowConstraints>
-
-                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
-
-                    <Label fx:id="theme_label" text="Tema">
-                        <font>
-                            <Font name="System Bold" size="12.0" />
-                        </font>
-                    </Label>
-                    <ComboBox fx:id="theme" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
-
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
-
-                    <Label fx:id="accent_label" text="Accento">
-                        <font>
-                            <Font name="System Bold" size="12.0" />
-                        </font>
-                    </Label>
-                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-
-                        <ColorPickerPreset fx:id="preset_blue" blue="255" green="151" prefHeight="30.0" prefWidth="30.0" red="71" />
-                        <ColorPickerPreset fx:id="preset_green" blue="58" green="222" prefHeight="30.0" prefWidth="30.0" red="74" />
-                        <ColorPickerPreset fx:id="preset_yellow" blue="38" green="218" prefHeight="30.0" prefWidth="30.0" red="235" />
-                        <ColorPickerPreset fx:id="preset_orange" blue="28" green="164" prefHeight="30.0" prefWidth="30.0" red="255" />
-                        <ColorPickerButton fx:id="custom_color" prefHeight="30.0" prefWidth="30.0" />
-
-                    </HBox>
-
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
-
-                    <Label fx:id="language_label" text="Lingua">
-                        <font>
-                            <Font name="System Bold" size="12.0" />
-                        </font>
-                    </Label>
-               <ComboBox fx:id="language" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" styleClass="combo-box-custom" />
-
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <Label fx:id="primary_curency_label" text="Valuta primaria">
-                        <font>
-                            <Font name="System Bold" size="12.0" />
-                        </font>
-                    </Label>
-                    <BalanceEditor fx:id="primary_currency" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" styleClass="combo-box-balance2" />
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="2">
-                    <Label fx:id="first_day_of_week_label" text="Primo giorno settimana">
-                        <font>
-                            <Font name="System Bold" size="12.0" />
-                        </font>
-                    </Label>
-                    <ComboBox fx:id="first_day_of_week" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                    <Label fx:id="start_page_label" text="Schermata iniziale">
-                        <font>
-                            <Font name="System Bold" size="12.0" />
-                        </font>
-                    </Label>
-                    <ComboBox fx:id="start_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
-                </VBox>
-
-                <padding>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                </padding>
-            </GridPane>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER_LEFT">
+         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <children>
+      
+                  <GridPane hgap="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="750.0" vgap="10.0">
+                      <columnConstraints>
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+      
+                      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+      
+                          <Label fx:id="theme_label" text="Tema">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Label>
+                          <ComboBox fx:id="theme" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
+      
+                      </VBox>
+                      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
+      
+                          <Label fx:id="accent_label" text="Accento">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Label>
+                          <HBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+      
+                              <ColorPickerPreset fx:id="preset_blue" blue="255" green="151" prefHeight="30.0" prefWidth="30.0" red="71" />
+                              <ColorPickerPreset fx:id="preset_green" blue="58" green="222" prefHeight="30.0" prefWidth="30.0" red="74" />
+                              <ColorPickerPreset fx:id="preset_yellow" blue="38" green="218" prefHeight="30.0" prefWidth="30.0" red="235" />
+                              <ColorPickerPreset fx:id="preset_orange" blue="28" green="164" prefHeight="30.0" prefWidth="30.0" red="255" />
+                              <ColorPickerButton fx:id="custom_color" prefHeight="30.0" prefWidth="30.0" />
+      
+                          </HBox>
+      
+                      </VBox>
+                      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
+      
+                          <Label fx:id="language_label" text="Lingua">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Label>
+                     <ComboBox fx:id="language" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" styleClass="combo-box-custom" />
+      
+                      </VBox>
+                      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <Label fx:id="primary_curency_label" text="Valuta primaria">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Label>
+                          <BalanceEditor fx:id="primary_currency" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" styleClass="combo-box-balance2" />
+                      </VBox>
+                      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="2">
+                          <Label fx:id="first_day_of_week_label" text="Primo giorno settimana">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Label>
+                          <ComboBox fx:id="first_day_of_week" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
+                      </VBox>
+                      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                          <Label fx:id="start_page_label" text="Schermata iniziale">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Label>
+                          <ComboBox fx:id="start_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" />
+                      </VBox>
+      
+                      <padding>
+                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                      </padding>
+                  </GridPane>
+                <TagHandler fx:id="tagHandler" HBox.hgrow="ALWAYS" prefHeight="140.0" prefWidth="340.0"  />
+            </children>
+         </HBox>
             <HBox fx:id="category_editor" spacing="5" style="-fx-background-radius: 6; -fx-padding: 0 5 5 5" styleClass="background-3" VBox.vgrow="ALWAYS">
                 <BorderPane fx:id="category_bp" HBox.hgrow="ALWAYS">
                     <top>
@@ -109,7 +115,8 @@
                                 <Label fx:id="category_label" text="Categorie" BorderPane.alignment="CENTER">
                                     <BorderPane.margin>
                                         <Insets bottom="10.0" left="20.0" />
-                                    </BorderPane.margin></Label>
+                                    </BorderPane.margin>
+                        </Label>
                             </left>
                             <right>
                                 <Button fx:id="new_category" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" styleClass="icon_general" text="Nuova categoria" BorderPane.alignment="CENTER">
@@ -118,7 +125,8 @@
                                     </BorderPane.margin>
                            <graphic>
                               <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" styleClass="icon_general" translateX="-3.0" />
-                           </graphic></Button>
+                           </graphic>
+                        </Button>
                             </right>
                             <BorderPane.margin>
                                 <Insets top="10.0" />
@@ -160,7 +168,8 @@
                                 <Button fx:id="new_sub_category" disable="true" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" styleClass="icon_general" text="Nuova sottocategoria" BorderPane.alignment="CENTER">
                            <graphic>
                               <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" styleClass="icon_general" translateX="-3.0" />
-                           </graphic></Button>
+                           </graphic>
+                        </Button>
                             </right>
                             <left>
                                 <Label fx:id="sub_category_label" text="Sottocategorie" BorderPane.alignment="CENTER" />

@@ -32,9 +32,9 @@
       </BorderPane>
    </center>
    <top>
-      <VBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="60.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-               <Label fx:id="pageTitle" text="Transazioni">
+               <Label fx:id="pageTitle" styleClass="text-title" text="Transazioni">
                    <font>
                        <Font size="20.0" />
                    </font>
@@ -42,13 +42,10 @@
                        <Insets />
                    </opaqueInsets>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
                </Label>
             <BorderPane VBox.vgrow="ALWAYS">
-               <left>
-                  <HBox fx:id="HboxmultiDatePicker" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" BorderPane.alignment="CENTER" />
-               </left>
                <right>
                   <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
@@ -78,9 +75,9 @@
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
-               <center>
-                  <DateRangePicker fx:id="MultiDatePicker" maxWidth="200.0" showPresetTitle="false" styleClass="date-range-view" BorderPane.alignment="CENTER" />
-               </center>
+               <left>
+                  <DateRangePicker fx:id="MultiDatePicker" maxHeight="-Infinity" maxWidth="200.0" minHeight="-Infinity" prefHeight="35.0" showPresetTitle="false" styleClass="date-range-view" BorderPane.alignment="CENTER" />
+               </left>
             </BorderPane>
          </children>
       </VBox>

@@ -39,7 +39,7 @@ public final class dbTag {
 
     public void setName(String name) throws SQLException {
         this.name = name;
-        updateField("name", color);
+        updateField("name", name);
     }
 
     public String color() {

@@ -5,7 +5,11 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
+import org.wip.moneymanager.model.DBObjects.dbTag;
+import org.wip.moneymanager.popUp.TagInfoPopUp;
 
 import java.io.IOException;
 
@@ -28,9 +32,10 @@ public class Tag extends BorderPane {
     // 0: display
     // 1: select
     // 2: filter
-
+    private dbTag dbTag;
     private static final PseudoClass DISCARDED_PSEUDO_CLASS = PseudoClass.getPseudoClass("discarded");
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
+    private TagInfoPopUp infoPopUp;
 
     public Tag() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/tag.fxml"));
@@ -63,6 +68,18 @@ public class Tag extends BorderPane {
         setColor(color);
     }
 
+    public Tag(dbTag dbTag) {
+        this();
+        this.dbTag = dbTag;
+        this.tag.set(dbTag.name());
+        this.tag_status.set(0);
+        this.modalita.set(0);
+        this.color.set(dbTag.color());
+        setColor(dbTag.color());
+        setupTooltips();
+    }
+
+
     private void setColor(String color) {
         tagBackground.setStyle("-fx-background-color: " + color + ";");
     }
@@ -70,6 +87,13 @@ public class Tag extends BorderPane {
     @FXML
     public void initialize() {
         tagLabel.textProperty().bindBidirectional(tag);
+    }
+
+    private void setupTooltips() {
+        Tooltip tooltip = new Tooltip("Doppio clic per dettagli");
+        tooltip.setShowDelay(Duration.millis(1));
+        tooltip.setHideDelay(Duration.millis(0));
+        Tooltip.install(tagBackground, tooltip);
     }
 
     public String getTag() {
@@ -121,4 +145,5 @@ public class Tag extends BorderPane {
     public String getColor() {
         return color.get();
     }
+
 }

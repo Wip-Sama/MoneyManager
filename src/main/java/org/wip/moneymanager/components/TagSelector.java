@@ -66,6 +66,7 @@ public class TagSelector extends BorderPane {
         contextMenu.getStyleClass().add("tag-filter-context-menu");
     }
 
+    @FXML
     public void initialize() {
         add_tag.setOnAction(_ -> showTagFilter());
 
@@ -126,7 +127,7 @@ public class TagSelector extends BorderPane {
     private void showAddNewTag() {
         try {
             if (addNewTagController == null) {
-                addNewTagController = new AddNewTagController(loaded.getScene().getWindow());
+                addNewTagController = new AddNewTagController();
             }
 
             // Crea un nuovo CustomMenuItem con il contenuto di AddNewTagController

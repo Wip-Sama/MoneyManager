@@ -29,31 +29,54 @@ public class UserDatabase extends Database {
     public Task<Boolean> createTag(String name, String color) {
         return asyncCall(() -> {
             if (isConnected()) {
-                String query = "INSERT INTO Tag (name, color) VALUES (?, ?);";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setString(1, name);
-                stmt.setString(2, color);
-                stmt.executeUpdate();
-                stmt.close();
+                String checkQuery = "SELECT COUNT(*) FROM Tag WHERE name = ?";
+                PreparedStatement checkStmt = con.prepareStatement(checkQuery);
+                checkStmt.setString(1, name);
+                ResultSet rs = checkStmt.executeQuery();
+                rs.next();
+                int count = rs.getInt(1);
+                rs.close();
+                checkStmt.close();
+
+                if (count > 0) {
+                    return false;
+                }
+
+                String insertQuery = "INSERT INTO Tag (name, color) VALUES (?, ?);";
+                PreparedStatement insertStmt = con.prepareStatement(insertQuery);
+                insertStmt.setString(1, name);
+                insertStmt.setString(2, color);
+                insertStmt.executeUpdate();
+                insertStmt.close();
+
                 return true;
             }
             return false;
         });
     }
 
+
     public Task<Boolean> removeTag(String name) {
         return asyncCall(() -> {
             if (isConnected()) {
-                String query = "DELETE FROM Tag WHERE name=?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setString(1, name);
-                stmt.executeUpdate();
-                stmt.close();
+                String query1 = "DELETE FROM Transactions_Tags WHERE Tag_id = (SELECT id FROM Tag WHERE name = ?);";
+                PreparedStatement stmt1 = con.prepareStatement(query1);
+                stmt1.setString(1, name);
+                stmt1.executeUpdate();
+                stmt1.close();
+
+                String query2 = "DELETE FROM Tag WHERE name = ?;";
+                PreparedStatement stmt2 = con.prepareStatement(query2);
+                stmt2.setString(1, name);
+                stmt2.executeUpdate();
+                stmt2.close();
+
                 return true;
             }
             return false;
         });
     }
+
 
     public Task<Boolean> removeAllTag() {
         return asyncCall(() -> {
@@ -507,16 +530,28 @@ public class UserDatabase extends Database {
     public Task<Boolean> removeAccount(int id) {
         return asyncCall(() -> {
             if (isConnected()) {
-                String query = "DELETE FROM Accounts WHERE id = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
-                stmt.close();
+                // Rimuovi tutte le transazioni in cui il conto appare come Account_id o Second_account_id
+                String query1 = "DELETE FROM Transactions WHERE account = ? OR second_account = ?;";
+                PreparedStatement stmt1 = con.prepareStatement(query1);
+                stmt1.setInt(1, id);
+                stmt1.setInt(2, id);
+                stmt1.executeUpdate();
+                stmt1.close();
+
+                // Ora elimina il conto dalla tabella Accounts
+                String query2 = "DELETE FROM Accounts WHERE id = ?;";
+                PreparedStatement stmt2 = con.prepareStatement(query2);
+                stmt2.setInt(1, id);
+                stmt2.executeUpdate();
+                stmt2.close();
+
                 return true;
             }
             return false;
         });
     }
+
+
 
 
     public Task<Boolean> addAccount(String name, int type, double balance, int creationDate, int includeIntoTotals, String currency) {
@@ -706,18 +741,57 @@ public class UserDatabase extends Database {
     public Task<Boolean> removeTransaction(int id) {
         return asyncCall(() -> {
             if (isConnected()) {
-                String query = "DELETE FROM Transactions WHERE id = ?;";
+                String query = "SELECT type, amount, account, second_account FROM Transactions WHERE id = ?;";
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setInt(1, id);
-                stmt.executeUpdate();
+                ResultSet resultSet = stmt.executeQuery();
+
+                if (!resultSet.next()) {
+                    return false;
+                }
+
+                int type = resultSet.getInt("type");
+                double amount = resultSet.getDouble("amount");
+                int accountId = resultSet.getInt("account");
+                Integer secondAccountId = resultSet.getInt("second_account");
+
                 stmt.close();
-                return removeTransaction_tags(id).get();
+
+                // Aggiorna i bilanci dei conti coinvolti
+                boolean success = true;
+
+
+                if (type == 0 || type == 1) {
+                    success &= updateAccountBalance(accountId, amount, false).get(); // Il get() blocca finché non ottieni il risultato
+                } else if (type == 2) {
+                    success &= updateAccountBalance(accountId, amount, false).get(); // Sottrai dal conto di origine
+                    success &= updateAccountBalance(secondAccountId, amount, true).get(); // Aggiungi al conto di destinazione
+                }
+
+                if (!success) {
+                    return false;
+                }
+
+                String query1 = "DELETE FROM Transactions_Tags WHERE Transaction_id = ?;";
+                PreparedStatement stmt1 = con.prepareStatement(query1);
+                stmt1.setInt(1, id);
+                stmt1.executeUpdate();
+                stmt1.close();
+
+                String query2 = "DELETE FROM Transactions WHERE id = ?;";
+                PreparedStatement stmt2 = con.prepareStatement(query2);
+                stmt2.setInt(1, id);
+                stmt2.executeUpdate();
+                stmt2.close();
+
+                return true;
             }
             return false;
         });
-
-
     }
+
+
+
 
 
     public Task<List<Integer>> getAllDaysOfTransaction() {
@@ -1095,7 +1169,6 @@ public class UserDatabase extends Database {
             List<String> tags = new ArrayList<>();
             for (Tag t : listTags) {
                 tags.add(t.getTag());
-                System.out.println(t.getTag());
             }
 
             // recupera gli ID della categoria, account e tag

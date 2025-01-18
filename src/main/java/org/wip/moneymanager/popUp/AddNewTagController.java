@@ -55,13 +55,11 @@ public class AddNewTagController extends BorderPane {
     private TextField tagNameField;
 
     private double xOffset = 0;
-    private double yOffset = 0;
-    private Accounts accountsPage;;
+    private double yOffset = 0;;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 
-    public AddNewTagController(Window window) throws IOException {
-        this.accountsPage = accountsPage;
+    public AddNewTagController() throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewTag.fxml"));
         fxmlLoader.setRoot(this);
@@ -131,17 +129,27 @@ public class AddNewTagController extends BorderPane {
     private void addTag() {
         String tagName = tagNameField.getText().trim();
         String selectedColor = colorComboBox.getValue();
+
         if (selectedColor != null && !tagName.isEmpty()) {
             String colorHex = getColorHex(selectedColor);
-            Task<Boolean> taskAddTag =  Data.userDatabase.createTag(tagName, colorHex);
-            executorService.submit(taskAddTag);
+            Task<Boolean> taskAddTag = Data.userDatabase.createTag(tagName, colorHex);
 
             taskAddTag.setOnSucceeded(workerStateEvent -> {
-                TagFilter.refreshTags();
+                if (taskAddTag.getValue() == Boolean.FALSE) {
+                    showError("addNewTag.duplicate");
+                    FieldAnimationUtils.animateFieldError(tagNameField);
+                } else {
+                    TagFilter.refreshTags();
+                    clearFields();
+                    TagSelector.closeAddNewTag();
+                }
             });
 
-            clearFields();
-            TagSelector.closeAddNewTag();
+            taskAddTag.setOnFailed(workerStateEvent -> {
+                showError("addNewTag.error");
+            });
+
+            executorService.submit(taskAddTag);
         } else {
             showError("addNewTag.error");
         }
@@ -155,7 +163,7 @@ public class AddNewTagController extends BorderPane {
             case "Verde", "Green" -> "#008000";
             case "Giallo", "Yellow" -> "#cfb721";
             case "Arancione", "Orange" -> "#FFA500";
-            default -> "-fu-accent"; // Default a bianco
+            default -> "-fu-accent";
         };
     }
 
@@ -212,5 +220,4 @@ public class AddNewTagController extends BorderPane {
         previewToggleButton.setText("Preview");
         previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
     }
-
 }

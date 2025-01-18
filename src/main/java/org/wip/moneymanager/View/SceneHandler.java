@@ -6,13 +6,22 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import static javafx.application.Application.setUserAgentStylesheet;
 
 public class SceneHandler {
     private static SceneHandler instance;
     private static Stage primaryStage;
+
+    private static final String STYLE_CSS_PATH = "/org/wip/moneymanager/style-dark.css";
+    private static final String ICON_PATH = "/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png";
+    private static final double MIN_WIDTH = 960;
+    private static final double MIN_HEIGHT = 540;
+    private static final double BASE_WIDTH = 1440;
+    private static final double BASE_HEIGHT = 810;
+
+    private double lastWidth = MIN_WIDTH;
+    private double lastHeight = MIN_HEIGHT;
 
     private SceneHandler(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -25,87 +34,49 @@ public class SceneHandler {
         return instance;
     }
 
-    // variabili per memorizzare le dimensioni della finestra
-    private double lastHeight = 540;
-    private double lastWidth = 960;
-
-    public void showLoginScreen() {
+    private void setupScene(String fxmlPath, String title, boolean isMaximized) {
         try {
-            setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/login.fxml"));
+            setUserAgentStylesheet(getClass().getResource(STYLE_CSS_PATH ).toExternalForm());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Scene scene = new Scene(loader.load());
 
-            lastWidth = primaryStage.getWidth();
-            lastHeight = primaryStage.getHeight();
 
-            primaryStage.setMinHeight(540);
-            primaryStage.setMinWidth(960);
+            primaryStage.setMinHeight(MIN_HEIGHT);
+            primaryStage.setMinWidth(MIN_WIDTH);
 
             primaryStage.setWidth(lastWidth);
             primaryStage.setHeight(lastHeight);
 
-            primaryStage.setTitle("Money Manager - Login");
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
+            primaryStage.setTitle(title);
+
+            Image icon = new Image(getClass().getResourceAsStream(ICON_PATH));
             primaryStage.getIcons().add(icon);
 
             primaryStage.setScene(scene);
+            primaryStage.setMaximized(isMaximized);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showLoginScreen() {
+        lastWidth = primaryStage.getWidth();
+        lastHeight = primaryStage.getHeight();
+        setupScene("/org/wip/moneymanager/login.fxml", "Money Manager - Login", false);
     }
 
     public void showRegisterScreen() {
-
-        try {
-            setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/register.fxml"));
-            Scene scene = new Scene(loader.load());
-
-            lastWidth = primaryStage.getWidth();
-            lastHeight = primaryStage.getHeight();
-
-            primaryStage.setMinHeight(540);
-            primaryStage.setMinWidth(960);
-
-            primaryStage.setWidth(lastWidth);
-            primaryStage.setHeight(lastHeight);
-
-            primaryStage.setTitle("Money Manager - Register");
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
-            primaryStage.getIcons().add(icon);
-
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        lastWidth = primaryStage.getWidth();
+        lastHeight = primaryStage.getHeight();
+        setupScene("/org/wip/moneymanager/register.fxml", "Money Manager - Register", false);
     }
 
     public void startMoneyManager() {
-        try {
-            setUserAgentStylesheet(getClass().getResource("/org/wip/moneymanager/style-dark.css").toExternalForm());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/base_menu.fxml"));
-            Scene scene = new Scene(loader.load());
-
-            lastWidth = primaryStage.getWidth();
-            lastHeight = primaryStage.getHeight();
-
-            primaryStage.setMinHeight(810);
-            primaryStage.setMinWidth(1440);
-
-            primaryStage.setWidth(lastWidth);
-            primaryStage.setHeight(lastHeight);
-
-            primaryStage.setTitle("Money Manager");
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
-            primaryStage.getIcons().add(icon);
-
-            primaryStage.setScene(scene);
-            primaryStage.setMaximized(true);
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        lastWidth = primaryStage.getWidth();
+        lastHeight = primaryStage.getHeight();
+        primaryStage.setMinHeight(BASE_HEIGHT);
+        primaryStage.setMinWidth(BASE_WIDTH);
+        setupScene("/org/wip/moneymanager/base_menu.fxml", "Money Manager", true);
     }
 }

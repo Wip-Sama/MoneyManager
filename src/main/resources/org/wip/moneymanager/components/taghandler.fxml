@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="340.0" stylesheets="@../style-dark.css" type="AnchorPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="340.0" stylesheets="@../style-dark.css">
+         <bottom>
+            <ScrollPane fx:id="listaTags" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefWidth="200.0" styleClass="tag-list" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+               <content>
+                  <FlowPane fx:id="tag_pane" hgap="5.0" maxHeight="1.7976931348623157E308" prefHeight="50.0" vgap="5.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
+               </content>
+               <padding>
+                  <Insets bottom="5.0" left="2.0" right="2.0" top="5.0" />
+               </padding>
+            </ScrollPane>
+         </bottom>
+         <top>
+            <Label fx:id="Tags" text="Tags" BorderPane.alignment="TOP_LEFT">
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+            </Label>
+         </top>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+         <center>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" styleClass="search-bar-tag" BorderPane.alignment="CENTER_LEFT">
+               <children>
+                  <TextField fx:id="searchBar" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" promptText="Cerca Tag" styleClass="transparent-field" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="deleteSearch" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" styleClass="transparent-button" visible="false">
+                     <graphic>
+                        <SVGPath content="m4.21 4.387.083-.094a1 1 0 0 1 1.32-.083l.094.083L12 10.585l6.293-6.292a1 1 0 1 1 1.414 1.414L13.415 12l6.292 6.293a1 1 0 0 1 .083 1.32l-.083.094a1 1 0 0 1-1.32.083l-.094-.083L12 13.415l-6.293 6.292a1 1 0 0 1-1.414-1.414L10.585 12 4.293 5.707a1 1 0 0 1-.083-1.32l.083-.094-.083.094Z" focusTraversable="true" mouseTransparent="true" scaleX="0.7" scaleY="0.7" styleClass="icon_general">
+                           <rotationAxis>
+                              <Point3D />
+                           </rotationAxis>
+                        </SVGPath>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="addNewTag" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" styleClass="transparent-button">
+                     <graphic>
+                        <SVGPath content="M11.883 3.007 12 3a1 1 0 0 1 .993.883L13 4v7h7a1 1 0 0 1 .993.883L21 12a1 1 0 0 1-.883.993L20 13h-7v7a1 1 0 0 1-.883.993L12 21a1 1 0 0 1-.993-.883L11 20v-7H4a1 1 0 0 1-.993-.883L3 12a1 1 0 0 1 .883-.993L4 11h7V4a1 1 0 0 1 .883-.993L12 3l-.117.007Z" styleClass="icon_general">
+                           <rotationAxis>
+                              <Point3D />
+                           </rotationAxis>
+                        </SVGPath>
+                     </graphic>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </HBox>
+         </center>
+      </BorderPane>
+      <BorderPane fx:id="infoPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="200.0" styleClass="background-2" visible="false" AnchorPane.rightAnchor="0.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </BorderPane>
+   </children>
+</fx:root>
