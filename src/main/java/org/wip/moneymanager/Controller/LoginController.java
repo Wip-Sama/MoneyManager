@@ -103,7 +103,6 @@ public class LoginController {
         });
     }
 
-
     private void handleSuccessfulLogin(String username) {
         Task<dbUser> userTask = Data.mmDatabase.getUser(username);
         executorService.submit(userTask);
@@ -152,7 +151,6 @@ public class LoginController {
 
     private void showError(String message) {
         errorLabel.textProperty().bind(Data.lsp.lsb(message));
-        // Animazione di "fade in" per il messaggio di errore
         Timeline fadeInTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> errorLabel.setOpacity(0)),
                 new KeyFrame(Duration.seconds(0.2), e -> errorLabel.setOpacity(1))
@@ -183,22 +181,21 @@ public class LoginController {
 
         passwordField.setOnKeyPressed(event -> {
             if (Objects.requireNonNull(event.getCode()) == KeyCode.ENTER) {
-                loginButton.fire(); // Simula il click sul bottone di login
-            }
-        });
-        // Listener per il campo username
-        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.isEmpty()) {
-                FieldAnimationUtils.removeErrorStyles(usernameField);  // Rimuove gli stili di errore
-                errorLabel.setOpacity(0);  // Nasconde il messaggio di errore
+                loginButton.fire();
             }
         });
 
-        // Listener per il campo password
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(usernameField);
+                errorLabel.setOpacity(0);
+            }
+        });
+
         passwordField.password.addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
                 FieldAnimationUtils.removeErrorStyles(passwordField);
-                errorLabel.setOpacity(0);  // Nascondi l'alert quando l'utente inizia a scrivere
+                errorLabel.setOpacity(0);
             }
         });
     }

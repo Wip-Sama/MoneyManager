@@ -290,8 +290,6 @@ public class Profile extends BorderPane implements AutoCloseable {
         }
     }
 
-
-
     @Override
     public void close() {
         executorService.shutdown();

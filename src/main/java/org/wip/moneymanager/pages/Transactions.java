@@ -1,6 +1,5 @@
 package org.wip.moneymanager.pages;
 
-import com.dlsc.gemsfx.CalendarPicker;
 import com.dlsc.gemsfx.daterange.DateRangePicker;
 import javafx.animation.RotateTransition;
 import javafx.concurrent.Task;
@@ -19,8 +18,8 @@ import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.CardTransactions;
 import org.wip.moneymanager.model.DBObjects.TransactionByDate;
 import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.popUp.popUpFilterController;
-import org.wip.moneymanager.popUp.transactionPopupController;
+import org.wip.moneymanager.popUp.PopUpFilterController;
+import org.wip.moneymanager.popUp.TransactionPopupController;
 import org.wip.moneymanager.utility.SVGLoader;
 
 import java.io.IOException;
@@ -64,8 +63,8 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private VBox vboxCard;
 
     protected Parent loaded;
-    private transactionPopupController AddNewController;
-    private popUpFilterController AddNewFilterController;
+    private TransactionPopupController AddNewController;
+    private PopUpFilterController AddNewFilterController;
     private final static String on_fav = new SVGLoader("favorite_on_icon").getPath();
     private final static String off_fav = new SVGLoader("favorite_off_icon").getPath();
     private boolean isFavorite = false;
@@ -124,7 +123,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private void open_popup() {
         try {
             if (AddNewController == null) {
-                AddNewController = new transactionPopupController(newTransaction.getScene().getWindow(), this);
+                AddNewController = new TransactionPopupController(newTransaction.getScene().getWindow(), this);
             }
 
             Bounds bounds = newTransaction.localToScreen(newTransaction.getBoundsInLocal());
@@ -142,7 +141,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private void openPopUpFilter() {
         try {
             if (AddNewFilterController == null) {
-                AddNewFilterController = new popUpFilterController(filter.getScene().getWindow(), this);
+                AddNewFilterController = new PopUpFilterController(filter.getScene().getWindow(), this);
             }
 
             Bounds bounds = filter.localToScreen(filter.getBoundsInLocal());

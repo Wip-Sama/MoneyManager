@@ -55,7 +55,6 @@ public class UserDatabase extends Database {
         });
     }
 
-
     public Task<Boolean> removeTag(String name) {
         return asyncCall(() -> {
             if (isConnected()) {
@@ -77,38 +76,6 @@ public class UserDatabase extends Database {
         });
     }
 
-
-    public Task<Boolean> removeAllTag() {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                // WHERE id != -1 non serve ma altrimenti intellij eprnede che la query pulisce il db come un errore
-                String query = "DELETE FROM Tag WHERE id != -1;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.executeUpdate();
-                stmt.close();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    public Task<dbTag> getTag(String name) {
-        return asyncCall(() -> {
-            dbTag dbTag = null;
-            if (isConnected()) {
-                String query = "SELECT * FROM Tag WHERE name = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setString(1, name);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    dbTag = new dbTag(rs, this);
-                }
-                stmt.close();
-            }
-            return dbTag;
-        });
-    }
-
     public Task<List<dbTag>> getAllTag() {
         return asyncCall(() -> {
             List<dbTag> dbTags = new ArrayList<>();
@@ -122,114 +89,6 @@ public class UserDatabase extends Database {
                 stmt.close();
             }
             return dbTags;
-        });
-    }
-
-    public Task<List<dbTransaction>> getAlltransactionBetween(int start, int end) {
-        return asyncCall(() -> {
-            List<dbTransaction> dbTransactions = new ArrayList<>();
-            if (isConnected()) {
-                String query = "SELECT * FROM Transactions WHERE date BETWEEN ? AND ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, start);
-                stmt.setInt(2, end);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    dbTransactions.add(new dbTransaction(rs, this));
-                }
-                stmt.close();
-            }
-            return dbTransactions;
-        });
-    }
-
-    public Task<Boolean> createTransaction_tags(int transaction, int tag) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "INSERT INTO Transaction_tags (transaction, tag) VALUES (?, ?);";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, transaction);
-                stmt.setInt(2, tag);
-                stmt.executeUpdate();
-                stmt.close();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    public Task<Boolean> removeTransaction_tags(int transaction) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "DELETE FROM Transactions_Tags WHERE Transaction_id = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, transaction);
-                stmt.executeUpdate();
-                stmt.close();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    public Task<Boolean> removeTransaction_tags(int transaction, int tag) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "DELETE FROM Transaction_tags WHERE 'transaction' = ? AND tag = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, transaction);
-                stmt.setInt(1, tag);
-                stmt.executeUpdate();
-                stmt.close();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    public Task<Boolean> removeAllTransaction_tags() {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "DELETE FROM Transaction_tags;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.executeUpdate();
-                stmt.close();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    public Task<List<dbTransaction_tags>> getAllTransaction_tags_per_transaction(int transaction) {
-        return asyncCall(() -> {
-            List<dbTransaction_tags> tt = new ArrayList<>();
-            if (isConnected()) {
-                String query = "SELECT * FROM Transaction_tags WHERE 'transaction' = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, transaction);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    tt.add(new dbTransaction_tags(rs, this));
-                }
-                stmt.close();
-            }
-            return tt;
-        });
-    }
-
-    public Task<List<dbTransaction_tags>> getAllTransaction_tags() {
-        return asyncCall(() -> {
-            List<dbTransaction_tags> tt = new ArrayList<>();
-            if (isConnected()) {
-                String query = "SELECT * FROM Transaction_tags;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    tt.add(new dbTransaction_tags(rs, this));
-                }
-                stmt.close();
-            }
-            return tt;
         });
     }
 
@@ -247,23 +106,6 @@ public class UserDatabase extends Database {
                 stmt.close();
             }
             return categories;
-        });
-    }
-
-    public Task<dbCategory> getCategory(int id) {
-        return asyncCall(() -> {
-            dbCategory dbCategory = null;
-            if (isConnected()) {
-                String query = "SELECT * FROM Categories WHERE id = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, id);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    dbCategory = new dbCategory(rs, this);
-                }
-                stmt.close();
-            }
-            return dbCategory;
         });
     }
 
@@ -365,34 +207,6 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<Boolean> removeCategory(int id) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "DELETE FROM Categories WHERE id = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
-                stmt.close();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    public Task<Boolean> removeAllSubcategories(int parent_category) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "DELETE FROM Categories WHERE parent_category = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, parent_category);
-                stmt.executeUpdate();
-                stmt.close();
-                return true;
-            }
-            return false;
-        });
-    }
-
     public Task<List<dbCategory>> getAllSubcategories(int parent_category) {
         return asyncCall(() -> {
             List<dbCategory> categories = new ArrayList<>();
@@ -426,24 +240,6 @@ public class UserDatabase extends Database {
         });
     }
 
-
-    public Task<dbAccount> getAccount(int id) {
-        return asyncCall(() -> {
-            dbAccount dbAccount = null;
-            if (isConnected()) {
-                String query = "SELECT * FROM Accounts WHERE id = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, id);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    dbAccount = new dbAccount(rs, this);
-                }
-                stmt.close();
-            }
-            return dbAccount;
-        });
-    }
-
     public Task<List<String>> getAllAccountNames() {
         return asyncCall(() -> {
             List<String> accountNames = new ArrayList<>();
@@ -459,7 +255,6 @@ public class UserDatabase extends Database {
             return accountNames;
         });
     }
-
 
     public Task<List<String>> getMainCategoryNamesByType(int type) {
         return asyncCall(() -> {
@@ -551,9 +346,6 @@ public class UserDatabase extends Database {
         });
     }
 
-
-
-
     public Task<Boolean> addAccount(String name, int type, double balance, int creationDate, int includeIntoTotals, String currency) {
         return asyncCall(() -> {
             try {
@@ -575,166 +367,6 @@ public class UserDatabase extends Database {
                 e.printStackTrace();
                 return false;
             }
-        });
-    }
-
-
-    //Tutti metodi per la schermata che servono alla schermata transictions
-
-
-    //Entrate e Spese
-    public Task<Boolean> addTransaction(int date, int type, double amount, int account, String note, Integer category) {
-        return asyncCall(() -> {
-            try {
-                String query = "INSERT INTO Transactions (date, type, amount, account, note, category) VALUES (?, ?, ?, ?, ?, ?);";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, date);
-                stmt.setInt(2, type);
-                stmt.setDouble(3, amount);
-                stmt.setInt(4, account);
-
-                if (note != null && !note.isEmpty()) {
-                    stmt.setString(5, note);
-                } else {
-                    stmt.setNull(5, Types.VARCHAR);
-                }
-
-
-                if (category != null) {
-                    stmt.setInt(6, category);
-                } else {
-                    stmt.setNull(6, java.sql.Types.INTEGER);
-                }
-
-                int rowsAffected = stmt.executeUpdate();
-                stmt.close();
-
-                return rowsAffected > 0;
-            } catch (SQLException e) {
-                System.err.println("SQL Error during transaction insertion: " + e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
-        });
-    }
-
-
-    //metodo per trasferimenti con aggiornamento dei bilanci, metto commenti per farti capire gli step
-    public Task<Boolean> addTransferWithBalanceUpdate(int date, double amount, int account, int secondAccount, String note) {
-        return asyncCall(() -> {
-            try {
-                // Step 1: Inserire il trasferimento nella tabella Transactions
-                String insertTransactionQuery = "INSERT INTO Transactions (date, type, amount, account, second_account, note) VALUES (?, ?, ?, ?, ?, ?);";
-                PreparedStatement transactionStmt = con.prepareStatement(insertTransactionQuery);
-                transactionStmt.setInt(1, date);
-                transactionStmt.setInt(2, 2); // Tipo 2: trasferimento
-                transactionStmt.setDouble(3, amount);
-                transactionStmt.setInt(4, account);
-                transactionStmt.setInt(5, secondAccount);
-
-                if (note != null && !note.isEmpty()) {
-                    transactionStmt.setString(6, note);
-                } else {
-                    transactionStmt.setNull(6, java.sql.Types.VARCHAR);
-                }
-
-                int rowsTransaction = transactionStmt.executeUpdate();
-                transactionStmt.close();
-
-                // Step 2: Aggiornare il saldo dell'account di origine
-                String updateSourceAccountQuery = "UPDATE Accounts SET balance = balance - ? WHERE id = ?;";
-                PreparedStatement sourceAccountStmt = con.prepareStatement(updateSourceAccountQuery);
-                sourceAccountStmt.setDouble(1, amount);
-                sourceAccountStmt.setInt(2, account);
-                int rowsSourceAccount = sourceAccountStmt.executeUpdate();
-                sourceAccountStmt.close();
-
-                // Step 3: Aggiornare il saldo dell'account di destinazione
-                String updateDestinationAccountQuery = "UPDATE Accounts SET balance = balance + ? WHERE id = ?;";
-                PreparedStatement destinationAccountStmt = con.prepareStatement(updateDestinationAccountQuery);
-                destinationAccountStmt.setDouble(1, amount);
-                destinationAccountStmt.setInt(2, secondAccount);
-                int rowsDestinationAccount = destinationAccountStmt.executeUpdate();
-                destinationAccountStmt.close();
-
-                // Verifica che tutte le operazioni abbiano avuto successo
-                return rowsTransaction > 0 && rowsSourceAccount > 0 && rowsDestinationAccount > 0;
-            } catch (SQLException e) {
-                System.err.println("SQL Error during transfer with balance update: " + e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
-        });
-    }
-
-
-    //metodo per i tags commento tutto per farti capire qualcosa
-    public Task<Boolean> linkTagToTransaction(String transactionName, String tagName) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                try {
-                    // Recupera l'ID della transazione in base al nome
-                    String transactionIdQuery = "SELECT id FROM Transactions WHERE note = ?;";
-                    PreparedStatement transactionStmt = con.prepareStatement(transactionIdQuery);
-                    transactionStmt.setString(1, transactionName);
-                    ResultSet transactionRs = transactionStmt.executeQuery();
-
-                    if (!transactionRs.next()) {
-                        transactionStmt.close();
-                        System.err.println("Transaction not found for name: " + transactionName);
-                        return false;
-                    }
-                    int transactionId = transactionRs.getInt("id");
-                    transactionStmt.close();
-
-                    // Recupera l'ID del tag in base al nome
-                    String tagIdQuery = "SELECT id FROM Tag WHERE name = ?;";
-                    PreparedStatement tagStmt = con.prepareStatement(tagIdQuery);
-                    tagStmt.setString(1, tagName);
-                    ResultSet tagRs = tagStmt.executeQuery();
-
-                    if (!tagRs.next()) {
-                        tagStmt.close();
-                        System.err.println("Tag not found for name: " + tagName);
-                        return false;
-                    }
-                    int tagId = tagRs.getInt("id");
-                    tagStmt.close();
-
-                    // Collega l'ID della transazione con l'ID del tag
-                    String linkQuery = "INSERT INTO Transaction_tags (transaction, tag) VALUES (?, ?);";
-                    PreparedStatement linkStmt = con.prepareStatement(linkQuery);
-                    linkStmt.setInt(1, transactionId);
-                    linkStmt.setInt(2, tagId);
-                    int rowsInserted = linkStmt.executeUpdate();
-                    linkStmt.close();
-
-                    return rowsInserted > 0;
-                } catch (SQLException e) {
-                    System.err.println("SQL Error during linking tag to transaction: " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-            return false;
-        });
-    }
-
-    public Task<String> getIDAccountFromName(String name) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "SELECT id FROM Accounts WHERE name = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setString(1, name);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    String id = rs.getString("id");
-                    stmt.close();
-                    return id;
-                }
-                stmt.close();
-            }
-            throw new IllegalArgumentException("Account not found");
         });
     }
 
@@ -790,58 +422,27 @@ public class UserDatabase extends Database {
         });
     }
 
-
-
-
-
-    public Task<List<Integer>> getAllDaysOfTransaction() {
-        return asyncCall(() -> {
-            List<Integer> transactionDates = new ArrayList<>();
-            if (isConnected()) {
-                String query = "SELECT date FROM Transactions;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    transactionDates.add(rs.getInt("date")); // Legge la colonna 'date'
-
-                }
-                stmt.close();
-            }
-
-            return transactionDates;
-        });
-
-    }
-
     public Task<List<TransactionByDate>> getAllDaysOfTransaction(String selectedCategory, String selectedAccount, List<String> selectedTags) {
         return asyncCall(() -> {
             List<TransactionByDate> transactionByDateList = new ArrayList<>();
-
-            // Recupera gli ID della categoria, account e tag
             Integer categoryId = getCategoryIdByName(selectedCategory);
             Integer accountId = getAccountIdByName(selectedAccount);
             List<Integer> tagIds = getTagIdsByNames(selectedTags);
 
-            // Inizializza la parte base della query
             StringBuilder queryBuilder = new StringBuilder("SELECT t.id, t.date FROM Transactions t WHERE 1=1");
-
-            // Lista per i parametri di filtro da passare alla PreparedStatement
             List<Object> params = new ArrayList<>();
 
-            // Aggiungi il filtro per la categoria se l'ID è valido
             if (categoryId != null) {
                 queryBuilder.append(" AND t.category = ?");
                 params.add(categoryId);
             }
 
-            // Aggiungi il filtro per l'account se l'ID è valido
             if (accountId != null) {
                 queryBuilder.append(" AND (t.account = ? OR t.second_account = ?)");
                 params.add(accountId);
                 params.add(accountId);  // Per second_account
             }
 
-            // Aggiungi il filtro per i tag se ci sono tag selezionati
             if (!tagIds.isEmpty()) {
                 queryBuilder.append(" AND EXISTS (SELECT 1 FROM Transactions_Tags tt WHERE t.id = tt.transaction_id AND tt.tag_id IN (");
                 for (int i = 0; i < tagIds.size(); i++) {
@@ -854,14 +455,12 @@ public class UserDatabase extends Database {
                 queryBuilder.append("))");
             }
 
-            // Aggiungi la parte finale della query per eseguire la selezione
+
             String query = queryBuilder.toString();
 
             if (isConnected()) {
-                // Esegui la query preparata
                 PreparedStatement stmt = con.prepareStatement(query);
 
-                // Imposta i parametri della query
                 for (int i = 0; i < params.size(); i++) {
                     stmt.setObject(i + 1, params.get(i));
                 }
@@ -871,14 +470,12 @@ public class UserDatabase extends Database {
                     Integer transactionId = rs.getInt("id");
                     Integer date = rs.getInt("date");
 
-                    // Trova o crea una entry per quella data
                     TransactionByDate transactionByDate = findTransactionByDate(transactionByDateList, date);
                     if (transactionByDate == null) {
                         transactionByDate = new TransactionByDate(date);
                         transactionByDateList.add(transactionByDate);
                     }
 
-                    // Aggiungi l'ID della transazione alla lista della data corrispondente
                     transactionByDate.addTransactionId(transactionId);
                 }
                 stmt.close();
@@ -888,14 +485,13 @@ public class UserDatabase extends Database {
         });
     }
 
-    // Metodo per trovare una data esistente o crearne una nuova
     private TransactionByDate findTransactionByDate(List<TransactionByDate> transactionByDateList, Integer date) {
         for (TransactionByDate tbd : transactionByDateList) {
             if (tbd.getDate().equals(date)) {
                 return tbd;
             }
         }
-        return null; // Se non esiste, ritorna null
+        return null;
     }
 
 
@@ -945,7 +541,7 @@ public class UserDatabase extends Database {
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             // Imposta i parametri per la query preparata
             for (int i = 0; i < tagNames.size(); i++) {
-                stmt.setString(i + 1, tagNames.get(i)); // Imposta ogni nome del tag come parametro
+                stmt.setString(i + 1, tagNames.get(i));
             }
 
             // Esegui la query
@@ -957,8 +553,6 @@ public class UserDatabase extends Database {
 
         return tagIds;
     }
-
-
 
     public Task<List<dbTransaction>> fillCard(Integer unix) {
         return asyncCall(() -> {
@@ -1001,25 +595,6 @@ public class UserDatabase extends Database {
         });
     }
 
-    public Task<String> getCategoryFromId(Integer category) {
-        return asyncCall(() -> {
-            if (isConnected()) {
-                String query = "SELECT name FROM Categories WHERE id = ?;";
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setInt(1, category);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    String name = rs.getString("name");
-                    stmt.close();
-                    return name;
-                }
-                stmt.close();
-            }
-            throw new IllegalArgumentException("Category not found");
-        });
-    }
-
-
     public Task<List<dbTag>> getTagFromTransaction(Integer transactionId) {
         return asyncCall(() -> {
             List<dbTag> tagList = new ArrayList<>();
@@ -1059,49 +634,6 @@ public class UserDatabase extends Database {
     }
 
 
-    public Task<List<dbTransaction>> getAllTransactions(List<Integer> transactionIds) {
-        return asyncCall(() -> {
-            List<dbTransaction> transactions = new ArrayList<>();
-
-            if (isConnected()) {
-                // Creiamo la query con un IN per gli ID delle transazioni
-                StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Transactions WHERE id IN (");
-
-                // Aggiungiamo i placeholder per ogni ID (?)
-                for (int i = 0; i < transactionIds.size(); i++) {
-                    queryBuilder.append("?");
-                    if (i < transactionIds.size() - 1) {
-                        queryBuilder.append(",");
-                    }
-                }
-                queryBuilder.append(");");
-
-                String query = queryBuilder.toString();
-
-                try (PreparedStatement stmt = con.prepareStatement(query)) {
-                    // Impostiamo i parametri della query
-                    for (int i = 0; i < transactionIds.size(); i++) {
-                        stmt.setInt(i + 1, transactionIds.get(i)); // Imposta gli ID delle transazioni
-                    }
-
-                    // Eseguiamo la query
-                    try (ResultSet rs = stmt.executeQuery()) {
-                        while (rs.next()) {
-                            // Creiamo l'oggetto dbTransaction per ogni riga del ResultSet
-                            transactions.add(new dbTransaction(rs, this));
-                        }
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Database not connected.");
-            }
-
-            return transactions;
-        });
-    }
-
     public String getCategoryNameById(int categoryId) throws SQLException {
         String query = "SELECT name FROM Categories WHERE id = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
@@ -1115,7 +647,6 @@ public class UserDatabase extends Database {
     }
 
     public String getAccountNameById(int accountName) throws SQLException {
-
         String query = "SELECT name FROM Accounts WHERE id = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, accountName);
@@ -1171,7 +702,6 @@ public class UserDatabase extends Database {
                 tags.add(t.getTag());
             }
 
-            // recupera gli ID della categoria, account e tag
             Integer accountId = getAccountIdByName(account);
             List<Integer> tagIds = getTagIdsByNames(tags);
 
@@ -1192,17 +722,13 @@ public class UserDatabase extends Database {
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    // ottieni l'ID della transazione appena inserita
                     ResultSet generatedKeys = stmt.getGeneratedKeys();
                     if (generatedKeys.next()) {
                         int transactionId = generatedKeys.getInt(1);
 
-                        // collega i tag alla transazione
                         linkTagsToTransaction(transactionId, tagIds);
                     }
                     generatedKeys.close();
-
-                    // Aggiorna il bilancio del conto
                     updateAccountBalance(accountId, amount, type == 0); // true per entrata, false per uscita
                 }
                 stmt.close();
@@ -1225,7 +751,6 @@ public class UserDatabase extends Database {
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    // ottieni l'ID della transazione appena inserita
                     ResultSet generatedKeys = stmt.getGeneratedKeys();
                     if (generatedKeys.next()) {
                         int transactionId = generatedKeys.getInt(1);
@@ -1233,10 +758,8 @@ public class UserDatabase extends Database {
                         linkTagsToTransaction(transactionId, tagIds);
                     }
                     generatedKeys.close();
-
-                    // Aggiorna il bilancio del conto di origine e destinazione
-                    updateAccountBalance(accountId, amount, false); // Sottrai dal conto di origine
-                    updateAccountBalance(secondAccountId, amount, true); // Aggiungi al conto di destinazione
+                    updateAccountBalance(accountId, amount, false);
+                    updateAccountBalance(secondAccountId, amount, true);
                 }
                 stmt.close();
 
@@ -1320,10 +843,48 @@ public class UserDatabase extends Database {
         });
     }
 
+    public Task<List<dbTransaction>> getAllTransactions(List<Integer> transactionIds) {
+        return asyncCall(() -> {
+            List<dbTransaction> transactions = new ArrayList<>();
 
+            if (isConnected()) {
+                // Creiamo la query con un IN per gli ID delle transazioni
+                StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Transactions WHERE id IN (");
 
+                // Aggiungiamo i placeholder per ogni ID (?)
+                for (int i = 0; i < transactionIds.size(); i++) {
+                    queryBuilder.append("?");
+                    if (i < transactionIds.size() - 1) {
+                        queryBuilder.append(",");
+                    }
+                }
+                queryBuilder.append(");");
 
+                String query = queryBuilder.toString();
 
+                try (PreparedStatement stmt = con.prepareStatement(query)) {
+                    // Impostiamo i parametri della query
+                    for (int i = 0; i < transactionIds.size(); i++) {
+                        stmt.setInt(i + 1, transactionIds.get(i)); // Imposta gli ID delle transazioni
+                    }
+
+                    // Eseguiamo la query
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        while (rs.next()) {
+                            // Creiamo l'oggetto dbTransaction per ogni riga del ResultSet
+                            transactions.add(new dbTransaction(rs, this));
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Database not connected.");
+            }
+
+            return transactions;
+        });
+    }
 }
 
 

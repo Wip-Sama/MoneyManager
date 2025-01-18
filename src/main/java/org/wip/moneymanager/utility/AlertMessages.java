@@ -9,9 +9,7 @@ public class AlertMessages {
         return Data.lsp.lsb("alert.old_password_empty");
     }
 
-    public static StringBinding getOldPasswordIncorrectMessage() {
-        return Data.lsp.lsb("alert.old_password_incorrect");
-    }
+    public static StringBinding getOldPasswordIncorrectMessage() {return Data.lsp.lsb("alert.old_password_incorrect");}
 
     public static StringBinding getUsernameExistsMessage() {
         return Data.lsp.lsb("alert.username_exists");

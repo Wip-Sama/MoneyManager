@@ -231,10 +231,7 @@ public class MoneyManagerController {
 
     @FXML
     public void logout() {
-        // Reset dello stato utente
-        Data.dbUser = null; // Rimuove l'utente attualmente loggato
-
-        // Reindirizza alla schermata di login
+        Data.dbUser = null;
         SceneHandler.getInstance((Stage) user_logout.getScene().getWindow()).showLoginScreen();
     }
 

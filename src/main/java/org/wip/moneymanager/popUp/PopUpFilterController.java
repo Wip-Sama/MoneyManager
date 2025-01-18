@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class popUpFilterController extends AnchorPane {
+public class PopUpFilterController extends AnchorPane {
     @FXML
     private ComboBox<String> accountCombo;
 
@@ -71,7 +71,7 @@ public class popUpFilterController extends AnchorPane {
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Transactions transactions;
-    public popUpFilterController(Window window, Transactions transactions) throws IOException {
+    public PopUpFilterController(Window window, Transactions transactions) throws IOException {
         this.ownerWindow = window;
         this.transactions = transactions;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/popUpFilter.fxml"));

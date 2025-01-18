@@ -74,8 +74,6 @@ public class AddNewAccountController extends BorderPane {
     @FXML
     private ComboBox<String>  typeAccountField;
 
-    private double xOffset = 0;
-    private double yOffset = 0;
     private Accounts accountsPage;
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
@@ -84,7 +82,7 @@ public class AddNewAccountController extends BorderPane {
 
     public AddNewAccountController(Window window, Accounts accountsPage) throws IOException {
         this.accountsPage = accountsPage;
-        node = window;
+        this.node = window;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewAccount.fxml"));
         fxmlLoader.setRoot(this);
@@ -104,24 +102,6 @@ public class AddNewAccountController extends BorderPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
-        typeAccountField.setEditable(false);
-        bilanceField.setBalance(0);
-        ErrorLabel.setOpacity(0);
-        dateField.setValue(LocalDate.now());
-        includeSwitch.setState(true);
-
-        // fa in modo che il datepicker non possa essere modificato manualmente
-        dateField.setEditable(false);
-        dateField.getEditor().setEditable(false);
-        dateField.getEditor().setOnMouseClicked(e -> {
-            if (!dateField.isShowing()) {
-                dateField.show();
-            }
-        });
-
-        dateField.setValue(LocalDate.now());
-        includeSwitch.setState(true);
-
 
         cancelButton.setText(Data.lsp.lsb("newAddAccount.cancelButtonLabel").get());
         saveButton.setText(Data.lsp.lsb("newAddAccount.saveButtonLabel").get());
@@ -133,6 +113,21 @@ public class AddNewAccountController extends BorderPane {
         labelType.setText(Data.lsp.lsb("newAddAccount.typeLabel").get());
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addnewaccount.error"));
 
+        typeAccountField.setEditable(false);
+        bilanceField.setBalance(0);
+        ErrorLabel.setOpacity(0);
+        dateField.setValue(LocalDate.now());
+        includeSwitch.setState(true);
+        dateField.setEditable(false);
+        dateField.getEditor().setEditable(false);
+        dateField.getEditor().setOnMouseClicked(e -> {
+            if (!dateField.isShowing()) {
+                dateField.show();
+            }
+        });
+
+        dateField.setValue(LocalDate.now());
+        includeSwitch.setState(true);
 
         update_type_field();
 
@@ -273,10 +268,9 @@ public class AddNewAccountController extends BorderPane {
         return !hasError.get() && !calendarError.get();
     }
 
-
     private void showError(String message) {
         ErrorLabel.textProperty().bind(Data.lsp.lsb(message));
-        //ErrorLabel.setTextFill(rgb(255,0,0));
+
         Timeline fadeInTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> ErrorLabel.setOpacity(0)),
                 new KeyFrame(Duration.seconds(0.2), e -> ErrorLabel.setOpacity(1))
@@ -284,7 +278,6 @@ public class AddNewAccountController extends BorderPane {
         fadeInTimeline.setCycleCount(1);
         fadeInTimeline.play();
     }
-
 
     private void saveNewAccount() throws ExecutionException, InterruptedException {
         String name = newAccountField.getText();
@@ -309,7 +302,6 @@ public class AddNewAccountController extends BorderPane {
         hide();
         accountsPage.refreshAccounts();
     }
-
 
     public void toggle(double x, double y) {
         if (contextMenu.isShowing()) {

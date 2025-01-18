@@ -32,7 +32,7 @@
 }
 
 .tag-list {
-    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest, -fu-foreground-rest;
+    -fx-background-color: -fu-stroke-rest, -fu-stroke-rest,  -fu-background-2;
     -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 2 2 2;
     -fx-background-radius: 4, 0 0 3 3, 0 0 3 3;
     -fx-padding: .5333333em .783em .844444em .783em;

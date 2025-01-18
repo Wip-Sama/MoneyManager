@@ -8,12 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import org.wip.moneymanager.components.TagFilter;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
-import org.wip.moneymanager.pages.Accounts;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
@@ -54,18 +52,15 @@ public class AddNewTagController extends BorderPane {
     @FXML
     private TextField tagNameField;
 
-    private double xOffset = 0;
-    private double yOffset = 0;;
+
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-
     public AddNewTagController() throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewTag.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
-            Parent addTag = fxmlLoader.load();
+            fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +69,9 @@ public class AddNewTagController extends BorderPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+
         resetPreviewButton();
+
         previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
         ErrorLabel.setOpacity(0);
         addButton.setText(Data.lsp.lsb("addNewTag.addButtonLabel").get());
@@ -84,7 +81,6 @@ public class AddNewTagController extends BorderPane {
         labelPreview.setText(Data.lsp.lsb("addNewTag.previewLabel").get());
         ErrorLabel.textProperty().bind(Data.lsp.lsb("addNewTag.error"));
         previewToggleButton.textProperty().bind(Data.lsp.lsb("addNewTag.previewButton"));
-
 
         colorComboBox.getItems().addAll(
                 Data.lsp.lsb("color.red").get(),
@@ -108,7 +104,6 @@ public class AddNewTagController extends BorderPane {
             FieldAnimationUtils.removeErrorStyles(colorComboBox);
             ErrorLabel.setOpacity(0);
         });
-
 
         cancelButton.setOnAction(event -> {
             clearFields();

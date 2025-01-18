@@ -56,6 +56,7 @@ public class CardTransactions extends AnchorPane {
         initialize();
         generaTransactionsByIds(transactionByDate.getTransactionIds());
     }
+
     public void removeVbox(dbTransaction myTransaction) {
         if (transactionsPage.isSetOnFavorite()) {
             cardTransaction.getChildren().removeIf(card -> {
@@ -71,9 +72,6 @@ public class CardTransactions extends AnchorPane {
                 }
             }
         }
-
-
-
 
     private String formatUnixDate(Integer unixDate) {
         LocalDate localDate = Instant.ofEpochSecond(unixDate)

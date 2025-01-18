@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class transactionPopupController extends BorderPane {
+public class TransactionPopupController extends BorderPane {
 
     @FXML private VBox ContainerAccountCategory;
     @FXML private BorderPane BoderPanePopup;
@@ -60,7 +60,7 @@ public class transactionPopupController extends BorderPane {
     private boolean isTransfer;
     private final Transactions transaction;
 
-    public transactionPopupController(Window window, Transactions tr) throws IOException {
+    public TransactionPopupController(Window window, Transactions tr) throws IOException {
         this.node = window;
         this.transaction = tr;
 

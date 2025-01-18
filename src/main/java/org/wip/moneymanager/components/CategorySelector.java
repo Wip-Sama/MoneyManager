@@ -41,16 +41,6 @@ public class CategorySelector extends HBox {
         }
     }
 
-    public ComboBox<String> getCategoryBox() {
-        return category_box;
-    }
-
-    public ComboBox<String> getSubCategoryBox() {
-        return sub_category_box;
-    }
-
-
-
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
@@ -62,30 +52,33 @@ public class CategorySelector extends HBox {
         setComboBoxCellSize(sub_category_box, 50);
     }
 
+    public ComboBox<String> getCategoryBox() {
+        return category_box;
+    }
 
-    // POPOLAMENTO CATEGORIE PRINCIPALI
+    public ComboBox<String> getSubCategoryBox() {
+        return sub_category_box;
+    }
 
     private void populateMainCategoriesByType(int type) {
         Platform.runLater(() -> {
-            clear(); // Svuota le ComboBox prima di aggiungere nuovi elementi
-            category_box.setDisable(true); // Disabilita durante il caricamento
+            clear();
+            category_box.setDisable(true);
         });
 
         Task<List<String>> taskCategory = Data.userDatabase.getMainCategoryNamesByType(type);
-
         taskCategory.setOnSucceeded(event -> {
             List<String> mainCategories = taskCategory.getValue();
             Platform.runLater(() -> {
                 category_box.getItems().addAll(mainCategories);
-                category_box.setDisable(false); // Riabilita dopo il caricamento
+                category_box.setDisable(false);
             });
         });
 
         taskCategory.setOnFailed(event -> {
             Throwable ex = taskCategory.getException();
-            System.err.println("Errore durante il caricamento delle categorie principali: " + ex.getMessage());
             ex.printStackTrace();
-            Platform.runLater(() -> category_box.setDisable(false)); // Riabilita anche in caso di errore
+            Platform.runLater(() -> category_box.setDisable(false));
         });
 
         executorService.submit(taskCategory);
@@ -109,7 +102,6 @@ public class CategorySelector extends HBox {
 
         taskCategory.setOnFailed(event -> {
             Throwable ex = taskCategory.getException();
-            System.err.println("Errore durante il caricamento delle categorie principali: " + ex.getMessage());
             ex.printStackTrace();
             Platform.runLater(() -> category_box.setDisable(false));
         });
@@ -130,7 +122,6 @@ public class CategorySelector extends HBox {
     }
 
 
-    // POPOLAMENTO SOTTOCATEGORIE
     private void populateSubCategories() {
         String selectedMainCategory = category_box.getSelectionModel().getSelectedItem();
         if (selectedMainCategory != null) {
@@ -147,16 +138,12 @@ public class CategorySelector extends HBox {
 
             taskSubCategory.setOnFailed(event -> {
                 Throwable ex = taskSubCategory.getException();
-                System.err.println("Errore durante il caricamento delle sottocategorie: " + ex.getMessage());
                 ex.printStackTrace();
             });
 
             executorService.submit(taskSubCategory);
         }
     }
-
-
-    // METODI DI UTILITÀ
 
     public String getSelectedCategory() {
         return category_box.getSelectionModel().getSelectedItem();
@@ -241,7 +228,6 @@ public class CategorySelector extends HBox {
             }
         });
 
-        // Imposta anche la dimensione massima per il pulsante di visualizzazione della ComboBox
         comboBox.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

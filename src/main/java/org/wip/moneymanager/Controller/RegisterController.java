@@ -148,9 +148,6 @@ public class RegisterController {
         }
     }
 
-
-
-
     private void showError(String message) {
         errorLabel.textProperty().bind(Data.lsp.lsb(message));
         Timeline fadeInTimeline = new Timeline(

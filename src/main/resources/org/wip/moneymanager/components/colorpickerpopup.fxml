@@ -52,8 +52,8 @@
             </HBox>
             <HBox alignment="CENTER" spacing="20.0">
                <children>
-                  <Button fx:id="discard_button" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#discard" prefHeight="40.0" prefWidth="80.0" style="-fx-text-fill: red;" styleClass="transparent-button" text="Discard" textAlignment="CENTER" />
-                  <Button fx:id="save_button" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#save" prefHeight="40.0" prefWidth="80.0" styleClass="full-button" text="Save" textAlignment="CENTER" />
+                  <Button fx:id="discard_button" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"  prefHeight="40.0" prefWidth="80.0" style="-fx-text-fill: red;" styleClass="transparent-button" text="Discard" textAlignment="CENTER" />
+                  <Button fx:id="save_button" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"  prefHeight="40.0" prefWidth="80.0" styleClass="full-button" text="Save" textAlignment="CENTER" />
                </children>
             </HBox>
          </children>

@@ -57,8 +57,7 @@ public class Settings extends BorderPane implements AutoCloseable {
     private ComboBox<String> language;
     @FXML
     private Label primary_curency_label;
-    //    @FXML
-//    private ComboBox<String> primary_currency;
+
     @FXML
     private BalanceEditor primary_currency;
     @FXML
@@ -99,7 +98,6 @@ public class Settings extends BorderPane implements AutoCloseable {
     private ToggleGroup category_type;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
-    private final MMDatabase db = MMDatabase.getInstance();
     private final ObjectProperty<Category> selectedCategory = new SimpleObjectProperty<>();
     private final ObservableList<Category> categories = FXCollections.observableList(new ArrayList<>());
     private final ObservableList<Category> subcategories = FXCollections.observableList(new ArrayList<>());
