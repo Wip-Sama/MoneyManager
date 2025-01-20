@@ -476,7 +476,6 @@ public class TransactionPopupController extends BorderPane {
             notes.setText("");
             categorySelector.discard();
             tagSelector.clearTags();
-            TagFilter.refreshTags();
     }
 
     // metodo che gestisce il cambio del tipo di transazione

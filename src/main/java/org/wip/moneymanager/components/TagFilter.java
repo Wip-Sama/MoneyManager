@@ -32,13 +32,11 @@ public class TagFilter extends BorderPane {
     @FXML
     public ScrollPane scroll_pane;
 
-    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    private static final ArrayList<Tag> tagsList = new ArrayList<>();
-    private static final ObservableList<Tag> observableTagList = FXCollections.observableArrayList(tagsList);
-    private static final ListProperty<Tag> tags = new SimpleListProperty<>(observableTagList);
+    private final ListProperty<Tag> tags = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-    public static void refreshTags() {
+    public void refreshTags() {
         tags.clear();  // Azzera i tag attuali
         initializeTags();  // Ricarica i tag
     }
@@ -78,18 +76,18 @@ public class TagFilter extends BorderPane {
         initializeTags();
     }
 
-    private static void initializeTags() {
+    private void initializeTags() {
         Task<List<dbTag>> loadTagsTask = Data.userDatabase.getAllTag();
         loadTagsTask.setOnSucceeded(event -> {
             List<dbTag> dbTags = loadTagsTask.getValue();
             if (dbTags != null) {
                 // Aggiungi solo tag non duplicati
                 for (dbTag dbTagItem : dbTags) {
-                    boolean exists = tags.stream()
-                            .anyMatch(tag -> tag.getTag().equals(dbTagItem.name()));
+                    boolean exists = tags.stream().anyMatch(tag -> tag.getTag().equals(dbTagItem.name()));
                     if (!exists) {
                         Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color());
                         tags.add(tag);
+                        System.out.println("Tag added: " + tag.getTag());
                     }
                 }
             }
@@ -101,7 +99,5 @@ public class TagFilter extends BorderPane {
 
         executorService.submit(loadTagsTask);
     }
-
-
 }
 

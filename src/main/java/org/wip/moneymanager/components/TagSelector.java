@@ -1,12 +1,11 @@
 package org.wip.moneymanager.components;
 
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
@@ -28,16 +27,12 @@ public class TagSelector extends BorderPane {
     @FXML
     private Button add_new_tag;
 
-    protected Parent loaded;
     private AddNewTagController addNewTagController;
-    private static final TagFilter tagFilter = new TagFilter();
-    private final CustomMenuItem customMenuItem;
-    private static ContextMenu contextMenu = null;
+    private final TagFilter tagFilter = new TagFilter();
+    private final CustomMenuItem tagFilterMenu;
+    private final ContextMenu addNewTagMenu; // WTF perché queso è un context menu e l'altro è un custom menu item
 
-    //Grazie JavaFX per farmi mettere tutta sta roba, spero che almeno ne valga la pena
-    private final ArrayList<Tag> tagsList = new ArrayList<>();
-    private final ObservableList<Tag> observableTagList = FXCollections.observableArrayList(tagsList);
-    private final ListProperty<Tag> tags = new SimpleListProperty<>(observableTagList);
+    private final ListProperty<Tag> tags = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public List<Tag> get_selected_tags() {
         List<Tag> selected_tags = new ArrayList<>();
@@ -54,16 +49,16 @@ public class TagSelector extends BorderPane {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
-            loaded = fxmlLoader.load();
+            fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
 
-        customMenuItem = new CustomMenuItem(tagFilter);
-        customMenuItem.hideOnClickProperty().set(false);
+        tagFilterMenu = new CustomMenuItem(tagFilter);
+        tagFilterMenu.hideOnClickProperty().set(false);
 
-        contextMenu = new ContextMenu(customMenuItem);
-        contextMenu.getStyleClass().add("tag-filter-context-menu");
+        addNewTagMenu = new ContextMenu(tagFilterMenu);
+        addNewTagMenu.getStyleClass().add("tag-filter-context-menu");
     }
 
     @FXML
@@ -78,8 +73,7 @@ public class TagSelector extends BorderPane {
         tagFilter.tagsProperty().addListener((_, _, newValue) -> {
             for (Tag tag : tagFilter.tagsProperty()) {
                 // Aggiungi tag solo se non è già presente
-                boolean exists = tags.stream()
-                        .anyMatch(existingTag -> existingTag.getTag().equals(tag.getTag()));
+                boolean exists = tags.stream().anyMatch(existingTag -> existingTag.getTag().equals(tag.getTag()));
                 if (!exists) {
                     Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita(), tag.getColor());
                     tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
@@ -94,17 +88,23 @@ public class TagSelector extends BorderPane {
         add_new_tag.setOnAction(_ -> showAddNewTag());
     }
 
-    public void addTag(Tag tag) {
-        tagsList.add(tag);
-    }
-
-
-    private void removeTag(Tag tag) {
-        tags.remove(tag);
-    }
-
-    public void addTags(List<Tag> tags) {
-        this.tags.addAll(tags);
+    public void selectTag(Tag tag) {
+        for (Tag t : tagFilter.tagsProperty()) {
+            if (t.getTag().equals(tag.getTag())) {
+                // Aggiungi tag solo se non è già presente
+                boolean exists = tags.stream().anyMatch(existingTag -> existingTag.getTag().equals(tag.getTag()));
+                if (!exists) {
+                    Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita(), tag.getColor());
+                    tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
+                    tmp.tagStatusProperty().addListener((_, _, newValue1) -> tmp.setVisible(newValue1.intValue() != 0));
+                    tmp.managedProperty().bindBidirectional(tmp.visibleProperty());
+                    tmp.setVisible(true);
+                    tags.add(tmp);
+                } else {
+                    tags.stream().filter(existingTag -> existingTag.getTag().equals(tag.getTag())).findFirst().ifPresent(existingTag -> existingTag.tagStatusProperty().set(1));
+                }
+            }
+        }
     }
 
     private void showTagFilter() {
@@ -114,12 +114,12 @@ public class TagSelector extends BorderPane {
         newCustomMenuItem.hideOnClickProperty().set(false);
 
         // Aggiorna il ContextMenu con il nuovo CustomMenuItem
-        contextMenu.getItems().clear(); // Rimuovi il contenuto precedente
-        contextMenu.getItems().add(newCustomMenuItem);
+        addNewTagMenu.getItems().clear(); // Rimuovi il contenuto precedente
+        addNewTagMenu.getItems().add(newCustomMenuItem);
 
         double screenX = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinX() - 280;
         double screenY = add_tag.localToScreen(add_tag.getBoundsInLocal()).getMinY() + 30;
-        contextMenu.show(this, screenX, screenY);
+        addNewTagMenu.show(this, screenX, screenY);
 
         this.layout();
     }
@@ -127,7 +127,7 @@ public class TagSelector extends BorderPane {
     private void showAddNewTag() {
         try {
             if (addNewTagController == null) {
-                addNewTagController = new AddNewTagController();
+                addNewTagController = new AddNewTagController(this);
             }
 
             // Crea un nuovo CustomMenuItem con il contenuto di AddNewTagController
@@ -136,36 +136,28 @@ public class TagSelector extends BorderPane {
             newCustomMenuItem.hideOnClickProperty().set(false);
 
             // Aggiorna il ContextMenu con il nuovo CustomMenuItem
-            contextMenu.getItems().clear(); // Rimuovi il contenuto precedente
-            contextMenu.getItems().add(newCustomMenuItem);
+            addNewTagMenu.getItems().clear(); // Rimuovi il contenuto precedente
+            addNewTagMenu.getItems().add(newCustomMenuItem);
 
             // Mostra il ContextMenu
             double screenX = add_new_tag.localToScreen(add_new_tag.getBoundsInLocal()).getMinX() - 280;
             double screenY = add_new_tag.localToScreen(add_new_tag.getBoundsInLocal()).getMinY() + 30;
-            contextMenu.show(this, screenX, screenY);
+            addNewTagMenu.show(this, screenX, screenY);
 
             // Forza il ricalcolo del layout per aggiornare il contenuto
-            this.layout();  // Esegui il layout sulla scena o sul nodo
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void closeAddNewTag() {
-        contextMenu.hide(); // Chiudi il menu
-        tagFilter.refreshTags(); // Pulisci i tag nel filtro
+
+    public void closeAddNewTag() {
+        addNewTagMenu.hide();
+        tagFilter.refreshTags();
     }
 
     public void clearTags() {
-        // Resetta completamente i tag nel TagSelector
         tags.clear();
         tag_list.getChildren().clear();
         tagFilter.refreshTags();
     }
-
-    public void reset() {
-        // Resetta tutti i tag e aggiorna il filtro
-        clearTags();
-        tagFilter.refreshTags();
-    }
-
 }

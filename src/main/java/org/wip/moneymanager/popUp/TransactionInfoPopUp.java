@@ -264,7 +264,7 @@ public class TransactionInfoPopUp extends BorderPane {
         if (listaTag != null) {
             listaTag.forEach(dbTagItem -> {
                 Tag tag = new Tag(dbTagItem.name(), 1, 1, dbTagItem.color());;
-                tagPane.addTag(tag);
+                tagPane.selectTag(tag);
             });
         }
     }

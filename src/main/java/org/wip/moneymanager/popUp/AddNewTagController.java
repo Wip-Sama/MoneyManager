@@ -5,11 +5,9 @@ import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
-import org.wip.moneymanager.components.TagFilter;
 import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
@@ -54,8 +52,10 @@ public class AddNewTagController extends BorderPane {
 
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final TagSelector tagSelector;
 
-    public AddNewTagController() throws IOException {
+    public AddNewTagController(TagSelector tagSelector) throws IOException {
+        this.tagSelector = tagSelector;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/addNewTag.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -107,7 +107,7 @@ public class AddNewTagController extends BorderPane {
 
         cancelButton.setOnAction(event -> {
             clearFields();
-            TagSelector.closeAddNewTag();
+            tagSelector.closeAddNewTag();
         });
 
         addButton.setOnAction(event -> {
@@ -134,9 +134,8 @@ public class AddNewTagController extends BorderPane {
                     showError("addNewTag.duplicate");
                     FieldAnimationUtils.animateFieldError(tagNameField);
                 } else {
-                    TagFilter.refreshTags();
                     clearFields();
-                    TagSelector.closeAddNewTag();
+                    tagSelector.closeAddNewTag();
                 }
             });
 
