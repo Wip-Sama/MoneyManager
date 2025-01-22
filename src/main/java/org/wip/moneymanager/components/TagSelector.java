@@ -28,11 +28,12 @@ public class TagSelector extends BorderPane {
     private Button add_new_tag;
 
     private AddNewTagController addNewTagController;
-    private final TagFilter tagFilter = new TagFilter();
+    private final TagFilter tagFilter = new TagFilter(this  );
     private final CustomMenuItem tagFilterMenu;
     private final ContextMenu addNewTagMenu; // WTF perché queso è un context menu e l'altro è un custom menu item
-
     private final ListProperty<Tag> tags = new SimpleListProperty<>(FXCollections.observableArrayList());
+    List<Tag> tagsSelected = new ArrayList<>();
+
 
     public List<Tag> get_selected_tags() {
         List<Tag> selected_tags = new ArrayList<>();
@@ -43,6 +44,7 @@ public class TagSelector extends BorderPane {
         }
         return selected_tags;
     }
+
 
     public TagSelector() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/tagselector.fxml"));
@@ -89,19 +91,25 @@ public class TagSelector extends BorderPane {
     }
 
     public void selectTag(Tag tag) {
+        tagsSelected.add(tag);
+    }
+
+    public void setVisibleSelectedTags(){
         for (Tag t : tagFilter.tagsProperty()) {
-            if (t.getTag().equals(tag.getTag())) {
-                // Aggiungi tag solo se non è già presente
-                boolean exists = tags.stream().anyMatch(existingTag -> existingTag.getTag().equals(tag.getTag()));
-                if (!exists) {
-                    Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita(), tag.getColor());
-                    tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
-                    tmp.tagStatusProperty().addListener((_, _, newValue1) -> tmp.setVisible(newValue1.intValue() != 0));
-                    tmp.managedProperty().bindBidirectional(tmp.visibleProperty());
-                    tmp.setVisible(true);
-                    tags.add(tmp);
-                } else {
-                    tags.stream().filter(existingTag -> existingTag.getTag().equals(tag.getTag())).findFirst().ifPresent(existingTag -> existingTag.tagStatusProperty().set(1));
+            for (Tag tag : tagsSelected) {
+                if (t.getTag().equals(tag.getTag())) {
+                    // Aggiungi tag solo se non è già presente
+                    boolean exists = tags.stream().anyMatch(existingTag -> existingTag.getTag().equals(tag.getTag()));
+                    if (!exists) {
+                        Tag tmp = new Tag(tag.tagProperty().get(), tag.getTagStatus(), tag.getModalita(), tag.getColor());
+                        tmp.tagStatusProperty().bindBidirectional(tag.tagStatusProperty());
+                        tmp.tagStatusProperty().addListener((_, _, newValue1) -> tmp.setVisible(newValue1.intValue() != 0));
+                        tmp.managedProperty().bindBidirectional(tmp.visibleProperty());
+                        tmp.setVisible(true);
+                        tags.add(tmp);
+                    } else {
+                        tags.stream().filter(existingTag -> existingTag.getTag().equals(tag.getTag())).findFirst().ifPresent(existingTag -> existingTag.tagStatusProperty().set(1));
+                    }
                 }
             }
         }

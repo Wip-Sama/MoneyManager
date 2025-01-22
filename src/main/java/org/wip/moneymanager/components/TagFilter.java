@@ -35,6 +35,7 @@ public class TagFilter extends BorderPane {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private final ListProperty<Tag> tags = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final TagSelector tagSelector;
 
     public void refreshTags() {
         tags.clear();  // Azzera i tag attuali
@@ -45,7 +46,8 @@ public class TagFilter extends BorderPane {
         return tags;
     }
 
-    public TagFilter() {
+    public TagFilter(TagSelector TagSelector) {
+        this.tagSelector = TagSelector;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/components/tagfilter.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -87,16 +89,15 @@ public class TagFilter extends BorderPane {
                     if (!exists) {
                         Tag tag = new Tag(dbTagItem.name(), 0, 1, dbTagItem.color());
                         tags.add(tag);
-                        System.out.println("Tag added: " + tag.getTag());
                     }
                 }
             }
+            tagSelector.setVisibleSelectedTags();
         });
         loadTagsTask.setOnFailed(event -> {
             Throwable exception = loadTagsTask.getException();
             exception.printStackTrace();
         });
-
         executorService.submit(loadTagsTask);
     }
 }
