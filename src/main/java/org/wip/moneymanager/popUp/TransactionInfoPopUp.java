@@ -112,6 +112,7 @@ public class TransactionInfoPopUp extends BorderPane {
     private final SingleTransactionController controller;
     private dbTransaction myTransaction;
     private final List<dbTag> listaTag;
+    private String firstnameaccount;
 
     public TransactionInfoPopUp(Window window, SingleTransactionController fatherTransactions, List<dbTag> listaTag) throws IOException {
         this.node = window;
@@ -210,12 +211,21 @@ public class TransactionInfoPopUp extends BorderPane {
         });
 
         try {
-            accountsComboBox.getSelectionModel().select(Data.userDatabase.getAccountNameById(myTransaction.account()));
+            firstnameaccount = Data.userDatabase.getAccountNameById(myTransaction.account());
+            accountsComboBox.getSelectionModel().select(firstnameaccount);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         // Gestione per il tipo di transazione (spesa, entrata, trasferimento)
         if (myTransaction.type() == 0) {
+            String currenty = null;
+            try {
+                currenty = Data.userDatabase.getCurrencyFromAccount(firstnameaccount);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            balanceCounter.setCurrency(currenty);
+            balanceCounter.disableCurrencyField();
             expenseButton.setDisable(true);
             transferButton.setDisable(true);
             incomeButton.setStyle("-fx-border-color: green;" + "-fx-border-radius: 6");
@@ -230,8 +240,27 @@ public class TransactionInfoPopUp extends BorderPane {
                 throw new RuntimeException(e);
             }
 
+            accountsComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    try {
+                        String currency = Data.userDatabase.getCurrencyFromAccount(accountsComboBox.getSelectionModel().getSelectedItem());
+                        balanceCounter.setCurrency(currency);
+                        balanceCounter.disableCurrencyField();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
 
         } else if (myTransaction.type() == 1) {
+            String currenty = null;
+            try {
+                currenty = Data.userDatabase.getCurrencyFromAccount(firstnameaccount);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            balanceCounter.setCurrency(currenty);
+            balanceCounter.disableCurrencyField();
 
             incomeButton.setDisable(true);
             transferButton.setDisable(true);
@@ -246,6 +275,18 @@ public class TransactionInfoPopUp extends BorderPane {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+            accountsComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    try {
+                        String currency = Data.userDatabase.getCurrencyFromAccount(accountsComboBox.getSelectionModel().getSelectedItem());
+                        balanceCounter.setCurrency(currency);
+                        balanceCounter.disableCurrencyField();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
 
 
         } else {
