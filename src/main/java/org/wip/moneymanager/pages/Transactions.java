@@ -165,10 +165,13 @@ public class Transactions extends BorderPane implements AutoCloseable {
                 cardCache.clear();
                 displayedTransactions.clear();
 
+                // **Ordina la lista per data in ordine decrescente (dal più recente al più vecchio)**
+                transactionByDateList.sort(Comparator.comparingInt(TransactionByDate::getDate).reversed());
+
                 for (TransactionByDate tbd : transactionByDateList) {
                     int date = tbd.getDate();
 
-                    CardTransactions cardNode = cardCache.getOrDefault(date, new CardTransactions(tbd,this));
+                    CardTransactions cardNode = cardCache.getOrDefault(date, new CardTransactions(tbd, this));
                     if (!cardCache.containsKey(date)) {
                         cardCache.put(date, cardNode);
                     }
@@ -185,6 +188,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
         executorService.submit(task);
     }
+
 
     private void filterFavoriteTransactions() {
         vboxCard.getChildren().removeIf(card -> {

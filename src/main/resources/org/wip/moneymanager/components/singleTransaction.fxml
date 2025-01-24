@@ -39,14 +39,14 @@
          <center>
             <ScrollPane fx:id="tagPane" fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                <content>
-                  <HBox fx:id="GridtagPane" alignment="CENTER_LEFT" fillHeight="false" spacing="5.0" />
+                  <HBox fx:id="GridtagPane" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" prefWidth="300.0" spacing="5.0" />
                </content>
             </ScrollPane>
          </center>
          <right>
             <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" text="Label" textAlignment="RIGHT" />
+                  <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Label" textAlignment="RIGHT" />
                   <Separator maxHeight="-Infinity" minHeight="-Infinity" orientation="VERTICAL" prefHeight="30.0" />
                   <Button fx:id="deleteCard" mnemonicParsing="false" style="-fx-text-fill: red;" styleClass="transparent-button" text="Elimina" textFill="RED" />
                </children>
