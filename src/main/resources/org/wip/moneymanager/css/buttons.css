@@ -168,46 +168,135 @@
     -fx-border-color: transparent;
 }
 
-.arrow-date{
-    -fx-background-color: transparent;
-
+.full-button {
+    -fx-text-fill: -fu-text-1;
+    -fx-background-color: -fu-stroke-rest, -fu-accent;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6, 4;
+    -fx-padding: 8 5 8 5;
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
+    -fx-opacity: 0.7;
 }
 
-.arrow-date SVGPath{
-    -fx-fill: -fu-text-1;
+.full-button:hover {
+    -fx-background-color: -fu-stroke-hover, -fu-accent;
+    -fx-opacity: 1;
+
+    -fx-text-fill: -fu-text-3;
 }
 
-.arrow-date:hover{
-    -fx-background-color: transparent;
-
+.full-button:pressed {
+    -fx-background-color: -fu-stroke-pressed, -fu-accent;
+    -fx-text-fill: -fu-text-3;
 }
 
-.arrow-date:hover SVGPath{
-    -fx-fill: -fu-accent;
-    -fx-opacity: 0.8;
+.full-button:hover:pressed {
+    -fx-background-color: -fu-stroke-selected, -fu-accent;
+    -fx-text-fill: -fu-text-3;
 }
 
-arrow-date:pressed{
-    -fx-background-color: transparent;
 
+.side-button {
+    /*background, accent*/
+    -fx-background-color: rgba(0, 0, 0, 0), transparent;
+    /*-fx-background-insets: 0, 6 125 6 0; /* Posiziona il bordo a sinistra */
+    -fx-background-insets: 0, 5.5 174 5.5 0; /* Posiziona il bordo a sinistra */
+    -fx-background-radius: 6, 10;
+    -fx-background-position: center, left;
+    -fx-text-fill: -fu-text-1;
+    -fx-label-padding: 0 0 0 16;
 }
 
-.arrow-date:pressed SVGPath{
-    -fx-fill: -fu-accent;
+.side-button:hover {
+    /*background, accent*/
+    -fx-background-color: -fu-foreground-hover, transparent;
+}
+
+.side-button:pressed {
+    /*background, accent*/
+    -fx-background-color: -fu-foreground-pressed, transparent;
+}
+
+.side-button:selected {
+    /*background, accent*/
+    -fx-background-color: -fu-foreground-selected, -fu-accent;
+}
+
+.side-button:selected:hover {
+    /*background, accent*/
+    -fx-background-color: -fu-foreground-selected, -fu-accent;
+}
+.transparent-button {
+    -fx-background-radius: 6;
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-text-fill: -fu-text-1;
+    -fx-opacity: 0.5;
+    -fx-text-alignment: left;
+}
+
+.transparent-button:hover {
+    -fx-opacity: 1;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.transparent-button:selected {
+    -fx-opacity: 1;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.transparent-button:pressed {
+    -fx-opacity: 1;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.transparent-button:hover:pressed {
     -fx-opacity: 1;
 }
 
-arrow-date:selected{
-    -fx-background-color: transparent;
-
-}
-
-.arrow-date:selected SVGPath{
-    -fx-fill: -fu-accent;
+.transparent-button:selected:hover {
     -fx-opacity: 1;
 }
 
+.transparent-menubutton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-text-fill: -fu-text-1;
+    -fx-text-alignment: left;
+    -fx-padding: 4;
+    -fx-background-radius: 4;
+}
 
+.transparent-menubutton:hover {
+    -fx-background-color: rgba(0, 0, 0, .4);
+}
 
+.transparent-menubutton > .arrow-button {
+    -fx-padding: 0;
+}
+
+.transparent-menubutton > .arrow-button > .arrow {
+    -fx-padding: 0;
+}
+
+.transparent-button {
+    -fx-background-radius: 6;
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-text-fill: -fu-text-1;
+    -fx-opacity: 0.5;
+    -fx-text-alignment: left;
+}
+
+.terms-hypertext {
+    -fx-text-fill: -fu-accent;
+    -fx-opacity: 0.5;
+}
+
+.terms-hypertext:hover {
+    -fx-opacity: 1;
+}
+
+.terms-hypertext:pressed {
+    -fx-opacity: 1;
+}
 
 

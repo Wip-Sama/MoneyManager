@@ -38,3 +38,11 @@
     -fx-background-radius: 0 4 4 0, 0 3 0 0, 0 4 4 0;
     -fx-padding: .333333em .583em .444444em .583em;
 }
+.tooltip {
+    -fx-background-color: -fu-foreground-rest;
+    -fx-background-radius: 5;
+    -fx-border-color: -fu-stroke-rest;
+    -fx-border-radius: 5;
+    -fx-text-fill: -fu-text-1;
+    -fx-padding: 5;
+}

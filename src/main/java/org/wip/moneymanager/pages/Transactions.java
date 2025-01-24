@@ -1,7 +1,7 @@
 package org.wip.moneymanager.pages;
 
-import com.dlsc.gemsfx.daterange.DateRangePicker;
 import javafx.animation.RotateTransition;
+import javafx.collections.SetChangeListener;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +21,9 @@ import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.PopUpFilterController;
 import org.wip.moneymanager.popUp.TransactionPopupController;
 import org.wip.moneymanager.utility.SVGLoader;
-
+import org.wip.moneymanager.components.MultiDatePicker;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,9 +32,6 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     private HBox HboxmultiDatePicker;
-
-    @FXML
-    private DateRangePicker MultiDatePicker;
 
     @FXML
     private Button TransactionsRefreshButton;
@@ -68,6 +66,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
     private final static String on_fav = new SVGLoader("favorite_on_icon").getPath();
     private final static String off_fav = new SVGLoader("favorite_off_icon").getPath();
     private boolean isFavorite = false;
+    private MultiDatePicker multiDatePicker = new MultiDatePicker().withRangeSelectionMode();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private Map<Integer, CardTransactions> cardCache = new HashMap<>();
@@ -86,26 +85,24 @@ public class Transactions extends BorderPane implements AutoCloseable {
 
     @FXML
     public void initialize() {
-        MultiDatePicker.getDateRangeView().setShowPresets(true);
         Data.esm.register(executorService);
+        HboxmultiDatePicker.getChildren().add(multiDatePicker.getDatePicker());
         generaCard(null, null, null);
+
         pageTitle.textProperty().bind(Data.lsp.lsb("transactions.pageTitle"));
         favouriteToggle.textProperty().bind(Data.lsp.lsb("transactions.favouriteToggle"));
         newTransaction.textProperty().bind(Data.lsp.lsb("transactions.newTransaction"));
         filter.textProperty().bind(Data.lsp.lsb("transactions.filter"));
         TransactionsRefreshButton.textProperty().bind(Data.lsp.lsb("transactions.refreshButton"));
 
-        filter.setOnAction(event ->{
-            openPopUpFilter();
+        filter.setOnAction(event -> openPopUpFilter());
+        newTransaction.setOnAction(event -> open_popup());
+        TransactionsRefreshButton.setOnAction(event -> refresh());
+
+        multiDatePicker.getSelectedDates().addListener((SetChangeListener<LocalDate>) change -> {
+            filterTransactionsBySelectedDates(multiDatePicker.getSelectedDates());
         });
 
-        newTransaction.setOnAction(event -> {
-            open_popup();
-        });
-
-        TransactionsRefreshButton.setOnAction(event -> {
-            refresh();
-        });
 
         favouriteToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -119,6 +116,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
             }
         });
     }
+
 
     private void open_popup() {
         try {
@@ -226,7 +224,10 @@ public class Transactions extends BorderPane implements AutoCloseable {
         rotateTransition.setByAngle(360);
         rotateTransition.setAutoReverse(false);
         rotateTransition.play();
-
+        if (multiDatePicker != null) {
+            multiDatePicker.getSelectedDates().clear();
+        }
+        multiDatePicker.getDatePicker().setValue(null);
         generaCard(null, null, null);
     }
 
@@ -243,4 +244,32 @@ public class Transactions extends BorderPane implements AutoCloseable {
         vboxCard.getChildren().remove(cardTransactions);
 
     }
+
+    private void filterTransactionsBySelectedDates(Set<LocalDate> selectedDates) {
+        if (selectedDates.isEmpty()) {
+            // Se non ci sono date selezionate, mostra tutte le transazioni
+            restoreAllTransactions();
+            return;
+        }
+
+        // Rimuovi solo le card che non corrispondono alle date selezionate
+        vboxCard.getChildren().removeIf(node -> {
+            if (node instanceof CardTransactions) {
+                CardTransactions card = (CardTransactions) node;
+                LocalDate transactionDate = card.getTransactionDate();
+                return !selectedDates.contains(transactionDate); // Rimuovi solo quelle fuori dal range
+            }
+            return false;
+        });
+
+        // Aggiungi solo le transazioni che devono essere visibili e non sono già presenti
+        for (CardTransactions card : displayedTransactions) {
+            LocalDate transactionDate = card.getTransactionDate();
+            if (selectedDates.contains(transactionDate) && !vboxCard.getChildren().contains(card)) {
+                vboxCard.getChildren().add(card);
+            }
+        }
+    }
+
+
 }

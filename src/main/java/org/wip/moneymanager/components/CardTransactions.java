@@ -164,4 +164,10 @@ public class CardTransactions extends AnchorPane {
             cardTransaction.getChildren().add(cardNode);
         });
     }
+
+    public LocalDate getTransactionDate() {
+        return Instant.ofEpochSecond(dateUnix) // Converte il timestamp UNIX in un oggetto Instant
+                .atZone(ZoneId.systemDefault())             // Converte l'Instant nel fuso orario del sistema
+                .toLocalDate();                             // Ottiene solo la parte di data (senza orario)
+    }
 }

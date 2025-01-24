@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.dlsc.gemsfx.CustomComboBox?>
-<?import com.dlsc.gemsfx.daterange.DateRangePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -24,7 +22,6 @@
                <content>
                   <VBox fx:id="vboxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="background-3">
                      <children>
-                        <CustomComboBox prefHeight="128.0" prefWidth="178.0" />
                      </children></VBox>
                </content>
             </ScrollPane>
@@ -76,7 +73,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
                <left>
-                  <DateRangePicker fx:id="MultiDatePicker" maxHeight="-Infinity" maxWidth="200.0" minHeight="-Infinity" prefHeight="35.0" showPresetTitle="false" styleClass="date-range-view" BorderPane.alignment="CENTER" />
+                  <HBox fx:id="HboxmultiDatePicker" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </left>
             </BorderPane>
          </children>
