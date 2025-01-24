@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MMDatabase extends Database {
     private static MMDatabase instance = null;
@@ -67,22 +68,34 @@ public class MMDatabase extends Database {
         });
     }
 
-    public Task<dbCurrency> getCurrency(String name) {
-        return asyncCall(() -> {
-            dbCurrency currency = null;
-            if (isConnected()) {
-                String query = "SELECT * FROM Currency where name=?;";
+    public double getCurrency(String name) {
+        if (isConnected()) {
+            try {
+                String query = "SELECT value FROM Currency WHERE LOWER(name) = LOWER(?);";
                 PreparedStatement stmt = con.prepareStatement(query);
-                stmt.setString(1, name);
+                stmt.setString(1, name.trim());
+
                 ResultSet rs = stmt.executeQuery();
+                double currency = 0;
                 if (rs.next()) {
-                    currency = new dbCurrency(rs);
+                    currency = rs.getDouble("value");
                 }
                 stmt.close();
+                return currency;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            return currency;
-        });
+        }
+        return 0.0;
     }
+
+
+    public double convertCurrency(String from, String to, double amount) {
+        double fromValue = getCurrency(from);
+        double toValue = getCurrency(to);
+        return ((amount * fromValue) / toValue);
+    }
+
 
     public Task<List<dbCurrency>> getAllCurrency() {
         return asyncCall(() -> {

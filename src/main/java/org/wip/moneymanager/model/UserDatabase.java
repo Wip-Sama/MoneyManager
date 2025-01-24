@@ -7,7 +7,6 @@ import org.wip.moneymanager.model.DBObjects.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.*;
 import java.sql.Statement;
 import java.util.stream.Collectors;
@@ -429,6 +428,19 @@ public class UserDatabase extends Database {
         return null;
     }
 
+    public String getCurrencyFromAccountid(int id) throws SQLException {
+        String query = "SELECT currency FROM Accounts WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("currency");
+            }
+        }
+        return null;
+    }
+
+
     public Task<Boolean> removeTransactionsWithCategory(int categoryId) {
         return asyncCall(() -> {
             if (isConnected()) {
@@ -740,6 +752,26 @@ public class UserDatabase extends Database {
         });
     }
 
+    public Task<Boolean> updateAccountBalanceConvertCurrency(int accountId, double amount, boolean isCredit, String currencyFromAmount) {
+        return asyncCall(() -> {
+            String currencyAccount = Data.userDatabase.getCurrencyFromAccountid(accountId);
+
+            double convertedAmount = Data.mmDatabase.convertCurrency(currencyFromAmount, currencyAccount, amount);
+
+            System.out.println("Updating account ID " + accountId + " with converted amount: " + convertedAmount + " " + currencyAccount);
+
+            String updateBalanceQuery = "UPDATE Accounts SET balance = balance + ? WHERE id = ?";
+            try (PreparedStatement updateStmt = con.prepareStatement(updateBalanceQuery)) {
+                updateStmt.setDouble(1, isCredit ? convertedAmount : -convertedAmount);
+                updateStmt.setInt(2, accountId);
+                int rowsAffected = updateStmt.executeUpdate();
+
+                System.out.println("Rows affected: " + rowsAffected);
+                return rowsAffected > 0;
+            }
+        });
+    }
+
 
 
     public Task<Boolean> addNewTransaction(int date, int type, double amount, String account, String secondAccount, String note, String category, List<Tag> listTags) {
@@ -806,7 +838,7 @@ public class UserDatabase extends Database {
                     }
                     generatedKeys.close();
                     updateAccountBalance(accountId, amount, false);
-                    updateAccountBalance(secondAccountId, amount, true);
+                    updateAccountBalanceConvertCurrency(secondAccountId, amount, true, getCurrencyFromAccountid(accountId));
                 }
                 stmt.close();
 

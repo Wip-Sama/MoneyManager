@@ -166,6 +166,7 @@ public class TransactionInfoPopUp extends BorderPane {
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
         setupEditButton();
+
     }
 
     private void initializeNoEditable()  {
@@ -178,6 +179,8 @@ public class TransactionInfoPopUp extends BorderPane {
         discardButton.setManaged(false);
         deleteButton.setManaged(true);
         editButton.setManaged(true);
+
+        currencySet();
 
         Tooltip deleteCardTooltip = new Tooltip();
         deleteCardTooltip.setShowDelay(Duration.millis(1));
@@ -239,19 +242,6 @@ public class TransactionInfoPopUp extends BorderPane {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
-            accountsComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    try {
-                        String currency = Data.userDatabase.getCurrencyFromAccount(accountsComboBox.getSelectionModel().getSelectedItem());
-                        balanceCounter.setCurrency(currency);
-                        balanceCounter.disableCurrencyField();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
-
         } else if (myTransaction.type() == 1) {
             String currenty = null;
             try {
@@ -275,20 +265,6 @@ public class TransactionInfoPopUp extends BorderPane {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
-            accountsComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    try {
-                        String currency = Data.userDatabase.getCurrencyFromAccount(accountsComboBox.getSelectionModel().getSelectedItem());
-                        balanceCounter.setCurrency(currency);
-                        balanceCounter.disableCurrencyField();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
-
-
         } else {
             expenseButton.setDisable(true);
             incomeButton.setDisable(true);
@@ -339,6 +315,20 @@ public class TransactionInfoPopUp extends BorderPane {
         }
 
 
+    }
+
+    public void currencySet(){
+        accountsComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                try {
+                    String currency = Data.userDatabase.getCurrencyFromAccount(accountsComboBox.getSelectionModel().getSelectedItem());
+                    balanceCounter.setCurrency(currency);
+                    balanceCounter.disableCurrencyField();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     private void popolaTags() {

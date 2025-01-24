@@ -14,7 +14,7 @@
    <children>
       <BorderPane fx:id="backGroundT" maxWidth="1.7976931348623157E308" prefHeight="30.0" style="-fx-background-radius: 6;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <left>
-            <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
+            <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="441.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
                <children>
                   <Button fx:id="buttonFavourite" alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" styleClass="transparent-button" textAlignment="CENTER" textOverrun="CLIP">
                      <graphic>
@@ -44,9 +44,9 @@
             </ScrollPane>
          </center>
          <right>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Label" textAlignment="RIGHT" />
+                  <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" text="Label" textAlignment="RIGHT" />
                   <Separator maxHeight="-Infinity" minHeight="-Infinity" orientation="VERTICAL" prefHeight="30.0" />
                   <Button fx:id="deleteCard" mnemonicParsing="false" style="-fx-text-fill: red;" styleClass="transparent-button" text="Elimina" textFill="RED" />
                </children>
