@@ -71,6 +71,10 @@ public class BalanceEditor extends HBox {
         currency_field.setValue(Data.dbUser.main_currencyProperty().get().toUpperCase());
     }
 
+    public void disableCurrencyField() {
+        currency_field.setDisable(true);
+    }
+
     public void only_combo_box() {
         balance_field.setVisible(false);
         balance_field.setManaged(false);
