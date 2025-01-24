@@ -32,7 +32,7 @@
             </HBox>
             <BorderPane id="card-transaction-singletran-up" maxWidth="1.7976931348623157E308" prefHeight="20.0" styleClass="background-2">
                <left>
-                  <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
+                  <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="441.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
                      <children>
                         <Label fx:id="categTransactions" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Category">
                            <HBox.margin>
@@ -48,7 +48,7 @@
                   </HBox>
                </left>
                <right>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Amount" textAlignment="RIGHT">
                            <HBox.margin>
