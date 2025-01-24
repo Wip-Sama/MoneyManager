@@ -102,19 +102,22 @@ public class SingleTransactionController extends AnchorPane {
     }
 
     private void setupTooltips() {
-        Tooltip tooltip = new Tooltip("Doppio clic per dettagli");
+        Tooltip tooltip = new Tooltip();
         tooltip.setShowDelay(Duration.millis(1));
         tooltip.setHideDelay(Duration.millis(0));
+        tooltip.textProperty().bind(Data.lsp.lsb("singleTransaction.tooltip.doubleClick"));
         Tooltip.install(backGroundT, tooltip);
 
-        Tooltip deleteCardTooltip = new Tooltip("Doppio clic per eliminare");
+        Tooltip deleteCardTooltip = new Tooltip();
         deleteCardTooltip.setShowDelay(Duration.millis(1));
         deleteCardTooltip.setHideDelay(Duration.millis(0));
+        deleteCardTooltip.textProperty().bind(Data.lsp.lsb("singleTransaction.tooltip.delete"));
         deleteCard.setOnMouseEntered(event -> Tooltip.install(deleteCard, deleteCardTooltip));
         deleteCard.setOnMouseExited(event -> Tooltip.uninstall(deleteCard, deleteCardTooltip));
     }
 
     private void setupDeleteCardEvents() {
+        deleteCard.textProperty().bind(Data.lsp.lsb("singleTransaction.delete"));
         deleteCard.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 removeCard(myTransaction.id());
@@ -204,7 +207,7 @@ public class SingleTransactionController extends AnchorPane {
         Task<String> taskSecondAccountName = Data.userDatabase.getNameAccountFromId(myTransaction.second_account());
         taskSecondAccountName.setOnSucceeded(event -> {
             recipient.setText(taskSecondAccountName.getValue());
-            categTransactions.setText("Trasferimento");
+            categTransactions.textProperty().bind(Data.lsp.lsb("singleTransaction.transfer"));
         });
         executorService.submit(taskSecondAccountName);
     }
