@@ -118,7 +118,6 @@ public class SingleTransactionController extends AnchorPane {
         deleteCard.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 removeCard(myTransaction.id());
-
                 event.consume();
             }
         });
@@ -131,26 +130,12 @@ public class SingleTransactionController extends AnchorPane {
             }
         });
 
-        backGroundT.setOnMouseMoved(event -> {
-            if (!deleteCard.contains(event.getX() - deleteCard.getLayoutX(), event.getY() - deleteCard.getLayoutY())) {
-                Tooltip.install(backGroundT, new Tooltip("Doppio clic per dettagli"));
-            } else {
-                Tooltip.uninstall(backGroundT, null);
-            }
-        });
-
         backGroundT.setOnMouseEntered(event -> backGroundT.setStyle(HOVER_BACKGROUND_COLOR));
         backGroundT.setOnMouseExited(event -> backGroundT.setStyle(ORIGINAL_BACKGROUND_COLOR));
     }
 
     private void setupButtonFavourite() {
-        if(myTransaction.favorite() == 1) {
-            starTransaction.setContent(on_fav);
-        } else {
-            starTransaction.setContent(off_fav);
-        }
-
-
+        starTransaction.setContent(myTransaction.favorite() == 1 ? on_fav : off_fav);
 
         buttonFavourite.setOnAction(event -> {
             try {
@@ -170,12 +155,7 @@ public class SingleTransactionController extends AnchorPane {
 
     private void setupTransactionDetails() {
         amount.setText(String.valueOf(myTransaction.amount()));
-
-        if (myTransaction.type() == 1) {
-            amount.setStyle("-fx-text-fill: red;");
-        } else if (myTransaction.type() == 0) {
-            amount.setStyle("-fx-text-fill: green;");
-        }
+        amount.setStyle(myTransaction.type() == 1 ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
 
         if (myTransaction.type() == 2) {
             setupTransferDetails();
@@ -191,11 +171,13 @@ public class SingleTransactionController extends AnchorPane {
     private void setupTransferDetails() {
         arrowTransaction.setVisible(true);
         recipient.setVisible(true);
+
         Task<String> taskSecondAccountName = Data.userDatabase.getNameAccountFromId(myTransaction.second_account());
         taskSecondAccountName.setOnSucceeded(event -> {
             recipient.setText(taskSecondAccountName.getValue());
             categTransactions.setText("Trasferimento");
         });
+        executorService.submit(taskSecondAccountName);
     }
 
     private void setupCategoryDetails() {
@@ -214,7 +196,7 @@ public class SingleTransactionController extends AnchorPane {
             dbTags = loadTagsTask.getValue();
             if (dbTags != null) {
                 dbTags.forEach(dbTagItem -> {
-                    Tag tag = new Tag(dbTagItem.name(), 0, 0, dbTagItem.color());;
+                    Tag tag = new Tag(dbTagItem.name(), 0, 0, dbTagItem.color());
                     GridtagPane.getChildren().add(tag);
                 });
             }
@@ -241,16 +223,12 @@ public class SingleTransactionController extends AnchorPane {
         Window mainWindow = TransactionsPage.getScene().getWindow();
         double popupWidth = 712.0;
         double popupHeight = 400.0;
-        double x = mainWindow.getX() + (mainWindow.getWidth() - popupWidth) / 2;
-        double y = mainWindow.getY() + (mainWindow.getHeight() - popupHeight) / 2;
-
-        x = Math.max(x, 0);
-        y = Math.max(y, 0);
+        double x = Math.max(mainWindow.getX() + (mainWindow.getWidth() - popupWidth) / 2, 0);
+        double y = Math.max(mainWindow.getY() + (mainWindow.getHeight() - popupHeight) / 2, 0);
 
         TransactionsPage.applyBlur();
         addNewController.toggle(x, y);
     }
-
 
     public dbTransaction getTransaction() {
         return myTransaction;
@@ -260,21 +238,12 @@ public class SingleTransactionController extends AnchorPane {
         TransactionsPage.refresh();
     }
 
-    public void removeCard(int id){
-        Task<Boolean> rimuoviT= Data.userDatabase.removeTransaction(id);
-        rimuoviT.setOnSucceeded(event -> {
-
+    public void removeCard(int id) {
+        Task<Boolean> removeTask = Data.userDatabase.removeTransaction(id);
+        removeTask.setOnSucceeded(event -> {
             parentCardTransactions.removeVbox(myTransaction);
             TransactionsPage.refresh();
         });
-        executorService.submit(rimuoviT);
+        executorService.submit(removeTask);
     }
 }
-
-
-
-
-
-
-
-

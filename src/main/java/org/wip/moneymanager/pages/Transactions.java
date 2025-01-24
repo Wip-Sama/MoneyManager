@@ -113,6 +113,7 @@ public class Transactions extends BorderPane implements AutoCloseable {
                 favoriteSvg.setContent(off_fav);
                 isFavorite = false;
                 restoreAllTransactions();
+                filterTransactionsBySelectedDates( multiDatePicker.getSelectedDates());
             }
         });
     }
@@ -228,7 +229,11 @@ public class Transactions extends BorderPane implements AutoCloseable {
             multiDatePicker.getSelectedDates().clear();
         }
         multiDatePicker.getDatePicker().setValue(null);
-        generaCard(null, null, null);
+
+        if (!isFavorite){
+            generaCard(null, null, null);
+        }
+
     }
 
     @Override
