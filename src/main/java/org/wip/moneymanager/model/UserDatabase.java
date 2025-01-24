@@ -180,27 +180,20 @@ public class UserDatabase extends Database {
     public Task<Boolean> forceRemoveCategory(int id) {
         return asyncCall(() -> {
             if (isConnected()) {
-                String remove_from_transactions = "UPDATE Transactions SET category = null WHERE category = ?;";
-                PreparedStatement stmt1 = con.prepareStatement(remove_from_transactions);
-                stmt1.setInt(1, id);
-                stmt1.executeUpdate();
-                stmt1.close();
-
-                Task<List<dbCategory>> subc = getAllSubcategories(id);
-                subc.run();
-                subc.get().forEach(sub -> forceRemoveCategory(sub.id()));
+                getAllSubcategories(id).get().forEach(sub -> removeTransactionsWithCategory(sub.id()).run());
+                removeTransactionsWithCategory(id).run();
 
                 String remove_subcategory = "DELETE FROM Categories WHERE parent_category = ?;";
-                PreparedStatement stmt2 = con.prepareStatement(remove_subcategory);
-                stmt2.setInt(1, id);
-                stmt2.executeUpdate();
-                stmt2.close();
-
-                String remove_category = "DELETE FROM Categories WHERE id = ?;";
-                PreparedStatement stmt3 = con.prepareStatement(remove_category);
+                PreparedStatement stmt3 = con.prepareStatement(remove_subcategory);
                 stmt3.setInt(1, id);
                 stmt3.executeUpdate();
                 stmt3.close();
+
+                String remove_category = "DELETE FROM Categories WHERE id = ?;";
+                PreparedStatement stmt4 = con.prepareStatement(remove_category);
+                stmt4.setInt(1, id);
+                stmt4.executeUpdate();
+                stmt4.close();
                 return true;
             }
             return false;
@@ -422,6 +415,29 @@ public class UserDatabase extends Database {
         });
     }
 
+    public Task<Boolean> removeTransactionsWithCategory(int categoryId) {
+        return asyncCall(() -> {
+            if (isConnected()) {
+                String query = "SELECT id FROM Transactions WHERE category = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, categoryId);
+                ResultSet rs = stmt.executeQuery();
+                List<Integer> transactionIds = new ArrayList<>();
+                while (rs.next()) {
+                    transactionIds.add(rs.getInt("id"));
+                }
+                stmt.close();
+
+                for (Integer transactionId : transactionIds) {
+                    removeTransaction(transactionId).run();
+                }
+
+                return true;
+            }
+            return false;
+        });
+    }
+
     public Task<List<TransactionByDate>> getAllDaysOfTransaction(String selectedCategory, String selectedAccount, List<String> selectedTags) {
         return asyncCall(() -> {
             List<TransactionByDate> transactionByDateList = new ArrayList<>();
@@ -482,6 +498,23 @@ public class UserDatabase extends Database {
             }
 
             return transactionByDateList;
+        });
+    }
+
+    public Task<List<dbTransaction>> getAllTransactionsWithCategory(int categoryId) {
+        return asyncCall(() -> {
+            List<dbTransaction> transactions = new ArrayList<>();
+            if (isConnected()) {
+                String query = "SELECT * FROM Transactions WHERE category = ?;";
+                PreparedStatement stmt = con.prepareStatement(query);
+                stmt.setInt(1, categoryId);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    transactions.add(new dbTransaction(rs, this));
+                }
+                stmt.close();
+            }
+            return transactions;
         });
     }
 

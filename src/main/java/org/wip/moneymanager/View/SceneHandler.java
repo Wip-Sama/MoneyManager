@@ -40,7 +40,6 @@ public class SceneHandler {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Scene scene = new Scene(loader.load());
 
-
             primaryStage.setMinHeight(MIN_HEIGHT);
             primaryStage.setMinWidth(MIN_WIDTH);
 

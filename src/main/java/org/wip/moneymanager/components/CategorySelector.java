@@ -146,7 +146,10 @@ public class CategorySelector extends HBox {
     }
 
     public String getSelectedCategory() {
-        return category_box.getSelectionModel().getSelectedItem();
+        if (sub_category_box.getSelectionModel().isEmpty()) {
+            return category_box.getSelectionModel().getSelectedItem();
+        }
+        return sub_category_box.getSelectionModel().getSelectedItem();
     }
 
     public String getSelectedSubCategory() {

@@ -33,17 +33,17 @@ public class Main extends Application {
 
         try {
             SceneHandler sceneHandler = SceneHandler.getInstance(primaryStage);
-            //sceneHandler.showLoginScreen(); // Chiama il metodo per mostrare la schermata di login
+            sceneHandler.showLoginScreen(); // Chiama il metodo per mostrare la schermata di login
 
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            Data.esm.register(executorService);
-            Task<dbUser> userTask = Data.mmDatabase.getUser("utente1");
-            executorService.submit(userTask);
-
-            userTask.setOnSucceeded(e -> {
-                Data.dbUser = userTask.getValue();
-                sceneHandler.startMoneyManager();
-            });
+//            ExecutorService executorService = Executors.newSingleThreadExecutor();
+//            Data.esm.register(executorService);
+//            Task<dbUser> userTask = Data.mmDatabase.getUser("utente1");
+//            executorService.submit(userTask);
+//
+//            userTask.setOnSucceeded(e -> {
+//                Data.dbUser = userTask.getValue();
+//                sceneHandler.startMoneyManager();
+//            });
         } catch (Exception e) {
             e.printStackTrace();
         }
