@@ -177,8 +177,7 @@ public class Settings extends BorderPane implements AutoCloseable {
         start_page.getItems().setAll(FXCollections.observableArrayList(
                         Data.localizationService.localizedStringBinding("homescreen.none").get(),
                         Data.localizationService.localizedStringBinding("homescreen.transactions").get(),
-                        Data.localizationService.localizedStringBinding("homescreen.accounts").get(),
-                        Data.localizationService.localizedStringBinding("homescreen.statistics").get()
+                        Data.localizationService.localizedStringBinding("homescreen.accounts").get()
                 )
         );
         start_page.getSelectionModel().select(selectedIndex);
