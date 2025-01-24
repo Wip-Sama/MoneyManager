@@ -1,5 +1,7 @@
 package org.wip.moneymanager.pages;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 import org.wip.moneymanager.View.SceneHandler;
 import org.wip.moneymanager.components.ComboPasswordField;
 import org.wip.moneymanager.components.Switch;
@@ -20,6 +23,7 @@ import org.wip.moneymanager.model.DBObjects.dbUser;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.utility.AlertMessages;
 import org.wip.moneymanager.utility.Encrypter;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,46 +37,44 @@ import java.util.concurrent.Executors;
 public class Profile extends BorderPane implements AutoCloseable {
 
     @FXML
-    private ImageView pic;
+    private Label EditProfileLabel;
 
     @FXML
-    private Label username_show;
+    private Button discardButton;
 
     @FXML
-    private Label username_label;
+    private Label errorLabel;
 
     @FXML
-    private TextField username_field;
+    private ImageView image;
 
     @FXML
-    private Label new_password_label;
+    private ComboPasswordField newPasswordField;
 
     @FXML
-    private ComboPasswordField new_password_field;
+    private Label newPasswordLabel;
 
     @FXML
-    private Label use_password_label;
+    private ComboPasswordField oldPasswordField;
 
     @FXML
-    private Switch use_password_field;
+    private Label oldPasswordLabel;
 
     @FXML
-    private ComboPasswordField old_password_field;
+    private Pane profileImage;
 
     @FXML
-    private Label old_password_label;
+    private Button saveButton;
 
     @FXML
-    private Button save;
+    private TextField usernameField;
 
     @FXML
-    private Button discard;
+    private Label usernameLabel;
 
     @FXML
-    private Label profile_label;
+    private Label usernamePreview;
 
-    @FXML
-    private Pane profile_pane;
 
 
     private final static Image mm_logo = new Image(Objects.requireNonNull(SceneHandler.class.getResourceAsStream("/org/wip/moneymanager/images/Logo_Money_manager_single.svg.png")));
@@ -89,23 +91,22 @@ public class Profile extends BorderPane implements AutoCloseable {
         }
 
         Circle clip = new Circle(75, 75, 75);
-        pic.setClip(clip);
+        image.setClip(clip);
     }
 
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
-        old_password_label.textProperty().bind(Data.lsp.lsb("profile.old_password"));
-        save.textProperty().bind(Data.lsp.lsb("profile.save"));
-        discard.textProperty().bind(Data.lsp.lsb("profile.discard"));
-        username_label.textProperty().bind(Data.lsp.lsb("profile.username"));
-        new_password_label.textProperty().bind(Data.lsp.lsb("profile.new_password"));
-        use_password_label.textProperty().bind(Data.lsp.lsb("profile.use_password"));
-        profile_label.textProperty().bind(Data.lsp.lsb("profile.edit_pic"));
+        errorLabel.setOpacity(0);
+        oldPasswordLabel.textProperty().bind(Data.lsp.lsb("profile.old_password"));
+        saveButton.textProperty().bind(Data.lsp.lsb("profile.save"));
+        discardButton.textProperty().bind(Data.lsp.lsb("profile.discard"));
+        usernameLabel.textProperty().bind(Data.lsp.lsb("profile.username"));
+        newPasswordLabel.textProperty().bind(Data.lsp.lsb("profile.new_password"));
+        EditProfileLabel.textProperty().bind(Data.lsp.lsb("profile.edit_pic"));
 
-        username_show.textProperty().bind(Data.dbUser.username());
-        username_field.setText(Data.dbUser.username().get());
-        use_password_field.setState(Data.dbUser.safe_login().get());
+        usernamePreview.textProperty().bind(Data.dbUser.username());
+        usernameField.setText(Data.dbUser.username().get());
 
         File directory = new File(Data.users_images_directory);
         String username = String.valueOf(Data.dbUser.id());
@@ -113,12 +114,13 @@ public class Profile extends BorderPane implements AutoCloseable {
         if (files != null && files.length > 0) {
             System.out.println(files[0].getPath());
             Image newImage = new Image(files[0].toURI().toString());
-            pic.setImage(newImage);
+            image.setImage(newImage);
+
         } else {
-            pic.setImage(mm_logo);
+            image.setImage(mm_logo);
         }
 
-        profile_pane.onMouseClickedProperty().set(_ -> {
+        profileImage.onMouseClickedProperty().set(_ -> {
             String user_id = String.valueOf(Data.dbUser.id());
 
             FileChooser fileChooser = new FileChooser();
@@ -137,27 +139,26 @@ public class Profile extends BorderPane implements AutoCloseable {
             File newFile = new File(Data.users_images_directory, newFileName);
             try {
                 Files.copy(selectedFile.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                Image image = new Image(newFile.toURI().toString());
-                pic.setImage(image);
+                Image imageFile = new Image(newFile.toURI().toString());
+                image.setImage(imageFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
 
-        save.setOnAction(_ -> {
+        saveButton.setOnAction(_ -> {
             update_stuff();
             update_pic();
 
-            use_password_field.updateState(Data.dbUser.safe_login().get());
             Data.userUpdated.set(true);
 
 
         });
 
-        discard.setOnAction(_ -> {
-            username_field.setText(Data.dbUser.username().get());
-            use_password_field.updateState(Data.dbUser.safe_login().get());
+        discardButton.setOnAction(_ -> {
+            usernameField.setText(Data.dbUser.username().get());
+
 
             File dir = new File(Data.users_images_directory);
             String user_id = String.valueOf(Data.dbUser.id());
@@ -172,8 +173,30 @@ public class Profile extends BorderPane implements AutoCloseable {
             assert old_files != null;
             String fileExtension = old_files[0].getName().substring(old_files[0].getName().lastIndexOf('.'));
             File oldFile = new File(Data.users_images_directory, user_id + fileExtension);
-            pic.setImage(new Image(oldFile.toURI().toString()));
+            image.setImage(new Image(oldFile.toURI().toString()));
         });
+
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(usernameField);
+                errorLabel.setOpacity(0);
+            }
+        });
+
+        oldPasswordField.password.addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(oldPasswordField);
+                errorLabel.setOpacity(0);
+            }
+        });
+
+        newPasswordField.password.addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(newPasswordField);
+                errorLabel.setOpacity(0);
+            }
+        });
+
     }
 
     private void update_pic() {
@@ -192,103 +215,79 @@ public class Profile extends BorderPane implements AutoCloseable {
             String fileExtension = new_files[0].getName().substring(new_files[0].getName().lastIndexOf('.'));
             File newFile = new File(Data.users_images_directory, user_id + fileExtension);
             new_files[0].renameTo(newFile);
-            pic.setImage(new Image(newFile.toURI().toString()));
+            image.setImage(new Image(newFile.toURI().toString()));
         }
     }
 
     private void update_stuff() {
-        Alert alertE = new Alert(Alert.AlertType.ERROR);
-        Alert alertI = new Alert(Alert.AlertType.INFORMATION);
+        errorLabel.setOpacity(0); // Nascondi l'errore all'inizio
 
+        boolean hasError = false;
 
-        if (old_password_field.password.get() == null || old_password_field.password.get().isEmpty() &&
-                new_password_field.password.get() == null || new_password_field.password.get().isEmpty()) {
+        if (oldPasswordField.password.get() == null || oldPasswordField.password.get().isEmpty()) {
+            FieldAnimationUtils.animateFieldError(oldPasswordField);
+            hasError = true;
+        }
+        if (newPasswordField.password.get() == null || newPasswordField.password.get().isEmpty()) {
+            FieldAnimationUtils.animateFieldError(newPasswordField);
+            hasError = true;
+        }
+        if (usernameField.getText().isEmpty()) {
+            FieldAnimationUtils.animateFieldError(usernameField);
+            hasError = true;
+        }
 
-            if (!Objects.equals(username_field.getText(), Data.dbUser.username().get())) {
-                try {
-                    Data.dbUser.setUsername(username_field.getText());
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                Task<Boolean> checkPasswordTask = Data.mmDatabase.checkPassword(Data.dbUser.username().get(), old_password_field.password.get());
-                checkPasswordTask.setOnSucceeded(event -> {
-                    Boolean isOldPasswordCorrect = checkPasswordTask.getValue();
+        if (hasError) {
+            showError("profile.error.all_fields", "red");
+            return;
+        }
 
-                    // Se la password è richiesta, controlla che sia corretta
-                    if ((new_password_field.password.get() != null && !new_password_field.password.get().isEmpty()) ||
-                            !Objects.equals(username_field.getText(), Data.dbUser.username().get())) {
-                        if (!isOldPasswordCorrect) {
-                            alertE.setContentText(AlertMessages.getOldPasswordIncorrectMessage().get());
-                            alertE.showAndWait();
-                            return;
-                        }
-                    }
+        Task<Boolean> checkPasswordTask = Data.mmDatabase.checkPassword(Data.dbUser.username().get(), oldPasswordField.password.get());
+        checkPasswordTask.setOnSucceeded(event -> {
+            boolean isOldPasswordCorrect = checkPasswordTask.getValue();
 
-                    Task<dbUser> dbUser = Data.mmDatabase.getUser(username_field.getText());
-                    executorService.submit(dbUser);
-
-                    if (use_password_field.getState() &&
-                            (new_password_field.password.get() == null || new_password_field.password.get().isEmpty())) {
-                        alertE.setContentText(AlertMessages.getPasswordEmptyMessage().get());
-                        alertE.showAndWait();
-                        return;
-                    }
-
-                    if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty() && !new_password_field.password.get().matches("[a-zA-Z0-9_]+")) {
-                        alertE.setContentText(AlertMessages.getPasswordSpecialMessage().get());
-                        alertE.showAndWait();
-                        return;
-                    }
-
-                    Task<Boolean> existTask = Data.mmDatabase.userExists(username_field.getText());
-                    existTask.setOnSucceeded(eventexist -> {
-                        boolean usernameExists = existTask.getValue();
-
-                        if (!Objects.equals(username_field.getText(), Data.dbUser.username().get()) && usernameExists) {
-                            alertE.setContentText(AlertMessages.getUsernameExistsMessage().get());
-                            alertE.showAndWait();
-                            return;
-                        }
-
-                        // Aggiorna solo i campi modificati
-                        try {
-                            if (!Objects.equals(username_field.getText(), Data.dbUser.username().get())) {
-                                Data.dbUser.setUsername(username_field.getText());
-                            }
-                            Data.dbUser.setSafe_login(use_password_field.getState());
-                            if (new_password_field.password.get() != null && !new_password_field.password.get().isEmpty()) {
-                                Data.dbUser.setPassword_hash(Encrypter.encrypt_string_bcrypt(new_password_field.password.get()));
-                            }
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        alertI.setContentText(AlertMessages.getSuccessMessage().get());
-                        alertI.showAndWait();
-
-                        username_field.setText(Data.dbUser.username().get());
-                        old_password_field.clear();
-                        new_password_field.clear();
-                    });
-
-                    executorService.submit(existTask);
-
-                });
-
-                checkPasswordTask.setOnFailed(e -> {
-                    alertE.setContentText(AlertMessages.getErrorCheckPasswordMessage().get());
-                    alertE.showAndWait();
-                });
-
-                executorService.submit(checkPasswordTask);
-
-
+            if (!isOldPasswordCorrect) {
+                showError("profile.error.old_password", "red");
+                FieldAnimationUtils.animateFieldError(oldPasswordField);
+                return;
             }
 
+            try {
+                if (!Objects.equals(usernameField.getText(), Data.dbUser.username().get())) {
+                    Data.dbUser.setUsername(usernameField.getText());
+                }
+                if (!newPasswordField.password.get().isEmpty()) {
+                    Data.dbUser.setPassword_hash(Encrypter.encrypt_string_bcrypt(newPasswordField.password.get()));
+                }
+            } catch (SQLException e) {
+                showError("profile.error.all_fields", "red");
+                return;
+            }
 
-        }
+            showError("profile.success", "green");
+
+            usernameField.setText(Data.dbUser.username().get());
+            oldPasswordField.clear();
+            newPasswordField.clear();
+        });
+
+        executorService.submit(checkPasswordTask);
     }
+
+    private void showError(String message, String color) {
+        errorLabel.textProperty().unbind();
+        errorLabel.textProperty().bind(Data.lsp.lsb(message));
+        errorLabel.setStyle("-fx-text-fill: " + color + ";");
+        errorLabel.setOpacity(1);
+
+        Timeline fadeInTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> errorLabel.setOpacity(0)),
+                new KeyFrame(Duration.seconds(0.2), e -> errorLabel.setOpacity(1))
+        );
+        fadeInTimeline.setCycleCount(1);
+        fadeInTimeline.play();
+    }
+
 
     @Override
     public void close() {

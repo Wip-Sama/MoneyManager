@@ -21,6 +21,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CardConto extends AnchorPane {
     @FXML
@@ -66,7 +68,7 @@ public class CardConto extends AnchorPane {
 
     private dbAccount account = null;
     public final BooleanProperty hide_balance = new SimpleBooleanProperty(false);
-
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final static StringProperty hidden_balance = new SimpleStringProperty("00,0");
     private final StringProperty amount = new SimpleStringProperty();
     private final StringProperty currency = new SimpleStringProperty("EUR");
@@ -139,10 +141,14 @@ public class CardConto extends AnchorPane {
         account.setCreationDate((int) creation_date_field.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond());
         account.setType(AccountType.fromInt(type_field.getSelectionModel().getSelectedIndex()));
         account.setIncludeIntoTotals(include_into_totals_field.getState() ? 0 : 1);
-        account.setCurrency(balance_field.getCurrency());
     }
 
+    @FXML
     public void initialize() {
+        Data.esm.register(executorService);
+        balance_field.setDisable(true);
+        balance_label.setOpacity(0.5);
+        balance_field.setOpacity(0.5);
         name_label.setText(Data.lsp.lsb("cardconto.name_label").get());
         balance_label.setText(Data.lsp.lsb("cardconto.balance_label").get());
         type_label.setText(Data.lsp.lsb("cardconto.type_label").get());
