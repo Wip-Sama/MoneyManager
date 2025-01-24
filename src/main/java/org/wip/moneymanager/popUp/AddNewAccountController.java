@@ -103,6 +103,13 @@ public class AddNewAccountController extends BorderPane {
     public void initialize() {
         Data.esm.register(executorService);
 
+        FieldAnimationUtils.disableContextMenu(
+                dateField,
+                newAccountField,
+                typeAccountField,
+                bilanceField
+        );
+
         cancelButton.setText(Data.lsp.lsb("newAddAccount.cancelButtonLabel").get());
         saveButton.setText(Data.lsp.lsb("newAddAccount.saveButtonLabel").get());
         LabelNewAccount.setText(Data.lsp.lsb("newAddAccount.newAccountLabel").get());

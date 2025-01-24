@@ -389,8 +389,8 @@ public class UserDatabase extends Database {
                 if (type == 0 || type == 1) {
                     success &= updateAccountBalance(accountId, amount, false).get(); // Il get() blocca finché non ottieni il risultato
                 } else if (type == 2) {
-                    success &= updateAccountBalance(accountId, amount, false).get(); // Sottrai dal conto di origine
-                    success &= updateAccountBalance(secondAccountId, amount, true).get(); // Aggiungi al conto di destinazione
+                    success &= updateAccountBalance(accountId, amount, true).get(); // Sottrai dal conto di origine
+                    success &= updateAccountBalance(secondAccountId, amount, false).get(); // Aggiungi al conto di destinazione
                 }
 
                 if (!success) {

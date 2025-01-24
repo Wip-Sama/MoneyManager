@@ -21,6 +21,7 @@ import org.wip.moneymanager.model.DBObjects.dbCategory;
 import org.wip.moneymanager.model.types.HomeScreen;
 import org.wip.moneymanager.model.types.Theme;
 import org.wip.moneymanager.model.types.Week;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

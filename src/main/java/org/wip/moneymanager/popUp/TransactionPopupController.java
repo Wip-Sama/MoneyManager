@@ -52,6 +52,7 @@ public class TransactionPopupController extends BorderPane {
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
 
+
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
     private final Window node;
@@ -84,6 +85,13 @@ public class TransactionPopupController extends BorderPane {
     private void initialize() {
 
         Data.esm.register(executorService);
+
+        FieldAnimationUtils.disableContextMenu(
+                datePicker,
+                accountComboBox,
+                balanceEditor,
+                notes
+        );
 
         // imposta i testi di label e dei pulsanti
         labelTitle.setText(Data.lsp.lsb("transactionPopUpController.title").get());
@@ -131,8 +139,6 @@ public class TransactionPopupController extends BorderPane {
         tagSelector.clearTags();
         categorySelector.populateMainCategoriesForIncome();
         datePicker.setValue(LocalDate.now());
-
-
 
         // azione per il pulsante cancel
         cancelButton.setOnAction(e -> hide());

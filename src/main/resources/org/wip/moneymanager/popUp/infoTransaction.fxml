@@ -94,7 +94,7 @@
             </VBox>
             <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Label text="Note Aggiuntive" />
+                  <Label fx:id="notesLabel" text="Note Aggiuntive" />
                   <TextArea fx:id="notesAgg" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" />
                </children>
             </VBox>

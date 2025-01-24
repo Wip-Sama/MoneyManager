@@ -162,6 +162,11 @@ public class LoginController {
     @FXML
     private void initialize() {
         Data.esm.register(executorService);
+
+        FieldAnimationUtils.disableContextMenu(
+                usernameField
+        );
+
         loginButton.textProperty().bind(Data.lsp.lsb("login.logintext"));
         labelUsername.textProperty().bind(Data.lsp.lsb("login.username"));
         labelPassword.textProperty().bind(Data.lsp.lsb("login.password"));

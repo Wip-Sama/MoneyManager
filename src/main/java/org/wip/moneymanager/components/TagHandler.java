@@ -15,6 +15,7 @@ import javafx.scene.layout.FlowPane;
 import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.popUp.TagInfoPopUp;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,6 +49,11 @@ public class TagHandler extends AnchorPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+
+        FieldAnimationUtils.disableContextMenu(
+            searchBar
+        );
+
         searchBar.promptTextProperty().bind(Data.lsp.lsb("searchBar.searchTagPlaceholder"));
 
         Task<List<dbTag>> task = Data.userDatabase.getAllTag();

@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.SVGPath;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 import org.wip.moneymanager.utility.SVGLoader;
 
 
@@ -63,6 +64,11 @@ public class ComboPasswordField extends StackPane {
 
         password_field.setFocusTraversable(true);
         text_field.setFocusTraversable(false);
+
+        FieldAnimationUtils.disableContextMenu(
+                password_field
+                //text_field
+        );
 
         icon_pane.setOnMouseClicked(_ -> {
             // dato che richiediamo il focus mentre copiamo i dati è importante che non vengano aggiornati dai listener

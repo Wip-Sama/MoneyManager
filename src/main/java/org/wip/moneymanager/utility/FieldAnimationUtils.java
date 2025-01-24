@@ -2,6 +2,8 @@ package org.wip.moneymanager.utility;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
+import javafx.event.Event;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import org.wip.moneymanager.components.BalanceEditor;
@@ -10,6 +12,30 @@ import org.wip.moneymanager.components.ComboPasswordField;
 public class FieldAnimationUtils {
     private static final double SHAKE_DISTANCE = 2;
     private static final double SHAKE_DURATION = 0.25;
+
+    public static void disableContextMenu(Node... nodes) {
+        for (Node node : nodes) {
+            if (node instanceof DatePicker datePicker) {
+                datePicker.setContextMenu(null);
+                datePicker.getEditor().setContextMenu(null);
+                datePicker.getEditor().setOnContextMenuRequested(Event::consume);
+            } else if (node instanceof ComboBox<?> comboBox) {
+                comboBox.setContextMenu(null);
+                comboBox.setOnContextMenuRequested(Event::consume);
+            } else if (node instanceof TextArea textArea) {
+                textArea.setContextMenu(null);
+                textArea.setOnContextMenuRequested(Event::consume);
+            } else if (node instanceof BalanceEditor balanceEditor) {
+                balanceEditor.getTextField().setContextMenu(null);
+                balanceEditor.getTextField().setOnContextMenuRequested(Event::consume);
+            } else if (node instanceof TextField textField) {
+                textField.setContextMenu(null);
+                textField.setOnContextMenuRequested(Event::consume);
+            } else if (node instanceof PasswordField passwordField) {
+
+            }
+        }
+    }
 
     private static Timeline createShakeTimeline(javafx.scene.Node node) {
         return new Timeline(

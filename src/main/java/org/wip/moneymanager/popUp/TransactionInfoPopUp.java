@@ -17,6 +17,7 @@ import org.wip.moneymanager.components.*;
 import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.DBObjects.dbTransaction;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 
 import java.io.IOException;
@@ -82,6 +83,9 @@ public class TransactionInfoPopUp extends BorderPane {
     private Label labelTransaction;
 
     @FXML
+    private Label notesLabel;
+
+    @FXML
     private TextArea notesAgg;
 
     @FXML
@@ -131,6 +135,33 @@ public class TransactionInfoPopUp extends BorderPane {
     @FXML
     private void initialize() throws SQLException {
         Data.esm.register(executorService);
+
+        FieldAnimationUtils.disableContextMenu(
+                datesPicker,
+                accountsComboBox,
+                balanceCounter,
+                notesAgg
+        );
+
+        // Set labels translations
+        labelTransaction.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.title"));
+        amountLabel.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.amount"));
+        account.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.account"));
+        //category.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.category"));
+        date.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.date"));
+        notesLabel.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.notes"));
+
+        // Set button translations
+        editButton.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.edit"));
+        saveEditButton.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.save"));
+        deleteButton.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.delete"));
+        discardButton.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.discard"));
+        //buttonExit.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.cancel"));
+
+        // Set transaction type button translations
+        incomeButton.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.income"));
+        expenseButton.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.expense"));
+        transferButton.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.transfer"));
         buttonExit.setOnAction(event -> close());
         myTransaction = controller.getTransaction();
         setupEditButton();
@@ -147,14 +178,17 @@ public class TransactionInfoPopUp extends BorderPane {
         deleteButton.setManaged(true);
         editButton.setManaged(true);
 
-        Tooltip deleteCardTooltip = new Tooltip("Doppio clic per eliminare");
+        Tooltip deleteCardTooltip = new Tooltip();
         deleteCardTooltip.setShowDelay(Duration.millis(1));
         deleteCardTooltip.setHideDelay(Duration.millis(0));
+        deleteCardTooltip.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.delete.tooltip"));
+        deleteButton.setOnMouseExited(_ -> deleteCardTooltip.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.delete.tooltip")));
         deleteButton.setOnMouseEntered(event -> Tooltip.install(deleteButton, deleteCardTooltip));
         deleteButton.setOnMouseExited(event -> Tooltip.uninstall(deleteButton, deleteCardTooltip));
 
         deleteButton.setOnAction(event ->{
             controller.removeCard(myTransaction.id());
+            hide();
         });
 
         if(tagPane.get_selected_tags().isEmpty()){
@@ -187,7 +221,8 @@ public class TransactionInfoPopUp extends BorderPane {
             incomeButton.setStyle("-fx-border-color: green;" + "-fx-border-radius: 6");
             secondAccountComboBox.setVisible(false);
             secondAccountComboBox.setManaged(false);
-            category.setText("Category");
+            category.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.category"));
+            //category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForIncome();
             try {
                 categorySelectorTwo.setCategory_box(myTransaction.category());
@@ -203,7 +238,8 @@ public class TransactionInfoPopUp extends BorderPane {
             expenseButton.setStyle("-fx-border-color: red;" + "-fx-border-radius: 6");
             secondAccountComboBox.setVisible(false);
             secondAccountComboBox.setManaged(false);
-            category.setText("Category");
+            category.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.category"));
+            //category.setText("Category");
             categorySelectorTwo.populateMainCategoriesForExpense();
             try {
                 categorySelectorTwo.setCategory_box(myTransaction.category());
@@ -218,7 +254,10 @@ public class TransactionInfoPopUp extends BorderPane {
             transferButton.setStyle("-fx-border-color: white;" + "-fx-border-radius: 6");
             categorySelectorTwo.setVisible(false);
             categorySelectorTwo.setManaged(false);
-            category.setText("Second Account");
+            account.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.sender"));
+            category.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.recipient"));
+            //transactionInfoPopUp.sender
+            //category.setText("Second Account");
             editButton.setDisable(true);
             editButton.setOpacity(0.2);
 
@@ -251,9 +290,10 @@ public class TransactionInfoPopUp extends BorderPane {
             }
 
             // Aggiungi un tooltip
-            Tooltip tooltip = new Tooltip("Non puoi modificare un trasferimento");
+            Tooltip tooltip = new Tooltip();
             tooltip.setShowDelay(new Duration(1));
             tooltip.setHideDelay(new Duration(0));
+            tooltip.textProperty().bind(Data.lsp.lsb("transactionInfoPopUp.transfer.tooltip"));
             Tooltip.install(BoxButtonRight, tooltip);
         }
 

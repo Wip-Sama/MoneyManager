@@ -3,6 +3,7 @@ package org.wip.moneymanager.components;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -31,6 +32,9 @@ public class MultiDatePicker {
         datePicker.setMaxHeight(33);
         setUpDatePicker();
 
+        datePicker.setOnContextMenuRequested(Event::consume);
+        datePicker.getEditor().setOnContextMenuRequested(Event::consume);
+
         // Aggiungi un listener per rilevare i cambiamenti nelle date selezionate
         this.selectedDates.addListener((SetChangeListener<LocalDate>) change -> {
             if (change.wasAdded()) {
@@ -41,6 +45,14 @@ public class MultiDatePicker {
             }
             // Chiamata al metodo per filtrare i dati
             applyDateFilter(this.selectedDates);
+        });
+
+        datePicker.setEditable(false);
+        datePicker.getEditor().setEditable(false);
+        datePicker.getEditor().setOnMouseClicked(e -> {
+            if (!datePicker.isShowing()) {
+                datePicker.show();
+            }
         });
     }
 
