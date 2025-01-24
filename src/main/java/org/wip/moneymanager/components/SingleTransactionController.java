@@ -154,8 +154,37 @@ public class SingleTransactionController extends AnchorPane {
     }
 
     private void setupTransactionDetails() {
-        amount.setText(String.valueOf(myTransaction.amount()));
-        amount.setStyle(myTransaction.type() == 1 ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
+        if (myTransaction.type() != 2) {
+            if(myTransaction.type() == 0){
+                amount.setStyle("-fx-text-fill: green;");
+            } else {
+                amount.setStyle("-fx-text-fill: red;");
+            }
+            try {
+                String currency = Data.userDatabase.getCurrencyFromAccountid(myTransaction.account());
+                String formattedAmount = myTransaction.amount() + " " + currency;
+                amount.setText(formattedAmount);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                amount.setStyle("-fx-text-fill: -fu-text-1;");
+                String fromCurrency = Data.userDatabase.getCurrencyFromAccountid(myTransaction.account());
+                String toCurrency = Data.userDatabase.getCurrencyFromAccountid(myTransaction.second_account());
+                double convertedAmount = Data.mmDatabase.convertCurrency(fromCurrency, toCurrency, myTransaction.amount());
+                int convertedAmountInt = (int) convertedAmount;
+                String formattedAmount = myTransaction.amount() + " " + fromCurrency + " -> " + convertedAmountInt + " " + toCurrency;
+                amount.setText(formattedAmount);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }
+
+
 
         if (myTransaction.type() == 2) {
             setupTransferDetails();
