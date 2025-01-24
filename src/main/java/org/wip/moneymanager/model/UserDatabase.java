@@ -416,10 +416,11 @@ public class UserDatabase extends Database {
     }
 
 
-    public String getCurrencyFromAccount(int accountId) throws SQLException {
+    public String getCurrencyFromAccount(String nameAccount) throws SQLException {
+        int idAccount = getAccountIdByName(nameAccount);
         String query = "SELECT currency FROM Accounts WHERE id = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
-            stmt.setInt(1, accountId);
+            stmt.setInt(1, idAccount);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getString("currency");
