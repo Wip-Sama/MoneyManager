@@ -65,11 +65,6 @@ public class TagInfoPopUp extends BorderPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
-
-        FieldAnimationUtils.disableContextMenu(
-            colorComboBox, tagNameField
-        );
-
         initializeUI();
         initializeListeners();
         setMode(currentMode);
@@ -145,24 +140,26 @@ public class TagInfoPopUp extends BorderPane {
         editButton.setOnAction(event -> enableEditFields());
 
         deleteButton.setText(Data.lsp.lsb("tagInfo.deleteButtonLabel").get());
+        Tooltip tooltip = new Tooltip("Doppio clic per eliminare");
+        tooltip.setShowDelay(Duration.millis(1));
+        tooltip.setHideDelay(Duration.millis(0));
+        Tooltip.install(deleteButton, tooltip);
         deleteButton.setOnAction(event -> deleteTag());
     }
 
     private void enableEditFields() {
+        Tooltip.uninstall(deleteButton, null);
         tagNameField.setDisable(false);
         colorComboBox.setDisable(false);
         editButton.setText(Data.lsp.lsb("tagInfo.saveButtonLabel").get());
+
         editButton.setOnAction(event -> {
             if (validateFields()) {
                 saveChanges();
             }
         });
-
-        deleteButton.setText(Data.lsp.lsb("tagInfo.cancelButtonLabel").get());
-        deleteButton.setOnAction(event -> {
-            setupEditMode();
-        });
     }
+
 
     private void addTag() {
         String tagName = tagNameField.getText().trim();

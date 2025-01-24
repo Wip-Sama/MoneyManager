@@ -14,7 +14,6 @@ import org.wip.moneymanager.components.TagSelector;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.pages.Transactions;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class PopUpFilterController extends AnchorPane {
+
     @FXML
     private ComboBox<String> accountCombo;
 
@@ -55,25 +55,20 @@ public class PopUpFilterController extends AnchorPane {
     @FXML
     private Label title;
 
-    @FXML
-    void handleFilterAction(ActionEvent event) {
-        // Implementazione della logica di filtraggio
-    }
-
     private final CustomMenuItem customMenuItem;
     private final ContextMenu contextMenu = new ContextMenu();
 
     private String selectedCategory;
     private String selectedSubCategory;
     private String selectedAccount;
-    private List<String> accountNames;
-
     private final Window ownerWindow;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Transactions transactions;
+
     public PopUpFilterController(Window window, Transactions transactions) throws IOException {
         this.ownerWindow = window;
         this.transactions = transactions;
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/wip/moneymanager/popUp/popUpFilter.fxml"));
         fxmlLoader.setController(this);
         Parent loaded = fxmlLoader.load();
@@ -85,10 +80,9 @@ public class PopUpFilterController extends AnchorPane {
 
         window.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, _ -> hide());
 
-        // Listener per il reset quando il popup viene chiuso
         contextMenu.showingProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) { // Quando il popup si chiude
-                resetFilters(); // Resetta i filtri
+            if (!newValue) {
+                resetFilters();
             }
         });
     }
@@ -96,6 +90,14 @@ public class PopUpFilterController extends AnchorPane {
     @FXML
     private void initialize() {
         Data.esm.register(executorService);
+        bindUIComponents();
+        categoryCombo.populateMainCategoriesType();
+        initializeAccountNames();
+        configureButtons();
+        notifyError.setOpacity(0);
+    }
+
+    private void bindUIComponents() {
         title.textProperty().bind(Data.lsp.lsb("popUpFilterController.title"));
         accountFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.accountFilter"));
         categoryFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.categoryFilter"));
@@ -103,12 +105,11 @@ public class PopUpFilterController extends AnchorPane {
         buttonFilter.textProperty().bind(Data.lsp.lsb("popUpFilterController.buttonFilter"));
         cancelPopUp.textProperty().bind(Data.lsp.lsb("popUpFilterController.cancelPopUp"));
         notifyError.textProperty().bind(Data.lsp.lsb("popUpFilterController.notifyError"));
+    }
 
-        categoryCombo.populateMainCategoriesType();
-        initializeAccountNames();
-        buttonFilter.setOnAction(event -> {handleFilterAction();});
-        cancelPopUp.setOnAction(e -> hide());
-        notifyError.setOpacity(0);
+    private void configureButtons() {
+        buttonFilter.setOnAction(event -> handleFilterAction());
+        cancelPopUp.setOnAction(event -> hide());
     }
 
     private void hide() {
@@ -125,55 +126,49 @@ public class PopUpFilterController extends AnchorPane {
 
     public void show(double x, double y) {
         resetFilters();
-        tagCombo.clearTags(); // Pulisce i tag quando il menu viene mostrato
+        tagCombo.clearTags();
         contextMenu.show(ownerWindow, x, y);
     }
 
     private void initializeAccountNames() {
         Task<List<String>> takeAccountsTask = Data.userDatabase.getAllAccountNames();
-        takeAccountsTask.setOnSucceeded(e -> {
+        takeAccountsTask.setOnSucceeded(event -> {
             List<String> accountNames = takeAccountsTask.getValue();
-            if (accountNames.size() > 0) {
+            if (!accountNames.isEmpty()) {
                 accountCombo.getItems().setAll(accountNames);
-                accountCombo.setValue(null); //
+                accountCombo.setValue(null);
             }
         });
+        executorService.submit(takeAccountsTask);
     }
 
     @FXML
     private void handleFilterAction() {
-        if (categoryCombo.getSelectedSubCategory() != null) {
-            selectedCategory = categoryCombo.getSelectedSubCategory();
-        }
-        else{
-            selectedCategory = categoryCombo.getSelectedCategory();
-        }
+        selectedCategory = categoryCombo.getSelectedSubCategory() != null
+                ? categoryCombo.getSelectedSubCategory()
+                : categoryCombo.getSelectedCategory();
 
         selectedAccount = accountCombo.getValue();
         List<Tag> selectedTags = tagCombo.get_selected_tags();
 
-
-        //visualizzare l'errore se nessun filtro è selezionato
         if (selectedCategory == null && selectedAccount == null && selectedTags.isEmpty()) {
-            notifyError.setOpacity(1); // Mostra il messaggio di errore
+            notifyError.setOpacity(1);
         } else {
-            if (!selectedTags.isEmpty()) {
-                List<String> filters = new ArrayList<>();
-                for (Tag t : selectedTags){
-                    filters.add(t.getTag());
-                    System.out.println(t.getTag());
-                }
-            transactions.generaCard(selectedCategory, selectedAccount, filters);
-            } else {
-                transactions.generaCard(selectedCategory, selectedAccount, null);
-            }
-            notifyError.setOpacity(0); // Nasconde il messaggio di errore
-            hide(); // Chiudi il popup se i filtri sono validi
+            applyFilters(selectedTags);
+            notifyError.setOpacity(0);
+            hide();
         }
     }
 
+    private void applyFilters(List<Tag> selectedTags) {
+        List<String> filters = new ArrayList<>();
+        if (!selectedTags.isEmpty()) {
+            selectedTags.forEach(tag -> filters.add(tag.getTag()));
+        }
+        transactions.generaCard(selectedCategory, selectedAccount, filters.isEmpty() ? null : filters);
+    }
+
     public void resetFilters() {
-        // Reset delle categorie
         if (categoryCombo != null) {
             categoryCombo.clear();
             categoryCombo.populateMainCategoriesType();
@@ -184,12 +179,8 @@ public class PopUpFilterController extends AnchorPane {
             selectedAccount = null;
         }
 
-        // Reset degli errori
         notifyError.setOpacity(0);
-
-        // Aggiornamento della selezione effettiva
-        selectedCategory = categoryCombo.getSelectedCategory();
-        selectedSubCategory = categoryCombo.getSelectedSubCategory();
+        selectedCategory = null;
+        selectedSubCategory = null;
     }
-
 }
