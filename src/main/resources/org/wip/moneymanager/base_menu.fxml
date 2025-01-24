@@ -42,14 +42,6 @@
                         <Insets />
                      </opaqueInsets>
                   </ToggleButton>
-                  <ToggleButton fx:id="statistics" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="36.0" prefWidth="180.0" styleClass="side-button" text="Statistiche" toggleGroup="$menu_bar">
-                     <graphic>
-                        <SVGPath content="M16.749 2h4.554l.1.014.099.028.06.026c.08.034.153.085.219.15l.04.044.044.057.054.09.039.09.019.064.014.064.009.095v4.532a.75.75 0 0 1-1.493.102l-.007-.102V4.559l-6.44 6.44a.75.75 0 0 1-.976.073L13 11 9.97 8.09l-5.69 5.689a.75.75 0 0 1-1.133-.977l.073-.084 6.22-6.22a.75.75 0 0 1 .976-.072l.084.072 3.03 2.91L19.438 3.5h-2.69a.75.75 0 0 1-.742-.648l-.007-.102a.75.75 0 0 1 .648-.743L16.75 2ZM3.75 17a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Zm5.75-3.25a.75.75 0 0 0-1.5 0v7.5a.75.75 0 0 0 1.5 0v-7.5ZM13.75 15a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5a.75.75 0 0 1 .75-.75Zm5.75-4.25a.75.75 0 0 0-1.5 0v10.5a.75.75 0 0 0 1.5 0v-10.5Z" styleClass="icon_general" />
-                     </graphic>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </ToggleButton>
                </children>
                <BorderPane.margin>
                   <Insets />
@@ -105,7 +97,7 @@
                         </ImageView>
                      </left>
                      <right>
-                        <Button fx:id="user_logout" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" styleClass="logout-button" BorderPane.alignment="CENTER" onAction="#logout">
+                        <Button fx:id="user_logout" mnemonicParsing="false" onAction="#logout" prefHeight="32.0" prefWidth="38.0" styleClass="logout-button" BorderPane.alignment="CENTER">
                            <graphic>
                               <SVGPath content="M8.5 11.25a.75.75 0 1 0 0-1.5a.75.75 0 0 0 0 1.5M11 3.5a.5.5 0 0 0-.576-.494l-7 1.07A.5.5 0 0 0 3 4.57v10.86a.5.5 0 0 0 .424.494l7 1.071a.5.5 0 0 0 .576-.494V10h5.172l-.997.874a.5.5 0 0 0 .658.752l1.996-1.75a.5.5 0 0 0 0-.752l-1.996-1.75a.499.499 0 1 0-.658.752l.997.874H11zm-1 .582V15.92L4 15V4.999zM12.5 16H12v-5h1v4.5a.5.5 0 0 1-.5.5M12 8V4h.5a.5.5 0 0 1 .5.5V8z" layoutX="10.0" layoutY="10.0" />
                            </graphic>

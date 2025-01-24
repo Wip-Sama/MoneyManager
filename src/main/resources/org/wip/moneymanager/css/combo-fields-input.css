@@ -42,6 +42,10 @@
     -fx-padding: 3 0 2 7;
 }
 
+.combo-box .list-cell:hover{
+    -fx-padding: 3 0 2 7;
+}
+
 .combo-box-base.combo-box > .arrow-button > .arrow{
     -fx-background-color: -fu-text-1;
     -fx-background-insets: 0 0 0 0;
@@ -59,11 +63,14 @@
     -fx-background-radius: 1.5;
 }
 
-.combo-box .list-view .list-cell:hover  {
+.combo-box .list-view .list-cell:hover {
     -fx-background-color: -fu-accent;
     -fx-padding: 3 0 2 7;
 }
 
+.combo-box .list-view .list-cell .text {
+    -fx-opacity: 1;
+}
 .combo-box .list-view .list-cell:empty:hover  {
     -fx-background-color:  transparent;
 }

@@ -251,9 +251,6 @@ public class SingleTransactionController extends AnchorPane {
         addNewController.toggle(x, y);
     }
 
-    public void removeBlurChild() {
-        TransactionsPage.removeBlur();
-    }
 
     public dbTransaction getTransaction() {
         return myTransaction;

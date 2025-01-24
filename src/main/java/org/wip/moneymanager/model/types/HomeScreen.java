@@ -5,8 +5,7 @@ import org.wip.moneymanager.model.Data;
 public enum HomeScreen {
     NONE,
     TRANSACTIONS,
-    ACCOUNTS,
-    STATISTICS;
+    ACCOUNTS;
 
     public static HomeScreen fromString(String home_screen) {
         home_screen = home_screen.toLowerCase();
@@ -16,8 +15,6 @@ public enum HomeScreen {
             return HomeScreen.TRANSACTIONS;
         } else if (Data.lsp.lsb("accounts").get().toLowerCase().equals(home_screen)) {
             return HomeScreen.ACCOUNTS;
-        } else if (Data.lsp.lsb("statistics").get().toLowerCase().equals(home_screen)) {
-            return HomeScreen.STATISTICS;
         }
         return null;
     }

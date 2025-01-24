@@ -27,8 +27,7 @@ public class MoneyManagerController {
     private ToggleButton accounts;
     @FXML
     private ToggleButton settings;
-    @FXML
-    private ToggleButton statistics;
+
     @FXML
     private ToggleButton transactions;
     @FXML
@@ -87,12 +86,7 @@ public class MoneyManagerController {
             }
         });
 
-        statistics.selectedProperty().addListener((_, _, newValue) -> {
-            if (newValue) {
-                statistics_loader = new Statistics();
-                change_pane.setCenter(statistics_loader);
-            }
-        });
+
 
         settings.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
@@ -112,7 +106,6 @@ public class MoneyManagerController {
 
         transactions.textProperty().bind(Data.lsp.lsb("homescreen.transactions"));
         accounts.textProperty().bind(Data.lsp.lsb("homescreen.accounts"));
-        statistics.textProperty().bind(Data.lsp.lsb("homescreen.statistics"));
         settings.textProperty().bind(Data.lsp.lsb("homescreen.settings"));
         user_profile.textProperty().bind(Data.lsp.lsb("basemenu.profile"));
 
@@ -223,8 +216,6 @@ public class MoneyManagerController {
                 transactions.setSelected(true);
             } else if (startPage == HomeScreen.ACCOUNTS) {
                 accounts.setSelected(true);
-            } else if (startPage == HomeScreen.STATISTICS) {
-                statistics.setSelected(true);
             }
         });
     }

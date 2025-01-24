@@ -97,9 +97,14 @@ public final class dbTransaction {
     }
 
     public void setAmount(double amount) throws SQLException {
+
+        if(this.type == 0){
+            Data.userDatabase.updateAccountBalance(account, this.amount - amount, type == 0);
+        } else if(this.type == 1){
+            Data.userDatabase.updateAccountBalance(account, this.amount - amount, type == 1);
+        }
         this.amount = amount;
         updateField("amount", amount);
-        Data.userDatabase.updateAccountBalance(account, amount, type == 0);
     }
 
     public void setAccount(int account) throws SQLException {
