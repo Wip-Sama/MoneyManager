@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import org.wip.moneymanager.model.DBObjects.dbTag;
 import org.wip.moneymanager.model.Data;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,6 +62,11 @@ public class TagFilter extends BorderPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+
+        FieldAnimationUtils.disableContextMenu(
+                search_bar
+        );
+
         tags.addListener((_, _, newValue) -> {
             tag_pane.getChildren().clear();
             tag_pane.getChildren().addAll(newValue);

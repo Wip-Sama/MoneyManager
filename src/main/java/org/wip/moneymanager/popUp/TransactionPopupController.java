@@ -20,6 +20,7 @@ import org.wip.moneymanager.components.BalanceEditor;
 import org.wip.moneymanager.pages.Transactions;
 import org.wip.moneymanager.utility.FieldAnimationUtils;
 
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -193,10 +194,21 @@ public class TransactionPopupController extends BorderPane {
 
         // listener per la validazione del campo dell'account
         accountComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && !newValue.isEmpty()) {
-                FieldAnimationUtils.removeErrorStyles(accountComboBox);
-                errorLabel.setOpacity(0);
+            if (newValue != null) {
+                updateCurrencyForSelectedAccount();
             }
+        });
+
+        incomeButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) updateCurrencyForSelectedAccount();
+        });
+
+        expenseButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) updateCurrencyForSelectedAccount();
+        });
+
+        transferButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) updateCurrencyForSelectedAccount();
         });
 
         // listener per la validazione del campo del secondo account (trasferimenti)
@@ -285,6 +297,18 @@ public class TransactionPopupController extends BorderPane {
             resetScreen();
             hide();
         });
+    }
+
+    private void updateCurrencyForSelectedAccount() {
+        if (accountComboBox.getValue() != null) {
+            try {
+                String currency = Data.userDatabase.getCurrencyFromAccount(accountComboBox.getValue());
+                balanceEditor.setCurrency(currency);
+                balanceEditor.disableCurrencyField();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // metodo che popola le combobox degli account

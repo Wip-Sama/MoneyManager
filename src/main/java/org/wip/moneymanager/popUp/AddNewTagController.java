@@ -70,6 +70,10 @@ public class AddNewTagController extends BorderPane {
     public void initialize() {
         Data.esm.register(executorService);
 
+        FieldAnimationUtils.disableContextMenu(
+            colorComboBox, tagNameField
+        );
+
         resetPreviewButton();
 
         previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
@@ -91,6 +95,12 @@ public class AddNewTagController extends BorderPane {
         );
 
         tagNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.trim().isEmpty()) {
+                FieldAnimationUtils.removeErrorStyles(tagNameField);
+                ErrorLabel.setOpacity(0);
+            }
+            updatePreview();
+
             String upperCaseValue = newValue.toUpperCase();  // Conversione in maiuscolo
             tagNameField.setText(upperCaseValue);  // Imposta il valore nel campo
             tagNameField.positionCaret(upperCaseValue.length());
@@ -100,6 +110,10 @@ public class AddNewTagController extends BorderPane {
         });
 
         colorComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                FieldAnimationUtils.removeErrorStyles(colorComboBox);
+                ErrorLabel.setOpacity(0);
+            }
             updatePreview();
             FieldAnimationUtils.removeErrorStyles(colorComboBox);
             ErrorLabel.setOpacity(0);
@@ -107,10 +121,12 @@ public class AddNewTagController extends BorderPane {
 
         cancelButton.setOnAction(event -> {
             clearFields();
+            clearError();
             tagSelector.closeAddNewTag();
         });
 
         addButton.setOnAction(event -> {
+            clearError();
             if (validateFields()) {
                 addTag();
             }
@@ -162,21 +178,40 @@ public class AddNewTagController extends BorderPane {
     }
 
     private boolean validateFields() {
-        String tagName = tagNameField.getText();
-        String selectedColor = colorComboBox.getValue();
         boolean hasError = false;
+        int errorCount = 0;
 
-        if (tagName == null || tagName.trim().isEmpty()) {
+        // Verifica se tutti i campi sono vuoti
+        boolean allFieldsEmpty = (tagNameField.getText() == null || tagNameField.getText().trim().isEmpty()) &&
+                (colorComboBox.getValue() == null);
+
+        if (allFieldsEmpty) {
             FieldAnimationUtils.animateFieldError(tagNameField);
-            hasError = true;
-        }
-
-        if (selectedColor == null || selectedColor.isEmpty()) {
             FieldAnimationUtils.animateFieldError(colorComboBox);
-            hasError = true;
+            showError("addNewTag.error");
+            return false;
         }
 
-        if (hasError) {
+        // Valida il nome del tag
+        if (tagNameField.getText() == null || tagNameField.getText().trim().isEmpty()) {
+            FieldAnimationUtils.animateFieldError(tagNameField);
+            showError("addNewTag.error.name");
+            hasError = true;
+            errorCount++;
+        }
+
+        // Valida il colore
+        if (colorComboBox.getValue() == null) {
+            FieldAnimationUtils.animateFieldError(colorComboBox);
+            if (!hasError) {
+                showError("addNewTag.error.color");
+            }
+            hasError = true;
+            errorCount++;
+        }
+
+        // Se ci sono più errori, mostra un messaggio generico
+        if (errorCount > 1) {
             showError("addNewTag.error");
         }
 
@@ -184,8 +219,8 @@ public class AddNewTagController extends BorderPane {
     }
 
     private void showError(String message) {
-        ErrorLabel.textProperty().bind(Data.lsp.lsb(message));
-        ErrorLabel.setTextFill(rgb(255, 0, 0));
+        ErrorLabel.setOpacity(1);
+        ErrorLabel.textProperty().bind(Data.lsp.lsb("addNewTag.error"));
         Timeline fadeInTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> ErrorLabel.setOpacity(0)),
                 new KeyFrame(Duration.seconds(0.2), e -> ErrorLabel.setOpacity(1))
@@ -210,7 +245,15 @@ public class AddNewTagController extends BorderPane {
         resetPreviewButton();
     }
 
+    private void clearError() {
+        FieldAnimationUtils.removeErrorStyles(tagNameField);
+        FieldAnimationUtils.removeErrorStyles(colorComboBox);
+        ErrorLabel.setOpacity(0);
+    }
+
+
     private void resetPreviewButton() {
+        previewToggleButton.textProperty().unbind();
         previewToggleButton.setText("Preview");
         previewToggleButton.setStyle("-fx-background-color: -fu-accent;");
     }

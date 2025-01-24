@@ -65,6 +65,11 @@ public class TagInfoPopUp extends BorderPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+
+        FieldAnimationUtils.disableContextMenu(
+            colorComboBox, tagNameField
+        );
+
         initializeUI();
         initializeListeners();
         setMode(currentMode);

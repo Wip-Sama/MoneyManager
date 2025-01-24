@@ -30,7 +30,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Label fx:id="ErrorLabel" text="ErrorLabel" textFill="RED">
+            <Label fx:id="ErrorLabel" text="ErrorLabel" style="-fx-text-fill: #ff0000">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

@@ -15,6 +15,7 @@ import javafx.util.Duration;
 import org.wip.moneymanager.model.DBObjects.dbAccount;
 import org.wip.moneymanager.model.Data;
 import org.wip.moneymanager.model.types.AccountType;
+import org.wip.moneymanager.utility.FieldAnimationUtils;
 
 import java.sql.SQLException;
 import java.time.Instant;
@@ -146,6 +147,11 @@ public class CardConto extends AnchorPane {
     @FXML
     public void initialize() {
         Data.esm.register(executorService);
+
+        FieldAnimationUtils.disableContextMenu(
+            account_balance, creation_date_field, name_field, account_type
+        );
+
         balance_field.setDisable(true);
         balance_label.setOpacity(0.5);
         balance_field.setOpacity(0.5);
